@@ -18,7 +18,7 @@ export const shopLevelsConfig: Record<string, ShopLevelConfig> = {
     commissionRate: 0.19,
     stockDiscount: 0.87,
     saleDiscount: 0.95,
-    color: '#c0c0c0',
+    color: '#757575',
     completionDays: 6
   },
   gold: {
@@ -38,7 +38,7 @@ export const shopLevelsConfig: Record<string, ShopLevelConfig> = {
     commissionRate: 0.17,
     stockDiscount: 0.85,
     saleDiscount: 0.95,
-    color: '#e5e4e2',
+    color: '#78909c',
     completionDays: 8
   },
   diamond: {

@@ -383,20 +383,17 @@ export default function CloudShopSimulator() {
     config: typeof shopLevelsConfig[ShopLevel],
     period: number
   ): number => {
-    // 结算周期天数
+    // 结算周期天数（卖出后10天回款）
     const settlementDays = config.settlementDays;
-    // 结算折扣（销售折扣）
-    const settlementDiscount = config.saleDiscount;
+    // 销售折扣（95折）
+    const saleDiscount = config.saleDiscount;
     // 进货折扣
     const stockDiscount = config.stockDiscount;
     // 卖出比例
     const sellRatio = config.sellRatio;
 
-    // 每日卖出额度 = 历史最高进货额度 × 卖出比例
-    let dailySellAmount = initialStock * sellRatio;
-
-    // 历史最高进货额度
-    let maxStock = initialStock;
+    // 当前剩余库存（可卖出额度）
+    let remainingStock = initialStock;
 
     // 累计利润
     let totalProfit = 0;
@@ -406,39 +403,42 @@ export default function CloudShopSimulator() {
 
     // 遍历每一天（从第2天开始卖出）
     for (let day = 2; day <= period + 1; day++) {
-      // 计算当日卖出额度
-      const sellAmount = dailySellAmount;
-
-      // 回款 = 卖出额度 × 销售折扣
-      const settlementAmount = sellAmount * settlementDiscount;
-
-      // 进货成本 = 卖出额度 × 进货折扣
-      const stockCost = sellAmount * stockDiscount;
-
-      // 单日利润 = 回款 - 进货成本
-      const dailyProfit = settlementAmount - stockCost;
-
-      // 累计利润
-      totalProfit += dailyProfit;
-
-      // 将回款加入结算队列（10天后结算）
-      const settlementDay = day + settlementDays;
-      const existing = settlementQueue.get(settlementDay) || 0;
-      settlementQueue.set(settlementDay, existing + settlementAmount);
-
       // 检查今天是否有回款可以结算
       const todaySettlement = settlementQueue.get(day) || 0;
       if (todaySettlement > 0) {
-        // 复利进货额度 = 回款 / 进货折扣
+        // 用回款进货，增加库存
         const newStock = Math.round(todaySettlement / stockDiscount);
+        remainingStock += newStock;
+      }
 
-        // 如果新进货额度有意义（大于100），且不超过店铺最大进货额度
-        if (newStock >= 100 && newStock > maxStock && newStock <= config.maxStock) {
-          // 更新历史最高进货额度
-          maxStock = newStock;
+      // 如果还有库存，当天可以卖出
+      if (remainingStock > 0) {
+        // 当天最大可卖出额度
+        const maxDailySell = initialStock * sellRatio;
 
-          // 更新每日卖出额度
-          dailySellAmount = maxStock * sellRatio;
+        // 实际卖出额度 = min(剩余库存, 每日卖出额度)
+        const sellAmount = Math.min(remainingStock, maxDailySell);
+
+        if (sellAmount > 0) {
+          // 减少库存
+          remainingStock -= sellAmount;
+
+          // 回款 = 卖出额度 × 销售折扣（95折）
+          const settlementAmount = sellAmount * saleDiscount;
+
+          // 进货成本 = 卖出额度 × 进货折扣
+          const stockCost = sellAmount * stockDiscount;
+
+          // 单日利润 = 回款 - 进货成本
+          const dailyProfit = settlementAmount - stockCost;
+
+          // 累计利润
+          totalProfit += dailyProfit;
+
+          // 将回款加入结算队列（卖出日+10天结算）
+          const settlementDay = day + settlementDays;
+          const existing = settlementQueue.get(settlementDay) || 0;
+          settlementQueue.set(settlementDay, existing + settlementAmount);
         }
       }
     }
@@ -1615,10 +1615,10 @@ export default function CloudShopSimulator() {
                 <span className="mr-2">🔄</span> 复利计算
               </h4>
               <p className="text-gray-700 text-sm leading-relaxed">
-                智能推荐系统支持周期复利计算。每日卖出额度 = 历史最高进货额度 × 卖出比例。
-                例如黑钻店铺（进货3600，卖出比例15%），每天卖出540电费，第11天结算回款513元（95折），
-                进货成本448.2元（83折），利润64.8元。回款513元复利进货600额度，更新历史最高进货额度，
-                次日卖出额度随之增加，实现复利增长。
+                库存有限，每天按卖出比例出货。如黑钻店铺（进货3600，卖出15%），
+                每天540，7天卖完。卖出后10天回款结算，回款立即进货增加库存。
+                例如：黑钻店铺进货3600，第2-8天卖出，第12-18天连续回款。
+                回款资金复利进货，循环滚动实现复利增长。
               </p>
             </div>
             
@@ -1627,8 +1627,9 @@ export default function CloudShopSimulator() {
                 <span className="mr-2">🧮</span> 利润计算
               </h4>
               <p className="text-gray-700 text-sm leading-relaxed">
-                每日利润 = （卖出额度 × 销售折扣） - （卖出额度 × 进货折扣）。
-                回款10天后结算，结算后资金立即复利进货，增加历史最高进货额度。
+                每日利润 = 卖出额度 × （销售折扣 - 进货折扣）。
+                黑钻83折进货、95折卖出，每卖出540元利润64.8元。
+                回款10天后结算，结算后资金立即进货，货卖完前新回款可增加库存。
               </p>
             </div>
           </div>

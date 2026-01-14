@@ -404,15 +404,7 @@ export default function CloudShopSimulator() {
 
     // 遍历每一天（从第2天开始卖出）
     for (let day = 2; day <= period + 1; day++) {
-      // 步骤1：检查今天是否有回款可以结算
-      const todaySettlement = settlementQueue.get(day) || 0;
-      if (todaySettlement > 0) {
-        // 用回款进货，增加库存（回款到账后才能继续销售）
-        const newStock = Math.round(todaySettlement / stockDiscount);
-        remainingStock += newStock;
-      }
-
-      // 步骤2：如果还有库存，当天可以卖出
+      // 步骤1：如果还有库存，当天可以卖出
       // 如果库存卖完且回款还没到账，店铺空转，当天无利润
       if (remainingStock > 0) {
         // 当天最大可卖出额度
@@ -446,6 +438,17 @@ export default function CloudShopSimulator() {
       }
       // else: remainingStock === 0 且今天没有回款到账
       // 店铺空转，当天无利润，等待回款到账
+
+      // 步骤2：检查今天是否有回款可以结算
+      // 回款到账当天进货，第二天才能卖出
+      const todaySettlement = settlementQueue.get(day) || 0;
+      if (todaySettlement > 0) {
+        // 用回款进货，增加库存（按100的倍数取整）
+        const newStock = Math.round(todaySettlement / stockDiscount / 100) * 100;
+        if (newStock >= 100) {
+          remainingStock += newStock;
+        }
+      }
     }
 
     return Math.round(totalProfit);
@@ -497,42 +500,7 @@ export default function CloudShopSimulator() {
 
     // 遍历每一天（从第2天开始卖出）
     for (let day = 2; day <= period + 1; day++) {
-      // 步骤1：检查今天是否有回款可以结算
-      const todaySettlement = settlementQueue.get(day) || 0;
-      
-      // 用回款进货（不受店铺最高进货额度限制）
-      // 回款到账后才能继续销售，否则店铺空转
-      if (todaySettlement > 0) {
-        const newStockFromSettlement = Math.round(todaySettlement / stockDiscount);
-        if (newStockFromSettlement >= 100) {
-          currentStock += newStockFromSettlement;
-        }
-      }
-
-      // 步骤2：用剩余预算进货（受店铺最高进货额度限制）
-      if (remainingBudget > 0) {
-        // 计算剩余可用额度 = 店铺最高进货额度 - 当前库存
-        const availableQuota = maxShopStock - currentStock;
-        
-        if (availableQuota > 0) {
-          // 用剩余预算能买到的最大额度
-          const maxStockByBudget = Math.round(remainingBudget / stockDiscount);
-          // 实际能进货的额度 = min(剩余预算能买的, 剩余可用额度)
-          const actualNewStock = Math.min(maxStockByBudget, availableQuota);
-          // 取100倍数
-          const roundedNewStock = Math.round(actualNewStock / 100) * 100;
-          
-          if (roundedNewStock >= 100) {
-            const newStockCost = Math.round(roundedNewStock * stockDiscount);
-            if (newStockCost <= remainingBudget) {
-              remainingBudget -= newStockCost;
-              currentStock += roundedNewStock;
-            }
-          }
-        }
-      }
-
-      // 步骤3：如果还有库存，当天可以卖出
+      // 步骤1：如果还有库存，当天可以卖出
       // 如果库存卖完且今天没有回款到账，店铺空转，当天无利润
       if (currentStock > 0) {
         // 当天最大可卖出额度
@@ -566,6 +534,45 @@ export default function CloudShopSimulator() {
       }
       // else: currentStock === 0 且今天没有回款到账
       // 店铺空转，当天无利润，等待回款到账
+
+      // 步骤2：检查今天是否有回款可以结算
+      // 回款到账当天进货，第二天才能卖出
+      const todaySettlement = settlementQueue.get(day) || 0;
+      
+      // 用回款进货（不受店铺最高进货额度限制）
+      // 回款到账后才能继续销售，否则店铺空转
+      if (todaySettlement > 0) {
+        // 计算可以进货的额度（取100的倍数）
+        const newStockFromSettlement = Math.round(todaySettlement / stockDiscount / 100) * 100;
+        // 只有进货额度大于等于100才进货
+        if (newStockFromSettlement >= 100) {
+          currentStock += newStockFromSettlement;
+        }
+      }
+
+      // 步骤3：用剩余预算进货（受店铺最高进货额度限制）
+      // 剩余预算进货的当天也可以卖出，因为是用自有资金进货
+      if (remainingBudget > 0) {
+        // 计算剩余可用额度 = 店铺最高进货额度 - 当前库存
+        const availableQuota = maxShopStock - currentStock;
+        
+        if (availableQuota > 0) {
+          // 用剩余预算能买到的最大额度
+          const maxStockByBudget = Math.round(remainingBudget / stockDiscount);
+          // 实际能进货的额度 = min(剩余预算能买的, 剩余可用额度)
+          const actualNewStock = Math.min(maxStockByBudget, availableQuota);
+          // 取100倍数
+          const roundedNewStock = Math.round(actualNewStock / 100) * 100;
+          
+          if (roundedNewStock >= 100) {
+            const newStockCost = Math.round(roundedNewStock * stockDiscount);
+            if (newStockCost <= remainingBudget) {
+              remainingBudget -= newStockCost;
+              currentStock += roundedNewStock;
+            }
+          }
+        }
+      }
     }
 
     return {

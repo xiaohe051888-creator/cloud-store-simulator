@@ -14,7 +14,9 @@ export type ViewType =
   | 'stockInput'
   | 'levelDetails'
   | 'salesDetails'
-  | 'comparison';
+  | 'comparison'
+  | 'recommendation'
+  | 'recommendationResult';
 
 // 店铺配置类型
 export interface ShopLevelConfig {
@@ -61,4 +63,18 @@ export interface ComparisonData {
   completionDays: number;
   totalProfit: number;
   createdAt: string;
+}
+
+// 推荐结果类型
+export interface RecommendationResult {
+  level: ShopLevel;
+  levelName: string;
+  recommendedStock: number;
+  stockCost: number;
+  estimatedProfit: number;
+  completionDays: number;
+  matchScore: number;
+  matchReason: string;
+  maxProfit: number;
+  minProfit: number;
 }

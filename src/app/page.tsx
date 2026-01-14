@@ -32,7 +32,7 @@ import {
   validateCloudBalance,
   validateMaxBalance,
 } from '@/lib/shop-utils';
-import type { ShopLevel, ViewType, SalesData, ComparisonData } from '@/types/shop';
+import type { ShopLevel, ViewType, SalesData, ComparisonData, RecommendationResult } from '@/types/shop';
 
 export default function CloudShopSimulator() {
   // 应用状态
@@ -61,6 +61,12 @@ export default function CloudShopSimulator() {
 
   // 销售数据
   const [salesData, setSalesData] = useState<SalesData[]>([]);
+
+  // 推荐系统状态
+  const [recommendInputType, setRecommendInputType] = useState<'budget' | 'profit'>('budget');
+  const [recommendBudget, setRecommendBudget] = useState<string>('');
+  const [recommendProfit, setRecommendProfit] = useState<string>('');
+  const [recommendResults, setRecommendResults] = useState<RecommendationResult[]>([]);
 
   // 获取当前等级配置
   const levelConfig = currentLevel ? shopLevelsConfig[currentLevel] : null;
@@ -370,11 +376,165 @@ export default function CloudShopSimulator() {
     };
   }, [comparisonData]);
 
+  // 推荐算法：根据预算或期望利润计算推荐方案
+  const generateRecommendations = useCallback((): RecommendationResult[] => {
+    const results: RecommendationResult[] = [];
+    const targetBudget = recommendInputType === 'budget' ? parseInt(recommendBudget) || 0 : 0;
+    const targetProfit = recommendInputType === 'profit' ? parseInt(recommendProfit) || 0 : 0;
+
+    // 遍历所有店铺等级，计算推荐方案
+    for (const [level, config] of Object.entries(shopLevelsConfig) as [ShopLevel, typeof shopLevelsConfig[ShopLevel]][]) {
+      // 计算该等级在最低和最高进货额度下的利润范围
+      const minStock = config.minStock;
+      const maxStock = config.maxStock;
+      
+      // 最低进货额度的情况
+      const minStockCost = Math.round(minStock * config.stockDiscount);
+      const minDailyCommission = Math.round(minStock * config.commissionRate);
+      const minCompletionDays = Math.ceil(minStock / minDailyCommission);
+      const minProfit = Math.round(minStock * (config.saleDiscount - config.stockDiscount));
+      
+      // 最高进货额度的情况
+      const maxStockCost = Math.round(maxStock * config.stockDiscount);
+      const maxDailyCommission = Math.round(maxStock * config.commissionRate);
+      const maxCompletionDays = Math.ceil(maxStock / maxDailyCommission);
+      const maxProfit = Math.round(maxStock * (config.saleDiscount - config.stockDiscount));
+
+      // 根据输入类型计算推荐方案
+      let recommendedStock: number;
+      let estimatedProfit: number;
+      let matchScore: number;
+      let matchReason: string;
+
+      if (recommendInputType === 'budget') {
+        // 根据预算推荐
+        if (targetBudget <= 0) continue;
+        
+        // 找到最接近预算的进货额度（在等级范围内）
+        const clampedBudget = Math.min(Math.max(targetBudget, config.minStock), config.maxStock);
+        recommendedStock = Math.round(clampedBudget / 100) * 100; // 取100的倍数
+        
+        // 确保在范围内
+        recommendedStock = Math.max(config.minStock, Math.min(config.maxStock, recommendedStock));
+        
+        estimatedProfit = Math.round(recommendedStock * (config.saleDiscount - config.stockDiscount));
+        const stockCost = Math.round(recommendedStock * config.stockDiscount);
+        const dailyCommission = Math.round(recommendedStock * config.commissionRate);
+        const completionDays = Math.ceil(recommendedStock / dailyCommission);
+
+        // 计算匹配度：考虑预算匹配程度和利润率
+        const budgetMatch = 1 - Math.abs(stockCost - targetBudget) / Math.max(targetBudget, 1);
+        const profitRate = (config.saleDiscount - config.stockDiscount) / config.stockDiscount;
+        matchScore = (budgetMatch * 0.7 + profitRate * 0.3) * 100;
+        matchReason = `预算匹配: ${stockCost}元（目标: ${targetBudget}元）`;
+        
+        results.push({
+          level,
+          levelName: config.name,
+          recommendedStock,
+          stockCost,
+          estimatedProfit,
+          completionDays,
+          matchScore: Math.round(matchScore * 100) / 100,
+          matchReason,
+          maxProfit,
+          minProfit
+        });
+      } else {
+        // 根据期望利润推荐
+        if (targetProfit <= 0) continue;
+        
+        // 计算达到目标利润所需的进货额度
+        const requiredStock = Math.round(targetProfit / (config.saleDiscount - config.stockDiscount) / 100) * 100;
+        
+        // 检查是否在该等级范围内
+        if (requiredStock < config.minStock) {
+          // 目标利润低于该等级最低利润
+          recommendedStock = config.minStock;
+          estimatedProfit = minProfit;
+          const profitDiff = Math.abs(estimatedProfit - targetProfit);
+          matchScore = (1 - profitDiff / targetProfit) * 100;
+          matchReason = `最低利润: ${minProfit}元（目标: ${targetProfit}元）`;
+        } else if (requiredStock > config.maxStock) {
+          // 目标利润高于该等级最高利润
+          recommendedStock = config.maxStock;
+          estimatedProfit = maxProfit;
+          const profitDiff = Math.abs(estimatedProfit - targetProfit);
+          matchScore = Math.max(0, (1 - profitDiff / targetProfit) * 100);
+          matchReason = `最高利润: ${maxProfit}元（目标: ${targetProfit}元）`;
+        } else {
+          // 目标利润在该等级范围内
+          recommendedStock = requiredStock;
+          estimatedProfit = Math.round(recommendedStock * (config.saleDiscount - config.stockDiscount));
+          const profitDiff = Math.abs(estimatedProfit - targetProfit);
+          matchScore = (1 - profitDiff / targetProfit) * 100;
+          matchReason = `预期利润: ${estimatedProfit}元（目标: ${targetProfit}元）`;
+        }
+        
+        const stockCost = Math.round(recommendedStock * config.stockDiscount);
+        const dailyCommission = Math.round(recommendedStock * config.commissionRate);
+        const completionDays = Math.ceil(recommendedStock / dailyCommission);
+        
+        results.push({
+          level,
+          levelName: config.name,
+          recommendedStock,
+          stockCost,
+          estimatedProfit,
+          completionDays,
+          matchScore: Math.round(matchScore * 100) / 100,
+          matchReason,
+          maxProfit,
+          minProfit
+        });
+      }
+    }
+
+    // 按匹配度排序
+    return results.sort((a, b) => b.matchScore - a.matchScore);
+  }, [recommendInputType, recommendBudget, recommendProfit]);
+
+  // 处理推荐查询
+  const handleRecommend = useCallback(() => {
+    const results = generateRecommendations();
+    setRecommendResults(results);
+    setCurrentView('recommendationResult');
+  }, [generateRecommendations]);
+
+  // 选择推荐方案
+  const handleSelectRecommendation = useCallback((result: RecommendationResult) => {
+    const level = result.level;
+    const config = shopLevelsConfig[level];
+    
+    setCurrentLevel(level);
+    setStockAmount(result.recommendedStock);
+    setStockInputValue(String(result.recommendedStock));
+    setCloudBalance(result.recommendedStock);
+    setCloudBalanceInputValue(String(result.recommendedStock));
+    setMaxBalance(result.recommendedStock);
+    setMaxBalanceInputValue(String(result.recommendedStock));
+    setIsEditCloudBalance(true);
+    setIsEditMaxBalance(true);
+    
+    // 直接进入确认流程
+    const stockCost = Math.round(result.recommendedStock * config.stockDiscount);
+    const dailyCommission = Math.round(result.recommendedStock * config.commissionRate);
+    const dailyProfit = dailyCommission * (config.saleDiscount - config.stockDiscount);
+    const data = generateSalesData(result.recommendedStock, dailyCommission, dailyProfit);
+    setSalesData(data);
+    setCurrentView('levelDetails');
+    setCurrentComparisonId(null);
+  }, []);
+
   // 处理Enter键
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && currentView === 'stockInput') {
       e.preventDefault();
       handleConfirmStock();
+    }
+    if (e.key === 'Enter' && currentView === 'recommendation') {
+      e.preventDefault();
+      handleRecommend();
     }
   };
 
@@ -387,6 +547,22 @@ export default function CloudShopSimulator() {
             云店模拟器
           </h1>
           <div className="flex items-center space-x-2 sm:space-x-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentView('recommendation')}
+              className="hidden sm:flex active:scale-95 transition-all duration-200 hover:shadow-md hover:border-purple-300 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200"
+            >
+              🎯 智能推荐
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentView('recommendation')}
+              className="sm:hidden active:scale-95 transition-all duration-200 hover:shadow-md bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200"
+            >
+              推荐
+            </Button>
             {comparisonData.length > 0 && (
               <Button
                 variant="outline"
@@ -528,6 +704,247 @@ export default function CloudShopSimulator() {
               </p>
             </div>
           </div>
+        )}
+
+        {/* 推荐系统输入界面 */}
+        {currentView === 'recommendation' && (
+          <Card className="max-w-lg mx-auto w-full animate-in fade-in-0 zoom-in-95 duration-300 shadow-xl border-0">
+            <CardHeader className="pb-4 pt-6 px-6">
+              <div className="flex items-center justify-between">
+                <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full">
+                  ←
+                </Button>
+                <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  🎯 智能推荐系统
+                </CardTitle>
+                <div className="w-8" />
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-5 sm:space-y-6 px-6 pb-6">
+              {/* 选择推荐类型 */}
+              <div className="space-y-3">
+                <Label className="text-sm font-medium text-gray-700">选择推荐方式</Label>
+                <div className="grid grid-cols-2 gap-3">
+                  <Button
+                    variant={recommendInputType === 'budget' ? 'default' : 'outline'}
+                    onClick={() => setRecommendInputType('budget')}
+                    className={`active:scale-95 transition-all duration-200 ${recommendInputType === 'budget' ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700' : 'hover:border-purple-300'}`}
+                  >
+                    💰 按预算推荐
+                  </Button>
+                  <Button
+                    variant={recommendInputType === 'profit' ? 'default' : 'outline'}
+                    onClick={() => setRecommendInputType('profit')}
+                    className={`active:scale-95 transition-all duration-200 ${recommendInputType === 'profit' ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700' : 'hover:border-purple-300'}`}
+                  >
+                    📈 按利润推荐
+                  </Button>
+                </div>
+              </div>
+
+              {/* 预算输入 */}
+              {recommendInputType === 'budget' && (
+                <div className="space-y-2">
+                  <Label htmlFor="recommendBudget" className="text-sm font-medium text-gray-700">
+                    预算金额（元）
+                  </Label>
+                  <Input
+                    id="recommendBudget"
+                    type="number"
+                    placeholder="请输入您的预算"
+                    min="1000"
+                    step="100"
+                    value={recommendBudget}
+                    onChange={(e) => setRecommendBudget(e.target.value)}
+                    className="focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all duration-200 h-12"
+                  />
+                  <p className="text-sm text-gray-500">
+                    系统将根据您的预算推荐最合适的店铺等级和进货额度
+                  </p>
+                </div>
+              )}
+
+              {/* 期望利润输入 */}
+              {recommendInputType === 'profit' && (
+                <div className="space-y-2">
+                  <Label htmlFor="recommendProfit" className="text-sm font-medium text-gray-700">
+                    期望利润（元）
+                  </Label>
+                  <Input
+                    id="recommendProfit"
+                    type="number"
+                    placeholder="请输入期望的利润"
+                    min="100"
+                    step="100"
+                    value={recommendProfit}
+                    onChange={(e) => setRecommendProfit(e.target.value)}
+                    className="focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 h-12"
+                  />
+                  <p className="text-sm text-gray-500">
+                    系统将根据您的期望利润推荐最合适的店铺等级
+                  </p>
+                </div>
+              )}
+
+              <Button
+                className="w-full h-12 sm:h-14 text-base sm:text-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl"
+                onClick={handleRecommend}
+                disabled={(
+                  recommendInputType === 'budget' && (!recommendBudget || parseInt(recommendBudget) <= 0)
+                ) || (
+                  recommendInputType === 'profit' && (!recommendProfit || parseInt(recommendProfit) <= 0)
+                )}
+              >
+                生成推荐方案 (Enter)
+              </Button>
+
+              {/* 使用提示 */}
+              <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-l-4 border-purple-400 p-4 rounded-xl">
+                <h4 className="font-semibold text-purple-800 mb-2 text-sm">💡 使用提示</h4>
+                <ul className="text-xs sm:text-sm text-purple-700 space-y-1 list-disc list-inside">
+                  <li>按预算推荐：系统会根据您的预算，推荐最匹配的进货额度和店铺等级</li>
+                  <li>按利润推荐：系统会根据您的期望利润，推荐能够达到该利润的店铺等级</li>
+                  <li>推荐结果按匹配度从高到低排序，您可以选择任意方案直接开始模拟</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* 推荐结果界面 */}
+        {currentView === 'recommendationResult' && (
+          <Card className="max-w-4xl mx-auto w-full animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl border-0">
+            <CardHeader className="pb-4 pt-6 px-6">
+              <div className="flex items-center justify-between">
+                <Button variant="ghost" size="icon" onClick={() => setCurrentView('recommendation')} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full">
+                  ←
+                </Button>
+                <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  🎯 推荐方案
+                </CardTitle>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentView('recommendation')}
+                  className="active:scale-95 transition-all duration-200 hover:shadow-md hover:border-purple-300"
+                >
+                  重新推荐
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="px-6 pb-6">
+              {recommendResults.length === 0 ? (
+                <div className="text-center py-16 bg-gradient-to-br from-gray-50 to-purple-50 rounded-2xl">
+                  <div className="w-20 h-20 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                    <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <p className="text-lg sm:text-xl text-gray-600 mb-2">没有找到匹配的方案</p>
+                  <p className="text-sm text-gray-500">请尝试调整预算或期望利润</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {recommendResults.map((result, index) => {
+                    const config = shopLevelsConfig[result.level];
+                    const isTopRecommendation = index === 0;
+                    return (
+                      <div
+                        key={result.level}
+                        onClick={() => handleSelectRecommendation(result)}
+                        className={`group relative overflow-hidden rounded-2xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] cursor-pointer ${
+                          isTopRecommendation 
+                            ? 'bg-gradient-to-r from-purple-50 to-pink-50 border-purple-400 shadow-lg' 
+                            : 'bg-white border-gray-200 hover:border-purple-300'
+                        }`}
+                      >
+                        {/* 推荐标签 */}
+                        {isTopRecommendation && (
+                          <div className="absolute top-0 right-0 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+                            ⭐ 最佳匹配
+                          </div>
+                        )}
+
+                        {/* 主内容 */}
+                        <div className="p-5 sm:p-6">
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-3 mb-2">
+                                <h3
+                                  className="text-xl sm:text-2xl font-bold"
+                                  style={{
+                                    color: config.color === '#000000' ? '#1f2937' : config.color,
+                                  }}
+                                >
+                                  {result.levelName}
+                                </h3>
+                                <Badge
+                                  variant="secondary"
+                                  className={`${
+                                    isTopRecommendation 
+                                      ? 'bg-purple-600 text-white' 
+                                      : 'bg-purple-100 text-purple-700'
+                                  }`}
+                                >
+                                  匹配度: {result.matchScore.toFixed(0)}%
+                                </Badge>
+                              </div>
+                              <p className="text-sm text-gray-600">{result.matchReason}</p>
+                            </div>
+                            <div className="flex-shrink-0 ml-4">
+                              <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                                isTopRecommendation ? 'bg-gradient-to-br from-purple-500 to-pink-500' : 'bg-gray-100'
+                              }`}>
+                                <span className="text-2xl font-bold text-white">
+                                  #{index + 1}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* 数据卡片 */}
+                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <div className="bg-white/80 p-3 rounded-xl">
+                              <p className="text-xs text-gray-500 mb-1">推荐进货额度</p>
+                              <p className="text-lg font-bold text-gray-800">
+                                {result.recommendedStock}⚡
+                              </p>
+                            </div>
+                            <div className="bg-white/80 p-3 rounded-xl">
+                              <p className="text-xs text-gray-500 mb-1">进货成本</p>
+                              <p className="text-lg font-bold text-gray-800">
+                                {result.stockCost}元
+                              </p>
+                            </div>
+                            <div className="bg-white/80 p-3 rounded-xl">
+                              <p className="text-xs text-gray-500 mb-1">预期利润</p>
+                              <p className={`text-lg font-bold ${isTopRecommendation ? 'text-purple-600' : 'text-green-600'}`}>
+                                {result.estimatedProfit}元
+                              </p>
+                            </div>
+                            <div className="bg-white/80 p-3 rounded-xl">
+                              <p className="text-xs text-gray-500 mb-1">完成天数</p>
+                              <p className="text-lg font-bold text-gray-800">
+                                {result.completionDays}天
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* 点击提示 */}
+                          <div className="mt-4 flex items-center justify-center text-sm text-gray-500 group-hover:text-purple-600 transition-colors">
+                            <span>点击选择此方案</span>
+                            <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </CardContent>
+          </Card>
         )}
 
         {/* 进货额度输入界面 */}

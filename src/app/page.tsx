@@ -403,7 +403,7 @@ export default function CloudShopSimulator() {
       { stock: initialStock, startDay: 2, endDay: period + 1 }
     ];
 
-    // 回款队列：key是结算日期，value是回款金额
+    // 回款队列：key是结算日期，value是回款金额（包含本金+利润）
     const settlementQueue: Map<number, number> = new Map();
 
     // 累计利润
@@ -421,15 +421,17 @@ export default function CloudShopSimulator() {
         }
       }
 
-      // 根据总进货额度和店铺等级的佣金率计算当日回款和利润
-      // 关键：每天卖出的额度取决于历史最高余额（即总进货额度），而不是单个进货
+      // 根据总进货额度和店铺等级的佣金率计算当日回款
+      // 回款包含了本金和利润
       const dailyCommission = Math.round(totalDailyStock * commissionRate);
-      const dailyProfit = dailyCommission * profitRate;
+
+      // 计算当日的利润（回款 × 利润率）
+      const dailyProfit = Math.round(dailyCommission * profitRate);
 
       // 加上利润
       totalProfit += dailyProfit;
 
-      // 将回款加入结算队列
+      // 将回款（包含本金+利润）加入结算队列
       const settlementDay = day + settlementDays;
       const existing = settlementQueue.get(settlementDay) || 0;
       settlementQueue.set(settlementDay, existing + dailyCommission);
@@ -437,10 +439,10 @@ export default function CloudShopSimulator() {
       // 检查今天是否有回款可以结算
       const todaySettlement = settlementQueue.get(day) || 0;
       if (todaySettlement > 0) {
-        // 结算回款（打折）
+        // 结算回款（95折）：这个钱包含了本金和利润
         const settledAmount = Math.round(todaySettlement * settlementDiscount);
 
-        // 用结算回来的钱继续进货
+        // 用结算回来的钱（包含本金+利润）继续进货
         const newStock = Math.round(settledAmount / stockDiscount);
 
         // 如果新进货额度有意义（大于100）
@@ -1618,7 +1620,7 @@ export default function CloudShopSimulator() {
                 <span className="mr-2">💰</span> 结算规则
               </h4>
               <p className="text-gray-700 text-sm leading-relaxed">
-                进货第二天自动开始卖出，结算时间为卖出时间+10天。例如：12月20日卖出的电费，12月30日以95折结算回来本金和利润。
+                进货第二天自动开始卖出，结算时间为卖出时间+10天。每日回款 = 历史最高余额 × 店铺佣金率（包含本金+利润）。回款以95折结算回来，可以继续进货。
               </p>
             </div>
 

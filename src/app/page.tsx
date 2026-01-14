@@ -390,6 +390,7 @@ export default function CloudShopSimulator() {
                 variant="outline"
                 size="sm"
                 onClick={handleViewComparison}
+                className="active:scale-95 transition-transform duration-100"
               >
                 查看对比 ({comparisonData.length})
               </Button>
@@ -398,6 +399,7 @@ export default function CloudShopSimulator() {
               variant="outline"
               size="sm"
               onClick={handleGoHome}
+              className="active:scale-95 transition-transform duration-100"
             >
               首页
             </Button>
@@ -405,6 +407,7 @@ export default function CloudShopSimulator() {
               variant="ghost"
               size="icon"
               onClick={() => setIsHelpOpen(true)}
+              className="active:scale-90 transition-transform duration-100"
             >
               ?
             </Button>
@@ -417,7 +420,7 @@ export default function CloudShopSimulator() {
         {/* 店铺选择界面 */}
         {currentView === 'shopSelection' && (
           <div className="max-w-3xl mx-auto">
-            <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-0">
+            <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-0 animate-in fade-in-0 slide-in-from-bottom-4 duration-500">
               <CardHeader className="pb-2 pt-2">
                 <CardTitle className="text-xl text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   请选择你的店铺等级
@@ -430,7 +433,7 @@ export default function CloudShopSimulator() {
                     <div
                       key={level}
                       onClick={() => handleSelectLevel(level)}
-                      className="group relative overflow-hidden rounded-lg border-2 transition-all duration-200 hover:shadow-md hover:scale-[1.01] cursor-pointer"
+                      className="group relative overflow-hidden rounded-lg border-2 transition-all duration-200 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
                       style={{
                         borderColor: config.color,
                         backgroundColor: `${config.color}15`
@@ -517,10 +520,10 @@ export default function CloudShopSimulator() {
 
         {/* 进货额度输入界面 */}
         {currentView === 'stockInput' && levelConfig && (
-          <Card className="max-w-md mx-auto">
+          <Card className="max-w-md mx-auto animate-in fade-in-0 zoom-in-95 duration-300">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToShopSelection}>
+                <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-transform duration-100">
                   ←
                 </Button>
                 <CardTitle className="text-2xl">{levelConfig.name}</CardTitle>
@@ -541,7 +544,7 @@ export default function CloudShopSimulator() {
                   step="100"
                   value={stockInputValue}
                   onChange={(e) => handleStockInputChange(e.target.value)}
-                  className={stockError ? 'border-red-500' : ''}
+                  className={`${stockError ? 'border-red-500' : ''} focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200`}
                 />
                 <p className={`text-sm ${stockError ? 'text-red-500' : 'text-gray-500'}`}>
                   {stockError || `进货额度范围：${levelConfig.minStock} - ${levelConfig.maxStock}电费`}
@@ -560,13 +563,14 @@ export default function CloudShopSimulator() {
                   value={cloudBalanceInputValue}
                   onChange={(e) => handleCloudBalanceInputChange(e.target.value)}
                   disabled={isEditCloudBalance}
-                  className={cloudBalanceError ? 'border-red-500' : isEditCloudBalance ? 'bg-gray-100' : ''}
+                  className={`${cloudBalanceError ? 'border-red-500' : ''} ${isEditCloudBalance ? 'bg-gray-100' : ''} focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200`}
                 />
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="editCloudBalance"
                     checked={isEditCloudBalance}
                     onCheckedChange={handleToggleEditCloudBalance}
+                    className="active:scale-95 transition-transform duration-100"
                   />
                   <Label
                     htmlFor="editCloudBalance"
@@ -592,13 +596,14 @@ export default function CloudShopSimulator() {
                   value={maxBalanceInputValue}
                   onChange={(e) => handleMaxBalanceInputChange(e.target.value)}
                   disabled={isEditMaxBalance}
-                  className={maxBalanceError ? 'border-red-500' : isEditMaxBalance ? 'bg-gray-100' : ''}
+                  className={`${maxBalanceError ? 'border-red-500' : ''} ${isEditMaxBalance ? 'bg-gray-100' : ''} focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200`}
                 />
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="editMaxBalance"
                     checked={isEditMaxBalance}
                     onCheckedChange={handleToggleEditMaxBalance}
+                    className="active:scale-95 transition-transform duration-100"
                   />
                   <Label
                     htmlFor="editMaxBalance"
@@ -613,11 +618,11 @@ export default function CloudShopSimulator() {
               </div>
 
               <Button
-                className="w-full h-14 text-lg"
+                className="w-full h-14 text-lg active:scale-95 transition-transform duration-100"
                 onClick={handleConfirmStock}
                 disabled={
-                  (!stockAmount && !cloudBalance) || 
-                  (stockAmount > 0 && !!stockError) || 
+                  (!stockAmount && !cloudBalance) ||
+                  (stockAmount > 0 && !!stockError) ||
                   (cloudBalance > 0 && !!cloudBalanceError) ||
                   (maxBalance > 0 && !!maxBalanceError)
                 }
@@ -630,10 +635,10 @@ export default function CloudShopSimulator() {
 
         {/* 店铺详情界面 */}
         {currentView === 'levelDetails' && levelConfig && detailsData && (
-          <Card className="max-w-2xl mx-auto">
+          <Card className="max-w-2xl mx-auto animate-in fade-in-0 zoom-in-95 duration-300">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToStockInput}>
+                <Button variant="ghost" size="icon" onClick={handleBackToStockInput} className="active:scale-90 transition-transform duration-100">
                   ←
                 </Button>
                 <CardTitle className="text-2xl">{levelConfig.name}详情</CardTitle>
@@ -679,21 +684,21 @@ export default function CloudShopSimulator() {
 
               <div className="flex gap-3">
                 <Button
-                  className="flex-1 h-12"
+                  className="flex-1 h-12 active:scale-95 transition-transform duration-100"
                   onClick={handleAddToComparison}
                   disabled={currentComparisonId !== null}
                 >
                   {currentComparisonId ? '✓ 已加入对比' : '加入对比'}
                 </Button>
                 <Button
-                  className="flex-1 h-12"
+                  className="flex-1 h-12 active:scale-95 transition-transform duration-100"
                   onClick={handleViewSalesDetails}
                 >
                   查看销售详情
                 </Button>
               </div>
 
-              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded hover:bg-blue-100 transition-colors duration-200">
                 <p className="text-sm text-blue-700">
                   进货第二天自动开始卖出，结算时间为卖出时间+10天。例如：12月20日卖出的电费，12月30日以95折结算回来本金和利润。
                 </p>
@@ -704,10 +709,10 @@ export default function CloudShopSimulator() {
 
         {/* 销售详情界面 */}
         {currentView === 'salesDetails' && (
-          <Card className="max-w-2xl mx-auto">
+          <Card className="max-w-2xl mx-auto animate-in fade-in-0 slide-in-from-right-8 duration-300">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails}>
+                <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails} className="active:scale-90 transition-transform duration-100">
                   ←
                 </Button>
                 <CardTitle className="text-2xl">销售详情</CardTitle>
@@ -773,10 +778,10 @@ export default function CloudShopSimulator() {
 
         {/* 数据对比界面 */}
         {currentView === 'comparison' && (
-          <Card className="max-w-4xl mx-auto">
+          <Card className="max-w-4xl mx-auto animate-in fade-in-0 slide-in-from-top-4 duration-300">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails}>
+                <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails} className="active:scale-90 transition-transform duration-100">
                   ←
                 </Button>
                 <CardTitle className="text-2xl">数据对比详情</CardTitle>
@@ -785,6 +790,7 @@ export default function CloudShopSimulator() {
                   size="sm"
                   onClick={handleClearComparison}
                   disabled={comparisonData.length === 0}
+                  className="active:scale-95 transition-transform duration-100"
                 >
                   清空对比
                 </Button>
@@ -838,6 +844,7 @@ export default function CloudShopSimulator() {
                                   variant="destructive"
                                   size="sm"
                                   onClick={() => handleDeleteComparison(item.id)}
+                                  className="active:scale-90 transition-transform duration-100"
                                 >
                                   删除
                                 </Button>
@@ -877,13 +884,13 @@ export default function CloudShopSimulator() {
                     <div className="mt-6 p-6 bg-gray-50 rounded-lg">
                       <h4 className="font-semibold text-gray-700 mb-4 text-lg">利润分析</h4>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                        <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md hover:scale-105 transition-all duration-200">
                           <p className="text-sm text-gray-600 mb-2">最低利润</p>
                           <p className="text-2xl font-bold text-gray-800">
                             {profitAnalysis.minProfit}元
                           </p>
                         </div>
-                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                        <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md hover:scale-105 transition-all duration-200">
                           <p className="text-sm text-gray-600 mb-2">最高利润</p>
                           <p className="text-2xl font-bold text-green-600">
                             {profitAnalysis.maxProfit}元
@@ -895,7 +902,7 @@ export default function CloudShopSimulator() {
                             {profitAnalysis.profitDiff}元
                           </p>
                         </div>
-                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                        <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md hover:scale-105 transition-all duration-200">
                           <p className="text-sm text-gray-600 mb-2">利润差额率</p>
                           <p className="text-2xl font-bold text-gray-800">
                             {profitAnalysis.profitDiffRate}

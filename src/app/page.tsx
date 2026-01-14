@@ -416,32 +416,115 @@ export default function CloudShopSimulator() {
       <main className="container mx-auto px-4 py-6">
         {/* 店铺选择界面 */}
         {currentView === 'shopSelection' && (
-          <Card className="max-w-md mx-auto">
-            <CardHeader>
-              <CardTitle className="text-xl text-center">请选择你的店铺等级</CardTitle>
-            </CardHeader>
-            <CardContent className="grid grid-cols-1 gap-3">
-              {(Object.keys(shopLevelsConfig) as ShopLevel[]).map((level) => {
-                const config = shopLevelsConfig[level];
-                return (
-                  <Button
-                    key={level}
-                    variant="outline"
-                    className="flex items-center justify-between min-h-[70px] hover:opacity-80 transition-opacity"
-                    style={{
-                      borderColor: config.color,
-                      backgroundColor: `${config.color}20`,
-                      color: config.color === '#000000' ? '#000' : config.color
-                    }}
-                    onClick={() => handleSelectLevel(level)}
-                  >
-                    <span className="text-lg font-semibold">{config.name}</span>
-                    <span className="text-gray-400">→</span>
-                  </Button>
-                );
-              })}
-            </CardContent>
-          </Card>
+          <div className="max-w-2xl mx-auto">
+            <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-0">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-2xl text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  请选择你的店铺等级
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {(Object.keys(shopLevelsConfig) as ShopLevel[]).map((level) => {
+                  const config = shopLevelsConfig[level];
+                  return (
+                    <div
+                      key={level}
+                      onClick={() => handleSelectLevel(level)}
+                      className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer"
+                      style={{
+                        borderColor: config.color,
+                        backgroundColor: config.color === '#000000' ? '#1a1a1a' : `${config.color}15`
+                      }}
+                    >
+                      {/* 渐变背景条 */}
+                      <div
+                        className="absolute left-0 top-0 bottom-0 w-2"
+                        style={{ backgroundColor: config.color }}
+                      />
+
+                      {/* 主内容 */}
+                      <div className="flex items-center justify-between p-5 pl-7">
+                        <div className="flex-1">
+                          {/* 店铺名称 */}
+                          <div className="flex items-center mb-3">
+                            <h3
+                              className="text-xl font-bold"
+                              style={{
+                                color: config.color === '#000000' ? '#ffffff' : config.color,
+                                textShadow: config.color === '#000000' ? '0 0 20px rgba(255,255,255,0.5)' : '0 0 20px rgba(0,0,0,0.1)'
+                              }}
+                            >
+                              {config.name}
+                            </h3>
+                            {maxProfitId && comparisonData.find(d => d.level === level)?.totalProfit === Math.max(...comparisonData.map(d => d.totalProfit)) && (
+                              <Badge className="ml-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0">
+                                热门推荐
+                              </Badge>
+                            )}
+                          </div>
+
+                          {/* 提示信息 */}
+                          <div className="space-y-1.5">
+                            <div className="flex items-center text-sm" style={{ color: config.color === '#000000' ? '#9ca3af' : '#6b7280' }}>
+                              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#9ca3af' : config.color }}>
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                              </svg>
+                              <span>进货额度:</span>
+                              <span className="ml-2 font-bold" style={{ color: config.color === '#000000' ? '#fbbf24' : '#059669' }}>
+                                {config.minStock} - {config.maxStock}⚡
+                              </span>
+                            </div>
+                            <div className="flex items-center text-sm" style={{ color: config.color === '#000000' ? '#9ca3af' : '#6b7280' }}>
+                              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#9ca3af' : config.color }}>
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              <span>进货折扣:</span>
+                              <span className="ml-2 font-bold" style={{ color: config.color === '#000000' ? '#fbbf24' : '#2563eb' }}>
+                                {(config.stockDiscount * 10).toFixed(1)}折
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* 箭头图标 */}
+                        <div
+                          className="flex items-center justify-center w-12 h-12 rounded-full transition-transform duration-300 group-hover:scale-110"
+                          style={{
+                            backgroundColor: config.color === '#000000' ? 'rgba(255,255,255,0.2)' : `${config.color}25`
+                          }}
+                        >
+                          <svg
+                            className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            style={{ color: config.color === '#000000' ? '#ffffff' : config.color }}
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          </svg>
+                        </div>
+                      </div>
+
+                      {/* 底部装饰条 */}
+                      <div
+                        className="absolute bottom-0 left-0 right-0 h-1"
+                        style={{
+                          background: `linear-gradient(to right, transparent, ${config.color}, transparent)`
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+              </CardContent>
+            </Card>
+
+            {/* 底部提示 */}
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-500">
+                💡 点击店铺等级查看详细信息和开始模拟
+              </p>
+            </div>
+          </div>
         )}
 
         {/* 进货额度输入界面 */}

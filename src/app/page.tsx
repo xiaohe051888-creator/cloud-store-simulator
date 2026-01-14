@@ -378,6 +378,7 @@ export default function CloudShopSimulator() {
   }, [comparisonData]);
 
   // 复利计算函数：根据卖出比例和结算周期计算周期内利润
+  // 正确处理结算等待期：库存卖完且无回款时，店铺空转，无利润
   const calculateCompoundProfit = useCallback((
     initialStock: number,
     config: typeof shopLevelsConfig[ShopLevel],
@@ -403,15 +404,16 @@ export default function CloudShopSimulator() {
 
     // 遍历每一天（从第2天开始卖出）
     for (let day = 2; day <= period + 1; day++) {
-      // 检查今天是否有回款可以结算
+      // 步骤1：检查今天是否有回款可以结算
       const todaySettlement = settlementQueue.get(day) || 0;
       if (todaySettlement > 0) {
-        // 用回款进货，增加库存
+        // 用回款进货，增加库存（回款到账后才能继续销售）
         const newStock = Math.round(todaySettlement / stockDiscount);
         remainingStock += newStock;
       }
 
-      // 如果还有库存，当天可以卖出
+      // 步骤2：如果还有库存，当天可以卖出
+      // 如果库存卖完且回款还没到账，店铺空转，当天无利润
       if (remainingStock > 0) {
         // 当天最大可卖出额度
         const maxDailySell = initialStock * sellRatio;
@@ -429,24 +431,28 @@ export default function CloudShopSimulator() {
           // 进货成本 = 卖出额度 × 进货折扣
           const stockCost = sellAmount * stockDiscount;
 
-          // 单日利润 = 回款 - 进货成本
+          // 单日利润 = 回款 - 进货成本（卖出当天就确认利润）
           const dailyProfit = settlementAmount - stockCost;
 
           // 累计利润
           totalProfit += dailyProfit;
 
           // 将回款加入结算队列（卖出日+10天结算）
+          // 虽然利润当天确认，但回款要10天后才能到账用于进货
           const settlementDay = day + settlementDays;
           const existing = settlementQueue.get(settlementDay) || 0;
           settlementQueue.set(settlementDay, existing + settlementAmount);
         }
       }
+      // else: remainingStock === 0 且今天没有回款到账
+      // 店铺空转，当天无利润，等待回款到账
     }
 
     return Math.round(totalProfit);
   }, []);
 
   // 复利计算函数（带预算）：考虑额度限制、额度释放和回款复利
+  // 正确处理结算等待期：库存卖完且无回款时，店铺空转，无利润
   const calculateCompoundProfitWithBudget = useCallback((
     budget: number,
     config: typeof shopLevelsConfig[ShopLevel],
@@ -495,6 +501,7 @@ export default function CloudShopSimulator() {
       const todaySettlement = settlementQueue.get(day) || 0;
       
       // 用回款进货（不受店铺最高进货额度限制）
+      // 回款到账后才能继续销售，否则店铺空转
       if (todaySettlement > 0) {
         const newStockFromSettlement = Math.round(todaySettlement / stockDiscount);
         if (newStockFromSettlement >= 100) {
@@ -526,6 +533,7 @@ export default function CloudShopSimulator() {
       }
 
       // 步骤3：如果还有库存，当天可以卖出
+      // 如果库存卖完且今天没有回款到账，店铺空转，当天无利润
       if (currentStock > 0) {
         // 当天最大可卖出额度
         const maxDailySell = initialStock * sellRatio;
@@ -543,18 +551,21 @@ export default function CloudShopSimulator() {
           // 进货成本 = 卖出额度 × 进货折扣
           const stockCost = sellAmount * stockDiscount;
 
-          // 单日利润 = 回款 - 进货成本
+          // 单日利润 = 回款 - 进货成本（卖出当天就确认利润）
           const dailyProfit = settlementAmount - stockCost;
 
           // 累计利润
           totalProfit += dailyProfit;
 
           // 将回款加入结算队列（卖出日+10天结算）
+          // 虽然利润当天确认，但回款要10天后才能到账用于进货
           const settlementDay = day + settlementDays;
           const existing = settlementQueue.get(settlementDay) || 0;
           settlementQueue.set(settlementDay, existing + settlementAmount);
         }
       }
+      // else: currentStock === 0 且今天没有回款到账
+      // 店铺空转，当天无利润，等待回款到账
     }
 
     return {
@@ -1772,10 +1783,15 @@ export default function CloudShopSimulator() {
               <h4 className="font-bold text-gray-800 mb-2 flex items-center">
                 <span className="mr-2">🔄</span> 复利机制
               </h4>
-              <p className="text-gray-700 text-sm leading-relaxed">
+              <p className="text-gray-700 text-sm leading-relaxed mb-2">
                 库存有限，每天按卖出比例出货。如黑钻店铺（进货3600，卖出15%），
                 每天540，7天卖完。卖出后10天95折回款，回款立即进货增加库存。
                 回款进货不受店铺最高进货额度限制，实现真正的复利增长。
+              </p>
+              <p className="text-gray-700 text-sm leading-relaxed">
+                <strong className="text-amber-700">结算等待期：</strong>当库存卖完且回款尚未到账时，店铺会进入"空转"状态。
+                空转期间没有商品可卖，因此没有新的利润产生。需要等待回款到账后才能继续进货销售。
+                例如：黑钻店铺第2-8天卖完库存，第12-18天回款到账。第9-11天店铺空转，无利润。
               </p>
             </div>
 

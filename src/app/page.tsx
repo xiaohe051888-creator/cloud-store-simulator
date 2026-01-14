@@ -457,14 +457,14 @@ export default function CloudShopSimulator() {
                         </div>
 
                         {/* 中间：提示信息 */}
-                        <div className="flex-1 flex space-x-3">
+                        <div className="flex space-x-3">
                           <div className="flex items-center text-xs" style={{ color: '#6b7280' }}>
                             <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                             </svg>
                             <span className="mr-1">额度:</span>
                             <span className="font-bold text-sm" style={{ color: '#059669' }}>
-                              {config.maxStock}⚡
+                              {config.minStock}-{config.maxStock}⚡
                             </span>
                           </div>
                           <div className="flex items-center text-xs" style={{ color: '#6b7280' }}>

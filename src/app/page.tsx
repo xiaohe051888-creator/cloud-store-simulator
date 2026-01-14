@@ -1340,7 +1340,7 @@ export default function CloudShopSimulator() {
                             <h4 className="font-bold text-gray-800 text-lg sm:text-xl mb-3">🎯 推荐方案</h4>
                             <p className="text-gray-700 leading-relaxed">
                               推荐您升级到<span className="font-bold text-emerald-700 mx-1 bg-white px-3 py-1 rounded-lg shadow-sm border border-emerald-100">{maxItem.levelName}</span>，
-                              同样的进货额度利润提升<span className="font-bold text-emerald-700 mx-1 bg-white px-3 py-1 rounded-lg shadow-sm border border-emerald-100">{profitAnalysis.profitDiffText}</span>
+                              利润提升<span className="font-bold text-emerald-700 mx-1 bg-white px-3 py-1 rounded-lg shadow-sm border border-emerald-100">{profitAnalysis.profitDiffText}</span>
                             </p>
                           </div>
                         </div>

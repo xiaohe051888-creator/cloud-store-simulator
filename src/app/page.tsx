@@ -446,6 +446,106 @@ export default function CloudShopSimulator() {
     return Math.round(totalProfit);
   }, []);
 
+  // 复利计算函数（带预算）：考虑初始进货后的剩余预算
+  const calculateCompoundProfitWithBudget = useCallback((
+    budget: number,
+    config: typeof shopLevelsConfig[ShopLevel],
+    period: number
+  ): { stock: number; profit: number } => {
+    // 结算周期天数（卖出后10天回款）
+    const settlementDays = config.settlementDays;
+    // 销售折扣（95折）
+    const saleDiscount = config.saleDiscount;
+    // 进货折扣
+    const stockDiscount = config.stockDiscount;
+    // 卖出比例
+    const sellRatio = config.sellRatio;
+
+    // 步骤1：计算初始进货额度（取100倍数）
+    let initialStock = Math.round(budget / stockDiscount / 100) * 100;
+    // 确保在店铺范围内
+    initialStock = Math.max(config.minStock, Math.min(config.maxStock, initialStock));
+
+    // 计算初始进货成本
+    let stockCost = Math.round(initialStock * stockDiscount);
+    
+    // 如果成本超过预算，减少进货额度
+    while (stockCost > budget && initialStock > config.minStock) {
+      initialStock -= 100;
+      stockCost = Math.round(initialStock * stockDiscount);
+    }
+
+    // 剩余预算
+    let remainingBudget = budget - stockCost;
+
+    // 当前剩余库存（可卖出额度）
+    let remainingStock = initialStock;
+
+    // 累计利润
+    let totalProfit = 0;
+
+    // 回款队列：key是结算日期，value是回款金额
+    const settlementQueue: Map<number, number> = new Map();
+
+    // 遍历每一天（从第2天开始卖出）
+    for (let day = 2; day <= period + 1; day++) {
+      // 检查今天是否有回款可以结算
+      const todaySettlement = settlementQueue.get(day) || 0;
+      if (todaySettlement > 0) {
+        // 用回款 + 剩余预算进货
+        const availableFunds = todaySettlement + remainingBudget;
+        if (availableFunds > 0) {
+          const newStock = Math.round(availableFunds / stockDiscount);
+          if (newStock >= 100) {
+            // 计算新进货的成本
+            const newStockCost = newStock * stockDiscount;
+            // 如果新进货成本不超过可用资金
+            if (newStockCost <= availableFunds) {
+              remainingBudget -= newStockCost;
+              remainingStock += newStock;
+            }
+          }
+        }
+      }
+
+      // 如果还有库存，当天可以卖出
+      if (remainingStock > 0) {
+        // 当天最大可卖出额度
+        const maxDailySell = initialStock * sellRatio;
+
+        // 实际卖出额度 = min(剩余库存, 每日卖出额度)
+        const sellAmount = Math.min(remainingStock, maxDailySell);
+
+        if (sellAmount > 0) {
+          // 减少库存
+          remainingStock -= sellAmount;
+
+          // 回款 = 卖出额度 × 销售折扣（95折）
+          const settlementAmount = sellAmount * saleDiscount;
+
+          // 进货成本 = 卖出额度 × 进货折扣
+          const stockCost = sellAmount * stockDiscount;
+
+          // 单日利润 = 回款 - 进货成本
+          const dailyProfit = settlementAmount - stockCost;
+
+          // 累计利润
+          totalProfit += dailyProfit;
+
+          // 将回款加入结算队列（卖出日+10天结算）
+          const settlementDay = day + settlementDays;
+          const existing = settlementQueue.get(settlementDay) || 0;
+          settlementQueue.set(settlementDay, existing + settlementAmount);
+        }
+      }
+    }
+
+    return {
+      stock: initialStock,
+      profit: Math.round(totalProfit)
+    };
+  }, []);
+
   // 推荐算法：根据预算或期望利润计算推荐方案
   const generateRecommendations = useCallback((): RecommendationResult[] => {
     let results: RecommendationResult[] = [];
@@ -486,31 +586,12 @@ export default function CloudShopSimulator() {
         let completionDays: number;
 
         if (period > 0 && period <= 30) {
-          // 考虑周期的推荐 - 利润最大化算法
-          // 在预算限制内找到使复利利润最大的进货额度
-
-          // 计算预算支持的最大进货额度（取100倍数）
-          const maxStockByBudget = Math.floor(targetBudget / config.stockDiscount / 100) * 100;
-          const cappedMaxStock = Math.min(config.maxStock, maxStockByBudget);
-
-          // 从最低到最大进货额度，寻找利润最大值
-          let maxProfit = -1;
-          let bestStock = config.minStock;
-
-          for (let stock = config.minStock; stock <= cappedMaxStock; stock += 100) {
-            const actualCost = stock * config.stockDiscount;
-            if (actualCost > targetBudget) break;
-
-            const compoundProfit = calculateCompoundProfit(stock, config, period);
-            if (compoundProfit > maxProfit) {
-              maxProfit = compoundProfit;
-              bestStock = stock;
-            }
-          }
-
-          recommendedStock = bestStock;
+          // 考虑周期的推荐 - 使用带预算的复利计算
+          // 新算法：考虑初始进货后剩余预算的利用
+          const result = calculateCompoundProfitWithBudget(targetBudget, config, period);
+          recommendedStock = result.stock;
+          estimatedProfit = result.profit;
           stockCost = Math.round(recommendedStock * config.stockDiscount);
-          estimatedProfit = maxProfit;
 
           // 完成天数
           dailyCommission = Math.round(recommendedStock * config.commissionRate);
@@ -706,7 +787,7 @@ export default function CloudShopSimulator() {
 
     // 按匹配度（利润）排序
     return results.sort((a, b) => b.matchScore - a.matchScore);
-  }, [recommendInputType, recommendBudget, recommendProfit, recommendPeriod]);
+  }, [recommendInputType, recommendBudget, recommendProfit, recommendPeriod, calculateCompoundProfit, calculateCompoundProfitWithBudget]);
 
   // 处理推荐查询
   const handleRecommend = useCallback(() => {
@@ -1659,6 +1740,17 @@ export default function CloudShopSimulator() {
               </p>
             </div>
             
+            <div className="p-4 bg-gradient-to-r from-emerald-50 to-green-50 rounded-xl">
+              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
+                <span className="mr-2">💵</span> 预算充分利用
+              </h4>
+              <p className="text-gray-700 text-sm leading-relaxed">
+                按预算推荐时，系统会充分利用预算。初始进货后剩余预算会在第一天卖出后与回款一起立即进货，
+                实现预算最大化利用。例如：预算3600元，青铜店铺88折，进货3000额度（2640元），
+                第一天卖出600元后，回款570元+剩余预算960元=1530元，可立即进货1700额度（1496元）。
+              </p>
+            </div>
+
             <div className="p-4 bg-gradient-to-r from-rose-50 to-red-50 rounded-xl">
               <h4 className="font-bold text-gray-800 mb-2 flex items-center">
                 <span className="mr-2">🧮</span> 利润计算

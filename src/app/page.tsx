@@ -486,68 +486,73 @@ export default function CloudShopSimulator() {
         let completionDays: number;
 
         if (period > 0 && period <= 30) {
-          // 考虑周期的推荐 - 使用复利计算
-          // 确保进货成本不超过预算
-          stockCost = targetBudget;
+          // 考虑周期的推荐 - 利润最大化算法
+          // 在预算限制内找到使复利利润最大的进货额度
 
-          // 计算进货额度（预算 / 进货折扣）
-          recommendedStock = Math.round(stockCost / config.stockDiscount);
-          recommendedStock = Math.round(recommendedStock / 100) * 100; // 取100的倍数
+          // 计算预算支持的最大进货额度（取100倍数）
+          const maxStockByBudget = Math.floor(targetBudget / config.stockDiscount / 100) * 100;
+          const cappedMaxStock = Math.min(config.maxStock, maxStockByBudget);
 
-          // 确保在店铺范围内
-          recommendedStock = Math.max(config.minStock, Math.min(config.maxStock, recommendedStock));
+          // 从最低到最大进货额度，寻找利润最大值
+          let maxProfit = -1;
+          let bestStock = config.minStock;
 
-          // 重新计算实际进货成本
-          let actualStockCost = Math.round(recommendedStock * config.stockDiscount);
+          for (let stock = config.minStock; stock <= cappedMaxStock; stock += 100) {
+            const actualCost = stock * config.stockDiscount;
+            if (actualCost > targetBudget) break;
 
-          // 如果进货成本超过预算，减少进货额度
-          while (actualStockCost > targetBudget && recommendedStock > config.minStock) {
-            recommendedStock -= 100;
-            actualStockCost = Math.round(recommendedStock * config.stockDiscount);
+            const compoundProfit = calculateCompoundProfit(stock, config, period);
+            if (compoundProfit > maxProfit) {
+              maxProfit = compoundProfit;
+              bestStock = stock;
+            }
           }
 
-          stockCost = actualStockCost;
-
-          // 使用复利计算周期内的总利润（考虑回款后继续进货）
-          estimatedProfit = calculateCompoundProfit(recommendedStock, config, period);
+          recommendedStock = bestStock;
+          stockCost = Math.round(recommendedStock * config.stockDiscount);
+          estimatedProfit = maxProfit;
 
           // 完成天数
           dailyCommission = Math.round(recommendedStock * config.commissionRate);
           completionDays = Math.ceil(recommendedStock / dailyCommission);
 
-          // 计算匹配度：考虑预算匹配程度和利润率
-          const budgetMatch = 1 - Math.abs(actualStockCost - targetBudget) / Math.max(targetBudget, 1);
+          // 计算匹配度：考虑利润最大化
           const profitRate = (config.saleDiscount - config.stockDiscount) / config.stockDiscount;
-          matchScore = (budgetMatch * 0.7 + profitRate * 0.3) * 100;
-          matchReason = `周期${period}天复利利润: ${estimatedProfit}元`;
+          matchScore = (profitRate * 0.6 + (stockCost / targetBudget) * 0.4) * 100;
+          matchReason = `周期${period}天复利利润: ${estimatedProfit}元（进货成本${stockCost}元）`;
         } else {
-          // 不考虑周期的推荐（原来的逻辑）
-          // 根据预算计算进货额度
-          recommendedStock = Math.round(targetBudget / config.stockDiscount);
-          recommendedStock = Math.round(recommendedStock / 100) * 100; // 取100的倍数
+          // 不考虑周期的推荐 - 利润最大化算法
+          // 在预算限制内找到使单次利润最大的进货额度
 
-          // 确保在范围内
-          recommendedStock = Math.max(config.minStock, Math.min(config.maxStock, recommendedStock));
+          // 计算预算支持的最大进货额度（取100倍数）
+          const maxStockByBudget = Math.floor(targetBudget / config.stockDiscount / 100) * 100;
+          const cappedMaxStock = Math.min(config.maxStock, maxStockByBudget);
 
-          // 计算进货成本
-          let actualStockCost = Math.round(recommendedStock * config.stockDiscount);
+          // 从最低到最大进货额度，寻找利润最大值
+          let maxProfit = -1;
+          let bestStock = config.minStock;
 
-          // 如果进货成本超过预算，减少进货额度
-          while (actualStockCost > targetBudget && recommendedStock > config.minStock) {
-            recommendedStock -= 100;
-            actualStockCost = Math.round(recommendedStock * config.stockDiscount);
+          for (let stock = config.minStock; stock <= cappedMaxStock; stock += 100) {
+            const actualCost = stock * config.stockDiscount;
+            if (actualCost > targetBudget) break;
+
+            const profit = stock * (config.saleDiscount - config.stockDiscount);
+            if (profit > maxProfit) {
+              maxProfit = profit;
+              bestStock = stock;
+            }
           }
 
-          stockCost = actualStockCost;
-          estimatedProfit = Math.round(recommendedStock * (config.saleDiscount - config.stockDiscount));
+          recommendedStock = bestStock;
+          stockCost = Math.round(recommendedStock * config.stockDiscount);
+          estimatedProfit = Math.round(maxProfit);
           dailyCommission = Math.round(recommendedStock * config.commissionRate);
           completionDays = Math.ceil(recommendedStock / dailyCommission);
 
-          // 计算匹配度：考虑预算匹配程度和利润率
-          const budgetMatch = 1 - Math.abs(stockCost - targetBudget) / Math.max(targetBudget, 1);
+          // 计算匹配度：考虑利润最大化
           const profitRate = (config.saleDiscount - config.stockDiscount) / config.stockDiscount;
-          matchScore = (budgetMatch * 0.7 + profitRate * 0.3) * 100;
-          matchReason = `预算匹配: ${stockCost}元（目标: ${targetBudget}元）`;
+          matchScore = (profitRate * 0.6 + (stockCost / targetBudget) * 0.4) * 100;
+          matchReason = `单次利润${estimatedProfit}元（进货成本${stockCost}元）`;
         }
 
         results.push({

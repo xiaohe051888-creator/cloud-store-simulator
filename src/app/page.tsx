@@ -413,17 +413,17 @@ export default function CloudShopSimulator() {
       </header>
 
       {/* 主要内容区域 */}
-      <main className="container mx-auto px-4 py-2">
+      <main className="container mx-auto px-4 py-4">
         {/* 店铺选择界面 */}
         {currentView === 'shopSelection' && (
           <div className="max-w-3xl mx-auto">
             <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-0">
-              <CardHeader className="pb-2 pt-3">
-                <CardTitle className="text-xl text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-2xl text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   请选择你的店铺等级
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-1.5">
+              <CardContent className="space-y-2">
                 {(Object.keys(shopLevelsConfig) as ShopLevel[]).map((level) => {
                   const config = shopLevelsConfig[level];
                   return (
@@ -443,11 +443,11 @@ export default function CloudShopSimulator() {
                       />
 
                       {/* 主内容 */}
-                      <div className="flex items-center justify-between p-2 pl-4">
+                      <div className="flex items-center justify-between p-3 pl-5">
                         {/* 左侧：店铺名称 */}
                         <div className="flex-1">
                           <h3
-                            className="text-base font-bold"
+                            className="text-lg font-bold"
                             style={{
                               color: config.color === '#000000' ? '#1f2937' : config.color,
                             }}
@@ -457,21 +457,21 @@ export default function CloudShopSimulator() {
                         </div>
 
                         {/* 中间：提示信息 */}
-                        <div className="flex space-x-2.5">
+                        <div className="flex space-x-3">
                           <div className="flex items-center text-xs" style={{ color: '#6b7280' }}>
-                            <svg className="w-3 h-3 mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
+                            <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                             </svg>
-                            <span className="mr-0.5">额度:</span>
+                            <span className="mr-1">额度:</span>
                             <span className="font-bold text-sm" style={{ color: '#059669' }}>
                               {config.minStock}-{config.maxStock}⚡
                             </span>
                           </div>
                           <div className="flex items-center text-xs" style={{ color: '#6b7280' }}>
-                            <svg className="w-3 h-3 mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
+                            <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12 a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span className="mr-0.5">折扣:</span>
+                            <span className="mr-1">折扣:</span>
                             <span className="font-bold text-sm" style={{ color: '#2563eb' }}>
                               {(config.stockDiscount * 10).toFixed(1)}折
                             </span>
@@ -480,13 +480,13 @@ export default function CloudShopSimulator() {
 
                         {/* 右侧：箭头图标 */}
                         <div
-                          className="flex items-center justify-center w-9 h-9 rounded-full transition-transform duration-200 group-hover:scale-105"
+                          className="flex items-center justify-center w-10 h-10 rounded-full transition-transform duration-200 group-hover:scale-105"
                           style={{
                             backgroundColor: `${config.color}25`
                           }}
                         >
                           <svg
-                            className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                            className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-0.5"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -511,7 +511,7 @@ export default function CloudShopSimulator() {
             </Card>
 
             {/* 底部提示 */}
-            <div className="mt-2 text-center">
+            <div className="mt-4 text-center">
               <p className="text-xs text-gray-400">
                 💡 点击店铺等级查看详细信息和开始模拟
               </p>

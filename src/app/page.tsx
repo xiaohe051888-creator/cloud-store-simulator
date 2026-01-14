@@ -379,27 +379,39 @@ export default function CloudShopSimulator() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100" onKeyDown={handleKeyDown}>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50" onKeyDown={handleKeyDown}>
       {/* 顶部导航栏 */}
-      <header className="bg-white shadow-md">
-        <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800">云店模拟器</h1>
-          <div className="flex items-center space-x-4">
+      <header className="bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100 sticky top-0 z-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex justify-between items-center">
+          <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            云店模拟器
+          </h1>
+          <div className="flex items-center space-x-2 sm:space-x-4">
             {comparisonData.length > 0 && (
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handleViewComparison}
-                className="active:scale-95 transition-transform duration-100"
+                className="hidden sm:flex active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300"
               >
                 查看对比 ({comparisonData.length})
+              </Button>
+            )}
+            {comparisonData.length > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleViewComparison}
+                className="sm:hidden active:scale-95 transition-all duration-200 hover:shadow-md"
+              >
+                对比({comparisonData.length})
               </Button>
             )}
             <Button
               variant="outline"
               size="sm"
               onClick={handleGoHome}
-              className="active:scale-95 transition-transform duration-100"
+              className="active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300"
             >
               首页
             </Button>
@@ -407,7 +419,7 @@ export default function CloudShopSimulator() {
               variant="ghost"
               size="icon"
               onClick={() => setIsHelpOpen(true)}
-              className="active:scale-90 transition-transform duration-100"
+              className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full"
             >
               ?
             </Button>
@@ -416,41 +428,41 @@ export default function CloudShopSimulator() {
       </header>
 
       {/* 主要内容区域 */}
-      <main className="container mx-auto px-4 pt-2 pb-4">
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
         {/* 店铺选择界面 */}
         {currentView === 'shopSelection' && (
-          <div className="max-w-3xl mx-auto">
-            <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-0 animate-in fade-in-0 slide-in-from-bottom-4 duration-500">
-              <CardHeader className="pb-2 pt-2">
-                <CardTitle className="text-xl text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <div className="max-w-4xl mx-auto w-full">
+            <Card className="bg-white/90 backdrop-blur-lg shadow-xl border-0 animate-in fade-in-0 slide-in-from-bottom-4 duration-500">
+              <CardHeader className="pb-4 pt-6 px-6">
+                <CardTitle className="text-xl sm:text-2xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
                   请选择你的店铺等级
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="space-y-3 px-4 sm:px-6 pb-6">
                 {(Object.keys(shopLevelsConfig) as ShopLevel[]).map((level) => {
                   const config = shopLevelsConfig[level];
                   return (
                     <div
                       key={level}
                       onClick={() => handleSelectLevel(level)}
-                      className="group relative overflow-hidden rounded-lg border-2 transition-all duration-200 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                      className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] cursor-pointer bg-white"
                       style={{
                         borderColor: config.color,
-                        backgroundColor: `${config.color}15`
+                        backgroundColor: `${config.color}10`
                       }}
                     >
                       {/* 渐变背景条 */}
                       <div
-                        className="absolute left-0 top-0 bottom-0 w-1.5"
+                        className="absolute left-0 top-0 bottom-0 w-2 rounded-l-xl"
                         style={{ backgroundColor: config.color }}
                       />
 
                       {/* 主内容 */}
-                      <div className="flex items-center p-3 pl-5">
+                      <div className="flex items-center p-4 sm:p-5 pl-6 sm:pl-8">
                         {/* 左侧：店铺名称 */}
-                        <div className="w-32 flex-shrink-0">
+                        <div className="w-28 sm:w-32 flex-shrink-0">
                           <h3
-                            className="text-lg font-bold"
+                            className="text-base sm:text-lg font-bold transition-colors duration-200 group-hover:scale-105"
                             style={{
                               color: config.color === '#000000' ? '#1f2937' : config.color,
                             }}
@@ -460,32 +472,32 @@ export default function CloudShopSimulator() {
                         </div>
 
                         {/* 中间：提示信息（居中） */}
-                        <div className="flex-1 flex justify-center space-x-3">
-                          <div className="flex items-center text-xs" style={{ color: '#6b7280' }}>
-                            <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
+                        <div className="flex-1 flex justify-center items-center space-x-2 sm:space-x-4">
+                          <div className="flex items-center text-xs sm:text-sm" style={{ color: '#6b7280' }}>
+                            <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                             </svg>
-                            <span className="mr-1">额度:</span>
-                            <span className="font-bold text-sm" style={{ color: '#059669' }}>
+                            <span className="mr-1 hidden sm:inline">额度:</span>
+                            <span className="font-bold text-sm sm:text-base" style={{ color: '#059669' }}>
                               {config.minStock}-{config.maxStock}⚡
                             </span>
                           </div>
-                          <div className="flex items-center text-xs" style={{ color: '#6b7280' }}>
-                            <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
+                          <div className="flex items-center text-xs sm:text-sm" style={{ color: '#6b7280' }}>
+                            <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12 a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span className="mr-1">折扣:</span>
-                            <span className="font-bold text-sm" style={{ color: '#2563eb' }}>
+                            <span className="mr-1 hidden sm:inline">折扣:</span>
+                            <span className="font-bold text-sm sm:text-base" style={{ color: '#2563eb' }}>
                               {(config.stockDiscount * 10).toFixed(1)}折
                             </span>
                           </div>
                         </div>
 
                         {/* 右侧：箭头图标 */}
-                        <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full transition-transform duration-200 group-hover:scale-105"
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
                              style={{ backgroundColor: `${config.color}25` }}>
                           <svg
-                            className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-0.5"
+                            className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:translate-x-1"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -498,7 +510,7 @@ export default function CloudShopSimulator() {
 
                       {/* 底部装饰条 */}
                       <div
-                        className="absolute bottom-0 left-0 right-0 h-0.5"
+                        className="absolute bottom-0 left-0 right-0 h-1"
                         style={{
                           background: `linear-gradient(to right, transparent, ${config.color}, transparent)`
                         }}
@@ -510,8 +522,8 @@ export default function CloudShopSimulator() {
             </Card>
 
             {/* 底部提示 */}
-            <div className="mt-4 text-center">
-              <p className="text-xs text-gray-400">
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-500 bg-white/60 backdrop-blur-sm inline-block px-4 py-2 rounded-full shadow-sm">
                 💡 点击店铺等级查看详细信息和开始模拟
               </p>
             </div>
@@ -520,19 +532,21 @@ export default function CloudShopSimulator() {
 
         {/* 进货额度输入界面 */}
         {currentView === 'stockInput' && levelConfig && (
-          <Card className="max-w-md mx-auto animate-in fade-in-0 zoom-in-95 duration-300">
-            <CardHeader>
+          <Card className="max-w-lg mx-auto w-full animate-in fade-in-0 zoom-in-95 duration-300 shadow-xl border-0">
+            <CardHeader className="pb-4 pt-6 px-6">
               <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-transform duration-100">
+                <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full">
                   ←
                 </Button>
-                <CardTitle className="text-2xl">{levelConfig.name}</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  {levelConfig.name}
+                </CardTitle>
                 <div className="w-8" />
               </div>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-5 sm:space-y-6 px-6 pb-6">
               <div className="space-y-2">
-                <Label htmlFor="stockAmount">
+                <Label htmlFor="stockAmount" className="text-sm font-medium text-gray-700">
                   进货额度（100的整倍数）
                 </Label>
                 <Input
@@ -544,15 +558,15 @@ export default function CloudShopSimulator() {
                   step="100"
                   value={stockInputValue}
                   onChange={(e) => handleStockInputChange(e.target.value)}
-                  className={`${stockError ? 'border-red-500' : ''} focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200`}
+                  className={`${stockError ? 'border-red-500 ring-red-500' : ''} focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 h-12`}
                 />
-                <p className={`text-sm ${stockError ? 'text-red-500' : 'text-gray-500'}`}>
+                <p className={`text-xs sm:text-sm ${stockError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
                   {stockError || `进货额度范围：${levelConfig.minStock} - ${levelConfig.maxStock}电费`}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="cloudBalance">
+                <Label htmlFor="cloudBalance" className="text-sm font-medium text-gray-700">
                   云店余额
                 </Label>
                 <Input
@@ -563,29 +577,29 @@ export default function CloudShopSimulator() {
                   value={cloudBalanceInputValue}
                   onChange={(e) => handleCloudBalanceInputChange(e.target.value)}
                   disabled={isEditCloudBalance}
-                  className={`${cloudBalanceError ? 'border-red-500' : ''} ${isEditCloudBalance ? 'bg-gray-100' : ''} focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200`}
+                  className={`${cloudBalanceError ? 'border-red-500 ring-red-500' : ''} ${isEditCloudBalance ? 'bg-gray-50 border-gray-200' : ''} focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 h-12`}
                 />
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="editCloudBalance"
                     checked={isEditCloudBalance}
                     onCheckedChange={handleToggleEditCloudBalance}
-                    className="active:scale-95 transition-transform duration-100"
+                    className="active:scale-95 transition-all duration-200 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
                   />
                   <Label
                     htmlFor="editCloudBalance"
-                    className="text-sm font-normal cursor-pointer"
+                    className="text-sm font-normal cursor-pointer text-gray-600 hover:text-gray-900 transition-colors"
                   >
                     与进货额度同步
                   </Label>
                 </div>
                 {cloudBalanceError && (
-                  <p className="text-sm text-red-500">{cloudBalanceError}</p>
+                  <p className="text-sm text-red-500 font-medium">{cloudBalanceError}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="maxBalance">
+                <Label htmlFor="maxBalance" className="text-sm font-medium text-gray-700">
                   云店历史最高余额
                 </Label>
                 <Input
@@ -596,29 +610,29 @@ export default function CloudShopSimulator() {
                   value={maxBalanceInputValue}
                   onChange={(e) => handleMaxBalanceInputChange(e.target.value)}
                   disabled={isEditMaxBalance}
-                  className={`${maxBalanceError ? 'border-red-500' : ''} ${isEditMaxBalance ? 'bg-gray-100' : ''} focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200`}
+                  className={`${maxBalanceError ? 'border-red-500 ring-red-500' : ''} ${isEditMaxBalance ? 'bg-gray-50 border-gray-200' : ''} focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 h-12`}
                 />
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="editMaxBalance"
                     checked={isEditMaxBalance}
                     onCheckedChange={handleToggleEditMaxBalance}
-                    className="active:scale-95 transition-transform duration-100"
+                    className="active:scale-95 transition-all duration-200 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
                   />
                   <Label
                     htmlFor="editMaxBalance"
-                    className="text-sm font-normal cursor-pointer"
+                    className="text-sm font-normal cursor-pointer text-gray-600 hover:text-gray-900 transition-colors"
                   >
                     与云店余额同步
                   </Label>
                 </div>
                 {maxBalanceError && (
-                  <p className="text-sm text-red-500">{maxBalanceError}</p>
+                  <p className="text-sm text-red-500 font-medium">{maxBalanceError}</p>
                 )}
               </div>
 
               <Button
-                className="w-full h-14 text-lg active:scale-95 transition-transform duration-100"
+                className="w-full h-12 sm:h-14 text-base sm:text-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl"
                 onClick={handleConfirmStock}
                 disabled={
                   (!stockAmount && !cloudBalance) ||
@@ -635,72 +649,75 @@ export default function CloudShopSimulator() {
 
         {/* 店铺详情界面 */}
         {currentView === 'levelDetails' && levelConfig && detailsData && (
-          <Card className="max-w-2xl mx-auto animate-in fade-in-0 zoom-in-95 duration-300">
-            <CardHeader>
+          <Card className="max-w-3xl mx-auto w-full animate-in fade-in-0 zoom-in-95 duration-300 shadow-xl border-0">
+            <CardHeader className="pb-4 pt-6 px-6">
               <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToStockInput} className="active:scale-90 transition-transform duration-100">
+                <Button variant="ghost" size="icon" onClick={handleBackToStockInput} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full">
                   ←
                 </Button>
-                <CardTitle className="text-2xl">{levelConfig.name}详情</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  {levelConfig.name}详情
+                </CardTitle>
                 <div className="w-8" />
               </div>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-gray-600 mb-1">进货额度</p>
-                  <p className="text-xl font-semibold text-gray-800">
+            <CardContent className="space-y-6 px-6 pb-6">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                <div className="bg-gradient-to-br from-white to-gray-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-gray-100">
+                  <p className="text-xs sm:text-sm text-gray-500 mb-1.5">进货额度</p>
+                  <p className="text-lg sm:text-xl font-bold text-gray-800">
                     {detailsData.calculationBalance}⚡
                   </p>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-gray-600 mb-1">进货成本</p>
-                  <p className="text-xl font-semibold text-green-600">
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-green-100">
+                  <p className="text-xs sm:text-sm text-green-600 mb-1.5">进货成本</p>
+                  <p className="text-lg sm:text-xl font-bold text-green-600">
                     {detailsData.stockCost}元
                   </p>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-gray-600 mb-1">每日代缴额度</p>
-                  <p className="text-xl font-semibold text-gray-800">
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-blue-100">
+                  <p className="text-xs sm:text-sm text-blue-600 mb-1.5">每日代缴额度</p>
+                  <p className="text-lg sm:text-xl font-bold text-blue-600">
                     {detailsData.dailyCommission}⚡
                   </p>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-gray-600 mb-1">销售完成天数</p>
-                  <p className="text-xl font-semibold text-gray-800">
+                <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-purple-100">
+                  <p className="text-xs sm:text-sm text-purple-600 mb-1.5">销售完成天数</p>
+                  <p className="text-lg sm:text-xl font-bold text-purple-600">
                     {detailsData.completionDays}天
                   </p>
                 </div>
               </div>
 
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-5 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
                 <div className="flex justify-between items-center">
-                  <p className="text-gray-600">总利润</p>
-                  <p className="text-2xl font-bold text-green-600">
+                  <p className="text-white font-medium">总利润</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-white">
                     {detailsData.totalProfit}元
                   </p>
                 </div>
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex gap-3 sm:gap-4">
                 <Button
-                  className="flex-1 h-12 active:scale-95 transition-transform duration-100"
+                  className="flex-1 h-12 sm:h-14 active:scale-95 transition-all duration-200 hover:shadow-lg"
                   onClick={handleAddToComparison}
                   disabled={currentComparisonId !== null}
+                  variant={currentComparisonId ? "secondary" : "default"}
                 >
                   {currentComparisonId ? '✓ 已加入对比' : '加入对比'}
                 </Button>
                 <Button
-                  className="flex-1 h-12 active:scale-95 transition-transform duration-100"
+                  className="flex-1 h-12 sm:h-14 active:scale-95 transition-all duration-200 hover:shadow-lg"
                   onClick={handleViewSalesDetails}
                 >
                   查看销售详情
                 </Button>
               </div>
 
-              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded hover:bg-blue-100 transition-colors duration-200">
-                <p className="text-sm text-blue-700">
-                  进货第二天自动开始卖出，结算时间为卖出时间+10天。例如：12月20日卖出的电费，12月30日以95折结算回来本金和利润。
+              <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border-l-4 border-blue-500 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+                <p className="text-sm text-blue-700 leading-relaxed">
+                  💡 进货第二天自动开始卖出，结算时间为卖出时间+10天。例如：12月20日卖出的电费，12月30日以95折结算回来本金和利润。
                 </p>
               </div>
             </CardContent>
@@ -709,54 +726,56 @@ export default function CloudShopSimulator() {
 
         {/* 销售详情界面 */}
         {currentView === 'salesDetails' && (
-          <Card className="max-w-2xl mx-auto animate-in fade-in-0 slide-in-from-right-8 duration-300">
-            <CardHeader>
+          <Card className="max-w-3xl mx-auto w-full animate-in fade-in-0 slide-in-from-right-8 duration-300 shadow-xl border-0">
+            <CardHeader className="pb-4 pt-6 px-6">
               <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails} className="active:scale-90 transition-transform duration-100">
+                <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full">
                   ←
                 </Button>
-                <CardTitle className="text-2xl">销售详情</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  销售详情
+                </CardTitle>
                 <div className="w-8" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
+            <CardContent className="px-6 pb-6">
+              <div className="overflow-x-auto -mx-6 px-6">
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead className="text-center">销售日期</TableHead>
-                      <TableHead className="text-center">销售额度</TableHead>
-                      <TableHead className="text-center">利润</TableHead>
-                      <TableHead className="text-center">结算时间</TableHead>
-                      <TableHead className="text-center">结算金额</TableHead>
+                    <TableRow className="bg-gradient-to-r from-blue-50 to-purple-50 hover:bg-blue-50/50">
+                      <TableHead className="text-center font-semibold text-gray-700">销售日期</TableHead>
+                      <TableHead className="text-center font-semibold text-gray-700">销售额度</TableHead>
+                      <TableHead className="text-center font-semibold text-gray-700">利润</TableHead>
+                      <TableHead className="text-center font-semibold text-gray-700 hidden sm:table-cell">结算时间</TableHead>
+                      <TableHead className="text-center font-semibold text-gray-700 hidden sm:table-cell">结算金额</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {salesData.map((sale, index) => (
-                      <TableRow key={index}>
-                        <TableCell className="text-center">{sale.date}</TableCell>
-                        <TableCell className="text-center">{sale.amount}⚡</TableCell>
-                        <TableCell className="text-center text-green-600">
+                      <TableRow key={index} className="hover:bg-blue-50/30 transition-colors duration-200">
+                        <TableCell className="text-center font-medium">{sale.date}</TableCell>
+                        <TableCell className="text-center font-semibold text-gray-800">{sale.amount}⚡</TableCell>
+                        <TableCell className="text-center text-green-600 font-semibold">
                           {sale.profit.toFixed(2)}元
                         </TableCell>
-                        <TableCell className="text-center">{sale.settlementDate}</TableCell>
-                        <TableCell className="text-center">
+                        <TableCell className="text-center text-gray-600 hidden sm:table-cell">{sale.settlementDate}</TableCell>
+                        <TableCell className="text-center text-gray-800 font-medium hidden sm:table-cell">
                           {sale.settlementAmount.toFixed(2)}元
                         </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
-                  <TableFooter>
+                  <TableFooter className="bg-gradient-to-r from-blue-100 to-purple-100">
                     <TableRow>
-                      <TableCell className="text-center font-bold text-blue-600">合计</TableCell>
-                      <TableCell className="text-center font-bold text-blue-600">
+                      <TableCell className="text-center font-bold text-blue-700">合计</TableCell>
+                      <TableCell className="text-center font-bold text-blue-700">
                         {salesData.reduce((sum, s) => sum + s.amount, 0)}⚡
                       </TableCell>
-                      <TableCell className="text-center font-bold text-blue-600">
+                      <TableCell className="text-center font-bold text-blue-700">
                         {salesData.reduce((sum, s) => sum + s.profit, 0).toFixed(2)}元
                       </TableCell>
-                      <TableCell className="text-center">-</TableCell>
-                      <TableCell className="text-center font-bold text-blue-600">
+                      <TableCell className="text-center font-bold text-blue-700 hidden sm:table-cell">-</TableCell>
+                      <TableCell className="text-center font-bold text-blue-700 hidden sm:table-cell">
                         {salesData.reduce((sum, s) => sum + s.settlementAmount, 0).toFixed(2)}元
                       </TableCell>
                     </TableRow>
@@ -764,10 +783,10 @@ export default function CloudShopSimulator() {
                 </Table>
               </div>
 
-              <div className="mt-4 bg-gray-50 p-4 rounded-lg">
+              <div className="mt-6 bg-gradient-to-r from-blue-50 to-purple-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
                 <div className="flex justify-between items-center">
-                  <p className="text-gray-600 font-medium">销售完成天数</p>
-                  <p className="text-xl font-bold text-gray-800">
+                  <p className="text-gray-700 font-medium">销售完成天数</p>
+                  <p className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     {salesData.length}天
                   </p>
                 </div>
@@ -808,12 +827,12 @@ export default function CloudShopSimulator() {
                     <Table>
                       <TableHeader>
                         <TableRow>
-                          <TableHead className="text-center">店铺等级</TableHead>
-                          <TableHead className="text-center">进货额度⚡</TableHead>
-                          <TableHead className="text-center">进货成本(元)</TableHead>
-                          <TableHead className="text-center">完成天数</TableHead>
-                          <TableHead className="text-center">总利润(元)</TableHead>
-                          <TableHead className="text-center">操作</TableHead>
+                          <TableHead className="text-center font-semibold text-gray-700">店铺等级</TableHead>
+                          <TableHead className="text-center font-semibold text-gray-700">进货额度⚡</TableHead>
+                          <TableHead className="text-center font-semibold text-gray-700 hidden sm:table-cell">进货成本(元)</TableHead>
+                          <TableHead className="text-center font-semibold text-gray-700">完成天数</TableHead>
+                          <TableHead className="text-center font-semibold text-gray-700">总利润(元)</TableHead>
+                          <TableHead className="text-center font-semibold text-gray-700">操作</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -824,19 +843,19 @@ export default function CloudShopSimulator() {
                           
                           return (
                             <TableRow key={item.id} className={
-                              isCurrent ? 'bg-blue-50' : ''
+                              isCurrent ? 'bg-blue-50/50' : 'hover:bg-blue-50/30'
                             }>
-                              <TableCell className="text-center font-medium" style={{ color: levelConfig.color }}>
+                              <TableCell className="text-center font-bold" style={{ color: levelConfig.color }}>
                                 {item.levelName}
                               </TableCell>
-                              <TableCell className="text-center">{item.stockAmount}</TableCell>
-                              <TableCell className="text-center">
+                              <TableCell className="text-center font-medium text-gray-800">{item.stockAmount}</TableCell>
+                              <TableCell className="text-center text-gray-700 hidden sm:table-cell">
                                 {item.stockCost}
                               </TableCell>
-                              <TableCell className="text-center">
+                              <TableCell className="text-center text-gray-700">
                                 {item.completionDays}
                               </TableCell>
-                              <TableCell className={`text-center font-bold ${isMaxProfit ? 'text-green-600 text-xl' : ''}`}>
+                              <TableCell className={`text-center font-bold ${isMaxProfit ? 'text-green-600 text-lg sm:text-xl' : 'text-gray-800'}`}>
                                 {item.totalProfit}
                               </TableCell>
                               <TableCell className="text-center">
@@ -844,7 +863,7 @@ export default function CloudShopSimulator() {
                                   variant="destructive"
                                   size="sm"
                                   onClick={() => handleDeleteComparison(item.id)}
-                                  className="active:scale-90 transition-transform duration-100"
+                                  className="active:scale-90 transition-all duration-200 hover:shadow-md"
                                 >
                                   删除
                                 </Button>
@@ -861,18 +880,18 @@ export default function CloudShopSimulator() {
                     const maxItem = comparisonData.find(d => d.id === maxProfitId);
                     if (!maxItem) return null;
                     return (
-                      <div className="mt-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border-l-4 border-green-500">
-                        <div className="flex items-start space-x-3">
-                          <div className="flex-shrink-0">
-                            <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="mt-6 p-5 sm:p-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                        <div className="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4">
+                          <div className="flex-shrink-0 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                             </svg>
                           </div>
                           <div className="flex-1">
-                            <h4 className="font-bold text-green-800 text-lg mb-1">推荐方案</h4>
-                            <p className="text-green-700">
-                              推荐您升级到<span className="font-bold text-green-900 mx-1" style={{ color: shopLevelsConfig[maxItem.level].color }}>{maxItem.levelName}</span>，
-                              同样的进货额度利润提升<span className="font-bold text-green-900 mx-1">{profitAnalysis.profitDiffText}</span>
+                            <h4 className="font-bold text-white text-lg sm:text-xl mb-2">🎯 推荐方案</h4>
+                            <p className="text-white/95 leading-relaxed">
+                              推荐您升级到<span className="font-bold mx-1 bg-white/20 px-2 py-0.5 rounded" style={{ color: 'white' }}>{maxItem.levelName}</span>，
+                              同样的进货额度利润提升<span className="font-bold mx-1 bg-white/20 px-2 py-0.5 rounded">{profitAnalysis.profitDiffText}</span>
                             </p>
                           </div>
                         </div>
@@ -881,30 +900,30 @@ export default function CloudShopSimulator() {
                   })()}
 
                   {profitAnalysis && (
-                    <div className="mt-6 p-6 bg-gray-50 rounded-lg">
-                      <h4 className="font-semibold text-gray-700 mb-4 text-lg">利润分析</h4>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md hover:scale-105 transition-all duration-200">
-                          <p className="text-sm text-gray-600 mb-2">最低利润</p>
-                          <p className="text-2xl font-bold text-gray-800">
+                    <div className="mt-6 p-5 sm:p-6 bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
+                      <h4 className="font-bold text-gray-700 mb-4 sm:mb-5 text-lg sm:text-xl">💰 利润分析</h4>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                        <div className="bg-white p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 border border-gray-100">
+                          <p className="text-xs sm:text-sm text-gray-500 mb-2">最低利润</p>
+                          <p className="text-xl sm:text-2xl font-bold text-gray-800">
                             {profitAnalysis.minProfit}元
                           </p>
                         </div>
-                        <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md hover:scale-105 transition-all duration-200">
-                          <p className="text-sm text-gray-600 mb-2">最高利润</p>
-                          <p className="text-2xl font-bold text-green-600">
+                        <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 border border-green-100">
+                          <p className="text-xs sm:text-sm text-green-600 mb-2">最高利润</p>
+                          <p className="text-xl sm:text-2xl font-bold text-green-600">
                             {profitAnalysis.maxProfit}元
                           </p>
                         </div>
-                        <div className="bg-white p-4 rounded-lg shadow-sm">
-                          <p className="text-sm text-gray-600 mb-2">利润差额</p>
-                          <p className="text-2xl font-bold text-gray-800">
+                        <div className="bg-white p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 border border-gray-100">
+                          <p className="text-xs sm:text-sm text-gray-500 mb-2">利润差额</p>
+                          <p className="text-xl sm:text-2xl font-bold text-gray-800">
                             {profitAnalysis.profitDiff}元
                           </p>
                         </div>
-                        <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md hover:scale-105 transition-all duration-200">
-                          <p className="text-sm text-gray-600 mb-2">利润差额率</p>
-                          <p className="text-2xl font-bold text-gray-800">
+                        <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 border border-blue-100">
+                          <p className="text-xs sm:text-sm text-blue-600 mb-2">利润差额率</p>
+                          <p className="text-xl sm:text-2xl font-bold text-blue-600">
                             {profitAnalysis.profitDiffRate}
                           </p>
                         </div>
@@ -920,48 +939,67 @@ export default function CloudShopSimulator() {
 
       {/* 帮助模态框 */}
       <Dialog open={isHelpOpen} onOpenChange={setIsHelpOpen}>
-        <DialogContent className="max-w-lg max-h-[70vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>使用帮助</DialogTitle>
+        <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto sm:max-w-2xl">
+          <DialogHeader className="pb-4">
+            <DialogTitle className="text-xl sm:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              使用帮助
+            </DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 py-4">
-            <div>
-              <h4 className="font-semibold text-gray-700 mb-2">店铺等级说明</h4>
-              <p className="text-gray-600 text-sm">
+          <div className="space-y-5 py-2">
+            <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
+                <span className="mr-2">📊</span> 店铺等级说明
+              </h4>
+              <p className="text-gray-700 text-sm leading-relaxed">
                 系统提供7个店铺等级，从青铜到至尊，每个等级对应不同的进货额度范围和折扣比例。
               </p>
             </div>
-            <div>
-              <h4 className="font-semibold text-gray-700 mb-2">进货流程</h4>
-              <ol className="list-decimal list-inside text-gray-600 text-sm space-y-1">
-                <li>选择你的店铺等级</li>
-                <li>输入进货额度（必须是100的整数倍）</li>
-                <li>输入或确认云店余额（可手动输入或自动同步）</li>
-                <li>输入或确认云店历史最高余额（可手动输入或自动同步）</li>
-                <li>点击"确认进货"按钮或按Enter键</li>
+            
+            <div className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
+              <h4 className="font-bold text-gray-800 mb-3 flex items-center">
+                <span className="mr-2">🛒</span> 进货流程
+              </h4>
+              <ol className="list-decimal list-inside text-gray-700 text-sm space-y-2">
+                <li className="pl-1">选择你的店铺等级</li>
+                <li className="pl-1">输入进货额度（必须是100的整数倍）</li>
+                <li className="pl-1">输入或确认云店余额（可手动输入或自动同步）</li>
+                <li className="pl-1">输入或确认云店历史最高余额（可手动输入或自动同步）</li>
+                <li className="pl-1">点击"确认进货"按钮或按Enter键</li>
               </ol>
             </div>
-            <div>
-              <h4 className="font-semibold text-gray-700 mb-2">同步说明</h4>
-              <p className="text-gray-600 text-sm">
+            
+            <div className="p-4 bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl">
+              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
+                <span className="mr-2">🔄</span> 同步说明
+              </h4>
+              <p className="text-gray-700 text-sm leading-relaxed">
                 云店余额默认与进货额度同步，历史最高余额默认与云店余额同步。取消勾选后可手动输入。
               </p>
             </div>
-            <div>
-              <h4 className="font-semibold text-gray-700 mb-2">数据对比功能</h4>
-              <p className="text-gray-600 text-sm">
-                确认进货后，点击"加入对比"按钮可将当前方案加入对比列表。点击"查看对比"可查看所有对比方案，系统会自动标注最优方案（最高利润、最低成本、最快完成、最高代缴）。
+            
+            <div className="p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl">
+              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
+                <span className="mr-2">📈</span> 数据对比功能
+              </h4>
+              <p className="text-gray-700 text-sm leading-relaxed">
+                确认进货后，点击"加入对比"按钮可将当前方案加入对比列表。点击"查看对比"可查看所有对比方案，系统会自动标注最优方案（最高利润）。
               </p>
             </div>
-            <div>
-              <h4 className="font-semibold text-gray-700 mb-2">结算规则</h4>
-              <p className="text-gray-600 text-sm">
+            
+            <div className="p-4 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-xl">
+              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
+                <span className="mr-2">💰</span> 结算规则
+              </h4>
+              <p className="text-gray-700 text-sm leading-relaxed">
                 进货第二天自动开始卖出，结算时间为卖出时间+10天。例如：12月20日卖出的电费，12月30日以95折结算回来本金和利润。
               </p>
             </div>
-            <div>
-              <h4 className="font-semibold text-gray-700 mb-2">利润计算</h4>
-              <p className="text-gray-600 text-sm">
+            
+            <div className="p-4 bg-gradient-to-r from-rose-50 to-red-50 rounded-xl">
+              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
+                <span className="mr-2">🧮</span> 利润计算
+              </h4>
+              <p className="text-gray-700 text-sm leading-relaxed">
                 利润 = 销售折扣 - 进货折扣，即每卖出100电费额度赚的利润。
               </p>
             </div>

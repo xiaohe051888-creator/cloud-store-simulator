@@ -337,11 +337,15 @@ export default function CloudShopSimulator() {
     const profitDiff = maxProfit - minProfit;
     const profitDiffRate = minProfit > 0 ? ((maxProfit - minProfit) / minProfit * 100).toFixed(2) : '0.00';
     
+    // 找到最低利润的方案
+    const minItem = comparisonData.find(d => d.totalProfit === minProfit);
+    
     return {
       maxProfit,
       minProfit,
       profitDiff,
-      profitDiffRate: profitDiffRate + '%'
+      profitDiffRate: profitDiffRate + '%',
+      minLevelName: minItem?.levelName || ''
     };
   }, [comparisonData]);
 
@@ -717,8 +721,17 @@ export default function CloudShopSimulator() {
                             <TableRow key={item.id} className={
                               isCurrent ? 'bg-blue-50' : ''
                             }>
-                              <TableCell className="text-center font-medium" style={{ color: levelConfig.color }}>
-                                {item.levelName}
+                              <TableCell className="text-center">
+                                <div className="flex flex-col items-center space-y-2">
+                                  <span className="font-medium" style={{ color: levelConfig.color }}>
+                                    {item.levelName}
+                                  </span>
+                                  {isMaxProfit && profitAnalysis && (
+                                    <div className="bg-green-100 text-green-700 text-xs px-3 py-1.5 rounded-full border border-green-300 max-w-[200px]">
+                                      推荐您升级到{item.levelName}，同样的进货额度利润提升{profitAnalysis.profitDiffRate}
+                                    </div>
+                                  )}
+                                </div>
                               </TableCell>
                               <TableCell className="text-center">{item.stockAmount}</TableCell>
                               <TableCell className="text-center">
@@ -729,7 +742,6 @@ export default function CloudShopSimulator() {
                               </TableCell>
                               <TableCell className={`text-center font-bold ${isMaxProfit ? 'text-green-600 text-xl' : ''}`}>
                                 {item.totalProfit}
-                                {isMaxProfit && <Badge className="ml-2 bg-green-600">推荐</Badge>}
                               </TableCell>
                               <TableCell className="text-center">
                                 <Button

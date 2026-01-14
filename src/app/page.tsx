@@ -880,18 +880,18 @@ export default function CloudShopSimulator() {
                     const maxItem = comparisonData.find(d => d.id === maxProfitId);
                     if (!maxItem) return null;
                     return (
-                      <div className="mt-6 p-5 sm:p-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                      <div className="mt-6 p-5 sm:p-6 bg-gradient-to-r from-emerald-50 to-green-50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-emerald-200">
                         <div className="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4">
-                          <div className="flex-shrink-0 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                          <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-emerald-400 to-green-500 rounded-2xl flex items-center justify-center shadow-md">
+                            <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                             </svg>
                           </div>
                           <div className="flex-1">
-                            <h4 className="font-bold text-white text-lg sm:text-xl mb-2">🎯 推荐方案</h4>
-                            <p className="text-white/95 leading-relaxed">
-                              推荐您升级到<span className="font-bold mx-1 bg-white/20 px-2 py-0.5 rounded" style={{ color: 'white' }}>{maxItem.levelName}</span>，
-                              同样的进货额度利润提升<span className="font-bold mx-1 bg-white/20 px-2 py-0.5 rounded">{profitAnalysis.profitDiffText}</span>
+                            <h4 className="font-bold text-gray-800 text-lg sm:text-xl mb-3">🎯 推荐方案</h4>
+                            <p className="text-gray-700 leading-relaxed">
+                              推荐您升级到<span className="font-bold text-emerald-700 mx-1 bg-white px-3 py-1 rounded-lg shadow-sm border border-emerald-100">{maxItem.levelName}</span>，
+                              同样的进货额度利润提升<span className="font-bold text-emerald-700 mx-1 bg-white px-3 py-1 rounded-lg shadow-sm border border-emerald-100">{profitAnalysis.profitDiffText}</span>
                             </p>
                           </div>
                         </div>

@@ -379,9 +379,9 @@ export default function CloudShopSimulator() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" onKeyDown={handleKeyDown}>
+    <div className="min-h-screen bg-gray-100" onKeyDown={handleKeyDown}>
       {/* 顶部导航栏 */}
-      <header className="bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-100">
+      <header className="bg-white shadow-md">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-800">云店模拟器</h1>
           <div className="flex items-center space-x-4">
@@ -413,76 +413,35 @@ export default function CloudShopSimulator() {
       </header>
 
       {/* 主要内容区域 */}
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-6">
         {/* 店铺选择界面 */}
         {currentView === 'shopSelection' && (
-          <div className="max-w-4xl mx-auto">
-            {/* 标题区域 */}
-            <div className="text-center mb-10">
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3">
-                云店模拟器
-              </h1>
-              <p className="text-gray-600 text-lg">专业的店铺经营管理模拟工具</p>
-            </div>
-
-            {/* 店铺等级卡片网格 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Card className="max-w-md mx-auto">
+            <CardHeader>
+              <CardTitle className="text-xl text-center">请选择你的店铺等级</CardTitle>
+            </CardHeader>
+            <CardContent className="grid grid-cols-1 gap-3">
               {(Object.keys(shopLevelsConfig) as ShopLevel[]).map((level) => {
                 const config = shopLevelsConfig[level];
                 return (
-                  <Card
+                  <Button
                     key={level}
-                    className="hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer border-2"
+                    variant="outline"
+                    className="flex items-center justify-between min-h-[70px] hover:opacity-80 transition-opacity"
                     style={{
                       borderColor: config.color,
-                      backgroundColor: 'white'
+                      backgroundColor: `${config.color}20`,
+                      color: config.color === '#000000' ? '#000' : config.color
                     }}
                     onClick={() => handleSelectLevel(level)}
                   >
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex-1">
-                          <h3 className="text-xl font-bold mb-1" style={{ color: config.color === '#000000' ? '#1a1a1a' : config.color }}>
-                            {config.name}
-                          </h3>
-                          <div className="flex items-center space-x-2">
-                            <div className="h-2 w-16 rounded-full" style={{ backgroundColor: config.color }}></div>
-                          </div>
-                        </div>
-                        <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: `${config.color}20` }}>
-                          <span className="text-2xl" style={{ color: config.color }}>→</span>
-                        </div>
-                      </div>
-
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">进货额度:</span>
-                          <span className="font-semibold text-gray-800">{config.minStock} - {config.maxStock}⚡</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">进货折扣:</span>
-                          <span className="font-semibold text-green-600">{(config.stockDiscount * 10).toFixed(1)}折</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">销售折扣:</span>
-                          <span className="font-semibold text-blue-600">{(config.saleDiscount * 10).toFixed(1)}折</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">完成天数:</span>
-                          <span className="font-semibold text-gray-800">{config.completionDays}天</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                    <span className="text-lg font-semibold">{config.name}</span>
+                    <span className="text-gray-400">→</span>
+                  </Button>
                 );
               })}
-            </div>
-
-            {/* 底部提示 */}
-            <div className="mt-8 text-center text-sm text-gray-500">
-              <p>选择一个店铺等级开始模拟经营</p>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         )}
 
         {/* 进货额度输入界面 */}

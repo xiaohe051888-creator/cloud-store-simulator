@@ -310,16 +310,13 @@ export default function CloudShopSimulator() {
 
   const detailsData = getDetailsData();
 
-  // 计算最优值
-  const optimalValues = useMemo(() => {
+  // 计算总利润最高的方案
+  const maxProfitId = useMemo(() => {
     if (comparisonData.length === 0) return null;
     
-    return {
-      maxProfit: Math.max(...comparisonData.map(d => d.totalProfit)),
-      minCost: Math.min(...comparisonData.map(d => d.stockCost)),
-      minDays: Math.min(...comparisonData.map(d => d.completionDays)),
-      maxDailyCommission: Math.max(...comparisonData.map(d => d.dailyCommission)),
-    };
+    const maxProfit = Math.max(...comparisonData.map(d => d.totalProfit));
+    const maxItem = comparisonData.find(d => d.totalProfit === maxProfit);
+    return maxItem?.id || null;
   }, [comparisonData]);
 
   // 处理Enter键
@@ -690,34 +687,32 @@ export default function CloudShopSimulator() {
                     <TableBody>
                       {comparisonData.map((item) => {
                         const levelConfig = shopLevelsConfig[item.level];
-                        const isMaxProfit = optimalValues?.maxProfit === item.totalProfit;
-                        const isMinCost = optimalValues?.minCost === item.stockCost;
-                        const isMinDays = optimalValues?.minDays === item.completionDays;
-                        const isMaxDaily = optimalValues?.maxDailyCommission === item.dailyCommission;
+                        const isRecommended = maxProfitId === item.id;
+                        const isCurrent = currentComparisonId === item.id;
                         
                         return (
-                          <TableRow key={item.id} className={currentComparisonId === item.id ? 'bg-blue-50' : ''}>
+                          <TableRow key={item.id} className={
+                            isRecommended ? 'bg-green-50' : 
+                            isCurrent ? 'bg-blue-50' : ''
+                          }>
                             <TableCell className="text-center font-medium" style={{ color: levelConfig.color }}>
                               {item.levelName}
+                              {isRecommended && <Badge className="ml-2 bg-green-600">推荐</Badge>}
                             </TableCell>
                             <TableCell className="text-center">{item.stockAmount}</TableCell>
                             <TableCell className="text-center">{item.cloudBalance}</TableCell>
                             <TableCell className="text-center">{item.maxBalance}</TableCell>
                             <TableCell className="text-center">
                               {item.stockCost}
-                              {isMinCost && <Badge className="ml-2 bg-green-500">最优</Badge>}
                             </TableCell>
                             <TableCell className="text-center">
                               {item.dailyCommission}
-                              {isMaxDaily && <Badge className="ml-2 bg-green-500">最高</Badge>}
                             </TableCell>
                             <TableCell className="text-center">
                               {item.completionDays}
-                              {isMinDays && <Badge className="ml-2 bg-green-500">最快</Badge>}
                             </TableCell>
                             <TableCell className="text-center font-bold">
                               {item.totalProfit}
-                              {isMaxProfit && <Badge className="ml-2 bg-green-500">最高</Badge>}
                             </TableCell>
                             <TableCell className="text-center text-xs text-gray-500">
                               {item.createdAt}
@@ -736,18 +731,6 @@ export default function CloudShopSimulator() {
                       })}
                     </TableBody>
                   </Table>
-                </div>
-              )}
-
-              {comparisonData.length > 0 && (
-                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                  <h4 className="font-semibold text-gray-700 mb-2">对比分析</h4>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• 总利润最高：{optimalValues?.maxProfit}元</li>
-                    <li>• 进货成本最低：{optimalValues?.minCost}元</li>
-                    <li>• 完成天数最快：{optimalValues?.minDays}天</li>
-                    <li>• 每日代缴最高：{optimalValues?.maxDailyCommission}⚡</li>
-                  </ul>
                 </div>
               )}
             </CardContent>

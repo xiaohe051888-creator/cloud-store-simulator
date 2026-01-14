@@ -413,13 +413,13 @@ export default function CloudShopSimulator() {
       </header>
 
       {/* 主要内容区域 */}
-      <main className="container mx-auto px-4 py-4">
+      <main className="container mx-auto px-4 pt-2 pb-4">
         {/* 店铺选择界面 */}
         {currentView === 'shopSelection' && (
           <div className="max-w-3xl mx-auto">
             <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-0">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-2xl text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <CardHeader className="pb-2 pt-2">
+                <CardTitle className="text-xl text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   请选择你的店铺等级
                 </CardTitle>
               </CardHeader>

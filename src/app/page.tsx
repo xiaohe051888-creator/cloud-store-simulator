@@ -88,6 +88,26 @@ export default function CloudShopSimulator() {
     setCurrentView('shopSelection');
   };
 
+  // 返回首页（重置所有状态）
+  const handleGoHome = () => {
+    setCurrentLevel(null);
+    setStockAmount(0);
+    setCloudBalance(0);
+    setMaxBalance(0);
+    setCurrentView('shopSelection');
+    setStockInputValue('');
+    setCloudBalanceInputValue('0');
+    setMaxBalanceInputValue('0');
+    setIsEditCloudBalance(true);
+    setIsEditMaxBalance(true);
+    setStockError('');
+    setCloudBalanceError('');
+    setMaxBalanceError('');
+    setSalesData([]);
+    setCurrentComparisonId(null);
+    // 注意：不清空comparisonData，保留用户已添加的对比数据
+  };
+
   // 返回进货输入
   const handleBackToStockInput = () => {
     setCurrentView('stockInput');
@@ -374,6 +394,13 @@ export default function CloudShopSimulator() {
                 查看对比 ({comparisonData.length})
               </Button>
             )}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleGoHome}
+            >
+              首页
+            </Button>
             <Button
               variant="ghost"
               size="icon"

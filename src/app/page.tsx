@@ -319,6 +319,32 @@ export default function CloudShopSimulator() {
     return maxItem?.id || null;
   }, [comparisonData]);
 
+  // 计算最低利润
+  const minProfitId = useMemo(() => {
+    if (comparisonData.length === 0) return null;
+    
+    const minProfit = Math.min(...comparisonData.map(d => d.totalProfit));
+    const minItem = comparisonData.find(d => d.totalProfit === minProfit);
+    return minItem?.id || null;
+  }, [comparisonData]);
+
+  // 计算利润分析数据
+  const profitAnalysis = useMemo(() => {
+    if (comparisonData.length === 0) return null;
+    
+    const maxProfit = Math.max(...comparisonData.map(d => d.totalProfit));
+    const minProfit = Math.min(...comparisonData.map(d => d.totalProfit));
+    const profitDiff = maxProfit - minProfit;
+    const profitDiffRate = minProfit > 0 ? ((maxProfit - minProfit) / minProfit * 100).toFixed(2) : '0.00';
+    
+    return {
+      maxProfit,
+      minProfit,
+      profitDiff,
+      profitDiffRate: profitDiffRate + '%'
+    };
+  }, [comparisonData]);
+
   // 处理Enter键
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && currentView === 'stockInput') {
@@ -668,70 +694,91 @@ export default function CloudShopSimulator() {
                   <p className="text-sm">请先确认进货，然后点击"加入对比"按钮</p>
                 </div>
               ) : (
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="text-center">店铺等级</TableHead>
-                        <TableHead className="text-center">进货额度⚡</TableHead>
-                        <TableHead className="text-center">云店余额⚡</TableHead>
-                        <TableHead className="text-center">历史最高⚡</TableHead>
-                        <TableHead className="text-center">进货成本(元)</TableHead>
-                        <TableHead className="text-center">每日代缴⚡</TableHead>
-                        <TableHead className="text-center">完成天数</TableHead>
-                        <TableHead className="text-center">总利润(元)</TableHead>
-                        <TableHead className="text-center">创建时间</TableHead>
-                        <TableHead className="text-center">操作</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {comparisonData.map((item) => {
-                        const levelConfig = shopLevelsConfig[item.level];
-                        const isRecommended = maxProfitId === item.id;
-                        const isCurrent = currentComparisonId === item.id;
-                        
-                        return (
-                          <TableRow key={item.id} className={
-                            isRecommended ? 'bg-green-50' : 
-                            isCurrent ? 'bg-blue-50' : ''
-                          }>
-                            <TableCell className="text-center font-medium" style={{ color: levelConfig.color }}>
-                              {item.levelName}
-                              {isRecommended && <Badge className="ml-2 bg-green-600">推荐</Badge>}
-                            </TableCell>
-                            <TableCell className="text-center">{item.stockAmount}</TableCell>
-                            <TableCell className="text-center">{item.cloudBalance}</TableCell>
-                            <TableCell className="text-center">{item.maxBalance}</TableCell>
-                            <TableCell className="text-center">
-                              {item.stockCost}
-                            </TableCell>
-                            <TableCell className="text-center">
-                              {item.dailyCommission}
-                            </TableCell>
-                            <TableCell className="text-center">
-                              {item.completionDays}
-                            </TableCell>
-                            <TableCell className="text-center font-bold">
-                              {item.totalProfit}
-                            </TableCell>
-                            <TableCell className="text-center text-xs text-gray-500">
-                              {item.createdAt}
-                            </TableCell>
-                            <TableCell className="text-center">
-                              <Button
-                                variant="destructive"
-                                size="sm"
-                                onClick={() => handleDeleteComparison(item.id)}
-                              >
-                                删除
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </div>
+                <>
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="text-center">店铺等级</TableHead>
+                          <TableHead className="text-center">进货额度⚡</TableHead>
+                          <TableHead className="text-center">进货成本(元)</TableHead>
+                          <TableHead className="text-center">完成天数</TableHead>
+                          <TableHead className="text-center">总利润(元)</TableHead>
+                          <TableHead className="text-center">操作</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {comparisonData.map((item) => {
+                          const levelConfig = shopLevelsConfig[item.level];
+                          const isMaxProfit = maxProfitId === item.id;
+                          const isCurrent = currentComparisonId === item.id;
+                          
+                          return (
+                            <TableRow key={item.id} className={
+                              isCurrent ? 'bg-blue-50' : ''
+                            }>
+                              <TableCell className="text-center font-medium" style={{ color: levelConfig.color }}>
+                                {item.levelName}
+                              </TableCell>
+                              <TableCell className="text-center">{item.stockAmount}</TableCell>
+                              <TableCell className="text-center">
+                                {item.stockCost}
+                              </TableCell>
+                              <TableCell className="text-center">
+                                {item.completionDays}
+                              </TableCell>
+                              <TableCell className={`text-center font-bold ${isMaxProfit ? 'text-green-600 text-xl' : ''}`}>
+                                {item.totalProfit}
+                                {isMaxProfit && <Badge className="ml-2 bg-green-600">推荐</Badge>}
+                              </TableCell>
+                              <TableCell className="text-center">
+                                <Button
+                                  variant="destructive"
+                                  size="sm"
+                                  onClick={() => handleDeleteComparison(item.id)}
+                                >
+                                  删除
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  </div>
+
+                  {profitAnalysis && (
+                    <div className="mt-6 p-6 bg-gray-50 rounded-lg">
+                      <h4 className="font-semibold text-gray-700 mb-4 text-lg">利润分析</h4>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                          <p className="text-sm text-gray-600 mb-2">最低利润</p>
+                          <p className="text-2xl font-bold text-gray-800">
+                            {profitAnalysis.minProfit}元
+                          </p>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                          <p className="text-sm text-gray-600 mb-2">最高利润</p>
+                          <p className="text-2xl font-bold text-green-600">
+                            {profitAnalysis.maxProfit}元
+                          </p>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                          <p className="text-sm text-gray-600 mb-2">利润差额</p>
+                          <p className="text-2xl font-bold text-gray-800">
+                            {profitAnalysis.profitDiff}元
+                          </p>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                          <p className="text-sm text-gray-600 mb-2">利润差额率</p>
+                          <p className="text-2xl font-bold text-gray-800">
+                            {profitAnalysis.profitDiffRate}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
             </CardContent>
           </Card>

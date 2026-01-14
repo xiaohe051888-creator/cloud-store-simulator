@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -28,6 +28,7 @@ import {
   formatDate,
   generateSalesData,
   validateStockAmount,
+  validateCloudBalance,
   validateMaxBalance,
 } from '@/lib/shop-utils';
 import type { ShopLevel, ViewType, SalesData } from '@/types/shop';
@@ -36,17 +37,21 @@ export default function CloudShopSimulator() {
   // 应用状态
   const [currentLevel, setCurrentLevel] = useState<ShopLevel | null>(null);
   const [stockAmount, setStockAmount] = useState<number>(0);
-  const [maxBalance, setMaxBalance] = useState<number>(0);
+  const [cloudBalance, setCloudBalance] = useState<number>(0);      // 云店余额
+  const [maxBalance, setMaxBalance] = useState<number>(0);           // 历史最高余额
   const [currentView, setCurrentView] = useState<ViewType>('shopSelection');
-  const [isEditMaxBalance, setIsEditMaxBalance] = useState<boolean>(true);
+  const [isEditCloudBalance, setIsEditCloudBalance] = useState<boolean>(true);  // 云店余额是否可编辑
+  const [isEditMaxBalance, setIsEditMaxBalance] = useState<boolean>(true);      // 最高余额是否可编辑
   const [isHelpOpen, setIsHelpOpen] = useState<boolean>(false);
   
   // 输入框值状态
   const [stockInputValue, setStockInputValue] = useState<string>('');
+  const [cloudBalanceInputValue, setCloudBalanceInputValue] = useState<string>('0');
   const [maxBalanceInputValue, setMaxBalanceInputValue] = useState<string>('0');
   
   // 错误状态
   const [stockError, setStockError] = useState<string>('');
+  const [cloudBalanceError, setCloudBalanceError] = useState<string>('');
   const [maxBalanceError, setMaxBalanceError] = useState<string>('');
 
   // 销售数据
@@ -60,11 +65,15 @@ export default function CloudShopSimulator() {
     setCurrentLevel(level);
     setCurrentView('stockInput');
     setStockInputValue('');
+    setCloudBalanceInputValue('0');
     setMaxBalanceInputValue('0');
     setStockAmount(0);
+    setCloudBalance(0);
     setMaxBalance(0);
+    setIsEditCloudBalance(true);
     setIsEditMaxBalance(true);
     setStockError('');
+    setCloudBalanceError('');
     setMaxBalanceError('');
   };
 
@@ -91,19 +100,45 @@ export default function CloudShopSimulator() {
     
     if (levelConfig) {
       const validation = validateStockAmount(numValue, levelConfig);
-      if (!validation.valid) {
+      if (!validation.valid && numValue > 0) {
         setStockError(validation.error || '');
-        return;
+      } else {
+        setStockError('');
       }
       
-      setStockError('');
       setStockAmount(numValue);
       
-      // 如果同步模式，更新最高余额
-      if (isEditMaxBalance) {
-        setMaxBalance(numValue);
-        setMaxBalanceInputValue(String(numValue));
+      // 如果云店余额是同步模式，自动更新
+      if (isEditCloudBalance && numValue > 0) {
+        setCloudBalance(numValue);
+        setCloudBalanceInputValue(String(numValue));
+        // 如果历史最高余额也是同步模式，也自动更新
+        if (isEditMaxBalance) {
+          setMaxBalance(numValue);
+          setMaxBalanceInputValue(String(numValue));
+        }
       }
+    }
+  };
+
+  // 处理云店余额输入
+  const handleCloudBalanceInputChange = (value: string) => {
+    setCloudBalanceInputValue(value);
+    const numValue = parseInt(value) || 0;
+    
+    const validation = validateCloudBalance(numValue, stockAmount);
+    if (!validation.valid && numValue > 0) {
+      setCloudBalanceError(validation.error || '');
+    } else {
+      setCloudBalanceError('');
+    }
+    
+    setCloudBalance(numValue);
+    
+    // 如果历史最高余额是同步模式，自动更新
+    if (isEditMaxBalance && numValue > 0) {
+      setMaxBalance(numValue);
+      setMaxBalanceInputValue(String(numValue));
     }
   };
 
@@ -112,52 +147,91 @@ export default function CloudShopSimulator() {
     setMaxBalanceInputValue(value);
     const numValue = parseInt(value) || 0;
     
-    const validation = validateMaxBalance(numValue, stockAmount);
-    if (!validation.valid) {
+    const validation = validateMaxBalance(numValue, cloudBalance);
+    if (!validation.valid && numValue > 0) {
       setMaxBalanceError(validation.error || '');
-      return;
+    } else {
+      setMaxBalanceError('');
     }
     
-    setMaxBalanceError('');
     setMaxBalance(numValue);
   };
 
-  // 切换同步最高余额
+  // 切换同步云店余额
+  const handleToggleEditCloudBalance = (checked: boolean) => {
+    setIsEditCloudBalance(checked);
+    
+    if (checked && stockAmount > 0) {
+      setCloudBalance(stockAmount);
+      setCloudBalanceInputValue(String(stockAmount));
+      // 如果历史最高余额也是同步模式，也自动更新
+      if (isEditMaxBalance) {
+        setMaxBalance(stockAmount);
+        setMaxBalanceInputValue(String(stockAmount));
+      }
+    }
+  };
+
+  // 切换同步历史最高余额
   const handleToggleEditMaxBalance = (checked: boolean) => {
     setIsEditMaxBalance(checked);
     
-    if (checked && stockAmount > 0) {
-      setMaxBalance(stockAmount);
-      setMaxBalanceInputValue(String(stockAmount));
+    if (checked && cloudBalance > 0) {
+      setMaxBalance(cloudBalance);
+      setMaxBalanceInputValue(String(cloudBalance));
     }
   };
 
   // 确认进货
-  const handleConfirmStock = () => {
+  const handleConfirmStock = useCallback(() => {
     if (!currentLevel || !levelConfig) return;
     
     const numValue = parseInt(stockInputValue) || 0;
-    const stockValidation = validateStockAmount(numValue, levelConfig);
     
-    if (!stockValidation.valid) {
-      setStockError(stockValidation.error || '');
+    // 如果有输入进货额度，需要验证进货额度
+    if (numValue > 0) {
+      const stockValidation = validateStockAmount(numValue, levelConfig);
+      if (!stockValidation.valid) {
+        setStockError(stockValidation.error || '');
+        return;
+      }
+    }
+    
+    // 验证云店余额
+    if (cloudBalance > 0 && stockAmount > 0) {
+      const cloudBalanceValidation = validateCloudBalance(cloudBalance, stockAmount);
+      if (!cloudBalanceValidation.valid) {
+        setCloudBalanceError(cloudBalanceValidation.error || '');
+        return;
+      }
+    }
+    
+    // 验证历史最高余额
+    if (maxBalance > 0 && cloudBalance > 0) {
+      const maxBalanceValidation = validateMaxBalance(maxBalance, cloudBalance);
+      if (!maxBalanceValidation.valid) {
+        setMaxBalanceError(maxBalanceValidation.error || '');
+        return;
+      }
+    }
+    
+    // 确保至少有进货额度或云店余额之一
+    if (stockAmount === 0 && cloudBalance === 0) {
+      setStockError('请输入进货额度或云店余额');
       return;
     }
     
-    const maxBalanceValidation = validateMaxBalance(maxBalance, numValue);
-    if (!maxBalanceValidation.valid) {
-      setMaxBalanceError(maxBalanceValidation.error || '');
-      return;
-    }
+    // 使用云店余额作为基准计算（如果没有进货额度）
+    const calculationBalance = cloudBalance > 0 ? cloudBalance : stockAmount;
     
     // 生成销售数据
     const dailyCommission = Math.round(maxBalance * levelConfig.commissionRate);
     const dailyProfit = dailyCommission * (levelConfig.saleDiscount - levelConfig.stockDiscount);
-    const data = generateSalesData(numValue, dailyCommission, dailyProfit);
+    const data = generateSalesData(calculationBalance, dailyCommission, dailyProfit);
     setSalesData(data);
     
     setCurrentView('levelDetails');
-  };
+  }, [currentLevel, levelConfig, stockInputValue, cloudBalance, stockAmount, maxBalance]);
 
   // 查看销售详情
   const handleViewSalesDetails = () => {
@@ -168,18 +242,29 @@ export default function CloudShopSimulator() {
   const getDetailsData = () => {
     if (!levelConfig) return null;
     
-    const stockCost = Math.round(stockAmount * levelConfig.stockDiscount);
-    const dailyCommission = Math.round(maxBalance * levelConfig.commissionRate);
-    const completionDays = Math.ceil(stockAmount / dailyCommission);
-    const totalProfit = Math.round(stockAmount * (levelConfig.saleDiscount - levelConfig.stockDiscount));
+    // 使用云店余额作为基准计算（如果没有进货额度）
+    const calculationBalance = cloudBalance > 0 ? cloudBalance : stockAmount;
     
-    return { stockCost, dailyCommission, completionDays, totalProfit };
+    const stockCost = Math.round(calculationBalance * levelConfig.stockDiscount);
+    const dailyCommission = Math.round(maxBalance * levelConfig.commissionRate);
+    const completionDays = Math.ceil(calculationBalance / dailyCommission);
+    const totalProfit = Math.round(calculationBalance * (levelConfig.saleDiscount - levelConfig.stockDiscount));
+    
+    return { stockCost, dailyCommission, completionDays, totalProfit, calculationBalance };
   };
 
   const detailsData = getDetailsData();
 
+  // 处理Enter键
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && currentView === 'stockInput') {
+      e.preventDefault();
+      handleConfirmStock();
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100" onKeyDown={handleKeyDown}>
       {/* 顶部导航栏 */}
       <header className="bg-white shadow-md">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
@@ -262,6 +347,38 @@ export default function CloudShopSimulator() {
               </div>
 
               <div className="space-y-2">
+                <Label htmlFor="cloudBalance">
+                  云店余额
+                </Label>
+                <Input
+                  id="cloudBalance"
+                  type="number"
+                  placeholder="0"
+                  min="0"
+                  value={cloudBalanceInputValue}
+                  onChange={(e) => handleCloudBalanceInputChange(e.target.value)}
+                  disabled={isEditCloudBalance}
+                  className={cloudBalanceError ? 'border-red-500' : isEditCloudBalance ? 'bg-gray-100' : ''}
+                />
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="editCloudBalance"
+                    checked={isEditCloudBalance}
+                    onCheckedChange={handleToggleEditCloudBalance}
+                  />
+                  <Label
+                    htmlFor="editCloudBalance"
+                    className="text-sm font-normal cursor-pointer"
+                  >
+                    与进货额度同步
+                  </Label>
+                </div>
+                {cloudBalanceError && (
+                  <p className="text-sm text-red-500">{cloudBalanceError}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
                 <Label htmlFor="maxBalance">
                   云店历史最高余额
                 </Label>
@@ -285,7 +402,7 @@ export default function CloudShopSimulator() {
                     htmlFor="editMaxBalance"
                     className="text-sm font-normal cursor-pointer"
                   >
-                    与进货额度同步
+                    与云店余额同步
                   </Label>
                 </div>
                 {maxBalanceError && (
@@ -296,9 +413,14 @@ export default function CloudShopSimulator() {
               <Button
                 className="w-full h-14 text-lg"
                 onClick={handleConfirmStock}
-                disabled={!stockAmount || !!stockError || !!maxBalanceError}
+                disabled={
+                  (!stockAmount && !cloudBalance) || 
+                  (stockAmount > 0 && !!stockError) || 
+                  (cloudBalance > 0 && !!cloudBalanceError) ||
+                  (maxBalance > 0 && !!maxBalanceError)
+                }
               >
-                确认进货
+                确认进货 (Enter)
               </Button>
             </CardContent>
           </Card>
@@ -321,7 +443,7 @@ export default function CloudShopSimulator() {
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <p className="text-gray-600 mb-1">进货额度</p>
                   <p className="text-xl font-semibold text-gray-800">
-                    {stockAmount}⚡
+                    {detailsData.calculationBalance}⚡
                   </p>
                 </div>
                 <div className="bg-gray-50 p-4 rounded-lg">
@@ -457,9 +579,16 @@ export default function CloudShopSimulator() {
               <ol className="list-decimal list-inside text-gray-600 text-sm space-y-1">
                 <li>选择你的店铺等级</li>
                 <li>输入进货额度（必须是100的整数倍）</li>
-                <li>输入或确认云店历史最高余额</li>
-                <li>点击"确认进货"按钮</li>
+                <li>输入或确认云店余额（可手动输入或自动同步）</li>
+                <li>输入或确认云店历史最高余额（可手动输入或自动同步）</li>
+                <li>点击"确认进货"按钮或按Enter键</li>
               </ol>
+            </div>
+            <div>
+              <h4 className="font-semibold text-gray-700 mb-2">同步说明</h4>
+              <p className="text-gray-600 text-sm">
+                云店余额默认与进货额度同步，历史最高余额默认与云店余额同步。取消勾选后可手动输入。
+              </p>
             </div>
             <div>
               <h4 className="font-semibold text-gray-700 mb-2">结算规则</h4>

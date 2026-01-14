@@ -68,10 +68,18 @@ export function validateStockAmount(
   return { valid: true };
 }
 
+// 验证云店余额
+export function validateCloudBalance(cloudBalance: number, stockAmount: number): { valid: boolean; error?: string } {
+  if (cloudBalance < stockAmount) {
+    return { valid: false, error: '云店余额必须大于或等于进货额度' };
+  }
+  return { valid: true };
+}
+
 // 验证最高余额
-export function validateMaxBalance(maxBalance: number, stockAmount: number): { valid: boolean; error?: string } {
-  if (maxBalance < stockAmount) {
-    return { valid: false, error: '云店历史最高余额必须大于或等于进货额度' };
+export function validateMaxBalance(maxBalance: number, cloudBalance: number): { valid: boolean; error?: string } {
+  if (maxBalance < cloudBalance) {
+    return { valid: false, error: '云店历史最高余额必须大于或等于云店余额' };
   }
   return { valid: true };
 }

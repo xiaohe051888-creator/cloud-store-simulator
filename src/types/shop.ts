@@ -40,7 +40,9 @@ export interface SalesData {
 export interface AppState {
   currentLevel: ShopLevel | null;
   stockAmount: number;
-  maxBalance: number;
+  cloudBalance: number;  // 云店余额
+  maxBalance: number;     // 云店历史最高余额
   currentView: ViewType;
-  isEditMaxBalance: boolean;
+  isEditCloudBalance: boolean;  // 是否可手动编辑云店余额
+  isEditMaxBalance: boolean;   // 是否可手动编辑历史最高余额
 }

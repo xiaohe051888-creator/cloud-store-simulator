@@ -446,7 +446,7 @@ export default function CloudShopSimulator() {
     return Math.round(totalProfit);
   }, []);
 
-  // 复利计算函数（带预算）：考虑初始进货后的剩余预算
+  // 复利计算函数（带预算）：考虑额度限制、额度释放和回款复利
   const calculateCompoundProfitWithBudget = useCallback((
     budget: number,
     config: typeof shopLevelsConfig[ShopLevel],
@@ -460,11 +460,13 @@ export default function CloudShopSimulator() {
     const stockDiscount = config.stockDiscount;
     // 卖出比例
     const sellRatio = config.sellRatio;
+    // 店铺最高进货额度
+    const maxShopStock = config.maxStock;
 
     // 步骤1：计算初始进货额度（取100倍数）
     let initialStock = Math.round(budget / stockDiscount / 100) * 100;
     // 确保在店铺范围内
-    initialStock = Math.max(config.minStock, Math.min(config.maxStock, initialStock));
+    initialStock = Math.max(config.minStock, Math.min(maxShopStock, initialStock));
 
     // 计算初始进货成本
     let stockCost = Math.round(initialStock * stockDiscount);
@@ -478,8 +480,8 @@ export default function CloudShopSimulator() {
     // 剩余预算
     let remainingBudget = budget - stockCost;
 
-    // 当前剩余库存（可卖出额度）
-    let remainingStock = initialStock;
+    // 当前库存（可卖出额度）
+    let currentStock = initialStock;
 
     // 累计利润
     let totalProfit = 0;
@@ -489,36 +491,51 @@ export default function CloudShopSimulator() {
 
     // 遍历每一天（从第2天开始卖出）
     for (let day = 2; day <= period + 1; day++) {
-      // 检查今天是否有回款可以结算
+      // 步骤1：检查今天是否有回款可以结算
       const todaySettlement = settlementQueue.get(day) || 0;
+      
+      // 用回款进货（不受店铺最高进货额度限制）
       if (todaySettlement > 0) {
-        // 用回款 + 剩余预算进货
-        const availableFunds = todaySettlement + remainingBudget;
-        if (availableFunds > 0) {
-          const newStock = Math.round(availableFunds / stockDiscount);
-          if (newStock >= 100) {
-            // 计算新进货的成本
-            const newStockCost = newStock * stockDiscount;
-            // 如果新进货成本不超过可用资金
-            if (newStockCost <= availableFunds) {
+        const newStockFromSettlement = Math.round(todaySettlement / stockDiscount);
+        if (newStockFromSettlement >= 100) {
+          currentStock += newStockFromSettlement;
+        }
+      }
+
+      // 步骤2：用剩余预算进货（受店铺最高进货额度限制）
+      if (remainingBudget > 0) {
+        // 计算剩余可用额度 = 店铺最高进货额度 - 当前库存
+        const availableQuota = maxShopStock - currentStock;
+        
+        if (availableQuota > 0) {
+          // 用剩余预算能买到的最大额度
+          const maxStockByBudget = Math.round(remainingBudget / stockDiscount);
+          // 实际能进货的额度 = min(剩余预算能买的, 剩余可用额度)
+          const actualNewStock = Math.min(maxStockByBudget, availableQuota);
+          // 取100倍数
+          const roundedNewStock = Math.round(actualNewStock / 100) * 100;
+          
+          if (roundedNewStock >= 100) {
+            const newStockCost = Math.round(roundedNewStock * stockDiscount);
+            if (newStockCost <= remainingBudget) {
               remainingBudget -= newStockCost;
-              remainingStock += newStock;
+              currentStock += roundedNewStock;
             }
           }
         }
       }
 
-      // 如果还有库存，当天可以卖出
-      if (remainingStock > 0) {
+      // 步骤3：如果还有库存，当天可以卖出
+      if (currentStock > 0) {
         // 当天最大可卖出额度
         const maxDailySell = initialStock * sellRatio;
 
-        // 实际卖出额度 = min(剩余库存, 每日卖出额度)
-        const sellAmount = Math.min(remainingStock, maxDailySell);
+        // 实际卖出额度 = min(当前库存, 每日卖出额度)
+        const sellAmount = Math.min(currentStock, maxDailySell);
 
         if (sellAmount > 0) {
-          // 减少库存
-          remainingStock -= sellAmount;
+          // 减少库存（释放额度）
+          currentStock -= sellAmount;
 
           // 回款 = 卖出额度 × 销售折扣（95折）
           const settlementAmount = sellAmount * saleDiscount;
@@ -1742,12 +1759,23 @@ export default function CloudShopSimulator() {
             
             <div className="p-4 bg-gradient-to-r from-emerald-50 to-green-50 rounded-xl">
               <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                <span className="mr-2">💵</span> 预算充分利用
+                <span className="mr-2">💵</span> 额度管理
               </h4>
               <p className="text-gray-700 text-sm leading-relaxed">
-                按预算推荐时，系统会充分利用预算。初始进货后剩余预算会在第一天卖出后与回款一起立即进货，
-                实现预算最大化利用。例如：预算3600元，青铜店铺88折，进货3000额度（2640元），
-                第一天卖出600元后，回款570元+剩余预算960元=1530元，可立即进货1700额度（1496元）。
+                店铺有最高进货额度限制（如青铜3000额度）。初始进货不能超过此限制。
+                卖出后释放额度，剩余预算可以在额度内进货。回款进货不受最高额度限制（复利模式）。
+                例如：预算3600元，青铜店铺进货3000额度，卖出600后释放额度，剩余预算960元可继续进货。
+              </p>
+            </div>
+
+            <div className="p-4 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-xl">
+              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
+                <span className="mr-2">🔄</span> 复利机制
+              </h4>
+              <p className="text-gray-700 text-sm leading-relaxed">
+                库存有限，每天按卖出比例出货。如黑钻店铺（进货3600，卖出15%），
+                每天540，7天卖完。卖出后10天95折回款，回款立即进货增加库存。
+                回款进货不受店铺最高进货额度限制，实现真正的复利增长。
               </p>
             </div>
 

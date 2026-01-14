@@ -377,7 +377,7 @@ export default function CloudShopSimulator() {
     };
   }, [comparisonData]);
 
-  // 复利计算函数：模拟周期内的资金滚动
+  // 复利计算函数：模拟周期内的资金滚动（优化版）
   const calculateCompoundProfit = useCallback((
     initialStock: number,
     config: typeof shopLevelsConfig[ShopLevel],
@@ -397,58 +397,56 @@ export default function CloudShopSimulator() {
     // 利润率
     const profitRate = saleDiscount - stockDiscount;
 
+    // 每天记录：[进货额度, 开始卖出日, 结束日]
+    // 初始进货：第1天进货，第2天开始卖出
+    const stockRecords: Array<{ stock: number, startDay: number, endDay: number }> = [
+      { stock: initialStock, startDay: 2, endDay: period + 1 }
+    ];
+
+    // 回款队列：key是结算日期，value是回款金额
+    const settlementQueue: Map<number, number> = new Map();
+
     // 累计利润
     let totalProfit = 0;
 
-    // 每个进货记录：[进货额度, 进货日期]
-    // 从第1天开始有初始进货
-    const stockList: Array<{ stock: number, startDay: number }> = [
-      { stock: initialStock, startDay: 1 }
-    ];
-
-    // 每天的回款队列：key是结算日期，value是结算金额列表
-    const settlementQueue: Map<number, Array<{ stock: number, amount: number }>> = new Map();
-
     // 遍历每一天
     for (let day = 1; day <= period; day++) {
-      // 遍历所有进货，计算每天的利润和回款
-      for (const { stock, startDay } of stockList) {
-        // 进货后第二天开始卖出（startDay + 1）
-        if (day >= startDay + 1) {
-          // 计算当日回款
-          const dailyCommission = Math.round(stock * commissionRate);
+      // 遍历所有进货记录
+      for (let i = 0; i < stockRecords.length; i++) {
+        const record = stockRecords[i];
+
+        // 检查该进货是否在当天产生利润
+        if (day >= record.startDay && day < record.endDay) {
+          const dailyCommission = Math.round(record.stock * commissionRate);
           const dailyProfit = dailyCommission * profitRate;
 
           // 加上利润
           totalProfit += dailyProfit;
 
-          // 将回款加入结算队列（在 settlementDays 天后结算）
+          // 将回款加入结算队列
           const settlementDay = day + settlementDays;
-          const daySettlements = settlementQueue.get(settlementDay) || [];
-          daySettlements.push({ stock, amount: dailyCommission });
-          settlementQueue.set(settlementDay, daySettlements);
+          const existing = settlementQueue.get(settlementDay) || 0;
+          settlementQueue.set(settlementDay, existing + dailyCommission);
         }
       }
 
       // 检查今天是否有回款可以结算
-      const todaySettlements = settlementQueue.get(day) || [];
-      if (todaySettlements.length > 0) {
-        // 计算今天的总结算金额
-        let totalSettlementAmount = 0;
-        for (const { amount } of todaySettlements) {
-          totalSettlementAmount += amount;
-        }
-
+      const todaySettlement = settlementQueue.get(day) || 0;
+      if (todaySettlement > 0) {
         // 结算回款（打折）
-        const settledAmount = Math.round(totalSettlementAmount * settlementDiscount);
+        const settledAmount = Math.round(todaySettlement * settlementDiscount);
 
         // 用结算回来的钱继续进货
         const newStock = Math.round(settledAmount / stockDiscount);
 
         // 如果新进货额度有意义（大于100）
         if (newStock >= 100) {
-          // 添加新的进货记录（从第二天开始卖出）
-          stockList.push({ stock: newStock, startDay: day + 1 });
+          // 添加新的进货记录：结算当天进货，第二天开始卖出
+          stockRecords.push({
+            stock: newStock,
+            startDay: day + 2,
+            endDay: period + 1
+          });
         }
       }
     }

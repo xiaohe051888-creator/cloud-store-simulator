@@ -443,9 +443,9 @@ export default function CloudShopSimulator() {
                       />
 
                       {/* 主内容 */}
-                      <div className="flex items-center justify-between p-3 pl-5">
+                      <div className="flex items-center p-3 pl-5">
                         {/* 左侧：店铺名称 */}
-                        <div className="flex-1">
+                        <div className="w-32 flex-shrink-0">
                           <h3
                             className="text-lg font-bold"
                             style={{
@@ -456,8 +456,8 @@ export default function CloudShopSimulator() {
                           </h3>
                         </div>
 
-                        {/* 中间：提示信息 */}
-                        <div className="flex space-x-3">
+                        {/* 中间：提示信息（居中） */}
+                        <div className="flex-1 flex justify-center space-x-3">
                           <div className="flex items-center text-xs" style={{ color: '#6b7280' }}>
                             <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -479,12 +479,8 @@ export default function CloudShopSimulator() {
                         </div>
 
                         {/* 右侧：箭头图标 */}
-                        <div
-                          className="flex items-center justify-center w-10 h-10 rounded-full transition-transform duration-200 group-hover:scale-105"
-                          style={{
-                            backgroundColor: `${config.color}25`
-                          }}
-                        >
+                        <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full transition-transform duration-200 group-hover:scale-105"
+                             style={{ backgroundColor: `${config.color}25` }}>
                           <svg
                             className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-0.5"
                             fill="none"

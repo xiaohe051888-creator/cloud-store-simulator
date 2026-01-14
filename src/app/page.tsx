@@ -413,15 +413,17 @@ export default function CloudShopSimulator() {
       </header>
 
       {/* 主要内容区域 */}
-      <main className="container mx-auto px-4 pt-0 pb-4">
+      <main className="container mx-auto px-4 pt-2 pb-4">
         {/* 店铺选择界面 */}
         {currentView === 'shopSelection' && (
           <div className="max-w-3xl mx-auto">
             <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-0">
-              <CardContent className="pt-3 space-y-2">
-                <h2 className="text-base text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font-semibold">
+              <CardHeader className="pb-2 pt-2">
+                <CardTitle className="text-xl text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   请选择你的店铺等级
-                </h2>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
                 {(Object.keys(shopLevelsConfig) as ShopLevel[]).map((level) => {
                   const config = shopLevelsConfig[level];
                   return (

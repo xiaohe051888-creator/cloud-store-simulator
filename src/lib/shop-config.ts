@@ -11,7 +11,8 @@ export const shopLevelsConfig: Record<string, ShopLevelConfig> = {
     color: '#cd7f32',
     completionDays: 5,
     settlementDays: 10,      // 结算周期：卖出后10天回款
-    settlementDiscount: 0.95  // 结算折扣：95折回款
+    settlementDiscount: 0.95, // 结算折扣：95折回款
+    sellRatio: 0.10          // 卖出比例：10%
   },
   silver: {
     name: '白银店铺',
@@ -23,7 +24,8 @@ export const shopLevelsConfig: Record<string, ShopLevelConfig> = {
     color: '#757575',
     completionDays: 6,
     settlementDays: 10,
-    settlementDiscount: 0.95
+    settlementDiscount: 0.95,
+    sellRatio: 0.11
   },
   gold: {
     name: '黄金店铺',
@@ -35,7 +37,8 @@ export const shopLevelsConfig: Record<string, ShopLevelConfig> = {
     color: '#ffd700',
     completionDays: 7,
     settlementDays: 10,
-    settlementDiscount: 0.95
+    settlementDiscount: 0.95,
+    sellRatio: 0.12
   },
   platinum: {
     name: '铂金店铺',
@@ -47,7 +50,8 @@ export const shopLevelsConfig: Record<string, ShopLevelConfig> = {
     color: '#78909c',
     completionDays: 8,
     settlementDays: 10,
-    settlementDiscount: 0.95
+    settlementDiscount: 0.95,
+    sellRatio: 0.13
   },
   diamond: {
     name: '钻石店铺',
@@ -59,7 +63,8 @@ export const shopLevelsConfig: Record<string, ShopLevelConfig> = {
     color: '#00bcd4',
     completionDays: 9,
     settlementDays: 10,
-    settlementDiscount: 0.95
+    settlementDiscount: 0.95,
+    sellRatio: 0.14
   },
   blackdiamond: {
     name: '黑钻店铺',
@@ -71,7 +76,8 @@ export const shopLevelsConfig: Record<string, ShopLevelConfig> = {
     color: '#000000',
     completionDays: 10,
     settlementDays: 10,
-    settlementDiscount: 0.95
+    settlementDiscount: 0.95,
+    sellRatio: 0.15          // 卖出比例：15%
   },
   royal: {
     name: '至尊店铺',
@@ -83,6 +89,7 @@ export const shopLevelsConfig: Record<string, ShopLevelConfig> = {
     color: '#9c27b0',
     completionDays: 12,
     settlementDays: 10,
-    settlementDiscount: 0.95
+    settlementDiscount: 0.95,
+    sellRatio: 0.16
   }
 };

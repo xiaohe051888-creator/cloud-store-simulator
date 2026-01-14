@@ -377,7 +377,7 @@ export default function CloudShopSimulator() {
     };
   }, [comparisonData]);
 
-  // 复利计算函数：模拟周期内的资金滚动（正确版）
+  // 复利计算函数：根据卖出比例和结算周期计算周期内利润
   const calculateCompoundProfit = useCallback((
     initialStock: number,
     config: typeof shopLevelsConfig[ShopLevel],
@@ -385,74 +385,60 @@ export default function CloudShopSimulator() {
   ): number => {
     // 结算周期天数
     const settlementDays = config.settlementDays;
-    // 结算折扣
-    const settlementDiscount = config.settlementDiscount;
+    // 结算折扣（销售折扣）
+    const settlementDiscount = config.saleDiscount;
     // 进货折扣
     const stockDiscount = config.stockDiscount;
-    // 销售折扣
-    const saleDiscount = config.saleDiscount;
-    // 佣金率
-    const commissionRate = config.commissionRate;
+    // 卖出比例
+    const sellRatio = config.sellRatio;
 
-    // 利润率
-    const profitRate = saleDiscount - stockDiscount;
+    // 每日卖出额度 = 历史最高进货额度 × 卖出比例
+    let dailySellAmount = initialStock * sellRatio;
 
-    // 每天记录：[进货额度, 开始卖出日, 结束日]
-    // 初始进货：第1天进货，第2天开始卖出
-    const stockRecords: Array<{ stock: number, startDay: number, endDay: number }> = [
-      { stock: initialStock, startDay: 2, endDay: period + 1 }
-    ];
-
-    // 回款队列：key是结算日期，value是回款金额（包含本金+利润）
-    const settlementQueue: Map<number, number> = new Map();
+    // 历史最高进货额度
+    let maxStock = initialStock;
 
     // 累计利润
     let totalProfit = 0;
 
-    // 遍历每一天
-    for (let day = 1; day <= period; day++) {
-      // 计算当天的总进货额度（所有在有效期的进货）
-      let totalDailyStock = 0;
-      for (let i = 0; i < stockRecords.length; i++) {
-        const record = stockRecords[i];
-        // 检查该进货是否在当天有效
-        if (day >= record.startDay && day < record.endDay) {
-          totalDailyStock += record.stock;
-        }
-      }
+    // 回款队列：key是结算日期，value是回款金额
+    const settlementQueue: Map<number, number> = new Map();
 
-      // 根据总进货额度和店铺等级的佣金率计算当日回款
-      // 回款包含了本金和利润
-      const dailyCommission = Math.round(totalDailyStock * commissionRate);
+    // 遍历每一天（从第2天开始卖出）
+    for (let day = 2; day <= period + 1; day++) {
+      // 计算当日卖出额度
+      const sellAmount = dailySellAmount;
 
-      // 计算当日的利润（回款 × 利润率）
-      const dailyProfit = Math.round(dailyCommission * profitRate);
+      // 回款 = 卖出额度 × 销售折扣
+      const settlementAmount = sellAmount * settlementDiscount;
 
-      // 加上利润
+      // 进货成本 = 卖出额度 × 进货折扣
+      const stockCost = sellAmount * stockDiscount;
+
+      // 单日利润 = 回款 - 进货成本
+      const dailyProfit = settlementAmount - stockCost;
+
+      // 累计利润
       totalProfit += dailyProfit;
 
-      // 将回款（包含本金+利润）加入结算队列
+      // 将回款加入结算队列（10天后结算）
       const settlementDay = day + settlementDays;
       const existing = settlementQueue.get(settlementDay) || 0;
-      settlementQueue.set(settlementDay, existing + dailyCommission);
+      settlementQueue.set(settlementDay, existing + settlementAmount);
 
       // 检查今天是否有回款可以结算
       const todaySettlement = settlementQueue.get(day) || 0;
       if (todaySettlement > 0) {
-        // 结算回款（95折）：这个钱包含了本金和利润
-        const settledAmount = Math.round(todaySettlement * settlementDiscount);
+        // 复利进货额度 = 回款 / 进货折扣
+        const newStock = Math.round(todaySettlement / stockDiscount);
 
-        // 用结算回来的钱（包含本金+利润）继续进货
-        const newStock = Math.round(settledAmount / stockDiscount);
+        // 如果新进货额度有意义（大于100），且不超过店铺最大进货额度
+        if (newStock >= 100 && newStock > maxStock && newStock <= config.maxStock) {
+          // 更新历史最高进货额度
+          maxStock = newStock;
 
-        // 如果新进货额度有意义（大于100）
-        if (newStock >= 100) {
-          // 添加新的进货记录：结算当天进货，第二天开始卖出
-          stockRecords.push({
-            stock: newStock,
-            startDay: day + 1,
-            endDay: period + 1
-          });
+          // 更新每日卖出额度
+          dailySellAmount = maxStock * sellRatio;
         }
       }
     }
@@ -1629,7 +1615,10 @@ export default function CloudShopSimulator() {
                 <span className="mr-2">🔄</span> 复利计算
               </h4>
               <p className="text-gray-700 text-sm leading-relaxed">
-                智能推荐系统支持周期复利计算。输入周期（如15天），系统会自动模拟资金滚动：每天卖出获得回款，10天后以95折结算，结算后的钱立即继续进货，第二天继续卖出。这样可以最大化利用资金，实现复利增长。
+                智能推荐系统支持周期复利计算。每日卖出额度 = 历史最高进货额度 × 卖出比例。
+                例如黑钻店铺（进货3600，卖出比例15%），每天卖出540电费，第11天结算回款513元（95折），
+                进货成本448.2元（83折），利润64.8元。回款513元复利进货600额度，更新历史最高进货额度，
+                次日卖出额度随之增加，实现复利增长。
               </p>
             </div>
             
@@ -1638,7 +1627,8 @@ export default function CloudShopSimulator() {
                 <span className="mr-2">🧮</span> 利润计算
               </h4>
               <p className="text-gray-700 text-sm leading-relaxed">
-                利润 = 销售折扣 - 进货折扣，即每卖出100电费额度赚的利润。
+                每日利润 = （卖出额度 × 销售折扣） - （卖出额度 × 进货折扣）。
+                回款10天后结算，结算后资金立即复利进货，增加历史最高进货额度。
               </p>
             </div>
           </div>

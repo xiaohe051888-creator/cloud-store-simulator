@@ -30,6 +30,7 @@ export interface ShopLevelConfig {
   completionDays: number;
   settlementDays: number;      // 结算周期（天）
   settlementDiscount: number;   // 结算折扣
+  sellRatio: number;            // 卖出比例（每日卖出比例）
 }
 
 // 销售数据类型

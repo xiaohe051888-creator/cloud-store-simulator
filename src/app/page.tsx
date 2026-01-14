@@ -487,13 +487,25 @@ export default function CloudShopSimulator() {
 
         if (period > 0 && period <= 30) {
           // 考虑周期的推荐 - 使用复利计算
+          // 确保进货成本不超过预算
           stockCost = targetBudget;
+
+          // 计算进货额度（预算 / 进货折扣）
           recommendedStock = Math.round(stockCost / config.stockDiscount);
           recommendedStock = Math.round(recommendedStock / 100) * 100; // 取100的倍数
+
+          // 确保在店铺范围内
           recommendedStock = Math.max(config.minStock, Math.min(config.maxStock, recommendedStock));
 
           // 重新计算实际进货成本
-          const actualStockCost = Math.round(recommendedStock * config.stockDiscount);
+          let actualStockCost = Math.round(recommendedStock * config.stockDiscount);
+
+          // 如果进货成本超过预算，减少进货额度
+          while (actualStockCost > targetBudget && recommendedStock > config.minStock) {
+            recommendedStock -= 100;
+            actualStockCost = Math.round(recommendedStock * config.stockDiscount);
+          }
+
           stockCost = actualStockCost;
 
           // 使用复利计算周期内的总利润（考虑回款后继续进货）
@@ -510,14 +522,24 @@ export default function CloudShopSimulator() {
           matchReason = `周期${period}天复利利润: ${estimatedProfit}元`;
         } else {
           // 不考虑周期的推荐（原来的逻辑）
-          const clampedBudget = Math.min(Math.max(targetBudget, config.minStock), config.maxStock);
-          recommendedStock = Math.round(clampedBudget / 100) * 100; // 取100的倍数
+          // 根据预算计算进货额度
+          recommendedStock = Math.round(targetBudget / config.stockDiscount);
+          recommendedStock = Math.round(recommendedStock / 100) * 100; // 取100的倍数
 
           // 确保在范围内
           recommendedStock = Math.max(config.minStock, Math.min(config.maxStock, recommendedStock));
 
+          // 计算进货成本
+          let actualStockCost = Math.round(recommendedStock * config.stockDiscount);
+
+          // 如果进货成本超过预算，减少进货额度
+          while (actualStockCost > targetBudget && recommendedStock > config.minStock) {
+            recommendedStock -= 100;
+            actualStockCost = Math.round(recommendedStock * config.stockDiscount);
+          }
+
+          stockCost = actualStockCost;
           estimatedProfit = Math.round(recommendedStock * (config.saleDiscount - config.stockDiscount));
-          stockCost = Math.round(recommendedStock * config.stockDiscount);
           dailyCommission = Math.round(recommendedStock * config.commissionRate);
           completionDays = Math.ceil(recommendedStock / dailyCommission);
 
@@ -936,7 +958,7 @@ export default function CloudShopSimulator() {
                     className="focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all duration-200 h-12"
                   />
                   <p className="text-sm text-gray-500">
-                    系统将根据您的预算推荐最合适的店铺等级和进货额度
+                    系统将根据您的预算推荐最合适的店铺等级和进货额度（进货成本不超过预算）
                   </p>
                 </div>
               )}

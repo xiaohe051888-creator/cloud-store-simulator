@@ -345,6 +345,7 @@ export default function CloudShopSimulator() {
       minProfit,
       profitDiff,
       profitDiffRate: profitDiffRate + '%',
+      profitDiffText: `${profitDiff}元`,
       minLevelName: minItem?.levelName || ''
     };
   }, [comparisonData]);
@@ -766,7 +767,7 @@ export default function CloudShopSimulator() {
                             <h4 className="font-bold text-green-800 text-lg mb-1">推荐方案</h4>
                             <p className="text-green-700">
                               推荐您升级到<span className="font-bold text-green-900 mx-1" style={{ color: shopLevelsConfig[maxItem.level].color }}>{maxItem.levelName}</span>，
-                              同样的进货额度利润提升<span className="font-bold text-green-900 mx-1">{profitAnalysis.profitDiffRate}</span>
+                              同样的进货额度利润提升<span className="font-bold text-green-900 mx-1">{profitAnalysis.profitDiffText}</span>
                             </p>
                           </div>
                         </div>

@@ -448,7 +448,7 @@ export default function CloudShopSimulator() {
 
   // 推荐算法：根据预算或期望利润计算推荐方案
   const generateRecommendations = useCallback((): RecommendationResult[] => {
-    const results: RecommendationResult[] = [];
+    let results: RecommendationResult[] = [];
     const targetBudget = recommendInputType === 'budget' ? parseInt(recommendBudget) || 0 : 0;
     const targetProfit = recommendInputType === 'profit' ? parseInt(recommendProfit) || 0 : 0;
     const period = parseInt(recommendPeriod) || 0; // 周期天数，0表示不考虑周期
@@ -516,10 +516,9 @@ export default function CloudShopSimulator() {
           dailyCommission = Math.round(recommendedStock * config.commissionRate);
           completionDays = Math.ceil(recommendedStock / dailyCommission);
 
-          // 计算匹配度：考虑利润最大化
-          const profitRate = (config.saleDiscount - config.stockDiscount) / config.stockDiscount;
-          matchScore = (profitRate * 0.6 + (stockCost / targetBudget) * 0.4) * 100;
-          matchReason = `周期${period}天复利利润: ${estimatedProfit}元（进货成本${stockCost}元）`;
+          // 匹配度稍后在所有结果计算完后统一重新计算（基于利润最大化）
+          matchScore = 0; // 临时值，会被覆盖
+          matchReason = `周期${period}天复利利润${estimatedProfit}元（进货成本${stockCost}元）`;
         } else {
           // 不考虑周期的推荐 - 利润最大化算法
           // 在预算限制内找到使单次利润最大的进货额度
@@ -549,9 +548,8 @@ export default function CloudShopSimulator() {
           dailyCommission = Math.round(recommendedStock * config.commissionRate);
           completionDays = Math.ceil(recommendedStock / dailyCommission);
 
-          // 计算匹配度：考虑利润最大化
-          const profitRate = (config.saleDiscount - config.stockDiscount) / config.stockDiscount;
-          matchScore = (profitRate * 0.6 + (stockCost / targetBudget) * 0.4) * 100;
+          // 匹配度稍后在所有结果计算完后统一重新计算（基于利润最大化）
+          matchScore = 0; // 临时值，会被覆盖
           matchReason = `单次利润${estimatedProfit}元（进货成本${stockCost}元）`;
         }
 
@@ -694,7 +692,19 @@ export default function CloudShopSimulator() {
       }
     }
 
-    // 按匹配度排序
+    // 重新计算匹配度：以利润最大化为主
+    if (results.length > 0) {
+      // 找到全局最大利润
+      const maxGlobalProfit = Math.max(...results.map(r => r.estimatedProfit));
+
+      // 重新计算每个结果的匹配度：当前利润 / 全局最大利润
+      results = results.map(result => ({
+        ...result,
+        matchScore: maxGlobalProfit > 0 ? Math.round((result.estimatedProfit / maxGlobalProfit) * 100) : 0
+      }));
+    }
+
+    // 按匹配度（利润）排序
     return results.sort((a, b) => b.matchScore - a.matchScore);
   }, [recommendInputType, recommendBudget, recommendProfit, recommendPeriod]);
 

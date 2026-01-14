@@ -690,32 +690,30 @@ export default function CloudShopSimulator() {
         let completionDays: number;
 
         if (period > 0 && period <= 30) {
-          // 考虑周期的推荐 - 围绕目标利润找最接近的进货额度
-          // 遍历该等级所有进货额度，找到使复利利润最接近目标利润的进货额度
+          // 考虑周期的推荐 - 利润最大化模式
+          // 遍历该等级所有进货额度，找到使复利利润最大的进货额度
 
-          let minDiff = Infinity;
+          let maxProfit = -1;
           let bestStock = config.minStock;
 
           // 遍历所有进货额度（100倍数递增）
           for (let stock = config.minStock; stock <= config.maxStock; stock += 100) {
             const profit = calculateCompoundProfit(stock, config, period);
-            const diff = Math.abs(profit - targetProfit);
-            if (diff < minDiff) {
-              minDiff = diff;
+            if (profit > maxProfit) {
+              maxProfit = profit;
               bestStock = stock;
             }
           }
 
           recommendedStock = bestStock;
-          estimatedProfit = calculateCompoundProfit(recommendedStock, config, period);
+          estimatedProfit = maxProfit;
           stockCost = Math.round(recommendedStock * config.stockDiscount);
           dailyCommission = Math.round(recommendedStock * config.commissionRate);
           completionDays = Math.ceil(recommendedStock / dailyCommission);
 
-          // 匹配度：基于与目标利润的接近程度
-          const profitDiff = Math.abs(estimatedProfit - targetProfit);
-          matchScore = Math.max(0, (1 - profitDiff / targetProfit) * 100);
-          matchReason = `周期${period}天复利利润${estimatedProfit}元（目标: ${targetProfit}元）`;
+          // 匹配度稍后在所有结果计算完后统一重新计算（基于利润最大化）
+          matchScore = 0; // 临时值，会被覆盖
+          matchReason = `周期${period}天复利利润${estimatedProfit}元（进货成本${stockCost}元）`;
 
           results.push({
             level,
@@ -730,32 +728,30 @@ export default function CloudShopSimulator() {
             minProfit
           });
         } else {
-          // 不考虑周期的推荐 - 围绕目标利润找最接近的进货额度
-          // 遍历该等级所有进货额度，找到使单次利润最接近目标利润的进货额度
+          // 不考虑周期的推荐 - 利润最大化模式
+          // 遍历该等级所有进货额度，找到使单次利润最大的进货额度
 
-          let minDiff = Infinity;
+          let maxProfit = -1;
           let bestStock = config.minStock;
 
           // 遍历所有进货额度（100倍数递增）
           for (let stock = config.minStock; stock <= config.maxStock; stock += 100) {
             const profit = stock * (config.saleDiscount - config.stockDiscount);
-            const diff = Math.abs(profit - targetProfit);
-            if (diff < minDiff) {
-              minDiff = diff;
+            if (profit > maxProfit) {
+              maxProfit = profit;
               bestStock = stock;
             }
           }
 
           recommendedStock = bestStock;
-          estimatedProfit = Math.round(recommendedStock * (config.saleDiscount - config.stockDiscount));
+          estimatedProfit = Math.round(maxProfit);
           stockCost = Math.round(recommendedStock * config.stockDiscount);
           dailyCommission = Math.round(recommendedStock * config.commissionRate);
           completionDays = Math.ceil(recommendedStock / dailyCommission);
 
-          // 匹配度：基于与目标利润的接近程度
-          const profitDiff = Math.abs(estimatedProfit - targetProfit);
-          matchScore = Math.max(0, (1 - profitDiff / targetProfit) * 100);
-          matchReason = `单次利润${estimatedProfit}元（目标: ${targetProfit}元）`;
+          // 匹配度稍后在所有结果计算完后统一重新计算（基于利润最大化）
+          matchScore = 0; // 临时值，会被覆盖
+          matchReason = `单次利润${estimatedProfit}元（进货成本${stockCost}元）`;
 
           results.push({
             level,
@@ -773,8 +769,8 @@ export default function CloudShopSimulator() {
       }
     }
 
-    // 只对"按预算推荐"重新计算匹配度（基于利润最大化）
-    if (results.length > 0 && recommendInputType === 'budget') {
+    // 对所有推荐模式都重新计算匹配度（基于利润最大化）
+    if (results.length > 0) {
       // 找到全局最大利润
       const maxGlobalProfit = Math.max(...results.map(r => r.estimatedProfit));
 
@@ -785,13 +781,8 @@ export default function CloudShopSimulator() {
       }));
     }
 
-    // 按匹配度和利润排序：匹配度高的排前面，匹配度相同时利润高的排前面
-    return results.sort((a, b) => {
-      if (b.matchScore !== a.matchScore) {
-        return b.matchScore - a.matchScore;
-      }
-      return b.estimatedProfit - a.estimatedProfit;
-    });
+    // 按匹配度（利润）排序
+    return results.sort((a, b) => b.matchScore - a.matchScore);
   }, [recommendInputType, recommendBudget, recommendProfit, recommendPeriod, calculateCompoundProfit, calculateCompoundProfitWithBudget]);
 
   // 处理推荐查询
@@ -1776,10 +1767,16 @@ export default function CloudShopSimulator() {
               <h4 className="font-bold text-gray-800 mb-2 flex items-center">
                 <span className="mr-2">🧮</span> 利润计算
               </h4>
-              <p className="text-gray-700 text-sm leading-relaxed">
+              <p className="text-gray-700 text-sm leading-relaxed mb-2">
                 每日利润 = 卖出额度 × （销售折扣 - 进货折扣）。
                 黑钻83折进货、95折卖出，每卖出540元利润64.8元。
                 回款10天后结算，结算后资金立即进货，货卖完前新回款可增加库存。
+              </p>
+              <p className="text-gray-700 text-sm leading-relaxed">
+                <strong className="text-rose-700">推荐系统：</strong>所有推荐都基于利润最大化原则。
+                按预算推荐：在预算限制内找到使利润最大的进货额度。
+                按利润推荐：推荐每个店铺利润最大的方案，按利润从高到低排序。
+                匹配度 = （当前利润 / 全局最大利润）× 100。
               </p>
             </div>
           </div>

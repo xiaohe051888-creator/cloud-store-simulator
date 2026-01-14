@@ -690,62 +690,30 @@ export default function CloudShopSimulator() {
         let completionDays: number;
 
         if (period > 0 && period <= 30) {
-          // 考虑周期的推荐 - 使用复利计算
-          // 先计算最低和最高进货额度的复利利润
-          const minCompoundProfit = calculateCompoundProfit(config.minStock, config, period);
-          const maxCompoundProfit = calculateCompoundProfit(config.maxStock, config, period);
+          // 考虑周期的推荐 - 利润最大化模式
+          // 遍历该等级所有进货额度，找到使复利利润最大的进货额度
 
-          // 检查是否在该等级范围内
-          if (targetProfit < minCompoundProfit) {
-            // 目标利润低于该等级最低复利利润
-            recommendedStock = config.minStock;
-            estimatedProfit = minCompoundProfit;
-            const profitDiff = Math.abs(estimatedProfit - targetProfit);
-            matchScore = (1 - profitDiff / targetProfit) * 100;
-            matchReason = `最低复利利润: ${estimatedProfit}元（目标: ${targetProfit}元）`;
-          } else if (targetProfit > maxCompoundProfit) {
-            // 目标利润高于该等级最高复利利润
-            recommendedStock = config.maxStock;
-            estimatedProfit = maxCompoundProfit;
-            const profitDiff = Math.abs(estimatedProfit - targetProfit);
-            matchScore = Math.max(0, (1 - profitDiff / targetProfit) * 100);
-            matchReason = `最高复利利润: ${estimatedProfit}元（目标: ${targetProfit}元）`;
-          } else {
-            // 目标利润在该等级范围内，使用二分法找到最接近的进货额度
-            let low = config.minStock;
-            let high = config.maxStock;
-            let bestStock = config.minStock;
-            let minDiff = Infinity;
+          let maxProfit = -1;
+          let bestStock = config.minStock;
 
-            // 进行二分搜索（最多20次迭代）
-            for (let i = 0; i < 20; i++) {
-              const mid = Math.round((low + high) / 2);
-              const midProfit = calculateCompoundProfit(mid, config, period);
-              const diff = Math.abs(midProfit - targetProfit);
-
-              if (diff < minDiff) {
-                minDiff = diff;
-                bestStock = mid;
-              }
-
-              if (midProfit < targetProfit) {
-                low = mid + 100;
-              } else {
-                high = mid - 100;
-              }
+          // 遍历所有进货额度（100倍数递增）
+          for (let stock = config.minStock; stock <= config.maxStock; stock += 100) {
+            const profit = calculateCompoundProfit(stock, config, period);
+            if (profit > maxProfit) {
+              maxProfit = profit;
+              bestStock = stock;
             }
-
-            recommendedStock = bestStock;
-            recommendedStock = Math.round(recommendedStock / 100) * 100; // 取100的倍数
-            estimatedProfit = calculateCompoundProfit(recommendedStock, config, period);
-            const profitDiff = Math.abs(estimatedProfit - targetProfit);
-            matchScore = (1 - profitDiff / targetProfit) * 100;
-            matchReason = `周期${period}天复利利润: ${estimatedProfit}元`;
           }
 
+          recommendedStock = bestStock;
+          estimatedProfit = maxProfit;
           stockCost = Math.round(recommendedStock * config.stockDiscount);
           dailyCommission = Math.round(recommendedStock * config.commissionRate);
           completionDays = Math.ceil(recommendedStock / dailyCommission);
+
+          // 匹配度稍后在所有结果计算完后统一重新计算（基于利润最大化）
+          matchScore = 0; // 临时值，会被覆盖
+          matchReason = `周期${period}天复利利润${estimatedProfit}元（进货成本${stockCost}元）`;
 
           results.push({
             level,
@@ -760,37 +728,30 @@ export default function CloudShopSimulator() {
             minProfit
           });
         } else {
-          // 不考虑周期的推荐（原来的逻辑）
-          // 计算达到目标利润所需的进货额度
-          const requiredStock = Math.round(targetProfit / (config.saleDiscount - config.stockDiscount) / 100) * 100;
+          // 不考虑周期的推荐 - 利润最大化模式
+          // 遍历该等级所有进货额度，找到使单次利润最大的进货额度
 
-          // 检查是否在该等级范围内
-          if (requiredStock < config.minStock) {
-            // 目标利润低于该等级最低利润
-            recommendedStock = config.minStock;
-            estimatedProfit = minProfit;
-            const profitDiff = Math.abs(estimatedProfit - targetProfit);
-            matchScore = (1 - profitDiff / targetProfit) * 100;
-            matchReason = `最低利润: ${minProfit}元（目标: ${targetProfit}元）`;
-          } else if (requiredStock > config.maxStock) {
-            // 目标利润高于该等级最高利润
-            recommendedStock = config.maxStock;
-            estimatedProfit = maxProfit;
-            const profitDiff = Math.abs(estimatedProfit - targetProfit);
-            matchScore = Math.max(0, (1 - profitDiff / targetProfit) * 100);
-            matchReason = `最高利润: ${maxProfit}元（目标: ${targetProfit}元）`;
-          } else {
-            // 目标利润在该等级范围内
-            recommendedStock = requiredStock;
-            estimatedProfit = Math.round(recommendedStock * (config.saleDiscount - config.stockDiscount));
-            const profitDiff = Math.abs(estimatedProfit - targetProfit);
-            matchScore = (1 - profitDiff / targetProfit) * 100;
-            matchReason = `预期利润: ${estimatedProfit}元（目标: ${targetProfit}元）`;
+          let maxProfit = -1;
+          let bestStock = config.minStock;
+
+          // 遍历所有进货额度（100倍数递增）
+          for (let stock = config.minStock; stock <= config.maxStock; stock += 100) {
+            const profit = stock * (config.saleDiscount - config.stockDiscount);
+            if (profit > maxProfit) {
+              maxProfit = profit;
+              bestStock = stock;
+            }
           }
 
+          recommendedStock = bestStock;
+          estimatedProfit = Math.round(maxProfit);
           stockCost = Math.round(recommendedStock * config.stockDiscount);
           dailyCommission = Math.round(recommendedStock * config.commissionRate);
           completionDays = Math.ceil(recommendedStock / dailyCommission);
+
+          // 匹配度稍后在所有结果计算完后统一重新计算（基于利润最大化）
+          matchScore = 0; // 临时值，会被覆盖
+          matchReason = `单次利润${estimatedProfit}元（进货成本${stockCost}元）`;
 
           results.push({
             level,

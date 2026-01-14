@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -21,6 +21,7 @@ import {
   TableRow,
   TableFooter,
 } from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
 import {
   shopLevelsConfig,
 } from '@/lib/shop-config';
@@ -31,7 +32,7 @@ import {
   validateCloudBalance,
   validateMaxBalance,
 } from '@/lib/shop-utils';
-import type { ShopLevel, ViewType, SalesData } from '@/types/shop';
+import type { ShopLevel, ViewType, SalesData, ComparisonData } from '@/types/shop';
 
 export default function CloudShopSimulator() {
   // 应用状态
@@ -43,6 +44,10 @@ export default function CloudShopSimulator() {
   const [isEditCloudBalance, setIsEditCloudBalance] = useState<boolean>(true);  // 云店余额是否可编辑
   const [isEditMaxBalance, setIsEditMaxBalance] = useState<boolean>(true);      // 最高余额是否可编辑
   const [isHelpOpen, setIsHelpOpen] = useState<boolean>(false);
+  
+  // 对比数据状态
+  const [comparisonData, setComparisonData] = useState<ComparisonData[]>([]);
+  const [currentComparisonId, setCurrentComparisonId] = useState<string | null>(null);
   
   // 输入框值状态
   const [stockInputValue, setStockInputValue] = useState<string>('');
@@ -75,6 +80,7 @@ export default function CloudShopSimulator() {
     setStockError('');
     setCloudBalanceError('');
     setMaxBalanceError('');
+    setCurrentComparisonId(null);
   };
 
   // 返回店铺选择
@@ -230,8 +236,57 @@ export default function CloudShopSimulator() {
     const data = generateSalesData(calculationBalance, dailyCommission, dailyProfit);
     setSalesData(data);
     
+    setCurrentComparisonId(null);
     setCurrentView('levelDetails');
   }, [currentLevel, levelConfig, stockInputValue, cloudBalance, stockAmount, maxBalance]);
+
+  // 加入对比
+  const handleAddToComparison = useCallback(() => {
+    if (!currentLevel || !levelConfig) return;
+    
+    // 使用云店余额作为基准计算（如果没有进货额度）
+    const calculationBalance = cloudBalance > 0 ? cloudBalance : stockAmount;
+    const stockCost = Math.round(calculationBalance * levelConfig.stockDiscount);
+    const dailyCommission = Math.round(maxBalance * levelConfig.commissionRate);
+    const completionDays = Math.ceil(calculationBalance / dailyCommission);
+    const totalProfit = Math.round(calculationBalance * (levelConfig.saleDiscount - levelConfig.stockDiscount));
+    
+    const newComparison: ComparisonData = {
+      id: Date.now().toString(),
+      level: currentLevel,
+      levelName: levelConfig.name,
+      stockAmount: calculationBalance,
+      cloudBalance: cloudBalance,
+      maxBalance: maxBalance,
+      stockCost: stockCost,
+      dailyCommission: dailyCommission,
+      completionDays: completionDays,
+      totalProfit: totalProfit,
+      createdAt: new Date().toLocaleString('zh-CN')
+    };
+    
+    setComparisonData(prev => [...prev, newComparison]);
+    setCurrentComparisonId(newComparison.id);
+  }, [currentLevel, levelConfig, cloudBalance, stockAmount, maxBalance]);
+
+  // 查看对比
+  const handleViewComparison = () => {
+    setCurrentView('comparison');
+  };
+
+  // 删除对比数据
+  const handleDeleteComparison = (id: string) => {
+    setComparisonData(prev => prev.filter(item => item.id !== id));
+    if (currentComparisonId === id) {
+      setCurrentComparisonId(null);
+    }
+  };
+
+  // 清空所有对比数据
+  const handleClearComparison = () => {
+    setComparisonData([]);
+    setCurrentComparisonId(null);
+  };
 
   // 查看销售详情
   const handleViewSalesDetails = () => {
@@ -255,6 +310,18 @@ export default function CloudShopSimulator() {
 
   const detailsData = getDetailsData();
 
+  // 计算最优值
+  const optimalValues = useMemo(() => {
+    if (comparisonData.length === 0) return null;
+    
+    return {
+      maxProfit: Math.max(...comparisonData.map(d => d.totalProfit)),
+      minCost: Math.min(...comparisonData.map(d => d.stockCost)),
+      minDays: Math.min(...comparisonData.map(d => d.completionDays)),
+      maxDailyCommission: Math.max(...comparisonData.map(d => d.dailyCommission)),
+    };
+  }, [comparisonData]);
+
   // 处理Enter键
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && currentView === 'stockInput') {
@@ -270,6 +337,15 @@ export default function CloudShopSimulator() {
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-800">云店模拟器</h1>
           <div className="flex items-center space-x-4">
+            {comparisonData.length > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleViewComparison}
+              >
+                查看对比 ({comparisonData.length})
+              </Button>
+            )}
             <Button
               variant="ghost"
               size="icon"
@@ -475,12 +551,21 @@ export default function CloudShopSimulator() {
                 </div>
               </div>
 
-              <Button
-                className="w-full h-12"
-                onClick={handleViewSalesDetails}
-              >
-                查看销售详情
-              </Button>
+              <div className="flex gap-3">
+                <Button
+                  className="flex-1 h-12"
+                  onClick={handleAddToComparison}
+                  disabled={currentComparisonId !== null}
+                >
+                  {currentComparisonId ? '✓ 已加入对比' : '加入对比'}
+                </Button>
+                <Button
+                  className="flex-1 h-12"
+                  onClick={handleViewSalesDetails}
+                >
+                  查看销售详情
+                </Button>
+              </div>
 
               <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
                 <p className="text-sm text-blue-700">
@@ -559,6 +644,115 @@ export default function CloudShopSimulator() {
             </CardContent>
           </Card>
         )}
+
+        {/* 数据对比界面 */}
+        {currentView === 'comparison' && (
+          <Card className="max-w-4xl mx-auto">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails}>
+                  ←
+                </Button>
+                <CardTitle className="text-2xl">数据对比详情</CardTitle>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleClearComparison}
+                  disabled={comparisonData.length === 0}
+                >
+                  清空对比
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {comparisonData.length === 0 ? (
+                <div className="text-center py-12 text-gray-500">
+                  <p className="text-lg mb-2">暂无对比数据</p>
+                  <p className="text-sm">请先确认进货，然后点击"加入对比"按钮</p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="text-center">店铺等级</TableHead>
+                        <TableHead className="text-center">进货额度⚡</TableHead>
+                        <TableHead className="text-center">云店余额⚡</TableHead>
+                        <TableHead className="text-center">历史最高⚡</TableHead>
+                        <TableHead className="text-center">进货成本(元)</TableHead>
+                        <TableHead className="text-center">每日代缴⚡</TableHead>
+                        <TableHead className="text-center">完成天数</TableHead>
+                        <TableHead className="text-center">总利润(元)</TableHead>
+                        <TableHead className="text-center">创建时间</TableHead>
+                        <TableHead className="text-center">操作</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {comparisonData.map((item) => {
+                        const levelConfig = shopLevelsConfig[item.level];
+                        const isMaxProfit = optimalValues?.maxProfit === item.totalProfit;
+                        const isMinCost = optimalValues?.minCost === item.stockCost;
+                        const isMinDays = optimalValues?.minDays === item.completionDays;
+                        const isMaxDaily = optimalValues?.maxDailyCommission === item.dailyCommission;
+                        
+                        return (
+                          <TableRow key={item.id} className={currentComparisonId === item.id ? 'bg-blue-50' : ''}>
+                            <TableCell className="text-center font-medium" style={{ color: levelConfig.color }}>
+                              {item.levelName}
+                            </TableCell>
+                            <TableCell className="text-center">{item.stockAmount}</TableCell>
+                            <TableCell className="text-center">{item.cloudBalance}</TableCell>
+                            <TableCell className="text-center">{item.maxBalance}</TableCell>
+                            <TableCell className="text-center">
+                              {item.stockCost}
+                              {isMinCost && <Badge className="ml-2 bg-green-500">最优</Badge>}
+                            </TableCell>
+                            <TableCell className="text-center">
+                              {item.dailyCommission}
+                              {isMaxDaily && <Badge className="ml-2 bg-green-500">最高</Badge>}
+                            </TableCell>
+                            <TableCell className="text-center">
+                              {item.completionDays}
+                              {isMinDays && <Badge className="ml-2 bg-green-500">最快</Badge>}
+                            </TableCell>
+                            <TableCell className="text-center font-bold">
+                              {item.totalProfit}
+                              {isMaxProfit && <Badge className="ml-2 bg-green-500">最高</Badge>}
+                            </TableCell>
+                            <TableCell className="text-center text-xs text-gray-500">
+                              {item.createdAt}
+                            </TableCell>
+                            <TableCell className="text-center">
+                              <Button
+                                variant="destructive"
+                                size="sm"
+                                onClick={() => handleDeleteComparison(item.id)}
+                              >
+                                删除
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
+
+              {comparisonData.length > 0 && (
+                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                  <h4 className="font-semibold text-gray-700 mb-2">对比分析</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• 总利润最高：{optimalValues?.maxProfit}元</li>
+                    <li>• 进货成本最低：{optimalValues?.minCost}元</li>
+                    <li>• 完成天数最快：{optimalValues?.minDays}天</li>
+                    <li>• 每日代缴最高：{optimalValues?.maxDailyCommission}⚡</li>
+                  </ul>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
       </main>
 
       {/* 帮助模态框 */}
@@ -588,6 +782,12 @@ export default function CloudShopSimulator() {
               <h4 className="font-semibold text-gray-700 mb-2">同步说明</h4>
               <p className="text-gray-600 text-sm">
                 云店余额默认与进货额度同步，历史最高余额默认与云店余额同步。取消勾选后可手动输入。
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-gray-700 mb-2">数据对比功能</h4>
+              <p className="text-gray-600 text-sm">
+                确认进货后，点击"加入对比"按钮可将当前方案加入对比列表。点击"查看对比"可查看所有对比方案，系统会自动标注最优方案（最高利润、最低成本、最快完成、最高代缴）。
               </p>
             </div>
             <div>

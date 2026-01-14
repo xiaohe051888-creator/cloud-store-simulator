@@ -13,7 +13,8 @@ export type ViewType =
   | 'shopSelection'
   | 'stockInput'
   | 'levelDetails'
-  | 'salesDetails';
+  | 'salesDetails'
+  | 'comparison';
 
 // 店铺配置类型
 export interface ShopLevelConfig {
@@ -45,4 +46,19 @@ export interface AppState {
   currentView: ViewType;
   isEditCloudBalance: boolean;  // 是否可手动编辑云店余额
   isEditMaxBalance: boolean;   // 是否可手动编辑历史最高余额
+}
+
+// 对比数据类型
+export interface ComparisonData {
+  id: string;
+  level: ShopLevel;
+  levelName: string;
+  stockAmount: number;
+  cloudBalance: number;
+  maxBalance: number;
+  stockCost: number;
+  dailyCommission: number;
+  completionDays: number;
+  totalProfit: number;
+  createdAt: string;
 }

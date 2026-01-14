@@ -66,6 +66,7 @@ export default function CloudShopSimulator() {
   const [recommendInputType, setRecommendInputType] = useState<'budget' | 'profit'>('budget');
   const [recommendBudget, setRecommendBudget] = useState<string>('');
   const [recommendProfit, setRecommendProfit] = useState<string>('');
+  const [recommendPeriod, setRecommendPeriod] = useState<string>(''); // 周期（天），1-30
   const [recommendResults, setRecommendResults] = useState<RecommendationResult[]>([]);
 
   // 获取当前等级配置
@@ -381,6 +382,7 @@ export default function CloudShopSimulator() {
     const results: RecommendationResult[] = [];
     const targetBudget = recommendInputType === 'budget' ? parseInt(recommendBudget) || 0 : 0;
     const targetProfit = recommendInputType === 'profit' ? parseInt(recommendProfit) || 0 : 0;
+    const period = parseInt(recommendPeriod) || 0; // 周期天数，0表示不考虑周期
 
     // 遍历所有店铺等级，计算推荐方案
     for (const [level, config] of Object.entries(shopLevelsConfig) as [ShopLevel, typeof shopLevelsConfig[ShopLevel]][]) {
@@ -409,25 +411,57 @@ export default function CloudShopSimulator() {
       if (recommendInputType === 'budget') {
         // 根据预算推荐
         if (targetBudget <= 0) continue;
-        
-        // 找到最接近预算的进货额度（在等级范围内）
-        const clampedBudget = Math.min(Math.max(targetBudget, config.minStock), config.maxStock);
-        recommendedStock = Math.round(clampedBudget / 100) * 100; // 取100的倍数
-        
-        // 确保在范围内
-        recommendedStock = Math.max(config.minStock, Math.min(config.maxStock, recommendedStock));
-        
-        estimatedProfit = Math.round(recommendedStock * (config.saleDiscount - config.stockDiscount));
-        const stockCost = Math.round(recommendedStock * config.stockDiscount);
-        const dailyCommission = Math.round(recommendedStock * config.commissionRate);
-        const completionDays = Math.ceil(recommendedStock / dailyCommission);
 
-        // 计算匹配度：考虑预算匹配程度和利润率
-        const budgetMatch = 1 - Math.abs(stockCost - targetBudget) / Math.max(targetBudget, 1);
-        const profitRate = (config.saleDiscount - config.stockDiscount) / config.stockDiscount;
-        matchScore = (budgetMatch * 0.7 + profitRate * 0.3) * 100;
-        matchReason = `预算匹配: ${stockCost}元（目标: ${targetBudget}元）`;
-        
+        let stockCost: number;
+        let dailyCommission: number;
+        let completionDays: number;
+
+        if (period > 0 && period <= 30) {
+          // 考虑周期的推荐
+          stockCost = targetBudget;
+          recommendedStock = Math.round(stockCost / config.stockDiscount);
+          recommendedStock = Math.round(recommendedStock / 100) * 100; // 取100的倍数
+          recommendedStock = Math.max(config.minStock, Math.min(config.maxStock, recommendedStock));
+
+          // 重新计算实际进货成本
+          const actualStockCost = Math.round(recommendedStock * config.stockDiscount);
+          stockCost = actualStockCost;
+
+          // 计算周期内的利润
+          dailyCommission = Math.round(recommendedStock * config.commissionRate);
+          const dailyProfit = dailyCommission * (config.saleDiscount - config.stockDiscount);
+          const estimatedPeriodProfit = Math.round(dailyProfit * period);
+
+          // 完成天数
+          completionDays = Math.ceil(recommendedStock / dailyCommission);
+
+          estimatedProfit = estimatedPeriodProfit;
+
+          // 计算匹配度：考虑预算匹配程度和利润率
+          const budgetMatch = 1 - Math.abs(actualStockCost - targetBudget) / Math.max(targetBudget, 1);
+          const profitRate = (config.saleDiscount - config.stockDiscount) / config.stockDiscount;
+          matchScore = (budgetMatch * 0.7 + profitRate * 0.3) * 100;
+          matchReason = `周期${period}天利润: ${estimatedProfit}元`;
+        } else {
+          // 不考虑周期的推荐（原来的逻辑）
+          const clampedBudget = Math.min(Math.max(targetBudget, config.minStock), config.maxStock);
+          recommendedStock = Math.round(clampedBudget / 100) * 100; // 取100的倍数
+
+          // 确保在范围内
+          recommendedStock = Math.max(config.minStock, Math.min(config.maxStock, recommendedStock));
+
+          estimatedProfit = Math.round(recommendedStock * (config.saleDiscount - config.stockDiscount));
+          stockCost = Math.round(recommendedStock * config.stockDiscount);
+          dailyCommission = Math.round(recommendedStock * config.commissionRate);
+          completionDays = Math.ceil(recommendedStock / dailyCommission);
+
+          // 计算匹配度：考虑预算匹配程度和利润率
+          const budgetMatch = 1 - Math.abs(stockCost - targetBudget) / Math.max(targetBudget, 1);
+          const profitRate = (config.saleDiscount - config.stockDiscount) / config.stockDiscount;
+          matchScore = (budgetMatch * 0.7 + profitRate * 0.3) * 100;
+          matchReason = `预算匹配: ${stockCost}元（目标: ${targetBudget}元）`;
+        }
+
         results.push({
           level,
           levelName: config.name,
@@ -443,56 +477,117 @@ export default function CloudShopSimulator() {
       } else {
         // 根据期望利润推荐
         if (targetProfit <= 0) continue;
-        
-        // 计算达到目标利润所需的进货额度
-        const requiredStock = Math.round(targetProfit / (config.saleDiscount - config.stockDiscount) / 100) * 100;
-        
-        // 检查是否在该等级范围内
-        if (requiredStock < config.minStock) {
-          // 目标利润低于该等级最低利润
-          recommendedStock = config.minStock;
-          estimatedProfit = minProfit;
-          const profitDiff = Math.abs(estimatedProfit - targetProfit);
-          matchScore = (1 - profitDiff / targetProfit) * 100;
-          matchReason = `最低利润: ${minProfit}元（目标: ${targetProfit}元）`;
-        } else if (requiredStock > config.maxStock) {
-          // 目标利润高于该等级最高利润
-          recommendedStock = config.maxStock;
-          estimatedProfit = maxProfit;
-          const profitDiff = Math.abs(estimatedProfit - targetProfit);
-          matchScore = Math.max(0, (1 - profitDiff / targetProfit) * 100);
-          matchReason = `最高利润: ${maxProfit}元（目标: ${targetProfit}元）`;
+
+        let stockCost: number;
+        let dailyCommission: number;
+        let completionDays: number;
+
+        if (period > 0 && period <= 30) {
+          // 考虑周期的推荐
+          const dailyTargetProfit = targetProfit / period;
+
+          // 计算达到目标每日利润所需的进货额度
+          const dailyCommissionRate = config.commissionRate;
+          const profitPerUnit = dailyCommissionRate * (config.saleDiscount - config.stockDiscount);
+          const requiredStock = Math.round(dailyTargetProfit / profitPerUnit / 100) * 100;
+
+          // 检查是否在该等级范围内
+          if (requiredStock < config.minStock) {
+            // 目标利润低于该等级最低利润
+            recommendedStock = config.minStock;
+            dailyCommission = Math.round(recommendedStock * config.commissionRate);
+            const dailyProfit = dailyCommission * (config.saleDiscount - config.stockDiscount);
+            estimatedProfit = Math.round(dailyProfit * period);
+            const profitDiff = Math.abs(estimatedProfit - targetProfit);
+            matchScore = (1 - profitDiff / targetProfit) * 100;
+            matchReason = `最低利润: ${estimatedProfit}元（目标: ${targetProfit}元）`;
+          } else if (requiredStock > config.maxStock) {
+            // 目标利润高于该等级最高利润
+            recommendedStock = config.maxStock;
+            dailyCommission = Math.round(recommendedStock * config.commissionRate);
+            const dailyProfit = dailyCommission * (config.saleDiscount - config.stockDiscount);
+            estimatedProfit = Math.round(dailyProfit * period);
+            const profitDiff = Math.abs(estimatedProfit - targetProfit);
+            matchScore = Math.max(0, (1 - profitDiff / targetProfit) * 100);
+            matchReason = `最高利润: ${estimatedProfit}元（目标: ${targetProfit}元）`;
+          } else {
+            // 目标利润在该等级范围内
+            recommendedStock = requiredStock;
+            dailyCommission = Math.round(recommendedStock * config.commissionRate);
+            const dailyProfit = dailyCommission * (config.saleDiscount - config.stockDiscount);
+            estimatedProfit = Math.round(dailyProfit * period);
+            const profitDiff = Math.abs(estimatedProfit - targetProfit);
+            matchScore = (1 - profitDiff / targetProfit) * 100;
+            matchReason = `周期${period}天利润: ${estimatedProfit}元`;
+          }
+
+          stockCost = Math.round(recommendedStock * config.stockDiscount);
+          completionDays = Math.ceil(recommendedStock / dailyCommission);
+
+          results.push({
+            level,
+            levelName: config.name,
+            recommendedStock,
+            stockCost,
+            estimatedProfit,
+            completionDays,
+            matchScore: Math.round(matchScore * 100) / 100,
+            matchReason,
+            maxProfit,
+            minProfit
+          });
         } else {
-          // 目标利润在该等级范围内
-          recommendedStock = requiredStock;
-          estimatedProfit = Math.round(recommendedStock * (config.saleDiscount - config.stockDiscount));
-          const profitDiff = Math.abs(estimatedProfit - targetProfit);
-          matchScore = (1 - profitDiff / targetProfit) * 100;
-          matchReason = `预期利润: ${estimatedProfit}元（目标: ${targetProfit}元）`;
+          // 不考虑周期的推荐（原来的逻辑）
+          // 计算达到目标利润所需的进货额度
+          const requiredStock = Math.round(targetProfit / (config.saleDiscount - config.stockDiscount) / 100) * 100;
+
+          // 检查是否在该等级范围内
+          if (requiredStock < config.minStock) {
+            // 目标利润低于该等级最低利润
+            recommendedStock = config.minStock;
+            estimatedProfit = minProfit;
+            const profitDiff = Math.abs(estimatedProfit - targetProfit);
+            matchScore = (1 - profitDiff / targetProfit) * 100;
+            matchReason = `最低利润: ${minProfit}元（目标: ${targetProfit}元）`;
+          } else if (requiredStock > config.maxStock) {
+            // 目标利润高于该等级最高利润
+            recommendedStock = config.maxStock;
+            estimatedProfit = maxProfit;
+            const profitDiff = Math.abs(estimatedProfit - targetProfit);
+            matchScore = Math.max(0, (1 - profitDiff / targetProfit) * 100);
+            matchReason = `最高利润: ${maxProfit}元（目标: ${targetProfit}元）`;
+          } else {
+            // 目标利润在该等级范围内
+            recommendedStock = requiredStock;
+            estimatedProfit = Math.round(recommendedStock * (config.saleDiscount - config.stockDiscount));
+            const profitDiff = Math.abs(estimatedProfit - targetProfit);
+            matchScore = (1 - profitDiff / targetProfit) * 100;
+            matchReason = `预期利润: ${estimatedProfit}元（目标: ${targetProfit}元）`;
+          }
+
+          stockCost = Math.round(recommendedStock * config.stockDiscount);
+          dailyCommission = Math.round(recommendedStock * config.commissionRate);
+          completionDays = Math.ceil(recommendedStock / dailyCommission);
+
+          results.push({
+            level,
+            levelName: config.name,
+            recommendedStock,
+            stockCost,
+            estimatedProfit,
+            completionDays,
+            matchScore: Math.round(matchScore * 100) / 100,
+            matchReason,
+            maxProfit,
+            minProfit
+          });
         }
-        
-        const stockCost = Math.round(recommendedStock * config.stockDiscount);
-        const dailyCommission = Math.round(recommendedStock * config.commissionRate);
-        const completionDays = Math.ceil(recommendedStock / dailyCommission);
-        
-        results.push({
-          level,
-          levelName: config.name,
-          recommendedStock,
-          stockCost,
-          estimatedProfit,
-          completionDays,
-          matchScore: Math.round(matchScore * 100) / 100,
-          matchReason,
-          maxProfit,
-          minProfit
-        });
       }
     }
 
     // 按匹配度排序
     return results.sort((a, b) => b.matchScore - a.matchScore);
-  }, [recommendInputType, recommendBudget, recommendProfit]);
+  }, [recommendInputType, recommendBudget, recommendProfit, recommendPeriod]);
 
   // 处理推荐查询
   const handleRecommend = useCallback(() => {
@@ -786,14 +881,34 @@ export default function CloudShopSimulator() {
                 </div>
               )}
 
+              {/* 周期输入 */}
+              <div className="space-y-2">
+                <Label htmlFor="recommendPeriod" className="text-sm font-medium text-gray-700">
+                  周期天数（可选）
+                </Label>
+                <Input
+                  id="recommendPeriod"
+                  type="number"
+                  placeholder="留空则按完整销售周期计算"
+                  min="1"
+                  max="30"
+                  value={recommendPeriod}
+                  onChange={(e) => setRecommendPeriod(e.target.value)}
+                  className="focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 h-12"
+                />
+                <p className="text-sm text-gray-500">
+                  输入1-30天的周期，系统将根据周期计算推荐方案（留空则按完整销售周期计算）
+                </p>
+              </div>
+
               <Button
                 className="w-full h-12 sm:h-14 text-base sm:text-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl"
                 onClick={handleRecommend}
-                disabled={(
-                  recommendInputType === 'budget' && (!recommendBudget || parseInt(recommendBudget) <= 0)
-                ) || (
-                  recommendInputType === 'profit' && (!recommendProfit || parseInt(recommendProfit) <= 0)
-                )}
+                disabled={
+                  (recommendInputType === 'budget' && (!recommendBudget || parseInt(recommendBudget) <= 0)) ||
+                  (recommendInputType === 'profit' && (!recommendProfit || parseInt(recommendProfit) <= 0)) ||
+                  (recommendPeriod !== '' && (parseInt(recommendPeriod) < 1 || parseInt(recommendPeriod) > 30))
+                }
               >
                 生成推荐方案 (Enter)
               </Button>
@@ -804,6 +919,7 @@ export default function CloudShopSimulator() {
                 <ul className="text-xs sm:text-sm text-purple-700 space-y-1 list-disc list-inside">
                   <li>按预算推荐：系统会根据您的预算，推荐最匹配的进货额度和店铺等级</li>
                   <li>按利润推荐：系统会根据您的期望利润，推荐能够达到该利润的店铺等级</li>
+                  <li>周期选项：输入1-30天的周期，系统将根据周期计算推荐方案（留空则按完整销售周期计算）</li>
                   <li>推荐结果按匹配度从高到低排序，您可以选择任意方案直接开始模拟</li>
                 </ul>
               </div>

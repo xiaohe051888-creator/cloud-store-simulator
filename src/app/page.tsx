@@ -397,66 +397,58 @@ export default function CloudShopSimulator() {
     // 利润率
     const profitRate = saleDiscount - stockDiscount;
 
-    // 进货成本
-    const stockCost = Math.round(initialStock * stockDiscount);
-
-    // 每日回款金额（卖出回款）
-    const dailyCommission = Math.round(initialStock * commissionRate);
-
-    // 每日利润
-    const dailyProfit = dailyCommission * profitRate;
-
     // 累计利润
     let totalProfit = 0;
 
-    // 待结算队列：[回款金额, 结算日期]
-    // 存储每天的回款记录，key是结算日期，value是该日结算的金额
-    const settlementQueue: Map<number, number> = new Map();
+    // 每个进货记录：[进货额度, 进货日期]
+    // 从第1天开始有初始进货
+    const stockList: Array<{ stock: number, startDay: number }> = [
+      { stock: initialStock, startDay: 1 }
+    ];
+
+    // 每天的回款队列：key是结算日期，value是结算金额列表
+    const settlementQueue: Map<number, Array<{ stock: number, amount: number }>> = new Map();
 
     // 遍历每一天
     for (let day = 1; day <= period; day++) {
-      // 当天卖出，获得利润
-      totalProfit += dailyProfit;
+      // 遍历所有进货，计算每天的利润和回款
+      for (const { stock, startDay } of stockList) {
+        // 进货后第二天开始卖出（startDay + 1）
+        if (day >= startDay + 1) {
+          // 计算当日回款
+          const dailyCommission = Math.round(stock * commissionRate);
+          const dailyProfit = dailyCommission * profitRate;
 
-      // 将当天的回款加入结算队列（在 settlementDays 天后结算）
-      const settlementDay = day + settlementDays;
-      const currentDaySettlements = settlementQueue.get(settlementDay) || 0;
-      settlementQueue.set(settlementDay, currentDaySettlements + dailyCommission);
+          // 加上利润
+          totalProfit += dailyProfit;
+
+          // 将回款加入结算队列（在 settlementDays 天后结算）
+          const settlementDay = day + settlementDays;
+          const daySettlements = settlementQueue.get(settlementDay) || [];
+          daySettlements.push({ stock, amount: dailyCommission });
+          settlementQueue.set(settlementDay, daySettlements);
+        }
+      }
 
       // 检查今天是否有回款可以结算
-      const todaySettlement = settlementQueue.get(day) || 0;
-      if (todaySettlement > 0) {
+      const todaySettlements = settlementQueue.get(day) || [];
+      if (todaySettlements.length > 0) {
+        // 计算今天的总结算金额
+        let totalSettlementAmount = 0;
+        for (const { amount } of todaySettlements) {
+          totalSettlementAmount += amount;
+        }
+
         // 结算回款（打折）
-        const settledAmount = Math.round(todaySettlement * settlementDiscount);
+        const settledAmount = Math.round(totalSettlementAmount * settlementDiscount);
 
         // 用结算回来的钱继续进货
         const newStock = Math.round(settledAmount / stockDiscount);
 
         // 如果新进货额度有意义（大于100）
         if (newStock >= 100) {
-          // 新进货的成本
-          const newStockCost = Math.round(newStock * stockDiscount);
-
-          // 新进货的每日回款
-          const newDailyCommission = Math.round(newStock * commissionRate);
-
-          // 新进货的每日利润
-          const newDailyProfit = newDailyCommission * profitRate;
-
-          // 从第二天开始，新进货开始产生回款和利润
-          // 注意：当天结算的钱进货后，第二天才卖出
-
-          // 遍历剩余天数，加上新进货的利润
-          const remainingDays = period - day;
-          for (let futureDay = day + 1; futureDay <= period; futureDay++) {
-            // 加上新进货的每日利润
-            totalProfit += newDailyProfit;
-
-            // 将新进货的回款加入结算队列
-            const newSettlementDay = futureDay + settlementDays;
-            const currentDayNewSettlements = settlementQueue.get(newSettlementDay) || 0;
-            settlementQueue.set(newSettlementDay, currentDayNewSettlements + newDailyCommission);
-          }
+          // 添加新的进货记录（从第二天开始卖出）
+          stockList.push({ stock: newStock, startDay: day + 1 });
         }
       }
     }

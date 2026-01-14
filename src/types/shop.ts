@@ -28,6 +28,8 @@ export interface ShopLevelConfig {
   saleDiscount: number;
   color: string;
   completionDays: number;
+  settlementDays: number;      // 结算周期（天）
+  settlementDiscount: number;   // 结算折扣
 }
 
 // 销售数据类型

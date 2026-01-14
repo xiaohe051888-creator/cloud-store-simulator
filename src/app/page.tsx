@@ -377,6 +377,93 @@ export default function CloudShopSimulator() {
     };
   }, [comparisonData]);
 
+  // 复利计算函数：模拟周期内的资金滚动
+  const calculateCompoundProfit = useCallback((
+    initialStock: number,
+    config: typeof shopLevelsConfig[ShopLevel],
+    period: number
+  ): number => {
+    // 结算周期天数
+    const settlementDays = config.settlementDays;
+    // 结算折扣
+    const settlementDiscount = config.settlementDiscount;
+    // 进货折扣
+    const stockDiscount = config.stockDiscount;
+    // 销售折扣
+    const saleDiscount = config.saleDiscount;
+    // 佣金率
+    const commissionRate = config.commissionRate;
+
+    // 利润率
+    const profitRate = saleDiscount - stockDiscount;
+
+    // 进货成本
+    const stockCost = Math.round(initialStock * stockDiscount);
+
+    // 每日回款金额（卖出回款）
+    const dailyCommission = Math.round(initialStock * commissionRate);
+
+    // 每日利润
+    const dailyProfit = dailyCommission * profitRate;
+
+    // 累计利润
+    let totalProfit = 0;
+
+    // 待结算队列：[回款金额, 结算日期]
+    // 存储每天的回款记录，key是结算日期，value是该日结算的金额
+    const settlementQueue: Map<number, number> = new Map();
+
+    // 遍历每一天
+    for (let day = 1; day <= period; day++) {
+      // 当天卖出，获得利润
+      totalProfit += dailyProfit;
+
+      // 将当天的回款加入结算队列（在 settlementDays 天后结算）
+      const settlementDay = day + settlementDays;
+      const currentDaySettlements = settlementQueue.get(settlementDay) || 0;
+      settlementQueue.set(settlementDay, currentDaySettlements + dailyCommission);
+
+      // 检查今天是否有回款可以结算
+      const todaySettlement = settlementQueue.get(day) || 0;
+      if (todaySettlement > 0) {
+        // 结算回款（打折）
+        const settledAmount = Math.round(todaySettlement * settlementDiscount);
+
+        // 用结算回来的钱继续进货
+        const newStock = Math.round(settledAmount / stockDiscount);
+
+        // 如果新进货额度有意义（大于100）
+        if (newStock >= 100) {
+          // 新进货的成本
+          const newStockCost = Math.round(newStock * stockDiscount);
+
+          // 新进货的每日回款
+          const newDailyCommission = Math.round(newStock * commissionRate);
+
+          // 新进货的每日利润
+          const newDailyProfit = newDailyCommission * profitRate;
+
+          // 从第二天开始，新进货开始产生回款和利润
+          // 注意：当天结算的钱进货后，第二天才卖出
+
+          // 遍历剩余天数，加上新进货的利润
+          const remainingDays = period - day;
+          for (let futureDay = day + 1; futureDay <= period; futureDay++) {
+            // 加上新进货的每日利润
+            totalProfit += newDailyProfit;
+
+            // 将新进货的回款加入结算队列
+            const newSettlementDay = futureDay + settlementDays;
+            const currentDayNewSettlements = settlementQueue.get(newSettlementDay) || 0;
+            settlementQueue.set(newSettlementDay, currentDayNewSettlements + newDailyCommission);
+          }
+        }
+      }
+    }
+
+    return Math.round(totalProfit);
+  }, []);
+
   // 推荐算法：根据预算或期望利润计算推荐方案
   const generateRecommendations = useCallback((): RecommendationResult[] => {
     const results: RecommendationResult[] = [];
@@ -417,7 +504,7 @@ export default function CloudShopSimulator() {
         let completionDays: number;
 
         if (period > 0 && period <= 30) {
-          // 考虑周期的推荐
+          // 考虑周期的推荐 - 使用复利计算
           stockCost = targetBudget;
           recommendedStock = Math.round(stockCost / config.stockDiscount);
           recommendedStock = Math.round(recommendedStock / 100) * 100; // 取100的倍数
@@ -427,21 +514,18 @@ export default function CloudShopSimulator() {
           const actualStockCost = Math.round(recommendedStock * config.stockDiscount);
           stockCost = actualStockCost;
 
-          // 计算周期内的利润
-          dailyCommission = Math.round(recommendedStock * config.commissionRate);
-          const dailyProfit = dailyCommission * (config.saleDiscount - config.stockDiscount);
-          const estimatedPeriodProfit = Math.round(dailyProfit * period);
+          // 使用复利计算周期内的总利润（考虑回款后继续进货）
+          estimatedProfit = calculateCompoundProfit(recommendedStock, config, period);
 
           // 完成天数
+          dailyCommission = Math.round(recommendedStock * config.commissionRate);
           completionDays = Math.ceil(recommendedStock / dailyCommission);
-
-          estimatedProfit = estimatedPeriodProfit;
 
           // 计算匹配度：考虑预算匹配程度和利润率
           const budgetMatch = 1 - Math.abs(actualStockCost - targetBudget) / Math.max(targetBudget, 1);
           const profitRate = (config.saleDiscount - config.stockDiscount) / config.stockDiscount;
           matchScore = (budgetMatch * 0.7 + profitRate * 0.3) * 100;
-          matchReason = `周期${period}天利润: ${estimatedProfit}元`;
+          matchReason = `周期${period}天复利利润: ${estimatedProfit}元`;
         } else {
           // 不考虑周期的推荐（原来的逻辑）
           const clampedBudget = Math.min(Math.max(targetBudget, config.minStock), config.maxStock);
@@ -483,45 +567,61 @@ export default function CloudShopSimulator() {
         let completionDays: number;
 
         if (period > 0 && period <= 30) {
-          // 考虑周期的推荐
-          const dailyTargetProfit = targetProfit / period;
-
-          // 计算达到目标每日利润所需的进货额度
-          const dailyCommissionRate = config.commissionRate;
-          const profitPerUnit = dailyCommissionRate * (config.saleDiscount - config.stockDiscount);
-          const requiredStock = Math.round(dailyTargetProfit / profitPerUnit / 100) * 100;
+          // 考虑周期的推荐 - 使用复利计算
+          // 先计算最低和最高进货额度的复利利润
+          const minCompoundProfit = calculateCompoundProfit(config.minStock, config, period);
+          const maxCompoundProfit = calculateCompoundProfit(config.maxStock, config, period);
 
           // 检查是否在该等级范围内
-          if (requiredStock < config.minStock) {
-            // 目标利润低于该等级最低利润
+          if (targetProfit < minCompoundProfit) {
+            // 目标利润低于该等级最低复利利润
             recommendedStock = config.minStock;
-            dailyCommission = Math.round(recommendedStock * config.commissionRate);
-            const dailyProfit = dailyCommission * (config.saleDiscount - config.stockDiscount);
-            estimatedProfit = Math.round(dailyProfit * period);
+            estimatedProfit = minCompoundProfit;
             const profitDiff = Math.abs(estimatedProfit - targetProfit);
             matchScore = (1 - profitDiff / targetProfit) * 100;
-            matchReason = `最低利润: ${estimatedProfit}元（目标: ${targetProfit}元）`;
-          } else if (requiredStock > config.maxStock) {
-            // 目标利润高于该等级最高利润
+            matchReason = `最低复利利润: ${estimatedProfit}元（目标: ${targetProfit}元）`;
+          } else if (targetProfit > maxCompoundProfit) {
+            // 目标利润高于该等级最高复利利润
             recommendedStock = config.maxStock;
-            dailyCommission = Math.round(recommendedStock * config.commissionRate);
-            const dailyProfit = dailyCommission * (config.saleDiscount - config.stockDiscount);
-            estimatedProfit = Math.round(dailyProfit * period);
+            estimatedProfit = maxCompoundProfit;
             const profitDiff = Math.abs(estimatedProfit - targetProfit);
             matchScore = Math.max(0, (1 - profitDiff / targetProfit) * 100);
-            matchReason = `最高利润: ${estimatedProfit}元（目标: ${targetProfit}元）`;
+            matchReason = `最高复利利润: ${estimatedProfit}元（目标: ${targetProfit}元）`;
           } else {
-            // 目标利润在该等级范围内
-            recommendedStock = requiredStock;
-            dailyCommission = Math.round(recommendedStock * config.commissionRate);
-            const dailyProfit = dailyCommission * (config.saleDiscount - config.stockDiscount);
-            estimatedProfit = Math.round(dailyProfit * period);
+            // 目标利润在该等级范围内，使用二分法找到最接近的进货额度
+            let low = config.minStock;
+            let high = config.maxStock;
+            let bestStock = config.minStock;
+            let minDiff = Infinity;
+
+            // 进行二分搜索（最多20次迭代）
+            for (let i = 0; i < 20; i++) {
+              const mid = Math.round((low + high) / 2);
+              const midProfit = calculateCompoundProfit(mid, config, period);
+              const diff = Math.abs(midProfit - targetProfit);
+
+              if (diff < minDiff) {
+                minDiff = diff;
+                bestStock = mid;
+              }
+
+              if (midProfit < targetProfit) {
+                low = mid + 100;
+              } else {
+                high = mid - 100;
+              }
+            }
+
+            recommendedStock = bestStock;
+            recommendedStock = Math.round(recommendedStock / 100) * 100; // 取100的倍数
+            estimatedProfit = calculateCompoundProfit(recommendedStock, config, period);
             const profitDiff = Math.abs(estimatedProfit - targetProfit);
             matchScore = (1 - profitDiff / targetProfit) * 100;
-            matchReason = `周期${period}天利润: ${estimatedProfit}元`;
+            matchReason = `周期${period}天复利利润: ${estimatedProfit}元`;
           }
 
           stockCost = Math.round(recommendedStock * config.stockDiscount);
+          dailyCommission = Math.round(recommendedStock * config.commissionRate);
           completionDays = Math.ceil(recommendedStock / dailyCommission);
 
           results.push({
@@ -1525,6 +1625,15 @@ export default function CloudShopSimulator() {
               </h4>
               <p className="text-gray-700 text-sm leading-relaxed">
                 进货第二天自动开始卖出，结算时间为卖出时间+10天。例如：12月20日卖出的电费，12月30日以95折结算回来本金和利润。
+              </p>
+            </div>
+
+            <div className="p-4 bg-gradient-to-r from-indigo-50 to-violet-50 rounded-xl">
+              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
+                <span className="mr-2">🔄</span> 复利计算
+              </h4>
+              <p className="text-gray-700 text-sm leading-relaxed">
+                智能推荐系统支持周期复利计算。输入周期（如15天），系统会自动模拟资金滚动：每天卖出获得回款，10天后以95折结算，结算后的钱立即继续进货，第二天继续卖出。这样可以最大化利用资金，实现复利增长。
               </p>
             </div>
             

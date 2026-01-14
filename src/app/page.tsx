@@ -377,7 +377,7 @@ export default function CloudShopSimulator() {
     };
   }, [comparisonData]);
 
-  // 复利计算函数：模拟周期内的资金滚动（优化版）
+  // 复利计算函数：模拟周期内的资金滚动（正确版）
   const calculateCompoundProfit = useCallback((
     initialStock: number,
     config: typeof shopLevelsConfig[ShopLevel],
@@ -411,24 +411,28 @@ export default function CloudShopSimulator() {
 
     // 遍历每一天
     for (let day = 1; day <= period; day++) {
-      // 遍历所有进货记录
+      // 计算当天的总进货额度（所有在有效期的进货）
+      let totalDailyStock = 0;
       for (let i = 0; i < stockRecords.length; i++) {
         const record = stockRecords[i];
-
-        // 检查该进货是否在当天产生利润
+        // 检查该进货是否在当天有效
         if (day >= record.startDay && day < record.endDay) {
-          const dailyCommission = Math.round(record.stock * commissionRate);
-          const dailyProfit = dailyCommission * profitRate;
-
-          // 加上利润
-          totalProfit += dailyProfit;
-
-          // 将回款加入结算队列
-          const settlementDay = day + settlementDays;
-          const existing = settlementQueue.get(settlementDay) || 0;
-          settlementQueue.set(settlementDay, existing + dailyCommission);
+          totalDailyStock += record.stock;
         }
       }
+
+      // 根据总进货额度和店铺等级的佣金率计算当日回款和利润
+      // 关键：每天卖出的额度取决于历史最高余额（即总进货额度），而不是单个进货
+      const dailyCommission = Math.round(totalDailyStock * commissionRate);
+      const dailyProfit = dailyCommission * profitRate;
+
+      // 加上利润
+      totalProfit += dailyProfit;
+
+      // 将回款加入结算队列
+      const settlementDay = day + settlementDays;
+      const existing = settlementQueue.get(settlementDay) || 0;
+      settlementQueue.set(settlementDay, existing + dailyCommission);
 
       // 检查今天是否有回款可以结算
       const todaySettlement = settlementQueue.get(day) || 0;
@@ -444,7 +448,7 @@ export default function CloudShopSimulator() {
           // 添加新的进货记录：结算当天进货，第二天开始卖出
           stockRecords.push({
             stock: newStock,
-            startDay: day + 2,
+            startDay: day + 1,
             endDay: period + 1
           });
         }

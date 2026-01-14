@@ -721,17 +721,8 @@ export default function CloudShopSimulator() {
                             <TableRow key={item.id} className={
                               isCurrent ? 'bg-blue-50' : ''
                             }>
-                              <TableCell className="text-center">
-                                <div className="flex flex-col items-center space-y-2">
-                                  <span className="font-medium" style={{ color: levelConfig.color }}>
-                                    {item.levelName}
-                                  </span>
-                                  {isMaxProfit && profitAnalysis && (
-                                    <div className="bg-green-100 text-green-700 text-xs px-3 py-1.5 rounded-full border border-green-300 max-w-[200px]">
-                                      推荐您升级到{item.levelName}，同样的进货额度利润提升{profitAnalysis.profitDiffRate}
-                                    </div>
-                                  )}
-                                </div>
+                              <TableCell className="text-center font-medium" style={{ color: levelConfig.color }}>
+                                {item.levelName}
                               </TableCell>
                               <TableCell className="text-center">{item.stockAmount}</TableCell>
                               <TableCell className="text-center">
@@ -758,6 +749,30 @@ export default function CloudShopSimulator() {
                       </TableBody>
                     </Table>
                   </div>
+
+                  {/* 推荐信息卡片 */}
+                  {maxProfitId && profitAnalysis && (() => {
+                    const maxItem = comparisonData.find(d => d.id === maxProfitId);
+                    if (!maxItem) return null;
+                    return (
+                      <div className="mt-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border-l-4 border-green-500">
+                        <div className="flex items-start space-x-3">
+                          <div className="flex-shrink-0">
+                            <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                            </svg>
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-bold text-green-800 text-lg mb-1">推荐方案</h4>
+                            <p className="text-green-700">
+                              推荐您升级到<span className="font-bold text-green-900 mx-1" style={{ color: shopLevelsConfig[maxItem.level].color }}>{maxItem.levelName}</span>，
+                              同样的进货额度利润提升<span className="font-bold text-green-900 mx-1">{profitAnalysis.profitDiffRate}</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })()}
 
                   {profitAnalysis && (
                     <div className="mt-6 p-6 bg-gray-50 rounded-lg">

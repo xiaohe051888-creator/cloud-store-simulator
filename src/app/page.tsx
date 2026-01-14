@@ -690,30 +690,32 @@ export default function CloudShopSimulator() {
         let completionDays: number;
 
         if (period > 0 && period <= 30) {
-          // 考虑周期的推荐 - 利润最大化模式
-          // 遍历该等级所有进货额度，找到使复利利润最大的进货额度
+          // 考虑周期的推荐 - 围绕目标利润找最接近的进货额度
+          // 遍历该等级所有进货额度，找到使复利利润最接近目标利润的进货额度
 
-          let maxProfit = -1;
+          let minDiff = Infinity;
           let bestStock = config.minStock;
 
           // 遍历所有进货额度（100倍数递增）
           for (let stock = config.minStock; stock <= config.maxStock; stock += 100) {
             const profit = calculateCompoundProfit(stock, config, period);
-            if (profit > maxProfit) {
-              maxProfit = profit;
+            const diff = Math.abs(profit - targetProfit);
+            if (diff < minDiff) {
+              minDiff = diff;
               bestStock = stock;
             }
           }
 
           recommendedStock = bestStock;
-          estimatedProfit = maxProfit;
+          estimatedProfit = calculateCompoundProfit(recommendedStock, config, period);
           stockCost = Math.round(recommendedStock * config.stockDiscount);
           dailyCommission = Math.round(recommendedStock * config.commissionRate);
           completionDays = Math.ceil(recommendedStock / dailyCommission);
 
-          // 匹配度稍后在所有结果计算完后统一重新计算（基于利润最大化）
-          matchScore = 0; // 临时值，会被覆盖
-          matchReason = `周期${period}天复利利润${estimatedProfit}元（进货成本${stockCost}元）`;
+          // 匹配度：基于与目标利润的接近程度
+          const profitDiff = Math.abs(estimatedProfit - targetProfit);
+          matchScore = Math.max(0, (1 - profitDiff / targetProfit) * 100);
+          matchReason = `周期${period}天复利利润${estimatedProfit}元（目标: ${targetProfit}元）`;
 
           results.push({
             level,
@@ -728,30 +730,32 @@ export default function CloudShopSimulator() {
             minProfit
           });
         } else {
-          // 不考虑周期的推荐 - 利润最大化模式
-          // 遍历该等级所有进货额度，找到使单次利润最大的进货额度
+          // 不考虑周期的推荐 - 围绕目标利润找最接近的进货额度
+          // 遍历该等级所有进货额度，找到使单次利润最接近目标利润的进货额度
 
-          let maxProfit = -1;
+          let minDiff = Infinity;
           let bestStock = config.minStock;
 
           // 遍历所有进货额度（100倍数递增）
           for (let stock = config.minStock; stock <= config.maxStock; stock += 100) {
             const profit = stock * (config.saleDiscount - config.stockDiscount);
-            if (profit > maxProfit) {
-              maxProfit = profit;
+            const diff = Math.abs(profit - targetProfit);
+            if (diff < minDiff) {
+              minDiff = diff;
               bestStock = stock;
             }
           }
 
           recommendedStock = bestStock;
-          estimatedProfit = Math.round(maxProfit);
+          estimatedProfit = Math.round(recommendedStock * (config.saleDiscount - config.stockDiscount));
           stockCost = Math.round(recommendedStock * config.stockDiscount);
           dailyCommission = Math.round(recommendedStock * config.commissionRate);
           completionDays = Math.ceil(recommendedStock / dailyCommission);
 
-          // 匹配度稍后在所有结果计算完后统一重新计算（基于利润最大化）
-          matchScore = 0; // 临时值，会被覆盖
-          matchReason = `单次利润${estimatedProfit}元（进货成本${stockCost}元）`;
+          // 匹配度：基于与目标利润的接近程度
+          const profitDiff = Math.abs(estimatedProfit - targetProfit);
+          matchScore = Math.max(0, (1 - profitDiff / targetProfit) * 100);
+          matchReason = `单次利润${estimatedProfit}元（目标: ${targetProfit}元）`;
 
           results.push({
             level,
@@ -769,8 +773,8 @@ export default function CloudShopSimulator() {
       }
     }
 
-    // 重新计算匹配度：以利润最大化为主
-    if (results.length > 0) {
+    // 只对"按预算推荐"重新计算匹配度（基于利润最大化）
+    if (results.length > 0 && recommendInputType === 'budget') {
       // 找到全局最大利润
       const maxGlobalProfit = Math.max(...results.map(r => r.estimatedProfit));
 
@@ -781,8 +785,13 @@ export default function CloudShopSimulator() {
       }));
     }
 
-    // 按匹配度（利润）排序
-    return results.sort((a, b) => b.matchScore - a.matchScore);
+    // 按匹配度和利润排序：匹配度高的排前面，匹配度相同时利润高的排前面
+    return results.sort((a, b) => {
+      if (b.matchScore !== a.matchScore) {
+        return b.matchScore - a.matchScore;
+      }
+      return b.estimatedProfit - a.estimatedProfit;
+    });
   }, [recommendInputType, recommendBudget, recommendProfit, recommendPeriod, calculateCompoundProfit, calculateCompoundProfitWithBudget]);
 
   // 处理推荐查询

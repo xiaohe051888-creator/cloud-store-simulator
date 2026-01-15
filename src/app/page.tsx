@@ -392,14 +392,12 @@ export default function CloudShopSimulator() {
       }
     }
 
-    // 计算基准：用于进货成本计算，优先使用进货额度，如果没有则使用云店余额
+    // 计算基准：数据对比页面所有计算都基于进货额度
     const calculationBalance = stockAmount > 0 ? stockAmount : cloudBalance;
 
-    // 云店总余额 = 进货额度 + 云店余额，用于销售数据和总利润计算
-    const cloudTotalBalance = stockAmount + cloudBalance;
-
+    // 数据对比页面：每日代缴额度也基于进货额度计算
+    const dailyCommission = Math.round(calculationBalance * levelConfig.commissionRate);
     const stockCost = Math.round(calculationBalance * levelConfig.stockDiscount);
-    const dailyCommission = Math.round(maxBalance * levelConfig.commissionRate);
     const completionDays = Math.ceil(calculationBalance / dailyCommission);
     const totalProfit = Math.round(calculationBalance * (levelConfig.saleDiscount - levelConfig.stockDiscount));
 

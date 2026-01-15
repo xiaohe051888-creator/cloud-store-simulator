@@ -55,6 +55,9 @@ export default function CloudShopSimulator() {
   const cloudBalanceRef = useRef<HTMLInputElement>(null);
   const stockAmountRef = useRef<HTMLInputElement>(null);
   const maxBalanceRef = useRef<HTMLInputElement>(null);
+
+  // 销售详情表格滚动容器引用
+  const salesDetailsScrollRef = useRef<HTMLDivElement>(null);
   
   // 推荐系统输入框引用
   const recommendBudgetRef = useRef<HTMLInputElement>(null);
@@ -1786,8 +1789,41 @@ export default function CloudShopSimulator() {
                 <div className="w-12" />
               </div>
             </CardHeader>
-            <CardContent className="px-6 pb-6">
-              <div className="overflow-x-auto -mx-6 px-6 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+            <CardContent className="px-6 pb-6 relative">
+              {/* 左右滑动箭头 - 移动端显示 */}
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  if (salesDetailsScrollRef.current) {
+                    salesDetailsScrollRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+                  }
+                }}
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:hidden bg-white/90 backdrop-blur-sm shadow-lg rounded-full border border-blue-200 active:scale-90 transition-all duration-200 hover:bg-blue-50"
+              >
+                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  if (salesDetailsScrollRef.current) {
+                    salesDetailsScrollRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+                  }
+                }}
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:hidden bg-white/90 backdrop-blur-sm shadow-lg rounded-full border border-blue-200 active:scale-90 transition-all duration-200 hover:bg-blue-50"
+              >
+                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Button>
+
+              <div
+                ref={salesDetailsScrollRef}
+                className="overflow-x-auto -mx-6 px-6 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent scroll-smooth"
+              >
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-gradient-to-r from-blue-50 to-purple-50 hover:bg-blue-50/50">

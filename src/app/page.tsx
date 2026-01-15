@@ -1884,7 +1884,6 @@ export default function CloudShopSimulator() {
             </CardContent>
           </Card>
         )}
-      </main>
 
         {/* 店铺等级页面 */}
         {currentView === 'shopLevels' && (

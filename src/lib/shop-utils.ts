@@ -70,16 +70,17 @@ export function validateStockAmount(
 
 // 验证云店余额
 export function validateCloudBalance(cloudBalance: number, stockAmount: number): { valid: boolean; error?: string } {
-  if (cloudBalance < stockAmount) {
-    return { valid: false, error: '云店余额必须大于或等于进货额度' };
+  if (cloudBalance < 0) {
+    return { valid: false, error: '云店余额不能为负数' };
   }
   return { valid: true };
 }
 
 // 验证最高余额
-export function validateMaxBalance(maxBalance: number, cloudBalance: number): { valid: boolean; error?: string } {
-  if (maxBalance < cloudBalance) {
-    return { valid: false, error: '云店历史最高余额必须大于或等于云店余额' };
+export function validateMaxBalance(maxBalance: number, stockAmount: number, cloudBalance: number): { valid: boolean; error?: string } {
+  const minRequired = stockAmount + cloudBalance;
+  if (maxBalance < minRequired) {
+    return { valid: false, error: `云店历史最高余额必须大于或等于${minRequired}（进货额度+云店余额）` };
   }
   return { valid: true };
 }

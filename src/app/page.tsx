@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -50,6 +50,11 @@ export default function CloudShopSimulator() {
   const [stockError, setStockError] = useState<string>('');
   const [cloudBalanceError, setCloudBalanceError] = useState<string>('');
   const [maxBalanceError, setMaxBalanceError] = useState<string>('');
+  
+  // 输入框引用
+  const cloudBalanceRef = useRef<HTMLInputElement>(null);
+  const stockAmountRef = useRef<HTMLInputElement>(null);
+  const maxBalanceRef = useRef<HTMLInputElement>(null);
   
   // 进货输入闪烁状态
   const [isStockShaking, setIsStockShaking] = useState<boolean>(false);
@@ -304,6 +309,33 @@ export default function CloudShopSimulator() {
     setCurrentComparisonId(null);
     setCurrentView('levelDetails');
   }, [currentLevel, levelConfig, stockInputValue, cloudBalance, stockAmount, maxBalance, isEditMaxBalance, stockError, cloudBalanceError, maxBalanceError]);
+
+  // 处理云店余额输入框的 Enter 键
+  const handleCloudBalanceKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+      stockAmountRef.current?.focus();
+    }
+  };
+
+  // 处理进货额度输入框的 Enter 键
+  const handleStockAmountKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+      handleConfirmStock();
+    }
+  };
+
+  // 处理历史最高余额输入框的 Enter 键
+  const handleMaxBalanceKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !isEditMaxBalance) {
+      e.preventDefault();
+      e.stopPropagation();
+      handleConfirmStock();
+    }
+  };
 
   // 加入对比
   const handleAddToComparison = useCallback(() => {
@@ -1488,12 +1520,14 @@ export default function CloudShopSimulator() {
                   云店余额（店铺已有额度）
                 </Label>
                 <Input
+                  ref={cloudBalanceRef}
                   id="cloudBalance"
                   type="number"
                   placeholder="请输入你当前的云店余额"
                   min="0"
                   value={cloudBalanceInputValue}
                   onChange={(e) => handleCloudBalanceInputChange(e.target.value)}
+                  onKeyDown={handleCloudBalanceKeyDown}
                   className={`focus:ring-2 transition-all duration-200 h-12 ${
                     cloudBalanceError
                       ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
@@ -1512,6 +1546,7 @@ export default function CloudShopSimulator() {
                   进货额度（100的整倍数）
                 </Label>
                 <Input
+                  ref={stockAmountRef}
                   id="stockAmount"
                   type="number"
                   placeholder="请输入你要进货的额度"
@@ -1520,6 +1555,7 @@ export default function CloudShopSimulator() {
                   step="100"
                   value={stockInputValue}
                   onChange={(e) => handleStockInputChange(e.target.value)}
+                  onKeyDown={handleStockAmountKeyDown}
                   className={`focus:ring-2 transition-all duration-200 h-12 ${
                     stockError
                       ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
@@ -1536,12 +1572,14 @@ export default function CloudShopSimulator() {
                   云店历史最高余额
                 </Label>
                 <Input
+                  ref={maxBalanceRef}
                   id="maxBalance"
                   type="number"
                   placeholder="历史最高余额（自动同步）"
                   min="0"
                   value={maxBalanceInputValue}
                   onChange={(e) => handleMaxBalanceInputChange(e.target.value)}
+                  onKeyDown={handleMaxBalanceKeyDown}
                   disabled={isEditMaxBalance}
                   className={`focus:ring-2 transition-all duration-200 h-12 ${
                     maxBalanceError

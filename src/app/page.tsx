@@ -694,36 +694,34 @@ export default function CloudShopSimulator() {
         // 存储该等级的最优方案
         let bestResult: RecommendationResult | null = null;
 
-        // 遍历周期（5-30天）
-        for (let searchPeriod = 5; searchPeriod <= 30; searchPeriod++) {
-          // 遍历所有进货额度（100倍数递增）
-          for (let stock = config.minStock; stock <= config.maxStock; stock += 100) {
-            const profit = calculateCompoundProfit(stock, config, searchPeriod);
-            const stockCost = Math.round(stock * config.stockDiscount);
-            const dailyCommission = Math.round(stock * config.commissionRate);
-            const completionDays = Math.ceil(stock / dailyCommission);
+        // 遍历所有进货额度（100倍数递增）
+        for (let stock = config.minStock; stock <= config.maxStock; stock += 100) {
+          // 计算单次销售利润（不是复利计算）
+          const profit = Math.round(stock * (config.saleDiscount - config.stockDiscount));
+          const stockCost = Math.round(stock * config.stockDiscount);
+          const dailyCommission = Math.round(stock * config.commissionRate);
+          const completionDays = Math.ceil(stock / dailyCommission); // 单次销售完成天数
 
-            // 检查利润是否在目标利润范围内
-            if (profit >= targetProfitMin && profit <= targetProfitMax) {
-              // 如果还没有找到方案，或者当前方案比之前的方案更优
-              // 优先级1：成本最低
-              // 优先级2：周期最短
-              if (bestResult === null ||
-                  stockCost < bestResult.stockCost ||
-                  (stockCost === bestResult.stockCost && searchPeriod < bestResult.completionDays)) {
-                bestResult = {
-                  level,
-                  levelName: config.name,
-                  recommendedStock: stock,
-                  stockCost,
-                  estimatedProfit: profit,
-                  completionDays: searchPeriod,
-                  matchScore: 0, // 稍后统一计算
-                  matchReason: `周期${searchPeriod}天复利利润${profit}元`,
-                  maxProfit,
-                  minProfit
-                };
-              }
+          // 检查利润是否在目标利润范围内（630-649元）
+          if (profit >= targetProfitMin && profit <= targetProfitMax) {
+            // 如果还没有找到方案，或者当前方案比之前的方案更优
+            // 优先级1：成本最低
+            // 优先级2：周期最短
+            if (bestResult === null ||
+                stockCost < bestResult.stockCost ||
+                (stockCost === bestResult.stockCost && completionDays < bestResult.completionDays)) {
+              bestResult = {
+                level,
+                levelName: config.name,
+                recommendedStock: stock,
+                stockCost,
+                estimatedProfit: profit,
+                completionDays,
+                matchScore: 0, // 稍后统一计算
+                matchReason: `单次利润${profit}元`,
+                maxProfit,
+                minProfit
+              };
             }
           }
         }
@@ -753,6 +751,27 @@ export default function CloudShopSimulator() {
       } else {
         // 按利润推荐：基于成本和周期的综合评分
         // 先按成本排序（最低优先），再按周期排序（最短优先）
+        const minCost = Math.min(...results.map(r => r.stockCost));
+        const minPeriod = Math.min(...results.map(r => r.completionDays));
+
+        // 重新计算每个结果的推荐率
+        results = results.map(result => {
+          // 成本得分：最低成本得100分
+          const costScore = minCost > 0 ? (minCost / result.stockCost) * 100 : 0;
+
+          // 周期得分：最短周期得100分
+          const periodScore = minPeriod > 0 ? (minPeriod / result.completionDays) * 100 : 0;
+
+          // 综合得分 = 成本得分×0.6 + 周期得分×0.4
+          const totalScore = costScore * 0.6 + periodScore * 0.4;
+
+          return {
+            ...result,
+            matchScore: Math.round(totalScore * 100) / 100
+          };
+        });
+
+        // 先按成本排序（最低优先），再按周期排序（最短优先），最后按推荐率排序
         results = results.sort((a, b) => {
           if (a.stockCost !== b.stockCost) {
             return a.stockCost - b.stockCost;
@@ -1099,7 +1118,7 @@ export default function CloudShopSimulator() {
                 <h4 className="font-semibold text-purple-800 mb-2 text-sm">💡 使用提示</h4>
                 <ul className="text-xs sm:text-sm text-purple-700 space-y-1 list-disc list-inside">
                   <li>按预算推荐：系统会根据您的预算，推荐最匹配的进货额度和店铺等级（利润最大化）</li>
-                  <li>按利润推荐：系统会自动遍历周期，推荐最低成本、最短周期的方案（利润可浮动0-19元）</li>
+                  <li>按利润推荐：系统会基于单次销售利润，推荐最低成本、最短周期的方案（利润可浮动0-19元）</li>
                   <li>周期选项：仅按预算推荐时可设置周期，按利润推荐时自动计算最优周期</li>
                   <li>推荐结果先按成本最低，再按周期最短排序，您可以选择任意方案直接开始模拟</li>
                 </ul>
@@ -1765,8 +1784,8 @@ export default function CloudShopSimulator() {
                 推荐率 = （当前利润 / 全局最大利润）× 100。按利润从高到低排序。
               </p>
               <p className="text-gray-700 text-sm leading-relaxed">
-                <strong className="text-rose-700">按利润推荐：</strong>自动遍历周期（5-30天），找到达到目标利润的所有方案（利润可浮动0-19元）。
-                按成本最低、周期最短排序。推荐率 = 成本得分×0.5 + 周期得分×0.5。
+                <strong className="text-rose-700">按利润推荐：</strong>基于单次销售利润计算，找到达到目标利润的所有方案（利润可浮动0-19元）。
+                按成本最低、周期最短排序。推荐率 = 成本得分×0.6 + 周期得分×0.4。
               </p>
             </div>
           </div>

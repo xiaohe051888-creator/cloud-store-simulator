@@ -1090,7 +1090,7 @@ export default function CloudShopSimulator() {
       <header className="bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100 sticky top-0 z-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex justify-between items-center">
           <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            云店模拟器
+            云店
           </h1>
           <div className="flex items-center gap-2 sm:gap-4">
             <Button
@@ -1791,38 +1791,40 @@ export default function CloudShopSimulator() {
             </CardHeader>
             <CardContent className="px-6 pb-6 relative">
               {/* 左右滑动箭头 - 移动端显示 */}
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => {
-                  if (salesDetailsScrollRef.current) {
-                    salesDetailsScrollRef.current.scrollBy({ left: -200, behavior: 'smooth' });
-                  }
-                }}
-                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:hidden bg-white/90 backdrop-blur-sm shadow-lg rounded-full border border-blue-200 active:scale-90 transition-all duration-200 hover:bg-blue-50"
-              >
-                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => {
-                  if (salesDetailsScrollRef.current) {
-                    salesDetailsScrollRef.current.scrollBy({ left: 200, behavior: 'smooth' });
-                  }
-                }}
-                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:hidden bg-white/90 backdrop-blur-sm shadow-lg rounded-full border border-blue-200 active:scale-90 transition-all duration-200 hover:bg-blue-50"
-              >
-                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Button>
+              <div className="absolute left-2 right-2 top-1/2 -translate-y-1/2 z-20 flex justify-between pointer-events-none sm:hidden">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => {
+                    if (salesDetailsScrollRef.current) {
+                      salesDetailsScrollRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+                    }
+                  }}
+                  className="pointer-events-auto w-10 h-10 bg-white/90 backdrop-blur-sm shadow-xl rounded-full border-2 border-blue-200 active:scale-90 transition-all duration-200 hover:bg-blue-50"
+                >
+                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => {
+                    if (salesDetailsScrollRef.current) {
+                      salesDetailsScrollRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+                    }
+                  }}
+                  className="pointer-events-auto w-10 h-10 bg-white/90 backdrop-blur-sm shadow-xl rounded-full border-2 border-blue-200 active:scale-90 transition-all duration-200 hover:bg-blue-50"
+                >
+                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Button>
+              </div>
 
               <div
                 ref={salesDetailsScrollRef}
-                className="overflow-x-auto -mx-6 px-6 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent scroll-smooth"
+                className="overflow-x-auto -mx-6 px-12 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent scroll-smooth"
               >
                 <Table>
                   <TableHeader>

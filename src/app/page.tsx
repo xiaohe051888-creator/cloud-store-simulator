@@ -791,7 +791,7 @@ export default function CloudShopSimulator() {
 
         // 匹配度稍后在所有结果计算完后统一重新计算（基于利润最大化）
         matchScore = 0; // 临时值，会被覆盖
-        matchReason = `周期${period}天复利利润${estimatedProfit}元（实际进货成本${result.totalStockCost}元）`;
+        matchReason = `周期${period}天复利利润${estimatedProfit}元（实际投入总成本${result.totalStockCost}元）`;
 
         results.push({
           level,
@@ -1243,7 +1243,7 @@ export default function CloudShopSimulator() {
                     } ${isBudgetShaking ? 'animate-shake' : ''}`}
                   />
                   <p className={`text-sm transition-colors duration-200 ${budgetError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
-                    {budgetError || '预算范围：100-100000元，系统将根据您的预算推荐最合适的店铺等级和进货额度（进货成本不超过预算）'}
+                    {budgetError || '预算范围：100-100000元，系统将根据您的预算推荐最合适的店铺等级和进货额度（投入总成本不超过预算）'}
                   </p>
                 </div>
               )}
@@ -1444,7 +1444,7 @@ export default function CloudShopSimulator() {
                             </div>
                             <div className="bg-white/80 p-3 rounded-xl">
                               <p className="text-xs text-gray-500 mb-1">
-                                {recommendInputType === 'budget' ? '首次进货成本' : '进货成本'}
+                                {recommendInputType === 'budget' ? '首次投入总成本' : '投入总成本'}
                               </p>
                               <p className="text-lg font-bold text-gray-800">
                                 {result.stockCost}元
@@ -1627,7 +1627,7 @@ export default function CloudShopSimulator() {
                   </p>
                 </div>
                 <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-green-100">
-                  <p className="text-xs sm:text-sm text-green-600 mb-1.5">进货成本</p>
+                  <p className="text-xs sm:text-sm text-green-600 mb-1.5">投入总成本</p>
                   <p className="text-lg sm:text-xl font-bold text-green-600">
                     {detailsData.stockCost}元
                   </p>
@@ -1786,7 +1786,7 @@ export default function CloudShopSimulator() {
                         <TableRow>
                           <TableHead className="text-center font-semibold text-gray-700">店铺等级</TableHead>
                           <TableHead className="text-center font-semibold text-gray-700">进货额度⚡</TableHead>
-                          <TableHead className="text-center font-semibold text-gray-700 hidden sm:table-cell">进货成本(元)</TableHead>
+                          <TableHead className="text-center font-semibold text-gray-700 hidden sm:table-cell">投入总成本(元)</TableHead>
                           <TableHead className="text-center font-semibold text-gray-700">完成天数</TableHead>
                           <TableHead className="text-center font-semibold text-gray-700">总利润(元)</TableHead>
                           <TableHead className="text-center font-semibold text-gray-700">操作</TableHead>

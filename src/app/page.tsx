@@ -35,7 +35,6 @@ export default function CloudShopSimulator() {
   const [cloudBalance, setCloudBalance] = useState<number>(0);      // 云店余额
   const [maxBalance, setMaxBalance] = useState<number>(0);           // 历史最高余额
   const [currentView, setCurrentView] = useState<ViewType>('shopSelection');
-  const [isEditCloudBalance, setIsEditCloudBalance] = useState<boolean>(true);  // 云店余额是否可编辑
   const [isEditMaxBalance, setIsEditMaxBalance] = useState<boolean>(true);      // 最高余额是否可编辑
   
   // 对比数据状态
@@ -88,7 +87,6 @@ export default function CloudShopSimulator() {
     setStockAmount(0);
     setCloudBalance(0);
     setMaxBalance(0);
-    setIsEditCloudBalance(true);
     setIsEditMaxBalance(true);
     setStockError('');
     setCloudBalanceError('');
@@ -111,7 +109,6 @@ export default function CloudShopSimulator() {
     setStockInputValue('');
     setCloudBalanceInputValue('0');
     setMaxBalanceInputValue('0');
-    setIsEditCloudBalance(true);
     setIsEditMaxBalance(true);
     setStockError('');
     setCloudBalanceError('');
@@ -148,19 +145,6 @@ export default function CloudShopSimulator() {
       }
 
       setStockAmount(numValue);
-
-      // 如果云店余额是同步模式，自动更新
-      if (isEditCloudBalance && numValue > 0) {
-        setCloudBalance(numValue);
-        setCloudBalanceInputValue(String(numValue));
-        // 验证云店余额
-        const cloudValidation = validateCloudBalance(numValue, numValue);
-        if (!cloudValidation.valid) {
-          setCloudBalanceError(cloudValidation.error || '');
-        } else {
-          setCloudBalanceError('');
-        }
-      }
 
       // 如果历史最高余额是同步模式，自动更新为进货额度+云店余额的总和
       if (isEditMaxBalance) {
@@ -224,41 +208,6 @@ export default function CloudShopSimulator() {
     }
 
     setMaxBalance(numValue);
-  };
-
-  // 切换同步云店余额
-  const handleToggleEditCloudBalance = (checked: boolean) => {
-    setIsEditCloudBalance(checked);
-
-    if (checked && stockAmount > 0) {
-      setCloudBalance(stockAmount);
-      setCloudBalanceInputValue(String(stockAmount));
-      // 验证云店余额
-      const cloudValidation = validateCloudBalance(stockAmount, stockAmount);
-      if (!cloudValidation.valid) {
-        setCloudBalanceError(cloudValidation.error || '');
-      } else {
-        setCloudBalanceError('');
-      }
-    } else {
-      // 取消勾选时，保持当前值，允许任意输入
-      setCloudBalanceError('');
-    }
-
-    // 如果历史最高余额是同步模式，自动更新为进货额度+云店余额的总和
-    if (isEditMaxBalance) {
-      const newCloudBalance = checked && stockAmount > 0 ? stockAmount : cloudBalance;
-      const newMaxBalance = stockAmount + newCloudBalance;
-      setMaxBalance(newMaxBalance);
-      setMaxBalanceInputValue(String(newMaxBalance));
-      // 验证历史最高余额
-      const maxValidation = validateMaxBalance(newMaxBalance, stockAmount, newCloudBalance);
-      if (!maxValidation.valid) {
-        setMaxBalanceError(maxValidation.error || '');
-      } else {
-        setMaxBalanceError('');
-      }
-    }
   };
 
   // 切换同步历史最高余额
@@ -354,7 +303,7 @@ export default function CloudShopSimulator() {
 
     setCurrentComparisonId(null);
     setCurrentView('levelDetails');
-  }, [currentLevel, levelConfig, stockInputValue, cloudBalance, stockAmount, maxBalance, isEditCloudBalance, isEditMaxBalance, stockError, cloudBalanceError, maxBalanceError]);
+  }, [currentLevel, levelConfig, stockInputValue, cloudBalance, stockAmount, maxBalance, isEditMaxBalance, stockError, cloudBalanceError, maxBalanceError]);
 
   // 加入对比
   const handleAddToComparison = useCallback(() => {
@@ -1004,7 +953,6 @@ export default function CloudShopSimulator() {
     setCloudBalanceInputValue(String(result.recommendedStock));
     setMaxBalance(result.recommendedStock);
     setMaxBalanceInputValue(String(result.recommendedStock));
-    setIsEditCloudBalance(true);
     setIsEditMaxBalance(true);
     
     // 直接进入确认流程
@@ -1519,6 +1467,28 @@ export default function CloudShopSimulator() {
             </CardHeader>
             <CardContent className="space-y-5 sm:space-y-6 px-6 pb-6">
               <div className="space-y-2">
+                <Label htmlFor="cloudBalance" className="text-sm font-medium text-gray-700">
+                  云店余额（店铺已有额度）
+                </Label>
+                <Input
+                  id="cloudBalance"
+                  type="number"
+                  placeholder="默认为0，可输入任意数字"
+                  min="0"
+                  value={cloudBalanceInputValue}
+                  onChange={(e) => handleCloudBalanceInputChange(e.target.value)}
+                  className={`focus:ring-2 transition-all duration-200 h-12 ${
+                    cloudBalanceError
+                      ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
+                      : 'focus:ring-blue-500/50 focus:border-blue-500'
+                  } ${isCloudBalanceShaking ? 'animate-shake' : ''}`}
+                />
+                <p className={`text-xs sm:text-sm transition-colors duration-200 ${cloudBalanceError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+                  {cloudBalanceError || '店铺里已有的额度，默认为0'}
+                </p>
+              </div>
+
+              <div className="space-y-2">
                 <Label htmlFor="stockAmount" className="text-sm font-medium text-gray-700">
                   进货额度（100的整倍数）
                 </Label>
@@ -1543,50 +1513,13 @@ export default function CloudShopSimulator() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="cloudBalance" className="text-sm font-medium text-gray-700">
-                  云店余额
-                </Label>
-                <Input
-                  id="cloudBalance"
-                  type="number"
-                  placeholder="默认为0，可输入任意数字"
-                  min="0"
-                  value={cloudBalanceInputValue}
-                  onChange={(e) => handleCloudBalanceInputChange(e.target.value)}
-                  disabled={isEditCloudBalance}
-                  className={`focus:ring-2 transition-all duration-200 h-12 ${
-                    cloudBalanceError
-                      ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
-                      : 'focus:ring-blue-500/50 focus:border-blue-500'
-                  } ${isEditCloudBalance ? 'bg-gray-50 border-gray-200' : ''} ${isCloudBalanceShaking ? 'animate-shake' : ''}`}
-                />
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="editCloudBalance"
-                    checked={isEditCloudBalance}
-                    onCheckedChange={handleToggleEditCloudBalance}
-                    className="active:scale-95 transition-all duration-200 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
-                  />
-                  <Label
-                    htmlFor="editCloudBalance"
-                    className="text-sm font-normal cursor-pointer text-gray-600 hover:text-gray-900 transition-colors"
-                  >
-                    自动设置为进货额度
-                  </Label>
-                </div>
-                {cloudBalanceError && (
-                  <p className="text-sm text-red-500 font-medium">{cloudBalanceError}</p>
-                )}
-              </div>
-
-              <div className="space-y-2">
                 <Label htmlFor="maxBalance" className="text-sm font-medium text-gray-700">
                   云店历史最高余额
                 </Label>
                 <Input
                   id="maxBalance"
                   type="number"
-                  placeholder="默认为进货额度+云店余额总和"
+                  placeholder="默认为云店余额+进货额度总和"
                   min="0"
                   value={maxBalanceInputValue}
                   onChange={(e) => handleMaxBalanceInputChange(e.target.value)}

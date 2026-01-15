@@ -457,8 +457,8 @@ export default function CloudShopSimulator() {
 
     const stockCost = Math.round(calculationBalance * levelConfig.stockDiscount);
     const dailyCommission = Math.round(maxBalance * levelConfig.commissionRate);
-    const completionDays = Math.ceil(calculationBalance / dailyCommission);
-    const totalProfit = Math.round(calculationBalance * (levelConfig.saleDiscount - levelConfig.stockDiscount));
+    const completionDays = Math.ceil(cloudTotalBalance / dailyCommission);
+    const totalProfit = Math.round(cloudTotalBalance * (levelConfig.saleDiscount - levelConfig.stockDiscount));
 
     return { stockCost, dailyCommission, completionDays, totalProfit, cloudTotalBalance, calculationBalance };
   };

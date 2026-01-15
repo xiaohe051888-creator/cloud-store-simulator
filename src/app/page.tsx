@@ -690,7 +690,11 @@ export default function CloudShopSimulator() {
       } else {
         // 根据期望利润推荐（新算法：寻找最低成本、最短周期的方案）
         // 自动遍历周期（5-30天），不需要用户输入周期
+        // 每个等级只保留一个最优方案
         if (targetProfit <= 0) continue;
+
+        // 存储该等级的最优方案
+        let bestResult: RecommendationResult | null = null;
 
         // 遍历周期（5-30天）
         for (let searchPeriod = 5; searchPeriod <= 30; searchPeriod++) {
@@ -703,23 +707,32 @@ export default function CloudShopSimulator() {
 
             // 检查利润是否在目标利润范围内
             if (profit >= targetProfitMin && profit <= targetProfitMax) {
-              results.push({
-                level,
-                levelName: config.name,
-                recommendedStock: stock,
-                stockCost,
-                estimatedProfit: profit,
-                completionDays: searchPeriod,
-                matchScore: 0, // 稍后统一计算
-                matchReason: `周期${searchPeriod}天复利利润${profit}元`,
-                maxProfit,
-                minProfit
-              });
-              // 找到该周期的可行方案后，跳出进货额度循环
-              // 继续寻找其他周期的方案
-              break;
+              // 如果还没有找到方案，或者当前方案比之前的方案更优
+              // 优先级1：成本最低
+              // 优先级2：周期最短
+              if (bestResult === null ||
+                  stockCost < bestResult.stockCost ||
+                  (stockCost === bestResult.stockCost && searchPeriod < bestResult.completionDays)) {
+                bestResult = {
+                  level,
+                  levelName: config.name,
+                  recommendedStock: stock,
+                  stockCost,
+                  estimatedProfit: profit,
+                  completionDays: searchPeriod,
+                  matchScore: 0, // 稍后统一计算
+                  matchReason: `周期${searchPeriod}天复利利润${profit}元`,
+                  maxProfit,
+                  minProfit
+                };
+              }
             }
           }
+        }
+
+        // 只添加该等级的最优方案
+        if (bestResult !== null) {
+          results.push(bestResult);
         }
       }
     }

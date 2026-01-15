@@ -705,7 +705,7 @@ export default function CloudShopSimulator() {
 
         // 匹配度稍后在所有结果计算完后统一重新计算（基于利润最大化）
         matchScore = 0; // 临时值，会被覆盖
-        matchReason = `周期${period}天复利利润${estimatedProfit}元（总进货成本${stockCost}元）`;
+        matchReason = `周期${period}天复利利润${estimatedProfit}元（总进货成本${targetBudget}元）`;
 
         results.push({
           level,

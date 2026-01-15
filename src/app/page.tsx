@@ -568,6 +568,9 @@ export default function CloudShopSimulator() {
     // 累计回款（尚未用于进货的回款）
     let accumulatedSettlement = 0;
 
+    // 可用于进货的利润（从totalProfit中分出来用于进货的部分）
+    let availableProfitForStock = 0;
+
     // 回款队列：key是结算日期，value是回款金额
     const settlementQueue: Map<number, number> = new Map();
 
@@ -615,7 +618,7 @@ export default function CloudShopSimulator() {
         accumulatedSettlement += todaySettlement;
       }
 
-      // 步骤3：进货逻辑（使用剩余预算 + 累计回款 + 累计利润）
+      // 步骤3：进货逻辑（使用剩余预算 + 累计回款 + 可用利润）
       // 精确补货到刚好够第二天卖的额度
       const dailySellAmount = initialStock * sellRatio; // 每日需要卖的额度
 
@@ -628,8 +631,8 @@ export default function CloudShopSimulator() {
         // 计算进货成本
         const stockCostNeeded = Math.round(roundedStockNeeded * stockDiscount);
 
-        // 可用资金 = 剩余预算 + 累计回款 + 累计利润
-        let availableFunds = remainingBudget + accumulatedSettlement + totalProfit;
+        // 可用资金 = 剩余预算 + 累计回款 + 可用利润
+        let availableFunds = remainingBudget + accumulatedSettlement + availableProfitForStock;
 
         if (availableFunds >= stockCostNeeded) {
           // 先用剩余预算
@@ -641,9 +644,9 @@ export default function CloudShopSimulator() {
           let settlementToUse = Math.min(accumulatedSettlement, stockCostNeeded - budgetToUse);
           accumulatedSettlement -= settlementToUse;
 
-          // 最后用累计利润
+          // 最后用可用利润（不影响totalProfit的累计）
           let profitToUse = stockCostNeeded - budgetToUse - settlementToUse;
-          totalProfit -= profitToUse; // 用利润进货，减少累计利润
+          availableProfitForStock -= profitToUse; // 减少可用利润，但不影响累计利润
 
           // 进货
           currentStock += roundedStockNeeded;

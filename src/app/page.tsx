@@ -649,18 +649,38 @@ export default function CloudShopSimulator() {
             // 进货成本
             const stockCost = Math.round(stockToBuy * stockDiscount);
 
-            // 先用剩余预算
-            let budgetToUse = Math.min(remainingBudget, stockCost);
-            remainingBudget -= budgetToUse;
-            totalStockCost += budgetToUse; // 只计入用户实际掏的钱
+            if (hasBudgetOrSettlement) {
+              // 预算够多的情况：优先使用累计回款，不用剩余预算
+              // 这样实际进货成本只包含初始进货的成本
+              let settlementToUse = Math.min(accumulatedSettlement, stockCost);
+              accumulatedSettlement -= settlementToUse;
 
-            // 再用累计回款
-            let settlementToUse = Math.min(accumulatedSettlement, stockCost - budgetToUse);
-            accumulatedSettlement -= settlementToUse;
+              // 如果回款不够，再用剩余预算
+              let budgetToUse = stockCost - settlementToUse;
+              if (budgetToUse > 0) {
+                budgetToUse = Math.min(remainingBudget, budgetToUse);
+                remainingBudget -= budgetToUse;
+                totalStockCost += budgetToUse; // 只计入用户实际掏的钱
+              }
 
-            // 最后用可用利润（不影响totalProfit的累计）
-            let profitToUse = stockCost - budgetToUse - settlementToUse;
-            availableProfitForStock -= profitToUse; // 减少可用利润，但不影响累计利润
+              // 如果还不够，用可用利润
+              let profitToUse = stockCost - settlementToUse - budgetToUse;
+              availableProfitForStock -= profitToUse; // 减少可用利润，但不影响累计利润
+            } else {
+              // 预算不足（有空档期）的情况：优先使用利润，再用剩余预算
+              // 先用可用利润（不影响totalProfit的累计）
+              let profitToUse = Math.min(availableProfitForStock, stockCost);
+              availableProfitForStock -= profitToUse;
+
+              // 再用剩余预算
+              let budgetToUse = Math.min(remainingBudget, stockCost - profitToUse);
+              remainingBudget -= budgetToUse;
+              totalStockCost += budgetToUse; // 只计入用户实际掏的钱
+
+              // 最后用累计回款
+              let settlementToUse = stockCost - profitToUse - budgetToUse;
+              accumulatedSettlement -= settlementToUse;
+            }
 
             // 进货
             currentStock += stockToBuy;
@@ -682,17 +702,21 @@ export default function CloudShopSimulator() {
         let availableFunds = remainingBudget + accumulatedSettlement + availableProfitForStock;
 
         if (availableFunds >= stockCostNeeded) {
-          // 先用剩余预算
-          let budgetToUse = Math.min(remainingBudget, stockCostNeeded);
-          remainingBudget -= budgetToUse;
-          totalStockCost += budgetToUse; // 只计入用户实际掏的钱
-
-          // 再用累计回款
-          let settlementToUse = Math.min(accumulatedSettlement, stockCostNeeded - budgetToUse);
+          // 优先使用累计回款，不用剩余预算
+          // 这样实际进货成本只包含初始进货的成本
+          let settlementToUse = Math.min(accumulatedSettlement, stockCostNeeded);
           accumulatedSettlement -= settlementToUse;
 
-          // 最后用可用利润（不影响totalProfit的累计）
-          let profitToUse = stockCostNeeded - budgetToUse - settlementToUse;
+          // 如果回款不够，再用剩余预算
+          let budgetToUse = stockCostNeeded - settlementToUse;
+          if (budgetToUse > 0) {
+            budgetToUse = Math.min(remainingBudget, budgetToUse);
+            remainingBudget -= budgetToUse;
+            totalStockCost += budgetToUse; // 只计入用户实际掏的钱
+          }
+
+          // 如果还不够，用可用利润
+          let profitToUse = stockCostNeeded - settlementToUse - budgetToUse;
           availableProfitForStock -= profitToUse; // 减少可用利润，但不影响累计利润
 
           // 补货到刚好够第二天卖的额度

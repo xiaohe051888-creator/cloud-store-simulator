@@ -16,7 +16,8 @@ export type ViewType =
   | 'salesDetails'
   | 'comparison'
   | 'recommendation'
-  | 'recommendationResult';
+  | 'recommendationResult'
+  | 'shopLevels';
 
 // 店铺配置类型
 export interface ShopLevelConfig {

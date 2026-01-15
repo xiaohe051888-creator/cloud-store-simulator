@@ -623,17 +623,31 @@ export default function CloudShopSimulator() {
       const dailySellAmount = maxShopStock * sellRatio;
 
       if (currentStock === 0) {
-        // 有空档期（预算不足）：用所有可用资金进货，能进多少进多少，实现利滚利
+        // 库存为0，需要判断是预算不足（有空档期）还是预算够多（无空档期）
         // 可用资金 = 剩余预算 + 累计回款 + 可用利润
         let availableFunds = remainingBudget + accumulatedSettlement + availableProfitForStock;
 
-        if (availableFunds >= 100 * stockDiscount) {
-          // 计算能进货的额度（100的倍数），最多进货到 maxShopStock
-          const maxStockPossible = Math.min(maxShopStock, Math.floor(availableFunds / stockDiscount / 100) * 100);
+        // 如果剩余预算够补货（或者已经有累计回款），说明是预算够多的情况
+        // 如果没有剩余预算也没有累计回款，只能用利润，说明是预算不足有空档期
+        const hasBudgetOrSettlement = remainingBudget > 0 || accumulatedSettlement > 0;
 
-          if (maxStockPossible >= 100) {
+        if (availableFunds >= 100 * stockDiscount) {
+          // 计算能进货的额度（100的倍数）
+          let stockToBuy = Math.floor(availableFunds / stockDiscount / 100) * 100;
+
+          if (stockToBuy >= 100) {
+            if (hasBudgetOrSettlement) {
+              // 预算够多（无空档期）：只补货到刚好够第二天卖的额度
+              // 需要补货的数量 = 每日要卖的
+              stockToBuy = Math.min(stockToBuy, Math.ceil(dailySellAmount / 100) * 100);
+            } else {
+              // 预算不足（有空档期）：尽可能多进货，实现利滚利
+              // 最多进货到 maxShopStock
+              stockToBuy = Math.min(stockToBuy, maxShopStock);
+            }
+
             // 进货成本
-            const stockCost = Math.round(maxStockPossible * stockDiscount);
+            const stockCost = Math.round(stockToBuy * stockDiscount);
 
             // 先用剩余预算
             let budgetToUse = Math.min(remainingBudget, stockCost);
@@ -648,10 +662,11 @@ export default function CloudShopSimulator() {
             let profitToUse = stockCost - budgetToUse - settlementToUse;
             availableProfitForStock -= profitToUse; // 减少可用利润，但不影响累计利润
 
-            // 进货（利滚利：尽可能多进货）
-            currentStock += maxStockPossible;
+            // 进货
+            currentStock += stockToBuy;
           }
         }
+        // else：资金不够，无法进货，店铺空转
       } else if (currentStock < dailySellAmount) {
         // 没有空档期但库存不足（预算够多的情况）：
         // 只补货到刚好够第二天卖的额度，达到循环后不再增加利润

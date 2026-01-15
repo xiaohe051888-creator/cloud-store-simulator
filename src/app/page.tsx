@@ -16,7 +16,6 @@ import {
   TableFooter,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import WeChatGuide from '@/components/wechat-guide';
 import WeChatLinkGuide from '@/components/wechat-link-guide';
 import {
   shopLevelsConfig,
@@ -2384,9 +2383,6 @@ export default function CloudShopSimulator() {
         </div>
       )}
 
-      {/* 微信引导提示 */}
-      <WeChatGuide />
-      
       {/* 微信链接引导 */}
       <WeChatLinkGuide
         isVisible={showWeChatLinkGuide}

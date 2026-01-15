@@ -43,7 +43,7 @@ export default function CloudShopSimulator() {
   
   // 输入框值状态
   const [stockInputValue, setStockInputValue] = useState<string>('');
-  const [cloudBalanceInputValue, setCloudBalanceInputValue] = useState<string>('0');
+  const [cloudBalanceInputValue, setCloudBalanceInputValue] = useState<string>('');
   const [maxBalanceInputValue, setMaxBalanceInputValue] = useState<string>('0');
   
   // 错误状态
@@ -82,7 +82,7 @@ export default function CloudShopSimulator() {
     setCurrentLevel(level);
     setCurrentView('stockInput');
     setStockInputValue('');
-    setCloudBalanceInputValue('0');
+    setCloudBalanceInputValue('');
     setMaxBalanceInputValue('0');
     setStockAmount(0);
     setCloudBalance(0);
@@ -107,7 +107,7 @@ export default function CloudShopSimulator() {
     setMaxBalance(0);
     setCurrentView('shopSelection');
     setStockInputValue('');
-    setCloudBalanceInputValue('0');
+    setCloudBalanceInputValue('');
     setMaxBalanceInputValue('0');
     setIsEditMaxBalance(true);
     setStockError('');
@@ -1480,7 +1480,7 @@ export default function CloudShopSimulator() {
                 <Input
                   id="cloudBalance"
                   type="number"
-                  placeholder="默认为0，可输入任意数字"
+                  placeholder="可输入任意数字"
                   min="0"
                   value={cloudBalanceInputValue}
                   onChange={(e) => handleCloudBalanceInputChange(e.target.value)}
@@ -1491,7 +1491,7 @@ export default function CloudShopSimulator() {
                   } ${isCloudBalanceShaking ? 'animate-shake' : ''}`}
                 />
                 <p className={`text-xs sm:text-sm transition-colors duration-200 ${cloudBalanceError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
-                  {cloudBalanceError || '店铺里已有的额度，默认为0'}
+                  {cloudBalanceError || '店铺里已有的额度'}
                 </p>
               </div>
 

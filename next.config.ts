@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // 构建优化
+  compress: true,
+  // 减少构建输出
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
 };
 
 export default nextConfig;

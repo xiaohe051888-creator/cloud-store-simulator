@@ -1002,7 +1002,7 @@ export default function CloudShopSimulator() {
           <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             云店模拟器
           </h1>
-          <div className="flex items-center space-x-2 sm:space-x-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <Button
               variant="outline"
               size="sm"
@@ -1060,11 +1060,11 @@ export default function CloudShopSimulator() {
       </header>
 
       {/* 主要内容区域 */}
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 min-h-[calc(100vh-80px)]">
         {/* 店铺选择界面 */}
         {currentView === 'shopSelection' && (
           <div className="max-w-4xl mx-auto w-full">
-            <Card className="max-w-4xl mx-auto w-full bg-white/90 backdrop-blur-lg shadow-xl border-0 animate-in fade-in-0 slide-in-from-top-4 duration-300">
+            <Card className="max-w-4xl mx-auto w-full bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0 animate-in fade-in-0 slide-in-from-top-4 duration-300">
               <CardHeader className="pb-4 pt-6 px-6">
                 <CardTitle className="text-xl sm:text-2xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
                   请选择你的店铺等级
@@ -1164,7 +1164,7 @@ export default function CloudShopSimulator() {
 
         {/* 推荐系统输入界面 */}
         {currentView === 'recommendation' && (
-          <Card className="max-w-lg mx-auto w-full animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl border-0">
+          <Card className="max-w-lg mx-auto w-full animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
             <CardHeader className="pb-4 pt-6 px-6">
               <div className="flex items-center justify-between">
                 <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
@@ -1207,7 +1207,7 @@ export default function CloudShopSimulator() {
                   <Input
                     id="recommendBudget"
                     type="number"
-                    placeholder="请输入您的预算（100-100000）"
+                    placeholder="预算金额（100-100000元）"
                     min="100"
                     max="100000"
                     step="100"
@@ -1244,7 +1244,7 @@ export default function CloudShopSimulator() {
                   <Input
                     id="recommendProfit"
                     type="number"
-                    placeholder="请输入期望的利润（7-9100）"
+                    placeholder="期望利润（7-9100元）"
                     min="7"
                     max="9100"
                     step="1"
@@ -1281,7 +1281,7 @@ export default function CloudShopSimulator() {
                   <Input
                     id="recommendPeriod"
                     type="number"
-                    placeholder="请输入周期天数（1-30）"
+                    placeholder="周期天数（1-30天）"
                     min="1"
                     max="30"
                     value={recommendPeriod}
@@ -1332,7 +1332,7 @@ export default function CloudShopSimulator() {
 
         {/* 推荐结果界面 */}
         {currentView === 'recommendationResult' && (
-          <Card className="max-w-4xl mx-auto w-full animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl border-0">
+          <Card className="max-w-4xl mx-auto w-full animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
             <CardHeader className="pb-4 pt-6 px-6">
               <div className="flex items-center justify-between">
                 <Button variant="ghost" size="icon" onClick={() => setCurrentView('recommendation')} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
@@ -1446,7 +1446,7 @@ export default function CloudShopSimulator() {
                             <div className="bg-white/80 p-3 rounded-xl">
                               <p className="text-xs text-gray-500 mb-1">完成天数</p>
                               <p className="text-lg font-bold text-gray-800">
-                                {recommendInputType === 'budget' && recommendPeriod ? `${recommendPeriod}天` : `${result.completionDays}天`}
+                                {recommendInputType === 'budget' && recommendPeriod ? `${parseInt(recommendPeriod)}天` : `${result.completionDays}天`}
                               </p>
                             </div>
                           </div>
@@ -1470,7 +1470,7 @@ export default function CloudShopSimulator() {
 
         {/* 进货额度输入界面 */}
         {currentView === 'stockInput' && levelConfig && (
-          <Card className="max-w-lg mx-auto w-full animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl border-0">
+          <Card className="max-w-lg mx-auto w-full animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
             <CardHeader className="pb-4 pt-6 px-6">
               <div className="flex items-center justify-between">
                 <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
@@ -1490,7 +1490,7 @@ export default function CloudShopSimulator() {
                 <Input
                   id="cloudBalance"
                   type="number"
-                  placeholder="请输入你当前的云店余额"
+                  placeholder="云店余额（选填）"
                   min="0"
                   value={cloudBalanceInputValue}
                   onChange={(e) => handleCloudBalanceInputChange(e.target.value)}
@@ -1514,7 +1514,7 @@ export default function CloudShopSimulator() {
                 <Input
                   id="stockAmount"
                   type="number"
-                  placeholder="请输入你要进货的额度"
+                  placeholder="进货额度（必填，100的倍数）"
                   min={levelConfig.minStock}
                   max={levelConfig.maxStock}
                   step="100"
@@ -1538,7 +1538,7 @@ export default function CloudShopSimulator() {
                 <Input
                   id="maxBalance"
                   type="number"
-                  placeholder="默认为云店余额+进货额度总和"
+                  placeholder="历史最高余额（自动同步）"
                   min="0"
                   value={maxBalanceInputValue}
                   onChange={(e) => handleMaxBalanceInputChange(e.target.value)}
@@ -1580,7 +1580,7 @@ export default function CloudShopSimulator() {
 
         {/* 店铺详情界面 */}
         {currentView === 'levelDetails' && levelConfig && detailsData && (
-          <Card className="max-w-3xl mx-auto w-full animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl border-0">
+          <Card className="max-w-3xl mx-auto w-full animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
             <CardHeader className="pb-4 pt-6 px-6">
               <div className="flex items-center justify-between">
                 <Button variant="ghost" size="icon" onClick={handleBackToStockInput} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
@@ -1667,7 +1667,7 @@ export default function CloudShopSimulator() {
 
         {/* 销售详情界面 */}
         {currentView === 'salesDetails' && (
-          <Card className="max-w-3xl mx-auto w-full animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl border-0">
+          <Card className="max-w-3xl mx-auto w-full animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
             <CardHeader className="pb-4 pt-6 px-6">
               <div className="flex items-center justify-between">
                 <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
@@ -1680,7 +1680,7 @@ export default function CloudShopSimulator() {
               </div>
             </CardHeader>
             <CardContent className="px-6 pb-6">
-              <div className="overflow-x-auto -mx-6 px-6">
+              <div className="overflow-x-auto -mx-6 px-6 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-gradient-to-r from-blue-50 to-purple-50 hover:bg-blue-50/50">
@@ -1738,7 +1738,7 @@ export default function CloudShopSimulator() {
 
         {/* 数据对比界面 */}
         {currentView === 'comparison' && (
-          <Card className="max-w-4xl mx-auto animate-in fade-in-0 slide-in-from-top-4 duration-300">
+          <Card className="max-w-4xl mx-auto animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
@@ -1765,7 +1765,7 @@ export default function CloudShopSimulator() {
                 </div>
               ) : (
                 <>
-                  <div className="overflow-x-auto">
+                  <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
                     <Table>
                       <TableHeader>
                         <TableRow>
@@ -1880,7 +1880,7 @@ export default function CloudShopSimulator() {
 
         {/* 店铺等级页面 */}
         {currentView === 'shopLevels' && (
-          <Card className="max-w-6xl mx-auto animate-in fade-in-0 slide-in-from-top-4 duration-300">
+          <Card className="max-w-6xl mx-auto animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
@@ -1958,7 +1958,7 @@ export default function CloudShopSimulator() {
                   <span className="mr-2">💎</span> 升级店铺的权益
                 </h3>
                 <div className="rounded-lg border overflow-hidden">
-                  <div className="overflow-x-auto">
+                  <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
                     <Table>
                       <TableHeader>
                         <TableRow>

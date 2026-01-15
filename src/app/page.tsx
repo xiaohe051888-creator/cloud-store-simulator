@@ -1180,13 +1180,13 @@ export default function CloudShopSimulator() {
           <Card className="max-w-lg mx-auto w-full animate-in fade-in-0 zoom-in-95 duration-300 shadow-xl border-0">
             <CardHeader className="pb-4 pt-6 px-6">
               <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full">
-                  ←
+                <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
+                  <span className="text-2xl font-bold">←</span>
                 </Button>
                 <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                   🎯 智能推荐系统
                 </CardTitle>
-                <div className="w-8" />
+                <div className="w-12" />
               </div>
             </CardHeader>
             <CardContent className="space-y-5 sm:space-y-6 px-6 pb-6">
@@ -1486,13 +1486,13 @@ export default function CloudShopSimulator() {
           <Card className="max-w-lg mx-auto w-full animate-in fade-in-0 zoom-in-95 duration-300 shadow-xl border-0">
             <CardHeader className="pb-4 pt-6 px-6">
               <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full">
-                  ←
+                <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
+                  <span className="text-2xl font-bold">←</span>
                 </Button>
                 <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   {levelConfig.name}
                 </CardTitle>
-                <div className="w-8" />
+                <div className="w-12" />
               </div>
             </CardHeader>
             <CardContent className="space-y-5 sm:space-y-6 px-6 pb-6">
@@ -1609,13 +1609,13 @@ export default function CloudShopSimulator() {
           <Card className="max-w-3xl mx-auto w-full animate-in fade-in-0 zoom-in-95 duration-300 shadow-xl border-0">
             <CardHeader className="pb-4 pt-6 px-6">
               <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToStockInput} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full">
-                  ←
+                <Button variant="ghost" size="icon" onClick={handleBackToStockInput} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
+                  <span className="text-2xl font-bold">←</span>
                 </Button>
                 <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   {levelConfig.name}详情
                 </CardTitle>
-                <div className="w-8" />
+                <div className="w-12" />
               </div>
             </CardHeader>
             <CardContent className="space-y-6 px-6 pb-6">
@@ -1686,13 +1686,13 @@ export default function CloudShopSimulator() {
           <Card className="max-w-3xl mx-auto w-full animate-in fade-in-0 slide-in-from-right-8 duration-300 shadow-xl border-0">
             <CardHeader className="pb-4 pt-6 px-6">
               <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full">
-                  ←
+                <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
+                  <span className="text-2xl font-bold">←</span>
                 </Button>
                 <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   销售详情
                 </CardTitle>
-                <div className="w-8" />
+                <div className="w-12" />
               </div>
             </CardHeader>
             <CardContent className="px-6 pb-6">
@@ -1757,8 +1757,8 @@ export default function CloudShopSimulator() {
           <Card className="max-w-4xl mx-auto animate-in fade-in-0 slide-in-from-top-4 duration-300">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails} className="active:scale-90 transition-transform duration-100">
-                  ←
+                <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails} className="active:scale-90 transition-transform duration-100 w-12 h-12">
+                  <span className="text-2xl font-bold">←</span>
                 </Button>
                 <CardTitle className="text-2xl">数据对比详情</CardTitle>
                 <Button

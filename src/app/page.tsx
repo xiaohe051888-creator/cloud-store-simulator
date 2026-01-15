@@ -329,10 +329,12 @@ export default function CloudShopSimulator() {
     if (e.key === 'Enter') {
       e.preventDefault();
       e.stopPropagation();
+      // 如果历史最高余额自动同步（不可编辑），直接确认进货
       if (isEditMaxBalance) {
-        maxBalanceRef.current?.focus();
-      } else {
         handleConfirmStock();
+      } else {
+        // 否则切换到历史最高余额输入框
+        maxBalanceRef.current?.focus();
       }
     }
   };

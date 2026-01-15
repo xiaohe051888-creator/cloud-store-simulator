@@ -63,8 +63,8 @@ export default function WeChatLinkGuide({ isVisible, onClose }: WeChatLinkGuideP
         </div>
 
         {/* 引导卡片 */}
-        <div className="absolute top-1/4 right-1/4 w-64 sm:w-80 animate-in zoom-in-95 duration-500">
-          <div className="relative bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-6 sm:p-8 overflow-hidden">
+        <div className="absolute top-8 left-1/2 transform -translate-x-1/2 sm:top-1/4 sm:left-1/4 sm:transform-none w-11/12 sm:w-80 animate-in zoom-in-95 duration-500">
+          <div className="relative bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-4 sm:p-6 lg:p-8 overflow-hidden max-h-[80vh] overflow-y-auto">
             {/* 顶部彩色条纹 */}
             <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-red-500 via-yellow-500 to-green-500" />
 

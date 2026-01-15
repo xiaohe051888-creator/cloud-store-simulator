@@ -1984,8 +1984,8 @@ export default function CloudShopSimulator() {
                       <TableRow className="hover:bg-gray-50">
                         <TableCell className="px-4 py-3 text-gray-700 text-center">
                           <div className="space-y-2">
-                            <div>新手店500额度卖完自动升级</div>
-                            <div>老手店开店完成后自动升级</div>
+                            <div>开店选择新手店500额度卖完自动升级</div>
+                            <div>开店选择老手店开店完成后自动升级</div>
                           </div>
                         </TableCell>
                         <TableCell className="px-4 py-3 text-center">

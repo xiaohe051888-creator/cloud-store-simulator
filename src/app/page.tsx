@@ -1982,9 +1982,20 @@ export default function CloudShopSimulator() {
                     </TableHeader>
                     <TableBody>
                       <TableRow className="hover:bg-gray-50">
-                        <TableCell className="px-4 py-3 text-gray-700 text-center">新手店500额度卖完</TableCell>
+                        <TableCell className="px-4 py-3 text-gray-700 text-center">新手店500额度卖完自动升级</TableCell>
                         <TableCell className="px-4 py-3 text-center">
                           <Badge className="bg-gradient-to-r from-orange-400 to-orange-600">青铜</Badge>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow className="hover:bg-gray-50 bg-gradient-to-r from-purple-50 to-pink-50">
+                        <TableCell className="px-4 py-3 text-gray-900 text-center font-semibold">
+                          <span className="inline-flex items-center">
+                            <span className="text-red-500 mr-1">⚡</span>
+                            老手店开店完成后自动升级
+                          </span>
+                        </TableCell>
+                        <TableCell className="px-4 py-3 text-center">
+                          <Badge className="bg-gradient-to-r from-orange-400 to-orange-600 shadow-lg">青铜</Badge>
                         </TableCell>
                       </TableRow>
                       <TableRow className="hover:bg-gray-50">

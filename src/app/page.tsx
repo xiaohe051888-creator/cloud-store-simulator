@@ -370,7 +370,10 @@ export default function CloudShopSimulator() {
     const completionDays = Math.ceil(calculationBalance / dailyCommission);
     const totalProfit = Math.round(calculationBalance * (levelConfig.saleDiscount - levelConfig.stockDiscount));
     
-    return { stockCost, dailyCommission, completionDays, totalProfit, calculationBalance };
+    // 云店总余额 = 进货额度 + 云店余额
+    const cloudTotalBalance = stockAmount + cloudBalance;
+    
+    return { stockCost, dailyCommission, completionDays, totalProfit, calculationBalance, cloudTotalBalance };
   };
 
   const detailsData = getDetailsData();
@@ -1601,12 +1604,22 @@ export default function CloudShopSimulator() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-5 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
-                <div className="flex justify-between items-center">
-                  <p className="text-white font-medium">总利润</p>
-                  <p className="text-2xl sm:text-3xl font-bold text-white">
-                    {detailsData.totalProfit}元
-                  </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-5 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01] border border-blue-100">
+                  <div className="flex justify-between items-center">
+                    <p className="text-blue-700 font-medium">云店总余额</p>
+                    <p className="text-2xl sm:text-3xl font-bold text-blue-700">
+                      {detailsData.cloudTotalBalance}⚡
+                    </p>
+                  </div>
+                </div>
+                <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-5 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
+                  <div className="flex justify-between items-center">
+                    <p className="text-white font-medium">总利润</p>
+                    <p className="text-2xl sm:text-3xl font-bold text-white">
+                      {detailsData.totalProfit}元
+                    </p>
+                  </div>
                 </div>
               </div>
 

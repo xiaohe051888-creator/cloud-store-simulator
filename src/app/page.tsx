@@ -1796,19 +1796,7 @@ export default function CloudShopSimulator() {
         {currentView === 'salesDetails' && (
           <Card className="max-w-3xl mx-auto w-full bg-white/90 backdrop-blur-lg animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
             <CardHeader className="pb-4 pt-6 px-6">
-              <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
-                  <span className="text-2xl font-bold">←</span>
-                </Button>
-                <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  销售详情
-                </CardTitle>
-                <div className="w-12" />
-              </div>
-            </CardHeader>
-            <CardContent className="px-6 pb-6 relative">
-              {/* 左右滑动箭头 - 移动端显示 */}
-              <div className="absolute left-2 right-2 top-1/2 -translate-y-1/2 z-20 flex justify-between pointer-events-none sm:hidden">
+              <div className="flex items-center justify-between gap-2">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -1817,12 +1805,15 @@ export default function CloudShopSimulator() {
                       salesDetailsScrollRef.current.scrollBy({ left: -200, behavior: 'smooth' });
                     }
                   }}
-                  className="pointer-events-auto w-10 h-10 bg-white/90 backdrop-blur-sm shadow-xl rounded-full border-2 border-blue-200 active:scale-90 transition-all duration-200 hover:bg-blue-50"
+                  className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 flex-shrink-0 bg-blue-50 border-2 border-blue-200"
                 >
-                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </Button>
+                <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  销售详情
+                </CardTitle>
                 <Button
                   variant="ghost"
                   size="icon"
@@ -1831,17 +1822,18 @@ export default function CloudShopSimulator() {
                       salesDetailsScrollRef.current.scrollBy({ left: 200, behavior: 'smooth' });
                     }
                   }}
-                  className="pointer-events-auto w-10 h-10 bg-white/90 backdrop-blur-sm shadow-xl rounded-full border-2 border-blue-200 active:scale-90 transition-all duration-200 hover:bg-blue-50"
+                  className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 flex-shrink-0 bg-blue-50 border-2 border-blue-200"
                 >
-                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </Button>
               </div>
-
+            </CardHeader>
+            <CardContent className="px-6 pb-6">
               <div
                 ref={salesDetailsScrollRef}
-                className="overflow-x-auto -mx-6 px-12 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent scroll-smooth"
+                className="overflow-x-auto -mx-6 px-6 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent scroll-smooth"
               >
                 <Table>
                   <TableHeader>
@@ -1893,6 +1885,15 @@ export default function CloudShopSimulator() {
                     {salesData.length}天
                   </p>
                 </div>
+              </div>
+
+              <div className="mt-6 flex justify-center">
+                <Button
+                  onClick={handleBackToLevelDetails}
+                  className="w-full sm:w-auto h-11 px-8 text-base font-semibold bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+                >
+                  返回等级详情
+                </Button>
               </div>
             </CardContent>
           </Card>

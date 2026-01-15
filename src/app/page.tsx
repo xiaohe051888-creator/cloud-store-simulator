@@ -617,61 +617,28 @@ export default function CloudShopSimulator() {
       let matchReason: string;
 
       if (recommendInputType === 'budget') {
-        // 根据预算推荐
-        if (targetBudget <= 0) continue;
+        // 根据预算推荐（必须提供周期）
+        if (targetBudget < 100 || targetBudget > 10000) continue;
+        if (period < 1 || period > 30) continue;
 
         let stockCost: number;
         let dailyCommission: number;
         let completionDays: number;
 
-        if (period > 0 && period <= 30) {
-          // 考虑周期的推荐 - 使用带预算的复利计算
-          // 新算法：考虑初始进货后剩余预算的利用
-          const result = calculateCompoundProfitWithBudget(targetBudget, config, period);
-          recommendedStock = result.stock;
-          estimatedProfit = result.profit;
-          stockCost = Math.round(recommendedStock * config.stockDiscount);
+        // 考虑周期的推荐 - 使用带预算的复利计算
+        // 新算法：考虑初始进货后剩余预算的利用
+        const result = calculateCompoundProfitWithBudget(targetBudget, config, period);
+        recommendedStock = result.stock;
+        estimatedProfit = result.profit;
+        stockCost = Math.round(recommendedStock * config.stockDiscount);
 
-          // 完成天数
-          dailyCommission = Math.round(recommendedStock * config.commissionRate);
-          completionDays = Math.ceil(recommendedStock / dailyCommission);
+        // 完成天数（显示用户输入的周期天数）
+        dailyCommission = Math.round(recommendedStock * config.commissionRate);
+        completionDays = period; // 直接使用用户输入的周期天数
 
-          // 匹配度稍后在所有结果计算完后统一重新计算（基于利润最大化）
-          matchScore = 0; // 临时值，会被覆盖
-          matchReason = `周期${period}天复利利润${estimatedProfit}元（进货成本${stockCost}元）`;
-        } else {
-          // 不考虑周期的推荐 - 利润最大化算法
-          // 在预算限制内找到使单次利润最大的进货额度
-
-          // 计算预算支持的最大进货额度（取100倍数）
-          const maxStockByBudget = Math.floor(targetBudget / config.stockDiscount / 100) * 100;
-          const cappedMaxStock = Math.min(config.maxStock, maxStockByBudget);
-
-          // 从最低到最大进货额度，寻找利润最大值
-          let maxProfit = -1;
-          let bestStock = config.minStock;
-
-          for (let stock = config.minStock; stock <= cappedMaxStock; stock += 100) {
-            const actualCost = stock * config.stockDiscount;
-            if (actualCost > targetBudget) break;
-
-            const profit = stock * (config.saleDiscount - config.stockDiscount);
-            if (profit > maxProfit) {
-              maxProfit = profit;
-              bestStock = stock;
-            }
-          }
-
-          recommendedStock = bestStock;
-          stockCost = Math.round(recommendedStock * config.stockDiscount);
-          estimatedProfit = Math.round(maxProfit);
-          dailyCommission = Math.round(recommendedStock * config.commissionRate);
-          completionDays = Math.ceil(recommendedStock / dailyCommission);
-
-          // 匹配度稍后在所有结果计算完后统一重新计算（基于利润最大化）
-          matchScore = 0; // 临时值，会被覆盖
-          matchReason = `单次利润${estimatedProfit}元（进货成本${stockCost}元）`;
-        }
+        // 匹配度稍后在所有结果计算完后统一重新计算（基于利润最大化）
+        matchScore = 0; // 临时值，会被覆盖
+        matchReason = `周期${period}天复利利润${estimatedProfit}元（进货成本${stockCost}元）`;
 
         results.push({
           level,
@@ -1044,15 +1011,16 @@ export default function CloudShopSimulator() {
                   <Input
                     id="recommendBudget"
                     type="number"
-                    placeholder="请输入您的预算"
-                    min="1000"
+                    placeholder="请输入您的预算（100-10000）"
+                    min="100"
+                    max="10000"
                     step="100"
                     value={recommendBudget}
                     onChange={(e) => setRecommendBudget(e.target.value)}
                     className="focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all duration-200 h-12"
                   />
                   <p className="text-sm text-gray-500">
-                    系统将根据您的预算推荐最合适的店铺等级和进货额度（进货成本不超过预算）
+                    预算范围：100-10000元，系统将根据您的预算推荐最合适的店铺等级和进货额度（进货成本不超过预算）
                   </p>
                 </div>
               )}
@@ -1083,12 +1051,12 @@ export default function CloudShopSimulator() {
               {recommendInputType === 'budget' && (
                 <div className="space-y-2">
                   <Label htmlFor="recommendPeriod" className="text-sm font-medium text-gray-700">
-                    周期天数（可选）
+                    周期天数 <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="recommendPeriod"
                     type="number"
-                    placeholder="留空则按完整销售周期计算"
+                    placeholder="请输入周期天数（1-30）"
                     min="1"
                     max="30"
                     value={recommendPeriod}
@@ -1096,7 +1064,7 @@ export default function CloudShopSimulator() {
                     className="focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 h-12"
                   />
                   <p className="text-sm text-gray-500">
-                    输入1-30天的周期，系统将根据周期计算推荐方案（留空则按完整销售周期计算）
+                    周期范围：1-30天，系统将根据周期计算推荐方案（复利计算）
                   </p>
                 </div>
               )}
@@ -1105,9 +1073,9 @@ export default function CloudShopSimulator() {
                 className="w-full h-12 sm:h-14 text-base sm:text-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl"
                 onClick={handleRecommend}
                 disabled={
-                  (recommendInputType === 'budget' && (!recommendBudget || parseInt(recommendBudget) <= 0)) ||
+                  (recommendInputType === 'budget' && (!recommendBudget || parseInt(recommendBudget) < 100 || parseInt(recommendBudget) > 10000)) ||
                   (recommendInputType === 'profit' && (!recommendProfit || parseInt(recommendProfit) <= 0)) ||
-                  (recommendInputType === 'budget' && recommendPeriod !== '' && (parseInt(recommendPeriod) < 1 || parseInt(recommendPeriod) > 30))
+                  (recommendInputType === 'budget' && (!recommendPeriod || parseInt(recommendPeriod) < 1 || parseInt(recommendPeriod) > 30))
                 }
               >
                 生成推荐方案 (Enter)
@@ -1117,9 +1085,9 @@ export default function CloudShopSimulator() {
               <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-l-4 border-purple-400 p-4 rounded-xl">
                 <h4 className="font-semibold text-purple-800 mb-2 text-sm">💡 使用提示</h4>
                 <ul className="text-xs sm:text-sm text-purple-700 space-y-1 list-disc list-inside">
-                  <li>按预算推荐：系统会根据您的预算，推荐最匹配的进货额度和店铺等级（利润最大化）</li>
+                  <li>按预算推荐：系统会根据您的预算（100-10000元）和周期（1-30天），推荐最匹配的进货额度和店铺等级（复利计算）</li>
                   <li>按利润推荐：系统会基于单次销售利润，推荐最低成本、最短周期的方案（利润可浮动0-19元）</li>
-                  <li>周期选项：仅按预算推荐时可设置周期，按利润推荐时自动计算最优周期</li>
+                  <li>周期天数：按预算推荐时必须输入周期天数，推荐结果的完成天数显示为您输入的周期</li>
                   <li>推荐结果先按成本最低，再按周期最短排序，您可以选择任意方案直接开始模拟</li>
                 </ul>
               </div>
@@ -1241,7 +1209,7 @@ export default function CloudShopSimulator() {
                             <div className="bg-white/80 p-3 rounded-xl">
                               <p className="text-xs text-gray-500 mb-1">完成天数</p>
                               <p className="text-lg font-bold text-gray-800">
-                                {result.completionDays}天
+                                {recommendInputType === 'budget' && recommendPeriod ? `${recommendPeriod}天` : `${result.completionDays}天`}
                               </p>
                             </div>
                           </div>

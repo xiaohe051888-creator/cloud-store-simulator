@@ -309,6 +309,16 @@ export default function CloudShopSimulator() {
   const handleAddToComparison = useCallback(() => {
     if (!currentLevel || !levelConfig) return;
 
+    // 检查是否已存在对比数据，如果存在则必须进货额度相同
+    if (comparisonData.length > 0) {
+      const firstStockAmount = comparisonData[0].stockAmount;
+      if (stockAmount !== firstStockAmount) {
+        // 提示用户只能加入相同进货额度的数据
+        alert('只能加入相同进货额度的数据进行对比');
+        return;
+      }
+    }
+
     // 计算基准：用于进货成本计算，优先使用进货额度，如果没有则使用云店余额
     const calculationBalance = stockAmount > 0 ? stockAmount : cloudBalance;
 
@@ -324,7 +334,7 @@ export default function CloudShopSimulator() {
       id: Date.now().toString(),
       level: currentLevel,
       levelName: levelConfig.name,
-      stockAmount: cloudTotalBalance,
+      stockAmount: stockAmount,
       cloudBalance: cloudBalance,
       maxBalance: maxBalance,
       stockCost: stockCost,
@@ -336,7 +346,7 @@ export default function CloudShopSimulator() {
 
     setComparisonData(prev => [...prev, newComparison]);
     setCurrentComparisonId(newComparison.id);
-  }, [currentLevel, levelConfig, cloudBalance, stockAmount, maxBalance]);
+  }, [currentLevel, levelConfig, cloudBalance, stockAmount, maxBalance, comparisonData]);
 
   // 查看对比
   const handleViewComparison = () => {
@@ -1751,6 +1761,7 @@ export default function CloudShopSimulator() {
                 <div className="text-center py-12 text-gray-500">
                   <p className="text-lg mb-2">暂无对比数据</p>
                   <p className="text-sm">请先确认进货，然后点击"加入对比"按钮</p>
+                  <p className="text-sm mt-2 text-blue-600">注意：只能对比相同进货额度的数据</p>
                 </div>
               ) : (
                 <>

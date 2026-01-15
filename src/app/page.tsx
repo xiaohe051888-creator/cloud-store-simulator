@@ -629,19 +629,22 @@ export default function CloudShopSimulator() {
         const dailySellAmount = initialStock * sellRatio; // 每日需要卖的额度
 
         if (availableQuota > 0 && currentStock < dailySellAmount) {
-          // 只补货第二天要卖的额度（dailySellAmount），而不是一次性补满
-          // 实际能进货的额度 = min(每日要卖的, 剩余可用额度, 剩余预算能买的)
-          const maxStockByBudget = Math.round(remainingBudget / stockDiscount);
-          const actualNewStock = Math.min(dailySellAmount, availableQuota, maxStockByBudget);
-          // 取100倍数
-          const roundedNewStock = Math.round(actualNewStock / 100) * 100;
+          // 精确补货：补货到刚好够第二天卖的额度（dailySellAmount）
+          // 需要补货的数量 = 每日要卖的 - 当前库存
+          const stockNeeded = dailySellAmount - currentStock;
+          // 取100倍数向上取整
+          const roundedStockNeeded = Math.ceil(stockNeeded / 100) * 100;
 
-          if (roundedNewStock >= 100) {
-            const newStockCost = Math.round(roundedNewStock * stockDiscount);
+          // 实际能进货的额度 = min(需要补货的, 剩余可用额度, 剩余预算能买的)
+          const maxStockByBudget = Math.round(remainingBudget / stockDiscount);
+          const actualNewStock = Math.min(roundedStockNeeded, availableQuota, maxStockByBudget);
+
+          if (actualNewStock >= 100) {
+            const newStockCost = Math.round(actualNewStock * stockDiscount);
             if (newStockCost <= remainingBudget) {
               remainingBudget -= newStockCost;
               totalStockCost += newStockCost; // 累加进货成本
-              currentStock += roundedNewStock;
+              currentStock += actualNewStock;
             }
           }
         }

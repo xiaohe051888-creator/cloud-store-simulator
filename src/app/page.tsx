@@ -2206,25 +2206,44 @@ export default function CloudShopSimulator() {
             <CardContent className="px-6 pb-6 space-y-4">
               {isWeChat() ? (
                 /* 微信环境：引导用户用浏览器打开 */
-                <div className="text-center space-y-4 py-6">
+                <div className="text-center space-y-6 py-8">
                   <div className="flex justify-center">
-                    <div className="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center shadow-lg">
-                      <svg className="w-14 h-14 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <div className="w-32 h-32 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center shadow-2xl animate-bounce">
+                      <svg className="w-20 h-20 text-white" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
                       </svg>
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <p className="text-lg font-semibold text-gray-800">请使用浏览器打开</p>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      检测到您正在微信中打开
+                  <div className="space-y-3">
+                    <p className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                      请使用浏览器打开
                     </p>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      请点击右上角的<span className="text-blue-600 font-semibold">···</span>按钮
+                    <p className="text-base text-gray-700 leading-relaxed font-medium">
+                      ⚠️ 检测到您正在微信中打开
                     </p>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      选择<span className="text-blue-600 font-semibold">在浏览器中打开</span>
-                    </p>
+                    <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-xl border-2 border-blue-200">
+                      <p className="text-lg text-gray-800 leading-relaxed font-semibold mb-3">
+                        请按以下步骤操作：
+                      </p>
+                      <div className="space-y-3 text-left">
+                        <div className="flex items-start gap-3">
+                          <span className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">
+                            1
+                          </span>
+                          <p className="text-base text-gray-800 leading-relaxed pt-1">
+                            点击右上角的<span className="inline-block px-3 py-1 bg-green-500 text-white rounded-lg font-bold mx-1 shadow-md text-lg">···</span>按钮
+                          </p>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">
+                            2
+                          </span>
+                          <p className="text-base text-gray-800 leading-relaxed pt-1">
+                            选择<span className="inline-block px-3 py-1 bg-blue-500 text-white rounded-lg font-bold mx-1 shadow-md text-base">在浏览器中打开</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ) : (

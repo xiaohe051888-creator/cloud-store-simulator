@@ -626,15 +626,16 @@ export default function CloudShopSimulator() {
       if (remainingBudget > 0) {
         // 计算剩余可用额度 = 店铺最高进货额度 - 当前库存
         const availableQuota = maxShopStock - currentStock;
-        
-        if (availableQuota > 0) {
-          // 用剩余预算能买到的最大额度
+        const dailySellAmount = initialStock * sellRatio; // 每日需要卖的额度
+
+        if (availableQuota > 0 && currentStock < dailySellAmount) {
+          // 只补货第二天要卖的额度（dailySellAmount），而不是一次性补满
+          // 实际能进货的额度 = min(每日要卖的, 剩余可用额度, 剩余预算能买的)
           const maxStockByBudget = Math.round(remainingBudget / stockDiscount);
-          // 实际能进货的额度 = min(剩余预算能买的, 剩余可用额度)
-          const actualNewStock = Math.min(maxStockByBudget, availableQuota);
+          const actualNewStock = Math.min(dailySellAmount, availableQuota, maxStockByBudget);
           // 取100倍数
           const roundedNewStock = Math.round(actualNewStock / 100) * 100;
-          
+
           if (roundedNewStock >= 100) {
             const newStockCost = Math.round(roundedNewStock * stockDiscount);
             if (newStockCost <= remainingBudget) {

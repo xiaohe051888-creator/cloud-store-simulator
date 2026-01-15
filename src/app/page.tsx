@@ -56,6 +56,11 @@ export default function CloudShopSimulator() {
   const stockAmountRef = useRef<HTMLInputElement>(null);
   const maxBalanceRef = useRef<HTMLInputElement>(null);
   
+  // 推荐系统输入框引用
+  const recommendBudgetRef = useRef<HTMLInputElement>(null);
+  const recommendPeriodRef = useRef<HTMLInputElement>(null);
+  const recommendProfitRef = useRef<HTMLInputElement>(null);
+  
   // 进货输入闪烁状态
   const [isStockShaking, setIsStockShaking] = useState<boolean>(false);
   const [isCloudBalanceShaking, setIsCloudBalanceShaking] = useState<boolean>(false);
@@ -324,16 +329,47 @@ export default function CloudShopSimulator() {
     if (e.key === 'Enter') {
       e.preventDefault();
       e.stopPropagation();
-      handleConfirmStock();
+      if (isEditMaxBalance) {
+        maxBalanceRef.current?.focus();
+      } else {
+        handleConfirmStock();
+      }
     }
   };
 
   // 处理历史最高余额输入框的 Enter 键
   const handleMaxBalanceKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && !isEditMaxBalance) {
+    if (e.key === 'Enter') {
       e.preventDefault();
       e.stopPropagation();
       handleConfirmStock();
+    }
+  };
+  
+  // 处理推荐系统预算输入框的 Enter 键
+  const handleRecommendBudgetKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+      recommendPeriodRef.current?.focus();
+    }
+  };
+  
+  // 处理推荐系统周期输入框的 Enter 键
+  const handleRecommendPeriodKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+      handleRecommend();
+    }
+  };
+  
+  // 处理推荐系统利润输入框的 Enter 键
+  const handleRecommendProfitKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+      handleRecommend();
     }
   };
 
@@ -1014,16 +1050,9 @@ export default function CloudShopSimulator() {
     setCurrentComparisonId(null);
   }, []);
 
-  // 处理Enter键
+  // 处理Enter键（已废弃，改用单个输入框的 onKeyDown 处理）
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && currentView === 'stockInput') {
-      e.preventDefault();
-      handleConfirmStock();
-    }
-    if (e.key === 'Enter' && currentView === 'recommendation') {
-      e.preventDefault();
-      handleRecommend();
-    }
+    // 不再需要全局处理
   };
 
   return (
@@ -1238,6 +1267,7 @@ export default function CloudShopSimulator() {
                   </Label>
                   <Input
                     id="recommendBudget"
+                    ref={recommendBudgetRef}
                     type="number"
                     placeholder="预算金额（100-100000元）"
                     min="100"
@@ -1255,6 +1285,7 @@ export default function CloudShopSimulator() {
                         setBudgetError('');
                       }
                     }}
+                    onKeyDown={handleRecommendBudgetKeyDown}
                     className={`focus:ring-2 transition-all duration-200 h-12 ${
                       budgetError
                         ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
@@ -1275,6 +1306,7 @@ export default function CloudShopSimulator() {
                   </Label>
                   <Input
                     id="recommendProfit"
+                    ref={recommendProfitRef}
                     type="number"
                     placeholder="期望利润（7-9100元）"
                     min="7"
@@ -1292,6 +1324,7 @@ export default function CloudShopSimulator() {
                         setProfitError('');
                       }
                     }}
+                    onKeyDown={handleRecommendProfitKeyDown}
                     className={`focus:ring-2 transition-all duration-200 h-12 ${
                       profitError
                         ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
@@ -1312,6 +1345,7 @@ export default function CloudShopSimulator() {
                   </Label>
                   <Input
                     id="recommendPeriod"
+                    ref={recommendPeriodRef}
                     type="number"
                     placeholder="周期天数（1-30天）"
                     min="1"
@@ -1328,6 +1362,7 @@ export default function CloudShopSimulator() {
                         setPeriodError('');
                       }
                     }}
+                    onKeyDown={handleRecommendPeriodKeyDown}
                     className={`focus:ring-2 transition-all duration-200 h-12 ${
                       periodError
                         ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'

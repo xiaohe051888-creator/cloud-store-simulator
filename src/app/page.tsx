@@ -292,8 +292,8 @@ export default function CloudShopSimulator() {
       return;
     }
 
-    // 使用云店余额作为基准计算（如果没有进货额度）
-    const calculationBalance = cloudBalance > 0 ? cloudBalance : stockAmount;
+    // 使用进货额度作为基准计算，如果用户没有输入进货额度，才使用云店余额
+    const calculationBalance = stockAmount > 0 ? stockAmount : cloudBalance;
 
     // 生成销售数据
     const dailyCommission = Math.round(finalMaxBalance * levelConfig.commissionRate);
@@ -309,8 +309,8 @@ export default function CloudShopSimulator() {
   const handleAddToComparison = useCallback(() => {
     if (!currentLevel || !levelConfig) return;
     
-    // 使用云店余额作为基准计算（如果没有进货额度）
-    const calculationBalance = cloudBalance > 0 ? cloudBalance : stockAmount;
+    // 使用进货额度作为基准计算，如果用户没有输入进货额度，才使用云店余额
+    const calculationBalance = stockAmount > 0 ? stockAmount : cloudBalance;
     const stockCost = Math.round(calculationBalance * levelConfig.stockDiscount);
     const dailyCommission = Math.round(maxBalance * levelConfig.commissionRate);
     const completionDays = Math.ceil(calculationBalance / dailyCommission);
@@ -362,8 +362,8 @@ export default function CloudShopSimulator() {
   const getDetailsData = () => {
     if (!levelConfig) return null;
     
-    // 使用云店余额作为基准计算（如果没有进货额度）
-    const calculationBalance = cloudBalance > 0 ? cloudBalance : stockAmount;
+    // 使用进货额度作为基准计算，如果用户没有输入进货额度，才使用云店余额
+    const calculationBalance = stockAmount > 0 ? stockAmount : cloudBalance;
     
     const stockCost = Math.round(calculationBalance * levelConfig.stockDiscount);
     const dailyCommission = Math.round(maxBalance * levelConfig.commissionRate);

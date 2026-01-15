@@ -1100,8 +1100,8 @@ export default function CloudShopSimulator() {
               onClick={handleOpenPlatform}
               className="text-xs sm:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-green-300 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 text-green-700 font-semibold h-8 sm:h-9 lg:h-10 px-2 sm:px-3 lg:px-4"
             >
-              <span className="hidden sm:inline">进入</span>
-              <span className="sm:hidden">进入</span>
+              <span className="hidden sm:inline">进入平台</span>
+              <span className="sm:hidden">进入平台</span>
             </Button>
             <Button
               variant="outline"
@@ -1109,7 +1109,7 @@ export default function CloudShopSimulator() {
               onClick={() => setCurrentView('recommendation')}
               className="hidden sm:flex text-xs sm:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-purple-300 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 h-9 lg:h-10 px-3 lg:px-4"
             >
-              🎯 推荐
+              智能推荐
             </Button>
             <Button
               variant="outline"
@@ -1117,7 +1117,7 @@ export default function CloudShopSimulator() {
               onClick={() => setCurrentView('recommendation')}
               className="sm:hidden active:scale-95 transition-all duration-200 hover:shadow-md bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 h-8 px-2"
             >
-              🎯
+              智能推荐
             </Button>
             {comparisonData.length > 0 && (
               <Button
@@ -1161,7 +1161,7 @@ export default function CloudShopSimulator() {
               onClick={handleGoHome}
               className="hidden sm:flex active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 h-9 lg:h-10 px-3 lg:px-4"
             >
-              首页
+              回到主页
             </Button>
             <Button
               variant="outline"
@@ -1169,7 +1169,7 @@ export default function CloudShopSimulator() {
               onClick={handleGoHome}
               className="sm:hidden active:scale-95 transition-all duration-200 hover:shadow-md h-8 px-2"
             >
-              🏠
+              主页
             </Button>
           </div>
         </div>
@@ -1461,7 +1461,7 @@ export default function CloudShopSimulator() {
                   ←
                 </Button>
                 <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                  🎯 推荐方案
+                  智能推荐方案
                 </CardTitle>
                 <Button
                   variant="outline"

@@ -579,11 +579,11 @@ export default function CloudShopSimulator() {
       // 步骤1：如果还有库存，当天可以卖出
       // 如果库存卖完且今天没有回款到账，店铺空转，当天无利润
       if (currentStock > 0) {
-        // 当天最大可卖出额度
-        const maxDailySell = initialStock * sellRatio;
+        // 每日卖出额度 = 店铺历史最高余额 × 代缴比例
+        const dailySellAmount = maxShopStock * sellRatio;
 
         // 实际卖出额度 = min(当前库存, 每日卖出额度)
-        const sellAmount = Math.min(currentStock, maxDailySell);
+        const sellAmount = Math.min(currentStock, dailySellAmount);
 
         if (sellAmount > 0) {
           // 减少库存（释放额度）
@@ -619,20 +619,21 @@ export default function CloudShopSimulator() {
       }
 
       // 步骤3：进货逻辑（使用剩余预算 + 累计回款 + 可用利润）
-      const dailySellAmount = initialStock * sellRatio; // 每日需要卖的额度
+      // 每日卖出额度 = 店铺历史最高余额 × 代缴比例
+      const dailySellAmount = maxShopStock * sellRatio;
 
       if (currentStock === 0) {
-        // 有空档期：用所有可用资金进货，能进多少进多少
+        // 有空档期（预算不足）：用所有可用资金进货，能进多少进多少，实现利滚利
         // 可用资金 = 剩余预算 + 累计回款 + 可用利润
         let availableFunds = remainingBudget + accumulatedSettlement + availableProfitForStock;
 
         if (availableFunds >= 100 * stockDiscount) {
-          // 计算能进货的额度（100的倍数）
-          const maxStock = Math.floor(availableFunds / stockDiscount / 100) * 100;
+          // 计算能进货的额度（100的倍数），最多进货到 maxShopStock
+          const maxStockPossible = Math.min(maxShopStock, Math.floor(availableFunds / stockDiscount / 100) * 100);
 
-          if (maxStock >= 100) {
+          if (maxStockPossible >= 100) {
             // 进货成本
-            const stockCost = Math.round(maxStock * stockDiscount);
+            const stockCost = Math.round(maxStockPossible * stockDiscount);
 
             // 先用剩余预算
             let budgetToUse = Math.min(remainingBudget, stockCost);
@@ -648,11 +649,12 @@ export default function CloudShopSimulator() {
             availableProfitForStock -= profitToUse; // 减少可用利润，但不影响累计利润
 
             // 进货（利滚利：尽可能多进货）
-            currentStock += maxStock;
+            currentStock += maxStockPossible;
           }
         }
       } else if (currentStock < dailySellAmount) {
-        // 没有空档期但库存不足：精确补货到刚好够第二天卖的额度
+        // 没有空档期但库存不足（预算够多的情况）：
+        // 只补货到刚好够第二天卖的额度，达到循环后不再增加利润
         // 需要补货的数量 = 每日要卖的 - 当前库存
         const stockNeeded = dailySellAmount - currentStock;
         // 向上取整到100的倍数
@@ -678,11 +680,12 @@ export default function CloudShopSimulator() {
           let profitToUse = stockCostNeeded - budgetToUse - settlementToUse;
           availableProfitForStock -= profitToUse; // 减少可用利润，但不影响累计利润
 
-          // 进货
+          // 补货到刚好够第二天卖的额度
           currentStock += roundedStockNeeded;
         }
         // else：资金不够，无法进货，店铺空转
       }
+      // else：库存足够第二天卖，不进货（达到循环状态）
     }
 
     return {

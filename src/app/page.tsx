@@ -84,6 +84,9 @@ export default function CloudShopSimulator() {
   const [isPeriodShaking, setIsPeriodShaking] = useState<boolean>(false);
   const [isProfitShaking, setIsProfitShaking] = useState<boolean>(false);
 
+  // 进入平台弹窗状态
+  const [showPlatformModal, setShowPlatformModal] = useState<boolean>(false);
+
   // 获取当前等级配置
   const levelConfig = currentLevel ? shopLevelsConfig[currentLevel] : null;
 
@@ -1053,6 +1056,26 @@ export default function CloudShopSimulator() {
     setCurrentComparisonId(null);
   }, []);
 
+  // 检测是否在微信中
+  const isWeChat = () => {
+    return /micromessenger/i.test(navigator.userAgent);
+  };
+
+  // 打开进入平台弹窗
+  const handleOpenPlatform = () => {
+    setShowPlatformModal(true);
+  };
+
+  // 关闭弹窗
+  const handleClosePlatformModal = () => {
+    setShowPlatformModal(false);
+  };
+
+  // 打开链接
+  const openLink = (url: string) => {
+    window.open(url, '_blank');
+  };
+
   // 处理Enter键（已废弃，改用单个输入框的 onKeyDown 处理）
   const handleKeyDown = (e: React.KeyboardEvent) => {
     // 不再需要全局处理
@@ -1067,6 +1090,14 @@ export default function CloudShopSimulator() {
             云店模拟器
           </h1>
           <div className="flex items-center gap-2 sm:gap-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleOpenPlatform}
+              className="active:scale-95 transition-all duration-200 hover:shadow-md hover:border-green-300 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 text-green-700 font-semibold"
+            >
+              进入平台
+            </Button>
             <Button
               variant="outline"
               size="sm"
@@ -2147,6 +2178,91 @@ export default function CloudShopSimulator() {
           </Card>
         )}
       </main>
+
+      {/* 进入平台弹窗 */}
+      {showPlatformModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={handleClosePlatformModal}>
+          <Card
+            className="w-full max-w-md mx-4 bg-white/95 backdrop-blur-xl shadow-2xl animate-in fade-in-0 zoom-in-95 duration-300 border-0"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <CardHeader className="pb-4 pt-6 px-6">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  进入平台
+                </CardTitle>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={handleClosePlatformModal}
+                  className="h-8 w-8 rounded-full hover:bg-gray-100 active:scale-90 transition-all duration-200"
+                >
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="px-6 pb-6 space-y-4">
+              {isWeChat() ? (
+                /* 微信环境：引导用户用浏览器打开 */
+                <div className="text-center space-y-4 py-6">
+                  <div className="flex justify-center">
+                    <div className="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center shadow-lg">
+                      <svg className="w-14 h-14 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-lg font-semibold text-gray-800">请使用浏览器打开</p>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      检测到您正在微信中打开
+                    </p>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      请点击右上角的<span className="text-blue-600 font-semibold">···</span>按钮
+                    </p>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      选择<span className="text-blue-600 font-semibold">在浏览器中打开</span>
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                /* 浏览器环境：显示3个选项 */
+                <div className="space-y-3">
+                  <Button
+                    onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/login/login')}
+                    className="w-full h-12 text-base font-semibold bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+                  >
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                    进入平台
+                  </Button>
+                  <Button
+                    onClick={() => openLink('https://www.ugpcgm.cn/#/pages/download/download')}
+                    className="w-full h-12 text-base font-semibold bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+                  >
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    下载缴费APP
+                  </Button>
+                  <Button
+                    onClick={() => openLink('https://www.ugpcgm.cn/#/myPages/groupChat/groupChat')}
+                    className="w-full h-12 text-base font-semibold bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+                  >
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    下载步信APP
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

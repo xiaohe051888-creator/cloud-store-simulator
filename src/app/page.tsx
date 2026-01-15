@@ -611,14 +611,12 @@ export default function CloudShopSimulator() {
 
       // 用回款进货（不受店铺最高进货额度限制）
       // 回款到账后才能继续销售，否则店铺空转
+      // 注意：回款进货的成本不计入用户实际掏的钱，因为这是用回款的钱
       if (todaySettlement > 0) {
         // 计算可以进货的额度（取100的倍数）
         const newStockFromSettlement = Math.round(todaySettlement / stockDiscount / 100) * 100;
         // 只有进货额度大于等于100才进货
         if (newStockFromSettlement >= 100) {
-          // 计算进货成本并累加
-          const settlementStockCost = Math.round(newStockFromSettlement * stockDiscount);
-          totalStockCost += settlementStockCost;
           currentStock += newStockFromSettlement;
         }
       }

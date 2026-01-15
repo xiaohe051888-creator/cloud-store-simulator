@@ -68,6 +68,14 @@ export default function CloudShopSimulator() {
   const [recommendProfit, setRecommendProfit] = useState<string>('');
   const [recommendPeriod, setRecommendPeriod] = useState<string>(''); // 周期（天），1-30
   const [recommendResults, setRecommendResults] = useState<RecommendationResult[]>([]);
+  
+  // 推荐系统验证状态
+  const [budgetError, setBudgetError] = useState<string>('');
+  const [periodError, setPeriodError] = useState<string>('');
+  const [profitError, setProfitError] = useState<string>('');
+  const [isBudgetShaking, setIsBudgetShaking] = useState<boolean>(false);
+  const [isPeriodShaking, setIsPeriodShaking] = useState<boolean>(false);
+  const [isProfitShaking, setIsProfitShaking] = useState<boolean>(false);
 
   // 获取当前等级配置
   const levelConfig = currentLevel ? shopLevelsConfig[currentLevel] : null;
@@ -618,7 +626,7 @@ export default function CloudShopSimulator() {
 
       if (recommendInputType === 'budget') {
         // 根据预算推荐（必须提供周期）
-        if (targetBudget < 100 || targetBudget > 10000) continue;
+        if (targetBudget < 100 || targetBudget > 100000) continue;
         if (period < 1 || period > 30) continue;
 
         let stockCost: number;
@@ -754,12 +762,68 @@ export default function CloudShopSimulator() {
     return results;
   }, [recommendInputType, recommendBudget, recommendProfit, recommendPeriod, calculateCompoundProfit, calculateCompoundProfitWithBudget]);
 
+  // 触发闪烁动画
+  const triggerShake = (setter: (value: boolean) => void) => {
+    setter(true);
+    setTimeout(() => setter(false), 500);
+  };
+
+  // 验证推荐输入
+  const validateRecommendInputs = useCallback((): boolean => {
+    let isValid = true;
+    
+    if (recommendInputType === 'budget') {
+      // 验证预算
+      const budget = parseInt(recommendBudget) || 0;
+      if (!recommendBudget || budget < 100 || budget > 100000) {
+        setBudgetError('预算必须在100-100000元之间');
+        isValid = false;
+      } else {
+        setBudgetError('');
+      }
+      
+      // 验证周期
+      const period = parseInt(recommendPeriod) || 0;
+      if (!recommendPeriod || period < 1 || period > 30) {
+        setPeriodError('周期必须在1-30天之间');
+        isValid = false;
+      } else {
+        setPeriodError('');
+      }
+    } else {
+      // 验证期望利润
+      const profit = parseInt(recommendProfit) || 0;
+      if (!recommendProfit || profit <= 0) {
+        setProfitError('请输入有效的期望利润');
+        isValid = false;
+      } else {
+        setProfitError('');
+      }
+    }
+    
+    return isValid;
+  }, [recommendInputType, recommendBudget, recommendPeriod, recommendProfit]);
+
   // 处理推荐查询
   const handleRecommend = useCallback(() => {
+    // 先验证输入
+    const isValid = validateRecommendInputs();
+    
+    if (!isValid) {
+      // 触发闪烁动画
+      if (recommendInputType === 'budget') {
+        if (budgetError) triggerShake(setIsBudgetShaking);
+        if (periodError) triggerShake(setIsPeriodShaking);
+      } else {
+        if (profitError) triggerShake(setIsProfitShaking);
+      }
+      return;
+    }
+    
     const results = generateRecommendations();
     setRecommendResults(results);
     setCurrentView('recommendationResult');
-  }, [generateRecommendations]);
+  }, [validateRecommendInputs, budgetError, periodError, profitError, recommendInputType, generateRecommendations]);
 
   // 选择推荐方案
   const handleSelectRecommendation = useCallback((result: RecommendationResult) => {
@@ -1011,16 +1075,30 @@ export default function CloudShopSimulator() {
                   <Input
                     id="recommendBudget"
                     type="number"
-                    placeholder="请输入您的预算（100-10000）"
+                    placeholder="请输入您的预算（100-100000）"
                     min="100"
-                    max="10000"
+                    max="100000"
                     step="100"
                     value={recommendBudget}
-                    onChange={(e) => setRecommendBudget(e.target.value)}
-                    className="focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all duration-200 h-12"
+                    onChange={(e) => {
+                      setRecommendBudget(e.target.value);
+                      const value = parseInt(e.target.value) || 0;
+                      if (e.target.value && (value < 100 || value > 100000)) {
+                        setBudgetError('预算必须在100-100000元之间');
+                      } else if (e.target.value && value >= 100 && value <= 100000) {
+                        setBudgetError('');
+                      } else if (!e.target.value) {
+                        setBudgetError('');
+                      }
+                    }}
+                    className={`focus:ring-2 transition-all duration-200 h-12 ${
+                      budgetError
+                        ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
+                        : 'focus:ring-purple-500/50 focus:border-purple-500'
+                    } ${isBudgetShaking ? 'animate-shake' : ''}`}
                   />
-                  <p className="text-sm text-gray-500">
-                    预算范围：100-10000元，系统将根据您的预算推荐最合适的店铺等级和进货额度（进货成本不超过预算）
+                  <p className={`text-sm transition-colors duration-200 ${budgetError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+                    {budgetError || '预算范围：100-100000元，系统将根据您的预算推荐最合适的店铺等级和进货额度（进货成本不超过预算）'}
                   </p>
                 </div>
               )}
@@ -1038,11 +1116,25 @@ export default function CloudShopSimulator() {
                     min="100"
                     step="100"
                     value={recommendProfit}
-                    onChange={(e) => setRecommendProfit(e.target.value)}
-                    className="focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 h-12"
+                    onChange={(e) => {
+                      setRecommendProfit(e.target.value);
+                      const value = parseInt(e.target.value) || 0;
+                      if (e.target.value && value <= 0) {
+                        setProfitError('期望利润必须大于0');
+                      } else if (e.target.value && value > 0) {
+                        setProfitError('');
+                      } else if (!e.target.value) {
+                        setProfitError('');
+                      }
+                    }}
+                    className={`focus:ring-2 transition-all duration-200 h-12 ${
+                      profitError
+                        ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
+                        : 'focus:ring-blue-500/50 focus:border-blue-500'
+                    } ${isProfitShaking ? 'animate-shake' : ''}`}
                   />
-                  <p className="text-sm text-gray-500">
-                    系统将根据您的期望利润推荐最合适的店铺等级（利润可浮动0-19元）
+                  <p className={`text-sm transition-colors duration-200 ${profitError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+                    {profitError || '系统将根据您的期望利润推荐最合适的店铺等级（利润可浮动0-19元）'}
                   </p>
                 </div>
               )}
@@ -1060,11 +1152,25 @@ export default function CloudShopSimulator() {
                     min="1"
                     max="30"
                     value={recommendPeriod}
-                    onChange={(e) => setRecommendPeriod(e.target.value)}
-                    className="focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 h-12"
+                    onChange={(e) => {
+                      setRecommendPeriod(e.target.value);
+                      const value = parseInt(e.target.value) || 0;
+                      if (e.target.value && (value < 1 || value > 30)) {
+                        setPeriodError('周期必须在1-30天之间');
+                      } else if (e.target.value && value >= 1 && value <= 30) {
+                        setPeriodError('');
+                      } else if (!e.target.value) {
+                        setPeriodError('');
+                      }
+                    }}
+                    className={`focus:ring-2 transition-all duration-200 h-12 ${
+                      periodError
+                        ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
+                        : 'focus:ring-blue-500/50 focus:border-blue-500'
+                    } ${isPeriodShaking ? 'animate-shake' : ''}`}
                   />
-                  <p className="text-sm text-gray-500">
-                    周期范围：1-30天，系统将根据周期计算推荐方案（复利计算）
+                  <p className={`text-sm transition-colors duration-200 ${periodError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+                    {periodError || '周期范围：1-30天，系统将根据周期计算推荐方案（复利计算）'}
                   </p>
                 </div>
               )}
@@ -1072,11 +1178,6 @@ export default function CloudShopSimulator() {
               <Button
                 className="w-full h-12 sm:h-14 text-base sm:text-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl"
                 onClick={handleRecommend}
-                disabled={
-                  (recommendInputType === 'budget' && (!recommendBudget || parseInt(recommendBudget) < 100 || parseInt(recommendBudget) > 10000)) ||
-                  (recommendInputType === 'profit' && (!recommendProfit || parseInt(recommendProfit) <= 0)) ||
-                  (recommendInputType === 'budget' && (!recommendPeriod || parseInt(recommendPeriod) < 1 || parseInt(recommendPeriod) > 30))
-                }
               >
                 生成推荐方案 (Enter)
               </Button>
@@ -1085,9 +1186,10 @@ export default function CloudShopSimulator() {
               <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-l-4 border-purple-400 p-4 rounded-xl">
                 <h4 className="font-semibold text-purple-800 mb-2 text-sm">💡 使用提示</h4>
                 <ul className="text-xs sm:text-sm text-purple-700 space-y-1 list-disc list-inside">
-                  <li>按预算推荐：系统会根据您的预算（100-10000元）和周期（1-30天），推荐最匹配的进货额度和店铺等级（复利计算）</li>
+                  <li>按预算推荐：系统会根据您的预算（100-100000元）和周期（1-30天），推荐最匹配的进货额度和店铺等级（复利计算）</li>
                   <li>按利润推荐：系统会基于单次销售利润，推荐最低成本、最短周期的方案（利润可浮动0-19元）</li>
                   <li>周期天数：按预算推荐时必须输入周期天数，推荐结果的完成天数显示为您输入的周期</li>
+                  <li>输入验证：输入超出范围时会显示红色提示，点击生成按钮时也会进行验证</li>
                   <li>推荐结果先按成本最低，再按周期最短排序，您可以选择任意方案直接开始模拟</li>
                 </ul>
               </div>

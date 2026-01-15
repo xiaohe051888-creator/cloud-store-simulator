@@ -309,9 +309,13 @@ export default function CloudShopSimulator() {
   const handleAddToComparison = useCallback(() => {
     if (!currentLevel || !levelConfig) return;
 
-    // 云店总余额 = 进货额度 + 云店余额
+    // 计算基准：用于进货成本计算，优先使用进货额度，如果没有则使用云店余额
+    const calculationBalance = stockAmount > 0 ? stockAmount : cloudBalance;
+
+    // 云店总余额 = 进货额度 + 云店余额，用于销售数据和总利润计算
     const cloudTotalBalance = stockAmount + cloudBalance;
-    const stockCost = Math.round(cloudTotalBalance * levelConfig.stockDiscount);
+
+    const stockCost = Math.round(calculationBalance * levelConfig.stockDiscount);
     const dailyCommission = Math.round(maxBalance * levelConfig.commissionRate);
     const completionDays = Math.ceil(cloudTotalBalance / dailyCommission);
     const totalProfit = Math.round(cloudTotalBalance * (levelConfig.saleDiscount - levelConfig.stockDiscount));
@@ -362,15 +366,18 @@ export default function CloudShopSimulator() {
   const getDetailsData = () => {
     if (!levelConfig) return null;
 
-    // 云店总余额 = 进货额度 + 云店余额
+    // 计算基准：用于进货成本计算，优先使用进货额度，如果没有则使用云店余额
+    const calculationBalance = stockAmount > 0 ? stockAmount : cloudBalance;
+
+    // 云店总余额 = 进货额度 + 云店余额，用于销售数据和总利润计算
     const cloudTotalBalance = stockAmount + cloudBalance;
 
-    const stockCost = Math.round(cloudTotalBalance * levelConfig.stockDiscount);
+    const stockCost = Math.round(calculationBalance * levelConfig.stockDiscount);
     const dailyCommission = Math.round(maxBalance * levelConfig.commissionRate);
     const completionDays = Math.ceil(cloudTotalBalance / dailyCommission);
     const totalProfit = Math.round(cloudTotalBalance * (levelConfig.saleDiscount - levelConfig.stockDiscount));
 
-    return { stockCost, dailyCommission, completionDays, totalProfit, cloudTotalBalance };
+    return { stockCost, dailyCommission, completionDays, totalProfit, cloudTotalBalance, calculationBalance };
   };
 
   const detailsData = getDetailsData();
@@ -1578,7 +1585,7 @@ export default function CloudShopSimulator() {
                 <div className="bg-gradient-to-br from-white to-gray-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-gray-100">
                   <p className="text-xs sm:text-sm text-gray-500 mb-1.5">进货额度</p>
                   <p className="text-lg sm:text-xl font-bold text-gray-800">
-                    {detailsData.cloudTotalBalance}⚡
+                    {detailsData.calculationBalance}⚡
                   </p>
                 </div>
                 <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-green-100">

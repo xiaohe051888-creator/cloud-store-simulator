@@ -286,9 +286,9 @@ export default function CloudShopSimulator() {
   // 确认进货
   const handleConfirmStock = useCallback(() => {
     if (!currentLevel || !levelConfig) return;
-    
+
     let isValid = true;
-    
+
     // 验证进货额度
     if (stockInputValue) {
       const numValue = parseInt(stockInputValue) || 0;
@@ -300,7 +300,7 @@ export default function CloudShopSimulator() {
         setStockError('');
       }
     }
-    
+
     // 验证云店余额（无论是否同步模式，都进行验证）
     if (cloudBalanceInputValue) {
       const numValue = parseInt(cloudBalanceInputValue) || 0;
@@ -313,24 +313,12 @@ export default function CloudShopSimulator() {
       }
     }
 
-    // 验证历史最高余额（无论是否同步模式，都进行验证）
-    if (maxBalanceInputValue) {
-      const numValue = parseInt(maxBalanceInputValue) || 0;
-      const maxBalanceValidation = validateMaxBalance(numValue, stockAmount, cloudBalance);
-      if (!maxBalanceValidation.valid) {
-        setMaxBalanceError(maxBalanceValidation.error || '');
-        isValid = false;
-      } else {
-        setMaxBalanceError('');
-      }
-    }
-    
     // 确保至少有进货额度或云店余额之一
     if (stockAmount === 0 && cloudBalance === 0) {
       setStockError('请输入进货额度或云店余额');
       isValid = false;
     }
-    
+
     if (!isValid) {
       // 触发闪烁动画
       if (stockError) triggerShake(setIsStockShaking);
@@ -338,16 +326,32 @@ export default function CloudShopSimulator() {
       if (maxBalanceError) triggerShake(setIsMaxBalanceShaking);
       return;
     }
-    
+
+    // 确定最终的历史最高余额：如果用户没有手动修改（即处于同步模式或默认值），则自动设置为进货额度+云店余额
+    let finalMaxBalance = maxBalance;
+    if (isEditMaxBalance) {
+      finalMaxBalance = stockAmount + cloudBalance;
+      setMaxBalance(finalMaxBalance);
+      setMaxBalanceInputValue(String(finalMaxBalance));
+    }
+
+    // 验证最终的历史最高余额
+    const maxBalanceValidation = validateMaxBalance(finalMaxBalance, stockAmount, cloudBalance);
+    if (!maxBalanceValidation.valid) {
+      setMaxBalanceError(maxBalanceValidation.error || '');
+      triggerShake(setIsMaxBalanceShaking);
+      return;
+    }
+
     // 使用云店余额作为基准计算（如果没有进货额度）
     const calculationBalance = cloudBalance > 0 ? cloudBalance : stockAmount;
-    
+
     // 生成销售数据
-    const dailyCommission = Math.round(maxBalance * levelConfig.commissionRate);
+    const dailyCommission = Math.round(finalMaxBalance * levelConfig.commissionRate);
     const dailyProfit = dailyCommission * (levelConfig.saleDiscount - levelConfig.stockDiscount);
     const data = generateSalesData(calculationBalance, dailyCommission, dailyProfit);
     setSalesData(data);
-    
+
     setCurrentComparisonId(null);
     setCurrentView('levelDetails');
   }, [currentLevel, levelConfig, stockInputValue, cloudBalance, stockAmount, maxBalance, isEditCloudBalance, isEditMaxBalance, stockError, cloudBalanceError, maxBalanceError]);

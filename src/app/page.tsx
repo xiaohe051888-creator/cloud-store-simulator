@@ -1490,9 +1490,11 @@ export default function CloudShopSimulator() {
                       : 'focus:ring-blue-500/50 focus:border-blue-500'
                   } ${isCloudBalanceShaking ? 'animate-shake' : ''}`}
                 />
-                <p className={`text-xs sm:text-sm transition-colors duration-200 ${cloudBalanceError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
-                  {cloudBalanceError || '店铺里已有的额度'}
-                </p>
+                {cloudBalanceError && (
+                  <p className="text-xs sm:text-sm transition-colors duration-200 text-red-500 font-medium">
+                    {cloudBalanceError}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">

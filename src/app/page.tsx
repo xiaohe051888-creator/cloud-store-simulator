@@ -292,13 +292,13 @@ export default function CloudShopSimulator() {
       return;
     }
 
-    // 使用进货额度作为基准计算，如果用户没有输入进货额度，才使用云店余额
-    const calculationBalance = stockAmount > 0 ? stockAmount : cloudBalance;
+    // 云店总余额 = 进货额度 + 云店余额
+    const cloudTotalBalance = stockAmount + cloudBalance;
 
-    // 生成销售数据
+    // 生成销售数据（基于云店总余额）
     const dailyCommission = Math.round(finalMaxBalance * levelConfig.commissionRate);
     const dailyProfit = dailyCommission * (levelConfig.saleDiscount - levelConfig.stockDiscount);
-    const data = generateSalesData(calculationBalance, dailyCommission, dailyProfit);
+    const data = generateSalesData(cloudTotalBalance, dailyCommission, dailyProfit);
     setSalesData(data);
 
     setCurrentComparisonId(null);
@@ -308,19 +308,19 @@ export default function CloudShopSimulator() {
   // 加入对比
   const handleAddToComparison = useCallback(() => {
     if (!currentLevel || !levelConfig) return;
-    
-    // 使用进货额度作为基准计算，如果用户没有输入进货额度，才使用云店余额
-    const calculationBalance = stockAmount > 0 ? stockAmount : cloudBalance;
-    const stockCost = Math.round(calculationBalance * levelConfig.stockDiscount);
+
+    // 云店总余额 = 进货额度 + 云店余额
+    const cloudTotalBalance = stockAmount + cloudBalance;
+    const stockCost = Math.round(cloudTotalBalance * levelConfig.stockDiscount);
     const dailyCommission = Math.round(maxBalance * levelConfig.commissionRate);
-    const completionDays = Math.ceil(calculationBalance / dailyCommission);
-    const totalProfit = Math.round(calculationBalance * (levelConfig.saleDiscount - levelConfig.stockDiscount));
-    
+    const completionDays = Math.ceil(cloudTotalBalance / dailyCommission);
+    const totalProfit = Math.round(cloudTotalBalance * (levelConfig.saleDiscount - levelConfig.stockDiscount));
+
     const newComparison: ComparisonData = {
       id: Date.now().toString(),
       level: currentLevel,
       levelName: levelConfig.name,
-      stockAmount: calculationBalance,
+      stockAmount: cloudTotalBalance,
       cloudBalance: cloudBalance,
       maxBalance: maxBalance,
       stockCost: stockCost,
@@ -329,7 +329,7 @@ export default function CloudShopSimulator() {
       totalProfit: totalProfit,
       createdAt: new Date().toLocaleString('zh-CN')
     };
-    
+
     setComparisonData(prev => [...prev, newComparison]);
     setCurrentComparisonId(newComparison.id);
   }, [currentLevel, levelConfig, cloudBalance, stockAmount, maxBalance]);
@@ -361,19 +361,16 @@ export default function CloudShopSimulator() {
   // 计算详情数据
   const getDetailsData = () => {
     if (!levelConfig) return null;
-    
-    // 使用进货额度作为基准计算，如果用户没有输入进货额度，才使用云店余额
-    const calculationBalance = stockAmount > 0 ? stockAmount : cloudBalance;
-    
-    const stockCost = Math.round(calculationBalance * levelConfig.stockDiscount);
-    const dailyCommission = Math.round(maxBalance * levelConfig.commissionRate);
-    const completionDays = Math.ceil(calculationBalance / dailyCommission);
-    const totalProfit = Math.round(calculationBalance * (levelConfig.saleDiscount - levelConfig.stockDiscount));
-    
+
     // 云店总余额 = 进货额度 + 云店余额
     const cloudTotalBalance = stockAmount + cloudBalance;
-    
-    return { stockCost, dailyCommission, completionDays, totalProfit, calculationBalance, cloudTotalBalance };
+
+    const stockCost = Math.round(cloudTotalBalance * levelConfig.stockDiscount);
+    const dailyCommission = Math.round(maxBalance * levelConfig.commissionRate);
+    const completionDays = Math.ceil(cloudTotalBalance / dailyCommission);
+    const totalProfit = Math.round(cloudTotalBalance * (levelConfig.saleDiscount - levelConfig.stockDiscount));
+
+    return { stockCost, dailyCommission, completionDays, totalProfit, cloudTotalBalance };
   };
 
   const detailsData = getDetailsData();
@@ -1581,7 +1578,7 @@ export default function CloudShopSimulator() {
                 <div className="bg-gradient-to-br from-white to-gray-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-gray-100">
                   <p className="text-xs sm:text-sm text-gray-500 mb-1.5">进货额度</p>
                   <p className="text-lg sm:text-xl font-bold text-gray-800">
-                    {detailsData.calculationBalance}⚡
+                    {detailsData.cloudTotalBalance}⚡
                   </p>
                 </div>
                 <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-green-100">

@@ -527,7 +527,7 @@ export default function CloudShopSimulator() {
     budget: number,
     config: typeof shopLevelsConfig[ShopLevel],
     period: number
-  ): { stock: number; profit: number } => {
+  ): { stock: number; profit: number; totalStockCost: number } => {
     // 结算周期天数（卖出后10天回款）
     const settlementDays = config.settlementDays;
     // 销售折扣（95折）
@@ -555,6 +555,9 @@ export default function CloudShopSimulator() {
 
     // 剩余预算
     let remainingBudget = budget - stockCost;
+
+    // 累计整个周期的进货成本
+    let totalStockCost = stockCost;
 
     // 当前库存（可卖出额度）
     let currentStock = initialStock;
@@ -605,7 +608,7 @@ export default function CloudShopSimulator() {
       // 步骤2：检查今天是否有回款可以结算
       // 回款到账当天进货，第二天才能卖出
       const todaySettlement = settlementQueue.get(day) || 0;
-      
+
       // 用回款进货（不受店铺最高进货额度限制）
       // 回款到账后才能继续销售，否则店铺空转
       if (todaySettlement > 0) {
@@ -613,6 +616,9 @@ export default function CloudShopSimulator() {
         const newStockFromSettlement = Math.round(todaySettlement / stockDiscount / 100) * 100;
         // 只有进货额度大于等于100才进货
         if (newStockFromSettlement >= 100) {
+          // 计算进货成本并累加
+          const settlementStockCost = Math.round(newStockFromSettlement * stockDiscount);
+          totalStockCost += settlementStockCost;
           currentStock += newStockFromSettlement;
         }
       }
@@ -635,6 +641,7 @@ export default function CloudShopSimulator() {
             const newStockCost = Math.round(roundedNewStock * stockDiscount);
             if (newStockCost <= remainingBudget) {
               remainingBudget -= newStockCost;
+              totalStockCost += newStockCost; // 累加进货成本
               currentStock += roundedNewStock;
             }
           }
@@ -644,7 +651,8 @@ export default function CloudShopSimulator() {
 
     return {
       stock: initialStock,
-      profit: Math.round(totalProfit)
+      profit: Math.round(totalProfit),
+      totalStockCost: Math.round(totalStockCost)
     };
   }, []);
 
@@ -705,7 +713,7 @@ export default function CloudShopSimulator() {
 
         // 匹配度稍后在所有结果计算完后统一重新计算（基于利润最大化）
         matchScore = 0; // 临时值，会被覆盖
-        matchReason = `周期${period}天复利利润${estimatedProfit}元（总进货成本${targetBudget}元）`;
+        matchReason = `周期${period}天复利利润${estimatedProfit}元（实际进货成本${result.totalStockCost}元）`;
 
         results.push({
           level,

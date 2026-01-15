@@ -59,7 +59,46 @@ export default function CloudShopSimulator() {
 
   // 销售详情表格滚动容器引用
   const salesDetailsScrollRef = useRef<HTMLDivElement>(null);
-  
+
+  // 触摸滑动状态
+  const [touchStart, setTouchStart] = useState<number>(0);
+  const [touchEnd, setTouchEnd] = useState<number>(0);
+
+  // 处理横向滚动
+  const handleScrollLeft = () => {
+    if (salesDetailsScrollRef.current) {
+      salesDetailsScrollRef.current.scrollLeft -= 200;
+    }
+  };
+
+  const handleScrollRight = () => {
+    if (salesDetailsScrollRef.current) {
+      salesDetailsScrollRef.current.scrollLeft += 200;
+    }
+  };
+
+  // 触摸滑动处理
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (salesDetailsScrollRef.current) {
+      const diff = touchStart - touchEnd;
+      if (Math.abs(diff) > 50) { // 滑动超过50px才触发
+        if (diff > 0) {
+          salesDetailsScrollRef.current.scrollLeft += 150;
+        } else {
+          salesDetailsScrollRef.current.scrollLeft -= 150;
+        }
+      }
+    }
+  };
+
   // 推荐系统输入框引用
   const recommendBudgetRef = useRef<HTMLInputElement>(null);
   const recommendPeriodRef = useRef<HTMLInputElement>(null);
@@ -1800,12 +1839,9 @@ export default function CloudShopSimulator() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => {
-                    if (salesDetailsScrollRef.current) {
-                      salesDetailsScrollRef.current.scrollBy({ left: -200, behavior: 'smooth' });
-                    }
-                  }}
+                  onClick={handleScrollLeft}
                   className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 flex-shrink-0 bg-blue-50 border-2 border-blue-200"
+                  title="向左滚动"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -1817,12 +1853,9 @@ export default function CloudShopSimulator() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => {
-                    if (salesDetailsScrollRef.current) {
-                      salesDetailsScrollRef.current.scrollBy({ left: 200, behavior: 'smooth' });
-                    }
-                  }}
+                  onClick={handleScrollRight}
                   className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 flex-shrink-0 bg-blue-50 border-2 border-blue-200"
+                  title="向右滚动"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -1834,6 +1867,9 @@ export default function CloudShopSimulator() {
               <div
                 ref={salesDetailsScrollRef}
                 className="overflow-x-auto -mx-6 px-6 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent scroll-smooth"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
               >
                 <Table>
                   <TableHeader>
@@ -1876,6 +1912,17 @@ export default function CloudShopSimulator() {
                     </TableRow>
                   </TableFooter>
                 </Table>
+              </div>
+
+              {/* 移动端滑动提示 */}
+              <div className="mt-4 flex items-center justify-center gap-2 text-sm text-gray-500 sm:hidden">
+                <svg className="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                </svg>
+                <span>左右滑动查看更多</span>
+                <svg className="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
               </div>
 
               <div className="mt-6 bg-gradient-to-r from-blue-50 to-purple-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">

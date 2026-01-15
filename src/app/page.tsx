@@ -565,6 +565,9 @@ export default function CloudShopSimulator() {
     // 累计利润
     let totalProfit = 0;
 
+    // 累计回款（尚未用于进货的回款）
+    let accumulatedSettlement = 0;
+
     // 回款队列：key是结算日期，value是回款金额
     const settlementQueue: Map<number, number> = new Map();
 
@@ -606,48 +609,46 @@ export default function CloudShopSimulator() {
       // 店铺空转，当天无利润，等待回款到账
 
       // 步骤2：检查今天是否有回款可以结算
-      // 回款到账当天进货，第二天才能卖出
+      // 回款到账后存入累计回款池，不立即进货
       const todaySettlement = settlementQueue.get(day) || 0;
-
-      // 用回款进货（不受店铺最高进货额度限制）
-      // 回款到账后才能继续销售，否则店铺空转
-      // 注意：回款进货的成本不计入用户实际掏的钱，因为这是用回款的钱
       if (todaySettlement > 0) {
-        // 计算可以进货的额度（取100的倍数）
-        const newStockFromSettlement = Math.round(todaySettlement / stockDiscount / 100) * 100;
-        // 只有进货额度大于等于100才进货
-        if (newStockFromSettlement >= 100) {
-          currentStock += newStockFromSettlement;
-        }
+        accumulatedSettlement += todaySettlement;
       }
 
-      // 步骤3：用剩余预算进货（受店铺最高进货额度限制）
-      // 剩余预算进货的当天也可以卖出，因为是用自有资金进货
-      if (remainingBudget > 0) {
-        // 计算剩余可用额度 = 店铺最高进货额度 - 当前库存
-        const availableQuota = maxShopStock - currentStock;
-        const dailySellAmount = initialStock * sellRatio; // 每日需要卖的额度
+      // 步骤3：进货逻辑（使用剩余预算 + 累计回款 + 累计利润）
+      // 精确补货到刚好够第二天卖的额度
+      const dailySellAmount = initialStock * sellRatio; // 每日需要卖的额度
 
-        if (availableQuota > 0 && currentStock < dailySellAmount) {
-          // 精确补货：补货到刚好够第二天卖的额度（dailySellAmount）
-          // 需要补货的数量 = 每日要卖的 - 当前库存
-          const stockNeeded = dailySellAmount - currentStock;
-          // 取100倍数向上取整
-          const roundedStockNeeded = Math.ceil(stockNeeded / 100) * 100;
+      if (currentStock < dailySellAmount) {
+        // 需要补货的数量 = 每日要卖的 - 当前库存
+        const stockNeeded = dailySellAmount - currentStock;
+        // 向上取整到100的倍数
+        const roundedStockNeeded = Math.ceil(stockNeeded / 100) * 100;
 
-          // 实际能进货的额度 = min(需要补货的, 剩余可用额度, 剩余预算能买的)
-          const maxStockByBudget = Math.round(remainingBudget / stockDiscount);
-          const actualNewStock = Math.min(roundedStockNeeded, availableQuota, maxStockByBudget);
+        // 计算进货成本
+        const stockCostNeeded = Math.round(roundedStockNeeded * stockDiscount);
 
-          if (actualNewStock >= 100) {
-            const newStockCost = Math.round(actualNewStock * stockDiscount);
-            if (newStockCost <= remainingBudget) {
-              remainingBudget -= newStockCost;
-              totalStockCost += newStockCost; // 累加进货成本
-              currentStock += actualNewStock;
-            }
-          }
+        // 可用资金 = 剩余预算 + 累计回款 + 累计利润
+        let availableFunds = remainingBudget + accumulatedSettlement + totalProfit;
+
+        if (availableFunds >= stockCostNeeded) {
+          // 先用剩余预算
+          let budgetToUse = Math.min(remainingBudget, stockCostNeeded);
+          remainingBudget -= budgetToUse;
+          totalStockCost += budgetToUse; // 只计入用户实际掏的钱
+
+          // 再用累计回款
+          let settlementToUse = Math.min(accumulatedSettlement, stockCostNeeded - budgetToUse);
+          accumulatedSettlement -= settlementToUse;
+
+          // 最后用累计利润
+          let profitToUse = stockCostNeeded - budgetToUse - settlementToUse;
+          totalProfit -= profitToUse; // 用利润进货，减少累计利润
+
+          // 进货
+          currentStock += roundedStockNeeded;
         }
+        // else：资金不够，无法进货，店铺空转
       }
     }
 

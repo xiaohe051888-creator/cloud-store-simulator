@@ -793,8 +793,8 @@ export default function CloudShopSimulator() {
     } else {
       // 验证期望利润
       const profit = parseInt(recommendProfit) || 0;
-      if (!recommendProfit || profit <= 0) {
-        setProfitError('请输入有效的期望利润');
+      if (!recommendProfit || profit < 7 || profit > 9100) {
+        setProfitError('期望利润必须在7-9100元之间');
         isValid = false;
       } else {
         setProfitError('');
@@ -1112,16 +1112,17 @@ export default function CloudShopSimulator() {
                   <Input
                     id="recommendProfit"
                     type="number"
-                    placeholder="请输入期望的利润"
-                    min="100"
-                    step="100"
+                    placeholder="请输入期望的利润（7-9100）"
+                    min="7"
+                    max="9100"
+                    step="1"
                     value={recommendProfit}
                     onChange={(e) => {
                       setRecommendProfit(e.target.value);
                       const value = parseInt(e.target.value) || 0;
-                      if (e.target.value && value <= 0) {
-                        setProfitError('期望利润必须大于0');
-                      } else if (e.target.value && value > 0) {
+                      if (e.target.value && (value < 7 || value > 9100)) {
+                        setProfitError('期望利润必须在7-9100元之间');
+                      } else if (e.target.value && value >= 7 && value <= 9100) {
                         setProfitError('');
                       } else if (!e.target.value) {
                         setProfitError('');
@@ -1134,7 +1135,7 @@ export default function CloudShopSimulator() {
                     } ${isProfitShaking ? 'animate-shake' : ''}`}
                   />
                   <p className={`text-sm transition-colors duration-200 ${profitError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
-                    {profitError || '系统将根据您的期望利润推荐最合适的店铺等级（利润可浮动0-19元）'}
+                    {profitError || '期望利润范围：7-9100元，系统将根据您的期望利润推荐最合适的店铺等级（利润可浮动0-19元）'}
                   </p>
                 </div>
               )}

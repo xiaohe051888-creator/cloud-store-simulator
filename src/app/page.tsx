@@ -2168,18 +2168,6 @@ export default function CloudShopSimulator() {
                           <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">3%</TableCell>
                         </TableRow>
                         <TableRow className="hover:bg-gray-50">
-                          <TableCell className="px-3 py-2 text-center">
-                            <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600">黄金</Badge>
-                          </TableCell>
-                          <TableCell className="px-2 py-2 text-center text-gray-700">86折</TableCell>
-                          <TableCell className="px-2 py-2 text-center text-gray-700">10000</TableCell>
-                          <TableCell className="px-2 py-2 text-center text-gray-700">18%</TableCell>
-                          <TableCell className="px-2 py-2 text-center text-gray-700">0.9%</TableCell>
-                          <TableCell className="px-2 py-2 text-center text-gray-700">1次/月</TableCell>
-                          <TableCell className="px-2 py-2 text-center text-gray-700">5%</TableCell>
-                          <TableCell className="px-2 py-2 text-center text-gray-700">6%</TableCell>
-                        </TableRow>
-                        <TableRow className="hover:bg-gray-50">
                           <TableCell className="px-2 py-2 sm:px-3 text-center">
                             <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-xs sm:text-sm">黄金</Badge>
                           </TableCell>

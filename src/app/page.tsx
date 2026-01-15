@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import WeChatGuide from '@/components/wechat-guide';
+import WeChatLinkGuide from '@/components/wechat-link-guide';
 import {
   shopLevelsConfig,
 } from '@/lib/shop-config';
@@ -90,6 +91,9 @@ export default function CloudShopSimulator() {
 
   // 进入平台弹窗状态
   const [showPlatformModal, setShowPlatformModal] = useState<boolean>(false);
+  
+  // 微信链接引导状态
+  const [showWeChatLinkGuide, setShowWeChatLinkGuide] = useState<boolean>(false);
 
   // 获取当前等级配置
   const levelConfig = currentLevel ? shopLevelsConfig[currentLevel] : null;
@@ -1077,7 +1081,21 @@ export default function CloudShopSimulator() {
 
   // 打开链接
   const openLink = (url: string) => {
-    window.open(url, '_blank');
+    // 检测是否在微信中打开
+    const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
+    
+    if (isWeChatBrowser) {
+      // 在微信中，显示引导页面
+      setShowWeChatLinkGuide(true);
+    } else {
+      // 在浏览器中，直接打开链接
+      window.open(url, '_blank');
+    }
+  };
+  
+  // 关闭微信链接引导
+  const handleCloseWeChatLinkGuide = () => {
+    setShowWeChatLinkGuide(false);
   };
 
   // 处理Enter键（已废弃，改用单个输入框的 onKeyDown 处理）
@@ -2368,6 +2386,12 @@ export default function CloudShopSimulator() {
 
       {/* 微信引导提示 */}
       <WeChatGuide />
+      
+      {/* 微信链接引导 */}
+      <WeChatLinkGuide
+        isVisible={showWeChatLinkGuide}
+        onClose={handleCloseWeChatLinkGuide}
+      />
     </div>
   );
 }

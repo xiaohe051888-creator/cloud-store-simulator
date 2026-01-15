@@ -1106,16 +1106,16 @@ export default function CloudShopSimulator() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50" onKeyDown={handleKeyDown}>
       {/* 顶部导航栏 */}
       <header className="bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100 sticky top-0 z-50">
-        <div className="container mx-auto px-3 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 flex justify-between items-center">
-          <h1 className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <div className="container mx-auto px-2 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 flex justify-between items-center">
+          <h1 className="text-base sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             云店
           </h1>
-          <div className="flex items-center gap-1.5 sm:gap-3 lg:gap-4">
+          <div className="flex items-center gap-1 sm:gap-2 lg:gap-3">
             <Button
               variant="outline"
               size="sm"
               onClick={handleOpenPlatform}
-              className="text-xs sm:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-green-300 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 text-green-700 font-semibold h-8 sm:h-9 lg:h-10 px-2 sm:px-3 lg:px-4"
+              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-green-300 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 text-green-700 font-semibold h-7 sm:h-8 lg:h-9 px-1.5 sm:px-2 lg:px-3"
             >
               <span className="hidden sm:inline">进入平台</span>
               <span className="sm:hidden">进入平台</span>
@@ -1124,7 +1124,7 @@ export default function CloudShopSimulator() {
               variant="outline"
               size="sm"
               onClick={() => setCurrentView('recommendation')}
-              className="hidden sm:flex text-xs sm:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-purple-300 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 h-9 lg:h-10 px-3 lg:px-4"
+              className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-purple-300 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
             >
               智能推荐
             </Button>
@@ -1132,7 +1132,7 @@ export default function CloudShopSimulator() {
               variant="outline"
               size="sm"
               onClick={() => setCurrentView('recommendation')}
-              className="sm:hidden active:scale-95 transition-all duration-200 hover:shadow-md bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 h-8 px-2"
+              className="sm:hidden active:scale-95 transition-all duration-200 hover:shadow-md bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 h-7 px-1.5"
             >
               智能推荐
             </Button>
@@ -1141,26 +1141,17 @@ export default function CloudShopSimulator() {
                 variant="outline"
                 size="sm"
                 onClick={handleViewComparison}
-                className="hidden md:flex text-xs sm:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 h-9 lg:h-10 px-3 lg:px-4"
+                className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
               >
-                对比 ({comparisonData.length})
-              </Button>
-            )}
-            {comparisonData.length > 0 && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleViewComparison}
-                className="md:hidden active:scale-95 transition-all duration-200 hover:shadow-md h-8 sm:h-9 px-2 sm:px-3"
-              >
-                对比{comparisonData.length}
+                <span className="hidden sm:inline">对比 ({comparisonData.length})</span>
+                <span className="sm:hidden">对比{comparisonData.length}</span>
               </Button>
             )}
             <Button
               variant="outline"
               size="sm"
               onClick={() => setCurrentView('shopLevels')}
-              className="hidden md:flex text-xs sm:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 h-9 lg:h-10 px-3 lg:px-4"
+              className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
             >
               店铺等级
             </Button>
@@ -1168,7 +1159,7 @@ export default function CloudShopSimulator() {
               variant="outline"
               size="sm"
               onClick={() => setCurrentView('shopLevels')}
-              className="md:hidden active:scale-95 transition-all duration-200 hover:shadow-md bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 h-8 sm:h-9 px-2 sm:px-3"
+              className="sm:hidden active:scale-95 transition-all duration-200 hover:shadow-md bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 h-7 px-1.5"
             >
               等级
             </Button>
@@ -1176,34 +1167,27 @@ export default function CloudShopSimulator() {
               variant="outline"
               size="sm"
               onClick={handleGoHome}
-              className="hidden sm:flex active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 h-9 lg:h-10 px-3 lg:px-4"
+              className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
             >
-              回到主页
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleGoHome}
-              className="sm:hidden active:scale-95 transition-all duration-200 hover:shadow-md h-8 px-2"
-            >
-              主页
+              <span className="hidden sm:inline">回到主页</span>
+              <span className="sm:hidden">主页</span>
             </Button>
           </div>
         </div>
       </header>
 
       {/* 主要内容区域 */}
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 min-h-[calc(100vh-80px)]">
+      <main className="container mx-auto px-2 sm:px-4 lg:px-6 py-3 sm:py-4 lg:py-6 min-h-[calc(100vh-56px)]">
         {/* 店铺选择界面 */}
         {currentView === 'shopSelection' && (
-          <div className="max-w-4xl mx-auto w-full">
-            <Card className="max-w-4xl mx-auto w-full bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0 animate-in fade-in-0 slide-in-from-top-4 duration-300">
-              <CardHeader className="pb-4 pt-6 px-6">
-                <CardTitle className="text-xl sm:text-2xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
+          <div className="w-full">
+            <Card className="w-full bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0 animate-in fade-in-0 slide-in-from-top-4 duration-300">
+              <CardHeader className="pb-3 sm:pb-4 pt-4 sm:pt-6 px-3 sm:px-4 lg:px-6">
+                <CardTitle className="text-lg sm:text-xl lg:text-2xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
                   请选择你的店铺等级
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 px-4 sm:px-6 pb-6">
+              <CardContent className="space-y-2 sm:space-y-3 px-2 sm:px-4 lg:px-6 pb-4 sm:pb-6">
                 {(Object.keys(shopLevelsConfig) as ShopLevel[]).map((level) => {
                   const config = shopLevelsConfig[level];
                   return (
@@ -1223,11 +1207,11 @@ export default function CloudShopSimulator() {
                       />
 
                       {/* 主内容 */}
-                      <div className="flex items-center p-4 sm:p-5 pl-6 sm:pl-8">
+                      <div className="flex items-center p-3 sm:p-4 lg:p-5 pl-4 sm:pl-6 lg:pl-8">
                         {/* 左侧：店铺名称 */}
-                        <div className="w-28 sm:w-32 flex-shrink-0">
+                        <div className="w-24 sm:w-28 lg:w-32 flex-shrink-0">
                           <h3
-                            className="text-base sm:text-lg font-bold transition-colors duration-200 group-hover:scale-105"
+                            className="text-sm sm:text-base lg:text-lg font-bold transition-colors duration-200 group-hover:scale-105"
                             style={{
                               color: config.color === '#000000' ? '#1f2937' : config.color,
                             }}
@@ -1237,32 +1221,30 @@ export default function CloudShopSimulator() {
                         </div>
 
                         {/* 中间：提示信息（居中） */}
-                        <div className="flex-1 flex justify-center items-center space-x-2 sm:space-x-4">
-                          <div className="flex items-center text-xs sm:text-sm" style={{ color: '#6b7280' }}>
-                            <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
+                        <div className="flex-1 flex justify-center items-center space-x-1.5 sm:space-x-2 lg:space-x-4">
+                          <div className="flex items-center text-[10px] sm:text-xs lg:text-sm" style={{ color: '#6b7280' }}>
+                            <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                             </svg>
-                            <span className="mr-1 hidden sm:inline">额度:</span>
-                            <span className="font-bold text-sm sm:text-base" style={{ color: '#059669' }}>
+                            <span className="font-bold text-xs sm:text-sm lg:text-base" style={{ color: '#059669' }}>
                               {config.minStock}-{config.maxStock}⚡
                             </span>
                           </div>
-                          <div className="flex items-center text-xs sm:text-sm" style={{ color: '#6b7280' }}>
-                            <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
+                          <div className="flex items-center text-[10px] sm:text-xs lg:text-sm" style={{ color: '#6b7280' }}>
+                            <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12 a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span className="mr-1 hidden sm:inline">折扣:</span>
-                            <span className="font-bold text-sm sm:text-base" style={{ color: '#2563eb' }}>
+                            <span className="font-bold text-xs sm:text-sm lg:text-base" style={{ color: '#2563eb' }}>
                               {(config.stockDiscount * 10).toFixed(1)}折
                             </span>
                           </div>
                         </div>
 
                         {/* 右侧：箭头图标 */}
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
                              style={{ backgroundColor: `${config.color}25` }}>
                           <svg
-                            className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:translate-x-1"
+                            className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 transition-transform duration-200 group-hover:translate-x-1"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -1287,8 +1269,8 @@ export default function CloudShopSimulator() {
             </Card>
 
             {/* 底部提示 */}
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-500 bg-white/60 backdrop-blur-sm inline-block px-4 py-2 rounded-full shadow-sm">
+            <div className="mt-4 sm:mt-6 text-center">
+              <p className="text-xs sm:text-sm text-gray-500 bg-white/60 backdrop-blur-sm inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-sm">
                 💡 点击店铺等级查看详细信息和开始模拟
               </p>
             </div>
@@ -1297,7 +1279,7 @@ export default function CloudShopSimulator() {
 
         {/* 推荐系统输入界面 */}
         {currentView === 'recommendation' && (
-          <Card className="max-w-lg mx-auto w-full bg-white/90 backdrop-blur-lg animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
+          <Card className="w-full max-w-lg mx-auto bg-white/90 backdrop-blur-lg animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
             <CardHeader className="pb-4 pt-6 px-6">
               <div className="flex items-center justify-between">
                 <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
@@ -1609,21 +1591,21 @@ export default function CloudShopSimulator() {
 
         {/* 进货额度输入界面 */}
         {currentView === 'stockInput' && levelConfig && (
-          <Card className="max-w-lg mx-auto w-full animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
-            <CardHeader className="pb-4 pt-6 px-6">
+          <Card className="w-full max-w-lg mx-auto animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
+            <CardHeader className="pb-3 sm:pb-4 pt-4 sm:pt-6 px-3 sm:px-4 lg:px-6">
               <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
-                  <span className="text-2xl font-bold">←</span>
+                <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 sm:w-12 sm:h-12">
+                  <span className="text-xl sm:text-2xl font-bold">←</span>
                 </Button>
-                <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <CardTitle className="text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   {levelConfig.name}
                 </CardTitle>
-                <div className="w-12" />
+                <div className="w-10 sm:w-12" />
               </div>
             </CardHeader>
-            <CardContent className="space-y-5 sm:space-y-6 px-6 pb-6">
-              <div className="space-y-2">
-                <Label htmlFor="cloudBalance" className="text-sm font-medium text-gray-700">
+            <CardContent className="space-y-4 sm:space-y-5 lg:space-y-6 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-6">
+              <div className="space-y-1.5 sm:space-y-2">
+                <Label htmlFor="cloudBalance" className="text-xs sm:text-sm font-medium text-gray-700">
                   云店余额（店铺已有额度）
                 </Label>
                 <Input
@@ -1635,21 +1617,21 @@ export default function CloudShopSimulator() {
                   value={cloudBalanceInputValue}
                   onChange={(e) => handleCloudBalanceInputChange(e.target.value)}
                   onKeyDown={handleCloudBalanceKeyDown}
-                  className={`focus:ring-2 transition-all duration-200 h-12 ${
+                  className={`focus:ring-2 transition-all duration-200 h-10 sm:h-12 ${
                     cloudBalanceError
                       ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
                       : 'focus:ring-blue-500/50 focus:border-blue-500'
                   } ${isCloudBalanceShaking ? 'animate-shake' : ''}`}
                 />
                 {cloudBalanceError && (
-                  <p className="text-xs sm:text-sm transition-colors duration-200 text-red-500 font-medium">
+                  <p className="text-[10px] sm:text-xs transition-colors duration-200 text-red-500 font-medium">
                     {cloudBalanceError}
                   </p>
                 )}
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="stockAmount" className="text-sm font-medium text-gray-700">
+              <div className="space-y-1.5 sm:space-y-2">
+                <Label htmlFor="stockAmount" className="text-xs sm:text-sm font-medium text-gray-700">
                   进货额度（100的整倍数）
                 </Label>
                 <Input
@@ -1663,19 +1645,19 @@ export default function CloudShopSimulator() {
                   value={stockInputValue}
                   onChange={(e) => handleStockInputChange(e.target.value)}
                   onKeyDown={handleStockAmountKeyDown}
-                  className={`focus:ring-2 transition-all duration-200 h-12 ${
+                  className={`focus:ring-2 transition-all duration-200 h-10 sm:h-12 ${
                     stockError
                       ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
                       : 'focus:ring-blue-500/50 focus:border-blue-500'
                   } ${isStockShaking ? 'animate-shake' : ''}`}
                 />
-                <p className={`text-xs sm:text-sm transition-colors duration-200 ${stockError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+                <p className={`text-[10px] sm:text-xs transition-colors duration-200 ${stockError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
                   {stockError || `进货额度范围：${levelConfig.minStock} - ${levelConfig.maxStock}电费`}
                 </p>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="maxBalance" className="text-sm font-medium text-gray-700">
+              <div className="space-y-1.5 sm:space-y-2">
+                <Label htmlFor="maxBalance" className="text-xs sm:text-sm font-medium text-gray-700">
                   云店历史最高余额
                 </Label>
                 <Input
@@ -1688,13 +1670,13 @@ export default function CloudShopSimulator() {
                   onChange={(e) => handleMaxBalanceInputChange(e.target.value)}
                   onKeyDown={handleMaxBalanceKeyDown}
                   disabled={isEditMaxBalance}
-                  className={`focus:ring-2 transition-all duration-200 h-12 ${
+                  className={`focus:ring-2 transition-all duration-200 h-10 sm:h-12 ${
                     maxBalanceError
                       ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
                       : 'focus:ring-blue-500/50 focus:border-blue-500'
                   } ${isEditMaxBalance ? 'bg-gray-50 border-gray-200' : ''} ${isMaxBalanceShaking ? 'animate-shake' : ''}`}
                 />
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-1.5 sm:space-x-2">
                   <Checkbox
                     id="editMaxBalance"
                     checked={isEditMaxBalance}
@@ -1703,18 +1685,18 @@ export default function CloudShopSimulator() {
                   />
                   <Label
                     htmlFor="editMaxBalance"
-                    className="text-sm font-normal cursor-pointer text-gray-600 hover:text-gray-900 transition-colors"
+                    className="text-xs sm:text-sm font-normal cursor-pointer text-gray-600 hover:text-gray-900 transition-colors"
                   >
                     自动设置为进货额度+云店余额
                   </Label>
                 </div>
                 {maxBalanceError && (
-                  <p className="text-sm text-red-500 font-medium">{maxBalanceError}</p>
+                  <p className="text-[10px] sm:text-xs text-red-500 font-medium">{maxBalanceError}</p>
                 )}
               </div>
 
               <Button
-                className="w-full h-12 sm:h-14 text-base sm:text-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="w-full h-10 sm:h-12 lg:h-14 text-sm sm:text-base lg:text-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl"
                 onClick={handleConfirmStock}
               >
                 确认进货 (Enter)
@@ -1725,68 +1707,68 @@ export default function CloudShopSimulator() {
 
         {/* 店铺详情界面 */}
         {currentView === 'levelDetails' && levelConfig && detailsData && (
-          <Card className="max-w-3xl mx-auto w-full animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
-            <CardHeader className="pb-4 pt-6 px-6">
+          <Card className="w-full max-w-3xl mx-auto animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
+            <CardHeader className="pb-3 sm:pb-4 pt-4 sm:pt-6 px-3 sm:px-4 lg:px-6">
               <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToStockInput} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
-                  <span className="text-2xl font-bold">←</span>
+                <Button variant="ghost" size="icon" onClick={handleBackToStockInput} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 sm:w-12 sm:h-12">
+                  <span className="text-xl sm:text-2xl font-bold">←</span>
                 </Button>
-                <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <CardTitle className="text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   {levelConfig.name}详情
                 </CardTitle>
-                <div className="w-12" />
+                <div className="w-10 sm:w-12" />
               </div>
             </CardHeader>
-            <CardContent className="space-y-6 px-6 pb-6">
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                <div className="bg-gradient-to-br from-white to-gray-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-gray-100">
-                  <p className="text-xs sm:text-sm text-gray-500 mb-1.5">进货额度</p>
-                  <p className="text-lg sm:text-xl font-bold text-gray-800">
+            <CardContent className="space-y-4 sm:space-y-5 lg:space-y-6 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-6">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:gap-4">
+                <div className="bg-gradient-to-br from-white to-gray-50 p-3 sm:p-4 lg:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-gray-100">
+                  <p className="text-[10px] sm:text-xs lg:text-sm text-gray-500 mb-1.5">进货额度</p>
+                  <p className="text-base sm:text-lg lg:text-xl font-bold text-gray-800">
                     {detailsData.calculationBalance}⚡
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-green-100">
-                  <p className="text-xs sm:text-sm text-green-600 mb-1.5">投入总成本</p>
-                  <p className="text-lg sm:text-xl font-bold text-green-600">
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-3 sm:p-4 lg:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-green-100">
+                  <p className="text-[10px] sm:text-xs lg:text-sm text-green-600 mb-1.5">投入总成本</p>
+                  <p className="text-base sm:text-lg lg:text-xl font-bold text-green-600">
                     {detailsData.stockCost}元
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-blue-100">
-                  <p className="text-xs sm:text-sm text-blue-600 mb-1.5">每日代缴额度</p>
-                  <p className="text-lg sm:text-xl font-bold text-blue-600">
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-3 sm:p-4 lg:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-blue-100">
+                  <p className="text-[10px] sm:text-xs lg:text-sm text-blue-600 mb-1.5">每日代缴额度</p>
+                  <p className="text-base sm:text-lg lg:text-xl font-bold text-blue-600">
                     {detailsData.dailyCommission}⚡
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-purple-100">
-                  <p className="text-xs sm:text-sm text-purple-600 mb-1.5">销售完成天数</p>
-                  <p className="text-lg sm:text-xl font-bold text-purple-600">
+                <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-3 sm:p-4 lg:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-purple-100">
+                  <p className="text-[10px] sm:text-xs lg:text-sm text-purple-600 mb-1.5">销售完成天数</p>
+                  <p className="text-base sm:text-lg lg:text-xl font-bold text-purple-600">
                     {detailsData.completionDays}天
                   </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-5 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01] border border-blue-100">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 lg:gap-4">
+                <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-4 sm:p-5 lg:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01] border border-blue-100">
                   <div className="flex justify-between items-center">
-                    <p className="text-blue-700 font-medium">云店总余额</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-blue-700">
+                    <p className="text-blue-700 font-medium text-sm sm:text-base">云店总余额</p>
+                    <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-700">
                       {detailsData.cloudTotalBalance}⚡
                     </p>
                   </div>
                 </div>
-                <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-5 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
+                <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-4 sm:p-5 lg:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
                   <div className="flex justify-between items-center">
-                    <p className="text-white font-medium">总利润</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-white">
+                    <p className="text-white font-medium text-sm sm:text-base">总利润</p>
+                    <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
                       {detailsData.totalProfit}元
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="flex gap-3 sm:gap-4">
+              <div className="flex gap-2 sm:gap-3 lg:gap-4">
                 <Button
-                  className="flex-1 h-12 sm:h-14 active:scale-95 transition-all duration-200 hover:shadow-lg"
+                  className="flex-1 h-10 sm:h-12 lg:h-14 text-sm sm:text-base active:scale-95 transition-all duration-200 hover:shadow-lg"
                   onClick={handleAddToComparison}
                   disabled={currentComparisonId !== null}
                   variant={currentComparisonId ? "secondary" : "default"}
@@ -1794,7 +1776,7 @@ export default function CloudShopSimulator() {
                   {currentComparisonId ? '✓ 已加入对比' : '加入对比'}
                 </Button>
                 <Button
-                  className="flex-1 h-12 sm:h-14 active:scale-95 transition-all duration-200 hover:shadow-lg"
+                  className="flex-1 h-10 sm:h-12 lg:h-14 text-sm sm:text-base active:scale-95 transition-all duration-200 hover:shadow-lg"
                   onClick={handleViewSalesDetails}
                 >
                   查看销售详情
@@ -2291,93 +2273,35 @@ export default function CloudShopSimulator() {
               </div>
             </CardHeader>
             <CardContent className="px-6 pb-6 space-y-4">
-              {isWeChat() ? (
-                /* 微信环境：引导用户用浏览器打开 */
-                <div className="text-center space-y-6 py-8 relative">
-                  <div className="flex justify-center">
-                    <div className="w-32 h-32 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center shadow-2xl animate-bounce">
-                      <svg className="w-20 h-20 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    <p className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                      请使用浏览器打开
-                    </p>
-                    <p className="text-base text-gray-700 leading-relaxed font-medium">
-                      ⚠️ 检测到您正在微信中打开
-                    </p>
-                    <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-xl border-2 border-blue-200 relative">
-                      <p className="text-lg text-gray-800 leading-relaxed font-semibold mb-3">
-                        请按以下步骤操作：
-                      </p>
-                      <div className="space-y-4 text-left relative">
-                        <div className="flex items-start gap-3">
-                          <span className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">
-                            1
-                          </span>
-                          <p className="text-base text-gray-800 leading-relaxed pt-1">
-                            点击右上角的<span className="inline-block px-3 py-1 bg-green-500 text-white rounded-lg font-bold mx-1 shadow-md text-lg">···</span>按钮
-                          </p>
-                        </div>
-                        <div className="flex justify-center relative">
-                          <div className="animate-bounce">
-                            <svg className="w-6 h-10 text-blue-500" viewBox="0 0 24 40" fill="none" stroke="currentColor" strokeWidth="3">
-                              <path d="M12 2 L12 30" strokeLinecap="round" strokeLinejoin="round" />
-                              <path d="M6 24 L12 30 L18 24" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">
-                            2
-                          </span>
-                          <p className="text-base text-gray-800 leading-relaxed pt-1">
-                            选择<span className="inline-block px-3 py-1 bg-blue-500 text-white rounded-lg font-bold mx-1 shadow-md text-base">在浏览器中打开</span>
-                          </p>
-                        </div>
-                      </div>
-                      <div className="absolute top-8 right-8 animate-pulse">
-                        <svg className="w-16 h-16 text-green-500 opacity-70" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                /* 浏览器环境：显示3个选项 */
-                <div className="space-y-3">
-                  <Button
-                    onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/login/login')}
-                    className="w-full h-12 text-base font-semibold bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
-                  >
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                    登录缴费平台
-                  </Button>
-                  <Button
-                    onClick={() => openLink('https://www.ugpcgm.cn/#/pages/download/download')}
-                    className="w-full h-12 text-base font-semibold bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
-                  >
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                    下载缴费APP
-                  </Button>
-                  <Button
-                    onClick={() => openLink('https://www.ugpcgm.cn/#/myPages/groupChat/groupChat')}
-                    className="w-full h-12 text-base font-semibold bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
-                  >
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                    下载步信APP
-                  </Button>
-                </div>
-              )}
+              <div className="space-y-3">
+                <Button
+                  onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/login/login')}
+                  className="w-full h-12 text-base font-semibold bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                  登录缴费平台
+                </Button>
+                <Button
+                  onClick={() => openLink('https://www.ugpcgm.cn/#/pages/download/download')}
+                  className="w-full h-12 text-base font-semibold bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  下载缴费APP
+                </Button>
+                <Button
+                  onClick={() => openLink('https://www.ugpcgm.cn/#/myPages/groupChat/groupChat')}
+                  className="w-full h-12 text-base font-semibold bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  下载步信APP
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>

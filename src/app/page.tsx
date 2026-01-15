@@ -66,7 +66,6 @@ export default function CloudShopSimulator() {
   const [recommendInputType, setRecommendInputType] = useState<'budget' | 'profit'>('budget');
   const [recommendBudget, setRecommendBudget] = useState<string>('');
   const [recommendProfit, setRecommendProfit] = useState<string>('');
-  const [recommendProfitVariance, setRecommendProfitVariance] = useState<number>(10); // 利润浮动范围（%），默认±10%
   const [recommendPeriod, setRecommendPeriod] = useState<string>(''); // 周期（天），1-30
   const [recommendResults, setRecommendResults] = useState<RecommendationResult[]>([]);
 
@@ -587,12 +586,11 @@ export default function CloudShopSimulator() {
     let results: RecommendationResult[] = [];
     const targetBudget = recommendInputType === 'budget' ? parseInt(recommendBudget) || 0 : 0;
     const targetProfit = recommendInputType === 'profit' ? parseInt(recommendProfit) || 0 : 0;
-    const profitVariance = recommendInputType === 'profit' ? (recommendProfitVariance / 100) : 0; // 利润浮动范围（例如 0.1 表示 ±10%）
     const period = parseInt(recommendPeriod) || 0; // 周期天数，0表示不考虑周期
 
-    // 如果是按利润推荐，计算目标利润范围
-    const targetProfitMin = targetProfit * (1 - profitVariance);
-    const targetProfitMax = targetProfit * (1 + profitVariance);
+    // 如果是按利润推荐，计算目标利润范围（不能低于期望利润，可以高0-19元）
+    const targetProfitMin = targetProfit; // 不能低于期望利润
+    const targetProfitMax = targetProfit + 19; // 最多高19元
 
     // 遍历所有店铺等级，计算推荐方案
     for (const [level, config] of Object.entries(shopLevelsConfig) as [ShopLevel, typeof shopLevelsConfig[ShopLevel]][]) {
@@ -754,29 +752,7 @@ export default function CloudShopSimulator() {
         results = results.sort((a, b) => b.matchScore - a.matchScore);
       } else {
         // 按利润推荐：基于成本和周期的综合评分
-        // 优先级1：最低成本
-        // 优先级2：最短周期
-        const minCost = Math.min(...results.map(r => r.stockCost));
-        const minPeriod = Math.min(...results.map(r => r.completionDays));
-
-        // 重新计算每个结果的推荐率
-        results = results.map(result => {
-          // 成本得分：最低成本得100分，其他按比例递减（权重60%）
-          const costScore = minCost > 0 ? (minCost / result.stockCost) * 100 : 0;
-
-          // 周期得分：最短周期得100分，其他按比例递减（权重40%）
-          const periodScore = minPeriod > 0 ? (minPeriod / result.completionDays) * 100 : 0;
-
-          // 综合得分 = 成本得分×0.6 + 周期得分×0.4
-          const totalScore = costScore * 0.6 + periodScore * 0.4;
-
-          return {
-            ...result,
-            matchScore: Math.round(totalScore * 100) / 100
-          };
-        });
-
-        // 先按成本排序（最低优先），再按周期排序（最短优先），最后按推荐率排序
+        // 先按成本排序（最低优先），再按周期排序（最短优先）
         results = results.sort((a, b) => {
           if (a.stockCost !== b.stockCost) {
             return a.stockCost - b.stockCost;
@@ -790,7 +766,7 @@ export default function CloudShopSimulator() {
     }
 
     return results;
-  }, [recommendInputType, recommendBudget, recommendProfit, recommendProfitVariance, recommendPeriod, calculateCompoundProfit, calculateCompoundProfitWithBudget]);
+  }, [recommendInputType, recommendBudget, recommendProfit, recommendPeriod, calculateCompoundProfit, calculateCompoundProfitWithBudget]);
 
   // 处理推荐查询
   const handleRecommend = useCallback(() => {
@@ -1079,30 +1055,7 @@ export default function CloudShopSimulator() {
                     className="focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 h-12"
                   />
                   <p className="text-sm text-gray-500">
-                    系统将根据您的期望利润推荐最合适的店铺等级
-                  </p>
-                </div>
-              )}
-
-              {/* 利润浮动范围输入 */}
-              {recommendInputType === 'profit' && (
-                <div className="space-y-2">
-                  <Label htmlFor="recommendProfitVariance" className="text-sm font-medium text-gray-700">
-                    利润浮动范围（%）
-                  </Label>
-                  <Input
-                    id="recommendProfitVariance"
-                    type="number"
-                    placeholder="默认±10%"
-                    min="0"
-                    max="50"
-                    step="5"
-                    value={recommendProfitVariance}
-                    onChange={(e) => setRecommendProfitVariance(Number(e.target.value) || 10)}
-                    className="focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 h-12"
-                  />
-                  <p className="text-sm text-gray-500">
-                    允许利润上下浮动范围，例如 10% 表示利润在期望利润的 90%-110% 之间都算匹配
+                    系统将根据您的期望利润推荐最合适的店铺等级（利润可浮动0-19元）
                   </p>
                 </div>
               )}
@@ -1146,9 +1099,9 @@ export default function CloudShopSimulator() {
                 <h4 className="font-semibold text-purple-800 mb-2 text-sm">💡 使用提示</h4>
                 <ul className="text-xs sm:text-sm text-purple-700 space-y-1 list-disc list-inside">
                   <li>按预算推荐：系统会根据您的预算，推荐最匹配的进货额度和店铺等级（利润最大化）</li>
-                  <li>按利润推荐：系统会自动遍历周期，推荐最低成本、最短周期的方案（可设置利润浮动范围）</li>
+                  <li>按利润推荐：系统会自动遍历周期，推荐最低成本、最短周期的方案（利润可浮动0-19元）</li>
                   <li>周期选项：仅按预算推荐时可设置周期，按利润推荐时自动计算最优周期</li>
-                  <li>推荐结果按推荐率从高到低排序，您可以选择任意方案直接开始模拟</li>
+                  <li>推荐结果先按成本最低，再按周期最短排序，您可以选择任意方案直接开始模拟</li>
                 </ul>
               </div>
             </CardContent>
@@ -1812,8 +1765,8 @@ export default function CloudShopSimulator() {
                 推荐率 = （当前利润 / 全局最大利润）× 100。按利润从高到低排序。
               </p>
               <p className="text-gray-700 text-sm leading-relaxed">
-                <strong className="text-rose-700">按利润推荐：</strong>自动遍历周期（5-30天），找到达到目标利润的所有方案。
-                推荐率 = 成本得分×0.6 + 周期得分×0.4。按成本最低、周期最短排序。
+                <strong className="text-rose-700">按利润推荐：</strong>自动遍历周期（5-30天），找到达到目标利润的所有方案（利润可浮动0-19元）。
+                按成本最低、周期最短排序。推荐率 = 成本得分×0.5 + 周期得分×0.5。
               </p>
             </div>
           </div>

@@ -1981,15 +1981,15 @@ export default function CloudShopSimulator() {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      <TableRow className="hover:bg-gray-50 bg-gradient-to-r from-purple-50 to-pink-50">
-                        <TableCell className="px-4 py-3 text-gray-900 text-center font-semibold">
+                      <TableRow className="hover:bg-gray-50">
+                        <TableCell className="px-4 py-3 text-gray-700 text-center">
                           <div className="space-y-2">
                             <div>新手店500额度卖完自动升级</div>
                             <div>老手店开店完成后自动升级</div>
                           </div>
                         </TableCell>
                         <TableCell className="px-4 py-3 text-center">
-                          <Badge className="bg-gradient-to-r from-orange-400 to-orange-600 shadow-lg">青铜</Badge>
+                          <Badge className="bg-gradient-to-r from-orange-400 to-orange-600">青铜</Badge>
                         </TableCell>
                       </TableRow>
                       <TableRow className="hover:bg-gray-50">

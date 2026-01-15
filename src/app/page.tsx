@@ -1062,11 +1062,10 @@ export default function CloudShopSimulator() {
             </Button>
             <Button
               variant="ghost"
-              size="icon"
               onClick={() => setIsHelpOpen(true)}
-              className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full"
+              className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full px-4"
             >
-              ?
+              店铺等级
             </Button>
           </div>
         </div>
@@ -1896,121 +1895,181 @@ export default function CloudShopSimulator() {
 
       {/* 帮助模态框 */}
       <Dialog open={isHelpOpen} onOpenChange={setIsHelpOpen}>
-        <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto sm:max-w-2xl">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader className="pb-4">
             <DialogTitle className="text-xl sm:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              使用帮助
+              店铺等级说明
             </DialogTitle>
           </DialogHeader>
-          <div className="space-y-5 py-2">
-            <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
-              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                <span className="mr-2">📊</span> 店铺等级说明
-              </h4>
-              <p className="text-gray-700 text-sm leading-relaxed">
-                系统提供7个店铺等级，从青铜到至尊，每个等级对应不同的进货额度范围和折扣比例。
-              </p>
-            </div>
-            
-            <div className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
-              <h4 className="font-bold text-gray-800 mb-3 flex items-center">
-                <span className="mr-2">🛒</span> 进货流程
-              </h4>
-              <ol className="list-decimal list-inside text-gray-700 text-sm space-y-2">
-                <li className="pl-1">选择你的店铺等级</li>
-                <li className="pl-1">输入进货额度（必须是100的整数倍）</li>
-                <li className="pl-1">输入或确认云店余额（可手动输入或自动同步）</li>
-                <li className="pl-1">输入或确认云店历史最高余额（可手动输入或自动同步）</li>
-                <li className="pl-1">点击"确认进货"按钮或按Enter键</li>
-              </ol>
-            </div>
-            
-            <div className="p-4 bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl">
-              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                <span className="mr-2">🔄</span> 同步说明
-              </h4>
-              <p className="text-gray-700 text-sm leading-relaxed">
-                云店余额默认与进货额度同步，历史最高余额默认与云店余额同步。取消勾选后可手动输入。
-              </p>
-            </div>
-            
-            <div className="p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl">
-              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                <span className="mr-2">📈</span> 数据对比功能
-              </h4>
-              <p className="text-gray-700 text-sm leading-relaxed">
-                确认进货后，点击"加入对比"按钮可将当前方案加入对比列表。点击"查看对比"可查看所有对比方案，系统会自动标注最优方案（最高利润）。
-              </p>
-            </div>
-            
-            <div className="p-4 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-xl">
-              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                <span className="mr-2">💰</span> 结算规则
-              </h4>
-              <p className="text-gray-700 text-sm leading-relaxed">
-                进货第二天自动开始卖出，结算时间为卖出时间+10天。每日回款 = 历史最高余额 × 店铺佣金率（包含本金+利润）。回款以95折结算回来，可以继续进货。
-              </p>
-            </div>
-
-            <div className="p-4 bg-gradient-to-r from-indigo-50 to-violet-50 rounded-xl">
-              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                <span className="mr-2">🔄</span> 复利计算
-              </h4>
-              <p className="text-gray-700 text-sm leading-relaxed">
-                库存有限，每天按卖出比例出货。如黑钻店铺（进货3600，卖出15%），
-                每天540，7天卖完。卖出后10天回款结算，回款立即进货增加库存。
-                例如：黑钻店铺进货3600，第2-8天卖出，第12-18天连续回款。
-                回款资金复利进货，循环滚动实现复利增长。
-              </p>
-            </div>
-            
-            <div className="p-4 bg-gradient-to-r from-emerald-50 to-green-50 rounded-xl">
-              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                <span className="mr-2">💵</span> 额度管理
-              </h4>
-              <p className="text-gray-700 text-sm leading-relaxed">
-                店铺有最高进货额度限制（如青铜3000额度）。初始进货不能超过此限制。
-                卖出后释放额度，剩余预算可以在额度内进货。回款进货不受最高额度限制（复利模式）。
-                例如：预算3600元，青铜店铺进货3000额度，卖出600后释放额度，剩余预算960元可继续进货。
-              </p>
+          <div className="space-y-6 py-2">
+            {/* 如何提升店铺等级 */}
+            <div>
+              <h3 className="font-bold text-lg text-gray-800 mb-3 flex items-center">
+                <span className="mr-2">📈</span> 如何提升店铺等级？
+              </h3>
+              <div className="rounded-lg border overflow-hidden">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="bg-gradient-to-r from-blue-50 to-purple-50">
+                      <th className="px-4 py-3 text-left font-semibold text-gray-700">升级条件</th>
+                      <th className="px-4 py-3 text-left font-semibold text-gray-700">目标等级</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-t hover:bg-gray-50">
+                      <td className="px-4 py-3 text-gray-700">新手店500额度卖完</td>
+                      <td className="px-4 py-3">
+                        <Badge className="bg-gradient-to-r from-orange-400 to-orange-600">青铜</Badge>
+                      </td>
+                    </tr>
+                    <tr className="border-t hover:bg-gray-50">
+                      <td className="px-4 py-3 text-gray-700">推荐 1 个用户开启云店</td>
+                      <td className="px-4 py-3">
+                        <Badge className="bg-gradient-to-r from-gray-300 to-gray-400">白银</Badge>
+                      </td>
+                    </tr>
+                    <tr className="border-t hover:bg-gray-50">
+                      <td className="px-4 py-3 text-gray-700">推荐 2 个用户开启云店</td>
+                      <td className="px-4 py-3">
+                        <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600">黄金</Badge>
+                      </td>
+                    </tr>
+                    <tr className="border-t hover:bg-gray-50">
+                      <td className="px-4 py-3 text-gray-700">推荐 4 个用户开启云店</td>
+                      <td className="px-4 py-3">
+                        <Badge className="bg-gradient-to-r from-gray-200 to-gray-300">铂金</Badge>
+                      </td>
+                    </tr>
+                    <tr className="border-t hover:bg-gray-50">
+                      <td className="px-4 py-3 text-gray-700">推荐 7 个用户开启云店</td>
+                      <td className="px-4 py-3">
+                        <Badge className="bg-gradient-to-r from-blue-400 to-blue-600">钻石</Badge>
+                      </td>
+                    </tr>
+                    <tr className="border-t hover:bg-gray-50">
+                      <td className="px-4 py-3 text-gray-700">推荐 10 个用户开启云店</td>
+                      <td className="px-4 py-3">
+                        <Badge className="bg-gradient-to-r from-gray-600 to-gray-800 text-white">黑钻</Badge>
+                      </td>
+                    </tr>
+                    <tr className="border-t hover:bg-gray-50">
+                      <td className="px-4 py-3 text-gray-700">推荐 15 个用户开启云店</td>
+                      <td className="px-4 py-3">
+                        <Badge className="bg-gradient-to-r from-purple-500 to-purple-700 text-white">至尊</Badge>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
-            <div className="p-4 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-xl">
-              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                <span className="mr-2">🔄</span> 复利机制
-              </h4>
-              <p className="text-gray-700 text-sm leading-relaxed mb-2">
-                库存有限，每天按卖出比例出货。如黑钻店铺（进货3600，卖出15%），
-                每天540，7天卖完。卖出后10天95折回款，回款立即进货增加库存。
-                回款进货不受店铺最高进货额度限制，实现真正的复利增长。
-              </p>
-              <p className="text-gray-700 text-sm leading-relaxed">
-                <strong className="text-amber-700">结算等待期：</strong>当库存卖完且回款尚未到账时，店铺会进入"空转"状态。
-                空转期间没有商品可卖，因此没有新的利润产生。需要等待回款到账后才能继续进货销售。
-                例如：黑钻店铺第2-8天卖完库存，第12-18天回款到账。第9-11天店铺空转，无利润。
-              </p>
-            </div>
-
-            <div className="p-4 bg-gradient-to-r from-rose-50 to-red-50 rounded-xl">
-              <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                <span className="mr-2">🧮</span> 利润计算
-              </h4>
-              <p className="text-gray-700 text-sm leading-relaxed mb-2">
-                每日利润 = 卖出额度 × （销售折扣 - 进货折扣）。
-                黑钻83折进货、95折卖出，每卖出540元利润64.8元。
-                回款10天后结算，结算后资金立即进货，货卖完前新回款可增加库存。
-              </p>
-              <p className="text-gray-700 text-sm leading-relaxed">
-                <strong className="text-rose-700">推荐系统：</strong>
-              </p>
-              <p className="text-gray-700 text-sm leading-relaxed">
-                <strong className="text-rose-700">按预算推荐：</strong>在预算限制内找到使利润最大的进货额度。
-                推荐率 = （当前利润 / 全局最大利润）× 100。按利润从高到低排序。
-              </p>
-              <p className="text-gray-700 text-sm leading-relaxed">
-                <strong className="text-rose-700">按利润推荐：</strong>基于单次销售利润计算，找到达到目标利润的所有方案（利润可浮动0-19元）。
-                按成本最低、周期最短排序。推荐率 = 成本得分×0.6 + 周期得分×0.4。
-              </p>
+            {/* 升级店铺的有哪些好处 */}
+            <div>
+              <h3 className="font-bold text-lg text-gray-800 mb-3 flex items-center">
+                <span className="mr-2">💎</span> 升级店铺的有哪些好处？
+              </h3>
+              <div className="rounded-lg border overflow-hidden">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="bg-gradient-to-r from-green-50 to-emerald-50">
+                      <th className="px-3 py-2 text-left font-semibold text-gray-700">等级</th>
+                      <th className="px-2 py-2 text-center font-semibold text-gray-700">预缴折扣</th>
+                      <th className="px-2 py-2 text-center font-semibold text-gray-700">最高余额</th>
+                      <th className="px-2 py-2 text-center font-semibold text-gray-700">代缴比例</th>
+                      <th className="px-2 py-2 text-center font-semibold text-gray-700">提现手续费</th>
+                      <th className="px-2 py-2 text-center font-semibold text-gray-700">抽奖</th>
+                      <th className="px-2 py-2 text-center font-semibold text-gray-700">E积分</th>
+                      <th className="px-2 py-2 text-center font-semibold text-gray-700">股权</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-t hover:bg-gray-50">
+                      <td className="px-3 py-2">
+                        <Badge className="bg-gradient-to-r from-orange-400 to-orange-600">青铜</Badge>
+                      </td>
+                      <td className="px-2 py-2 text-center text-gray-700">88折</td>
+                      <td className="px-2 py-2 text-center text-gray-700">3000</td>
+                      <td className="px-2 py-2 text-center text-gray-700">20%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">1%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">-</td>
+                      <td className="px-2 py-2 text-center text-gray-700">1%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">-</td>
+                    </tr>
+                    <tr className="border-t hover:bg-gray-50">
+                      <td className="px-3 py-2">
+                        <Badge className="bg-gradient-to-r from-gray-300 to-gray-400">白银</Badge>
+                      </td>
+                      <td className="px-2 py-2 text-center text-gray-700">87折</td>
+                      <td className="px-2 py-2 text-center text-gray-700">6000</td>
+                      <td className="px-2 py-2 text-center text-gray-700">19%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">0.95%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">1次/月</td>
+                      <td className="px-2 py-2 text-center text-gray-700">2%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">3%</td>
+                    </tr>
+                    <tr className="border-t hover:bg-gray-50">
+                      <td className="px-3 py-2">
+                        <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600">黄金</Badge>
+                      </td>
+                      <td className="px-2 py-2 text-center text-gray-700">86折</td>
+                      <td className="px-2 py-2 text-center text-gray-700">10000</td>
+                      <td className="px-2 py-2 text-center text-gray-700">18%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">0.9%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">1次/月</td>
+                      <td className="px-2 py-2 text-center text-gray-700">5%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">6%</td>
+                    </tr>
+                    <tr className="border-t hover:bg-gray-50">
+                      <td className="px-3 py-2">
+                        <Badge className="bg-gradient-to-r from-gray-200 to-gray-300">铂金</Badge>
+                      </td>
+                      <td className="px-2 py-2 text-center text-gray-700">85折</td>
+                      <td className="px-2 py-2 text-center text-gray-700">30000</td>
+                      <td className="px-2 py-2 text-center text-gray-700">17%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">0.85%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">1次/月</td>
+                      <td className="px-2 py-2 text-center text-gray-700">6%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">8%</td>
+                    </tr>
+                    <tr className="border-t hover:bg-gray-50">
+                      <td className="px-3 py-2">
+                        <Badge className="bg-gradient-to-r from-blue-400 to-blue-600">钻石</Badge>
+                      </td>
+                      <td className="px-2 py-2 text-center text-gray-700">84折</td>
+                      <td className="px-2 py-2 text-center text-gray-700">70000</td>
+                      <td className="px-2 py-2 text-center text-gray-700">16%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">0.8%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">2次/月</td>
+                      <td className="px-2 py-2 text-center text-gray-700">7%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">10%</td>
+                    </tr>
+                    <tr className="border-t hover:bg-gray-50">
+                      <td className="px-3 py-2">
+                        <Badge className="bg-gradient-to-r from-gray-600 to-gray-800 text-white">黑钻</Badge>
+                      </td>
+                      <td className="px-2 py-2 text-center text-gray-700">83折</td>
+                      <td className="px-2 py-2 text-center text-gray-700">130000</td>
+                      <td className="px-2 py-2 text-center text-gray-700">15%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">0.75%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">2次/月</td>
+                      <td className="px-2 py-2 text-center text-gray-700">8%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">15%</td>
+                    </tr>
+                    <tr className="border-t hover:bg-gray-50">
+                      <td className="px-3 py-2">
+                        <Badge className="bg-gradient-to-r from-purple-500 to-purple-700 text-white">至尊</Badge>
+                      </td>
+                      <td className="px-2 py-2 text-center text-gray-700">82折</td>
+                      <td className="px-2 py-2 text-center text-gray-700">200000</td>
+                      <td className="px-2 py-2 text-center text-gray-700">14%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">0.65%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">3次/月</td>
+                      <td className="px-2 py-2 text-center text-gray-700">10%</td>
+                      <td className="px-2 py-2 text-center text-gray-700">20%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </DialogContent>

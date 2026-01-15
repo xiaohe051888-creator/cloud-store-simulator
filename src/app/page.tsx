@@ -16,6 +16,7 @@ import {
   TableFooter,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import WeChatGuide from '@/components/wechat-guide';
 import {
   shopLevelsConfig,
 } from '@/lib/shop-config';
@@ -2333,6 +2334,9 @@ export default function CloudShopSimulator() {
           </Card>
         </div>
       )}
+
+      {/* 微信引导提示 */}
+      <WeChatGuide />
     </div>
   );
 }

@@ -302,16 +302,16 @@ export default function CloudShopSimulator() {
       return;
     }
 
-    // 云店总余额 = 进货额度 + 云店余额
+    // 云店总余额 = 进货额度 + 云店余额，用于销售数据和总利润计算
     const cloudTotalBalance = stockAmount + cloudBalance;
 
-    // 计算基准：用于进货成本和利润计算，优先使用进货额度，如果没有则使用云店余额
+    // 计算基准：用于进货成本计算，优先使用进货额度，如果没有则使用云店余额
     const calculationBalance = stockAmount > 0 ? stockAmount : cloudBalance;
 
-    // 生成销售数据（基于计算基准）
+    // 生成销售数据（基于云店总余额）
     const dailyCommission = Math.round(finalMaxBalance * levelConfig.commissionRate);
     const dailyProfit = dailyCommission * (levelConfig.saleDiscount - levelConfig.stockDiscount);
-    const data = generateSalesData(calculationBalance, dailyCommission, dailyProfit);
+    const data = generateSalesData(cloudTotalBalance, dailyCommission, dailyProfit);
     setSalesData(data);
 
     setCurrentComparisonId(null);

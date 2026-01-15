@@ -58,6 +58,11 @@ export default function CloudShopSimulator() {
   const [stockError, setStockError] = useState<string>('');
   const [cloudBalanceError, setCloudBalanceError] = useState<string>('');
   const [maxBalanceError, setMaxBalanceError] = useState<string>('');
+  
+  // 进货输入闪烁状态
+  const [isStockShaking, setIsStockShaking] = useState<boolean>(false);
+  const [isCloudBalanceShaking, setIsCloudBalanceShaking] = useState<boolean>(false);
+  const [isMaxBalanceShaking, setIsMaxBalanceShaking] = useState<boolean>(false);
 
   // 销售数据
   const [salesData, setSalesData] = useState<SalesData[]>([]);
@@ -143,7 +148,9 @@ export default function CloudShopSimulator() {
       const validation = validateStockAmount(numValue, levelConfig);
       if (!validation.valid && numValue > 0) {
         setStockError(validation.error || '');
-      } else {
+      } else if (numValue > 0 && validation.valid) {
+        setStockError('');
+      } else if (!value) {
         setStockError('');
       }
       
@@ -153,10 +160,34 @@ export default function CloudShopSimulator() {
       if (isEditCloudBalance && numValue > 0) {
         setCloudBalance(numValue);
         setCloudBalanceInputValue(String(numValue));
+        // 验证云店余额
+        const cloudValidation = validateCloudBalance(numValue, numValue);
+        if (!cloudValidation.valid) {
+          setCloudBalanceError(cloudValidation.error || '');
+        } else {
+          setCloudBalanceError('');
+        }
         // 如果历史最高余额也是同步模式，也自动更新
         if (isEditMaxBalance) {
           setMaxBalance(numValue);
           setMaxBalanceInputValue(String(numValue));
+          // 验证历史最高余额
+          const maxValidation = validateMaxBalance(numValue, numValue);
+          if (!maxValidation.valid) {
+            setMaxBalanceError(maxValidation.error || '');
+          } else {
+            setMaxBalanceError('');
+          }
+        }
+      } else if (!isEditCloudBalance) {
+        // 如果云店余额不是同步模式，需要验证现有的云店余额
+        if (cloudBalance > 0) {
+          const cloudValidation = validateCloudBalance(cloudBalance, numValue);
+          if (!cloudValidation.valid) {
+            setCloudBalanceError(cloudValidation.error || '');
+          } else {
+            setCloudBalanceError('');
+          }
         }
       }
     }
@@ -170,7 +201,9 @@ export default function CloudShopSimulator() {
     const validation = validateCloudBalance(numValue, stockAmount);
     if (!validation.valid && numValue > 0) {
       setCloudBalanceError(validation.error || '');
-    } else {
+    } else if (numValue > 0 && validation.valid) {
+      setCloudBalanceError('');
+    } else if (!value) {
       setCloudBalanceError('');
     }
     
@@ -180,6 +213,13 @@ export default function CloudShopSimulator() {
     if (isEditMaxBalance && numValue > 0) {
       setMaxBalance(numValue);
       setMaxBalanceInputValue(String(numValue));
+      // 验证历史最高余额
+      const maxValidation = validateMaxBalance(numValue, numValue);
+      if (!maxValidation.valid) {
+        setMaxBalanceError(maxValidation.error || '');
+      } else {
+        setMaxBalanceError('');
+      }
     }
   };
 
@@ -191,7 +231,9 @@ export default function CloudShopSimulator() {
     const validation = validateMaxBalance(numValue, cloudBalance);
     if (!validation.valid && numValue > 0) {
       setMaxBalanceError(validation.error || '');
-    } else {
+    } else if (numValue > 0 && validation.valid) {
+      setMaxBalanceError('');
+    } else if (!value) {
       setMaxBalanceError('');
     }
     
@@ -227,38 +269,55 @@ export default function CloudShopSimulator() {
   const handleConfirmStock = useCallback(() => {
     if (!currentLevel || !levelConfig) return;
     
-    const numValue = parseInt(stockInputValue) || 0;
+    let isValid = true;
     
-    // 如果有输入进货额度，需要验证进货额度
-    if (numValue > 0) {
+    // 验证进货额度
+    if (stockInputValue) {
+      const numValue = parseInt(stockInputValue) || 0;
       const stockValidation = validateStockAmount(numValue, levelConfig);
       if (!stockValidation.valid) {
         setStockError(stockValidation.error || '');
-        return;
+        isValid = false;
+      } else {
+        setStockError('');
       }
     }
     
     // 验证云店余额
-    if (cloudBalance > 0 && stockAmount > 0) {
-      const cloudBalanceValidation = validateCloudBalance(cloudBalance, stockAmount);
+    if (cloudBalanceInputValue && !isEditCloudBalance) {
+      const numValue = parseInt(cloudBalanceInputValue) || 0;
+      const cloudBalanceValidation = validateCloudBalance(numValue, stockAmount);
       if (!cloudBalanceValidation.valid) {
         setCloudBalanceError(cloudBalanceValidation.error || '');
-        return;
+        isValid = false;
+      } else {
+        setCloudBalanceError('');
       }
     }
     
     // 验证历史最高余额
-    if (maxBalance > 0 && cloudBalance > 0) {
-      const maxBalanceValidation = validateMaxBalance(maxBalance, cloudBalance);
+    if (maxBalanceInputValue && !isEditMaxBalance) {
+      const numValue = parseInt(maxBalanceInputValue) || 0;
+      const maxBalanceValidation = validateMaxBalance(numValue, cloudBalance);
       if (!maxBalanceValidation.valid) {
         setMaxBalanceError(maxBalanceValidation.error || '');
-        return;
+        isValid = false;
+      } else {
+        setMaxBalanceError('');
       }
     }
     
     // 确保至少有进货额度或云店余额之一
     if (stockAmount === 0 && cloudBalance === 0) {
       setStockError('请输入进货额度或云店余额');
+      isValid = false;
+    }
+    
+    if (!isValid) {
+      // 触发闪烁动画
+      if (stockError) triggerShake(setIsStockShaking);
+      if (cloudBalanceError) triggerShake(setIsCloudBalanceShaking);
+      if (maxBalanceError) triggerShake(setIsMaxBalanceShaking);
       return;
     }
     
@@ -273,7 +332,7 @@ export default function CloudShopSimulator() {
     
     setCurrentComparisonId(null);
     setCurrentView('levelDetails');
-  }, [currentLevel, levelConfig, stockInputValue, cloudBalance, stockAmount, maxBalance]);
+  }, [currentLevel, levelConfig, stockInputValue, cloudBalance, stockAmount, maxBalance, isEditCloudBalance, isEditMaxBalance, stockError, cloudBalanceError, maxBalanceError]);
 
   // 加入对比
   const handleAddToComparison = useCallback(() => {
@@ -1362,9 +1421,13 @@ export default function CloudShopSimulator() {
                   step="100"
                   value={stockInputValue}
                   onChange={(e) => handleStockInputChange(e.target.value)}
-                  className={`${stockError ? 'border-red-500 ring-red-500' : ''} focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 h-12`}
+                  className={`focus:ring-2 transition-all duration-200 h-12 ${
+                    stockError
+                      ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
+                      : 'focus:ring-blue-500/50 focus:border-blue-500'
+                  } ${isStockShaking ? 'animate-shake' : ''}`}
                 />
-                <p className={`text-xs sm:text-sm ${stockError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+                <p className={`text-xs sm:text-sm transition-colors duration-200 ${stockError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
                   {stockError || `进货额度范围：${levelConfig.minStock} - ${levelConfig.maxStock}电费`}
                 </p>
               </div>
@@ -1381,7 +1444,11 @@ export default function CloudShopSimulator() {
                   value={cloudBalanceInputValue}
                   onChange={(e) => handleCloudBalanceInputChange(e.target.value)}
                   disabled={isEditCloudBalance}
-                  className={`${cloudBalanceError ? 'border-red-500 ring-red-500' : ''} ${isEditCloudBalance ? 'bg-gray-50 border-gray-200' : ''} focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 h-12`}
+                  className={`focus:ring-2 transition-all duration-200 h-12 ${
+                    cloudBalanceError
+                      ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
+                      : 'focus:ring-blue-500/50 focus:border-blue-500'
+                  } ${isEditCloudBalance ? 'bg-gray-50 border-gray-200' : ''} ${isCloudBalanceShaking ? 'animate-shake' : ''}`}
                 />
                 <div className="flex items-center space-x-2">
                   <Checkbox
@@ -1414,7 +1481,11 @@ export default function CloudShopSimulator() {
                   value={maxBalanceInputValue}
                   onChange={(e) => handleMaxBalanceInputChange(e.target.value)}
                   disabled={isEditMaxBalance}
-                  className={`${maxBalanceError ? 'border-red-500 ring-red-500' : ''} ${isEditMaxBalance ? 'bg-gray-50 border-gray-200' : ''} focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 h-12`}
+                  className={`focus:ring-2 transition-all duration-200 h-12 ${
+                    maxBalanceError
+                      ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
+                      : 'focus:ring-blue-500/50 focus:border-blue-500'
+                  } ${isEditMaxBalance ? 'bg-gray-50 border-gray-200' : ''} ${isMaxBalanceShaking ? 'animate-shake' : ''}`}
                 />
                 <div className="flex items-center space-x-2">
                   <Checkbox
@@ -1438,12 +1509,6 @@ export default function CloudShopSimulator() {
               <Button
                 className="w-full h-12 sm:h-14 text-base sm:text-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl"
                 onClick={handleConfirmStock}
-                disabled={
-                  (!stockAmount && !cloudBalance) ||
-                  (stockAmount > 0 && !!stockError) ||
-                  (cloudBalance > 0 && !!cloudBalanceError) ||
-                  (maxBalance > 0 && !!maxBalanceError)
-                }
               >
                 确认进货 (Enter)
               </Button>

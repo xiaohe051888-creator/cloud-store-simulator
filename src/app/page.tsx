@@ -1490,7 +1490,7 @@ export default function CloudShopSimulator() {
                 <Input
                   id="cloudBalance"
                   type="number"
-                  placeholder="云店余额（选填）"
+                  placeholder="请输入你当前的云店余额"
                   min="0"
                   value={cloudBalanceInputValue}
                   onChange={(e) => handleCloudBalanceInputChange(e.target.value)}
@@ -1514,7 +1514,7 @@ export default function CloudShopSimulator() {
                 <Input
                   id="stockAmount"
                   type="number"
-                  placeholder="进货额度（必填，100的倍数）"
+                  placeholder="请输入你要进货的额度"
                   min={levelConfig.minStock}
                   max={levelConfig.maxStock}
                   step="100"

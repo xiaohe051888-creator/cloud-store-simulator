@@ -1444,7 +1444,7 @@ export default function CloudShopSimulator() {
                             </div>
                             <div className="bg-white/80 p-3 rounded-xl">
                               <p className="text-xs text-gray-500 mb-1">
-                                {recommendInputType === 'budget' ? '首次投入总成本' : '投入总成本'}
+                                {recommendInputType === 'budget' ? '首次进货成本' : '投入总成本'}
                               </p>
                               <p className="text-lg font-bold text-gray-800">
                                 {result.stockCost}元

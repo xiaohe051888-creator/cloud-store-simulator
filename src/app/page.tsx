@@ -1048,18 +1048,18 @@ export default function CloudShopSimulator() {
             <Button
               variant="outline"
               size="sm"
-              onClick={handleGoHome}
-              className="active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300"
-            >
-              首页
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
               onClick={() => setCurrentView('shopLevels')}
               className="active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200"
             >
               店铺等级
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleGoHome}
+              className="active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300"
+            >
+              首页
             </Button>
           </div>
         </div>

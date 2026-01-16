@@ -1838,9 +1838,9 @@ export default function CloudShopSimulator() {
                     <TableRow className="bg-gradient-to-r from-blue-50 to-purple-50 hover:bg-blue-50/50">
                       <TableHead className="text-center font-semibold text-gray-700">销售日期</TableHead>
                       <TableHead className="text-center font-semibold text-gray-700">销售额度</TableHead>
-                      <TableHead className="text-center font-semibold text-gray-700">利润</TableHead>
                       <TableHead className="text-center font-semibold text-gray-700 hidden sm:table-cell">结算时间</TableHead>
                       <TableHead className="text-center font-semibold text-gray-700 hidden sm:table-cell">结算金额</TableHead>
+                      <TableHead className="text-center font-semibold text-gray-700">利润</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -1848,12 +1848,12 @@ export default function CloudShopSimulator() {
                       <TableRow key={index} className="hover:bg-blue-50/30 transition-colors duration-200">
                         <TableCell className="text-center font-medium">{sale.date}</TableCell>
                         <TableCell className="text-center font-semibold text-gray-800">{sale.amount}⚡</TableCell>
-                        <TableCell className="text-center text-green-600 font-semibold">
-                          {sale.profit.toFixed(2)}元
-                        </TableCell>
                         <TableCell className="text-center text-gray-600 hidden sm:table-cell">{sale.settlementDate}</TableCell>
                         <TableCell className="text-center text-gray-800 font-medium hidden sm:table-cell">
                           {sale.settlementAmount.toFixed(2)}元
+                        </TableCell>
+                        <TableCell className="text-center text-green-600 font-semibold">
+                          {sale.profit.toFixed(2)}元
                         </TableCell>
                       </TableRow>
                     ))}
@@ -1864,10 +1864,11 @@ export default function CloudShopSimulator() {
                       <TableCell className="text-center font-bold text-blue-700">
                         {salesData.reduce((sum, s) => sum + s.amount, 0)}⚡
                       </TableCell>
+                      <TableCell className="text-center font-bold text-blue-700 hidden sm:table-cell">-</TableCell>
+                      <TableCell className="text-center font-bold text-blue-700 hidden sm:table-cell">-</TableCell>
                       <TableCell className="text-center font-bold text-blue-700">
                         {salesData.reduce((sum, s) => sum + s.profit, 0).toFixed(2)}元
                       </TableCell>
-                      <TableCell className="text-center font-bold text-blue-700 hidden sm:table-cell">-</TableCell>
                       <TableCell className="text-center font-bold text-blue-700 hidden sm:table-cell">
                         {salesData.reduce((sum, s) => sum + s.settlementAmount, 0).toFixed(2)}元
                       </TableCell>

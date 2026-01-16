@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import PWAInstaller from '@/components/pwa-installer';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,9 +33,12 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Coze Code Team', url: 'https://code.coze.cn' }],
   generator: 'Coze Code',
-  // icons: {
-  //   icon: '',
-  // },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: '云店',
+  },
   openGraph: {
     title: '扣子编程 | 你的 AI 工程师已就位',
     description:
@@ -43,26 +47,15 @@ export const metadata: Metadata = {
     siteName: '扣子编程',
     locale: 'zh_CN',
     type: 'website',
-    // images: [
-    //   {
-    //     url: '',
-    //     width: 1200,
-    //     height: 630,
-    //     alt: '扣子编程 - 你的 AI 工程师',
-    //   },
-    // ],
   },
-  // twitter: {
-  //   card: 'summary_large_image',
-  //   title: 'Coze Code | Your AI Engineer is Here',
-  //   description:
-  //     'Build and deploy full-stack applications through AI conversation. No env setup, just flow.',
-  //   // images: [''],
-  // },
   robots: {
     index: true,
     follow: true,
   },
+};
+
+export const viewport = {
+  themeColor: '#2563eb',
 };
 
 export default function RootLayout({
@@ -72,9 +65,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
+      <head>
+        <link rel="icon" href="/icon-192.png" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <PWAInstaller />
         {children}
       </body>
     </html>

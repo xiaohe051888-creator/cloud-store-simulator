@@ -1,0 +1,41 @@
+{
+  "name": "云店",
+  "short_name": "云店",
+  "description": "云店 - 专业的店铺经营管理模拟工具，支持多种店铺等级，详细计算利润和结算周期。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "finance"],
+  "shortcuts": [
+    {
+      "name": "店铺等级",
+      "short_name": "店铺等级",
+      "description": "查看店铺等级详情",
+      "url": "/?view=shopLevels",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "智能推荐",
+      "short_name": "智能推荐",
+      "description": "智能推荐最优方案",
+      "url": "/?view=recommendation",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

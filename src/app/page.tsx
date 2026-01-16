@@ -1,6 +1,8 @@
 'use client';
 
-import { useState, useCallback, useMemo, useRef } from 'react';
+import { Suspense } from 'react';
+
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -17,6 +19,8 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import WeChatLinkGuide from '@/components/wechat-link-guide';
+import ShareModal from '@/components/share-modal';
+import { useShareParams } from '@/hooks/use-share-params';
 import {
   shopLevelsConfig,
 } from '@/lib/shop-config';
@@ -29,7 +33,7 @@ import {
 } from '@/lib/shop-utils';
 import type { ShopLevel, ViewType, SalesData, ComparisonData, RecommendationResult } from '@/types/shop';
 
-export default function CloudShopSimulator() {
+function CloudShopSimulator() {
   // 应用状态
   const [currentLevel, setCurrentLevel] = useState<ShopLevel | null>(null);
   const [stockAmount, setStockAmount] = useState<number>(0);
@@ -119,6 +123,12 @@ export default function CloudShopSimulator() {
   
   // 微信链接引导状态
   const [showWeChatLinkGuide, setShowWeChatLinkGuide] = useState<boolean>(false);
+
+  // 分享弹窗状态
+  const [showShareModal, setShowShareModal] = useState<boolean>(false);
+
+  // 获取分享参数
+  const { shareParams, isFromShare } = useShareParams();
 
   // 获取当前等级配置
   const levelConfig = currentLevel ? shopLevelsConfig[currentLevel] : null;
@@ -1123,6 +1133,42 @@ export default function CloudShopSimulator() {
     setShowWeChatLinkGuide(false);
   };
 
+  // 处理分享参数
+  useEffect(() => {
+    if (isFromShare && shareParams) {
+      if (shareParams.level && Object.keys(shopLevelsConfig).includes(shareParams.level)) {
+        setCurrentLevel(shareParams.level as ShopLevel);
+        setCurrentView('levelDetails');
+        
+        if (shareParams.stock !== undefined) {
+          setStockInputValue(String(shareParams.stock));
+          setStockAmount(shareParams.stock);
+        }
+        
+        if (shareParams.balance !== undefined) {
+          setCloudBalanceInputValue(String(shareParams.balance));
+          setCloudBalance(shareParams.balance);
+        }
+        
+        if (shareParams.max !== undefined) {
+          setMaxBalanceInputValue(String(shareParams.max));
+          setMaxBalance(shareParams.max);
+          setIsEditMaxBalance(false);
+        }
+        
+        // 重新计算销售数据
+        const config = shopLevelsConfig[shareParams.level as ShopLevel];
+        if (config) {
+          const cloudTotalBalance = (shareParams.stock || 0) + (shareParams.balance || 0);
+          const dailyCommission = Math.round((shareParams.max || cloudTotalBalance) * config.commissionRate);
+          const dailyProfit = dailyCommission * (config.saleDiscount - config.stockDiscount);
+          const data = generateSalesData(cloudTotalBalance, dailyCommission, dailyProfit);
+          setSalesData(data);
+        }
+      }
+    }
+  }, [isFromShare, shareParams]);
+
   // 处理Enter键（已废弃，改用单个输入框的 onKeyDown 处理）
   const handleKeyDown = (e: React.KeyboardEvent) => {
     // 不再需要全局处理
@@ -1802,6 +1848,12 @@ export default function CloudShopSimulator() {
                 >
                   查看销售详情
                 </Button>
+                <Button
+                  className="flex-1 h-10 sm:h-12 lg:h-14 text-sm sm:text-base active:scale-95 transition-all duration-200 hover:shadow-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                  onClick={() => setShowShareModal(true)}
+                >
+                  分享
+                </Button>
               </div>
 
               <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border-l-4 border-blue-500 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
@@ -2351,6 +2403,32 @@ export default function CloudShopSimulator() {
         isVisible={showWeChatLinkGuide}
         onClose={handleCloseWeChatLinkGuide}
       />
+
+      {/* 分享弹窗 */}
+      {showShareModal && detailsData && levelConfig && (
+        <ShareModal
+          isOpen={showShareModal}
+          onClose={() => setShowShareModal(false)}
+          shareData={{
+            shopLevel: levelConfig.name,
+            stockAmount: detailsData.calculationBalance,
+            cloudBalance: cloudBalance,
+            maxBalance: maxBalance,
+            totalProfit: detailsData.totalProfit,
+            dailyCommission: detailsData.dailyCommission,
+            completionDays: detailsData.completionDays,
+          }}
+        />
+      )}
     </div>
+  );
+}
+
+// 包装组件以支持 Suspense
+export default function CloudShopSimulatorWrapper() {
+  return (
+    <Suspense fallback={null}>
+      <CloudShopSimulator />
+    </Suspense>
   );
 }

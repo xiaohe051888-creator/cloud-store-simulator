@@ -1624,7 +1624,7 @@ export default function CloudShopSimulator() {
             </CardHeader>
             <CardContent className="space-y-4 sm:space-y-5 lg:space-y-6 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-6">
               <div className="space-y-1.5 sm:space-y-2">
-                <Label htmlFor="cloudBalance" className="text-xs sm:text-sm font-medium text-gray-700">
+                <Label htmlFor="cloudBalance" className="text-sm sm:text-base font-semibold text-gray-800">
                   云店余额（店铺已有额度）
                 </Label>
                 <Input
@@ -1636,10 +1636,10 @@ export default function CloudShopSimulator() {
                   value={cloudBalanceInputValue}
                   onChange={(e) => handleCloudBalanceInputChange(e.target.value)}
                   onKeyDown={handleCloudBalanceKeyDown}
-                  className={`focus:ring-2 transition-all duration-200 h-10 sm:h-12 ${
+                  className={`focus:ring-2 transition-all duration-200 h-12 sm:h-12 border-2 ${
                     cloudBalanceError
                       ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
-                      : 'focus:ring-blue-500/50 focus:border-blue-500'
+                      : 'border-gray-300 focus:ring-blue-500/50 focus:border-blue-500'
                   } ${isCloudBalanceShaking ? 'animate-shake' : ''}`}
                 />
                 {cloudBalanceError && (
@@ -1650,7 +1650,7 @@ export default function CloudShopSimulator() {
               </div>
 
               <div className="space-y-1.5 sm:space-y-2">
-                <Label htmlFor="stockAmount" className="text-xs sm:text-sm font-medium text-gray-700">
+                <Label htmlFor="stockAmount" className="text-sm sm:text-base font-semibold text-gray-800">
                   进货额度（100的整倍数）
                 </Label>
                 <Input
@@ -1664,10 +1664,10 @@ export default function CloudShopSimulator() {
                   value={stockInputValue}
                   onChange={(e) => handleStockInputChange(e.target.value)}
                   onKeyDown={handleStockAmountKeyDown}
-                  className={`focus:ring-2 transition-all duration-200 h-10 sm:h-12 ${
+                  className={`focus:ring-2 transition-all duration-200 h-12 sm:h-12 border-2 ${
                     stockError
                       ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
-                      : 'focus:ring-blue-500/50 focus:border-blue-500'
+                      : 'border-gray-300 focus:ring-blue-500/50 focus:border-blue-500'
                   } ${isStockShaking ? 'animate-shake' : ''}`}
                 />
                 <p className={`text-[10px] sm:text-xs transition-colors duration-200 ${stockError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
@@ -1676,7 +1676,7 @@ export default function CloudShopSimulator() {
               </div>
 
               <div className="space-y-1.5 sm:space-y-2">
-                <Label htmlFor="maxBalance" className="text-xs sm:text-sm font-medium text-gray-700">
+                <Label htmlFor="maxBalance" className="text-sm sm:text-base font-semibold text-gray-800">
                   云店历史最高余额
                 </Label>
                 <Input
@@ -1689,11 +1689,11 @@ export default function CloudShopSimulator() {
                   onChange={(e) => handleMaxBalanceInputChange(e.target.value)}
                   onKeyDown={handleMaxBalanceKeyDown}
                   disabled={isEditMaxBalance}
-                  className={`focus:ring-2 transition-all duration-200 h-10 sm:h-12 ${
+                  className={`focus:ring-2 transition-all duration-200 h-12 sm:h-12 border-2 ${
                     maxBalanceError
                       ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
-                      : 'focus:ring-blue-500/50 focus:border-blue-500'
-                  } ${isEditMaxBalance ? 'bg-gray-50 border-gray-200' : ''} ${isMaxBalanceShaking ? 'animate-shake' : ''}`}
+                      : 'border-gray-300 focus:ring-blue-500/50 focus:border-blue-500'
+                  } ${isEditMaxBalance ? 'bg-gray-50 border-gray-300' : ''} ${isMaxBalanceShaking ? 'animate-shake' : ''}`}
                 />
                 <div className="flex items-center space-x-1.5 sm:space-x-2">
                   <Checkbox

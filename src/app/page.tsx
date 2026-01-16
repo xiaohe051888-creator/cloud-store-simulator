@@ -1196,7 +1196,6 @@ function CloudShopSimulator() {
             )}
           </div>
           <div className="flex items-center gap-0.5 sm:gap-2 lg:gap-3">
-            {/* 移动端隐藏进入平台，通过其他入口访问 */}
             <Button
               variant="outline"
               size="sm"

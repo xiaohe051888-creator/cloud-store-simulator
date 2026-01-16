@@ -70,11 +70,6 @@ export default function RootLayout({
         <link rel="icon" href="/icon-192.png" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-
-        {/* 缓存控制：HTML和JS不缓存，确保刷新即可看到最新版本 */}
-        <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-        <meta httpEquiv="Pragma" content="no-cache" />
-        <meta httpEquiv="Expires" content="0" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

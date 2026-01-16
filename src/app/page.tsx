@@ -1195,7 +1195,7 @@ export default function CloudShopSimulator() {
               onClick={handleGoHome}
               className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 h-7 sm:h-8 lg:h-9 px-1.5 sm:px-2 lg:px-3"
             >
-              <span className="hidden sm:inline">回到主页</span>
+              <span className="hidden sm:inline">回到首页</span>
               <span className="sm:hidden">回到首页</span>
             </Button>
           </div>

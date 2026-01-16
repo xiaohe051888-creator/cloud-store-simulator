@@ -5,7 +5,7 @@ import html2canvas from 'html2canvas';
 import { QRCodeSVG } from 'qrcode.react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Copy, Download, Share2, X } from 'lucide-react';
+import { Copy, Download, Share2, MessageCircle, X } from 'lucide-react';
 
 interface ShareData {
   shopLevel: string;
@@ -27,6 +27,11 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
   const [copied, setCopied] = useState(false);
   const shareCardRef = useRef<HTMLDivElement>(null);
 
+  // 检测是否在微信中
+  const isWeChat = () => {
+    return /micromessenger/i.test(navigator.userAgent);
+  };
+
   // 生成分享链接
   const generateShareUrl = () => {
     if (!shareData) return '';
@@ -36,7 +41,7 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     params.set('balance', String(shareData.cloudBalance));
     params.set('max', String(shareData.maxBalance));
     params.set('profit', String(shareData.totalProfit));
-    
+
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
     return `${baseUrl}?${params.toString()}`;
   };
@@ -67,6 +72,21 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
         console.error('Share failed:', error);
       }
     }
+  };
+
+  // 分享到微信（在微信环境中显示引导）
+  const handleShareToWeChat = () => {
+    const url = generateShareUrl();
+    // 先复制链接到剪贴板
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }).catch((error) => {
+      console.error('Failed to copy:', error);
+    });
+
+    // 显示引导信息（简单使用 alert，或者可以显示一个更友好的提示）
+    alert('链接已复制！\n\n在微信中分享步骤：\n1. 点击右上角 •••\n2. 选择发送给朋友\n3. 粘贴链接发送');
   };
 
   // 生成分享图片
@@ -226,11 +246,11 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
 
             {!(typeof navigator !== 'undefined' && 'share' in navigator) && (
               <Button
-                onClick={handleCopyLink}
-                className="flex items-center justify-center gap-2 h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                onClick={handleShareToWeChat}
+                className="flex items-center justify-center gap-2 h-12 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700"
               >
-                <Copy className="h-4 w-4" />
-                复制链接
+                <MessageCircle className="h-4 w-4" />
+                分享到微信
               </Button>
             )}
           </div>

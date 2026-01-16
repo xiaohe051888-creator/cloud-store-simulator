@@ -65,7 +65,7 @@ export default function PWAInstallPrompt() {
   if (!showPrompt) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:w-auto z-[100] animate-in slide-in-from-bottom-4 duration-300">
+    <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:w-auto z-[300] animate-in slide-in-from-bottom-4 duration-300">
       <div className="bg-white/95 backdrop-blur-lg rounded-xl shadow-2xl border border-gray-200 p-4 sm:p-5 max-w-sm">
         <button
           onClick={handleDismiss}

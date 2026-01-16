@@ -1209,83 +1209,88 @@ export default function CloudShopSimulator() {
           <div className="w-full">
             <Card className="w-full bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0 animate-in fade-in-0 slide-in-from-top-4 duration-300">
               <CardHeader className="pb-4 sm:pb-5 pt-5 sm:pt-7 px-4 sm:px-6 lg:px-8">
-                <CardTitle className="text-xl sm:text-2xl lg:text-3xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
+                <CardTitle className="text-lg sm:text-xl lg:text-2xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
                   请选择你的店铺等级
                 </CardTitle>
               </CardHeader>
-              <CardContent className="px-3 sm:px-4 lg:px-6 pb-5 sm:pb-7">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-                  {(Object.keys(shopLevelsConfig) as ShopLevel[]).map((level) => {
-                    const config = shopLevelsConfig[level];
-                    return (
+              <CardContent className="space-y-3 sm:space-y-4 px-3 sm:px-4 lg:px-6 pb-6 sm:pb-8">
+                {(Object.keys(shopLevelsConfig) as ShopLevel[]).map((level) => {
+                  const config = shopLevelsConfig[level];
+                  return (
+                    <div
+                      key={level}
+                      onClick={() => handleSelectLevel(level)}
+                      className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer bg-white"
+                      style={{
+                        borderColor: config.color,
+                        backgroundColor: `${config.color}10`
+                      }}
+                    >
+                      {/* 渐变背景条 */}
                       <div
-                        key={level}
-                        onClick={() => handleSelectLevel(level)}
-                        className="group relative overflow-hidden rounded-2xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 active:scale-[0.98] cursor-pointer bg-white"
-                        style={{
-                          borderColor: config.color,
-                          backgroundColor: `${config.color}10`
-                        }}
-                      >
-                        {/* 顶部渐变条 */}
-                        <div
-                          className="absolute top-0 left-0 right-0 h-2 rounded-t-2xl"
-                          style={{ backgroundColor: config.color }}
-                        />
+                        className="absolute left-0 top-0 bottom-0 w-2 rounded-l-xl"
+                        style={{ backgroundColor: config.color }}
+                      />
 
-                        {/* 主内容 */}
-                        <div className="pt-8 sm:pt-10 pb-5 sm:pb-6 px-4 sm:px-5">
-                          {/* 店铺名称 */}
+                      {/* 主内容 */}
+                      <div className="flex items-center p-4 sm:p-5 lg:p-6 pl-5 sm:pl-7 lg:pl-9">
+                        {/* 左侧：店铺名称 */}
+                        <div className="w-28 sm:w-32 lg:w-36 flex-shrink-0">
                           <h3
-                            className="text-xl sm:text-2xl lg:text-3xl font-bold text-center mb-4 sm:mb-5 transition-all duration-200 group-hover:scale-105"
+                            className="text-base sm:text-lg lg:text-xl font-bold transition-colors duration-200 group-hover:scale-105"
                             style={{
                               color: config.color === '#000000' ? '#1f2937' : config.color,
                             }}
                           >
                             {config.name}
                           </h3>
+                        </div>
 
-                          {/* 信息区域 */}
-                          <div className="space-y-3 sm:space-y-4">
-                            {/* 额度 */}
-                            <div className="flex items-center justify-center gap-2">
-                              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                              </svg>
-                              <span className="text-sm sm:text-base lg:text-lg font-bold" style={{ color: '#059669' }}>
-                                {config.minStock}-{config.maxStock}⚡
-                              </span>
-                            </div>
-
-                            {/* 折扣 */}
-                            <div className="flex items-center justify-center gap-2">
-                              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12 a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                              <span className="text-sm sm:text-base lg:text-lg font-bold" style={{ color: '#2563eb' }}>
-                                {(config.stockDiscount * 10).toFixed(1)}折
-                              </span>
-                            </div>
-                          </div>
-
-                          {/* 箭头指示 */}
-                          <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg opacity-60 group-hover:opacity-100"
-                               style={{ backgroundColor: `${config.color}25` }}>
-                            <svg
-                              className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-200 group-hover:translate-x-1"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}
-                            >
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        {/* 中间：提示信息（居中） */}
+                        <div className="flex-1 flex justify-center items-center space-x-2 sm:space-x-3 lg:space-x-4">
+                          <div className="flex items-center text-xs sm:text-sm lg:text-base" style={{ color: '#6b7280' }}>
+                            <svg className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                             </svg>
+                            <span className="font-bold text-sm sm:text-base lg:text-lg" style={{ color: '#059669' }}>
+                              {config.minStock}-{config.maxStock}⚡
+                            </span>
+                          </div>
+                          <div className="flex items-center text-xs sm:text-sm lg:text-base" style={{ color: '#6b7280' }}>
+                            <svg className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12 a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span className="font-bold text-sm sm:text-base lg:text-lg" style={{ color: '#2563eb' }}>
+                              {(config.stockDiscount * 10).toFixed(1)}折
+                            </span>
                           </div>
                         </div>
+
+                        {/* 右侧：箭头图标 */}
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                             style={{ backgroundColor: `${config.color}25` }}>
+                          <svg
+                            className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 transition-transform duration-200 group-hover:translate-x-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          </svg>
+                        </div>
                       </div>
-                    );
-                  })}
-                </div>
+
+                      {/* 底部装饰条 */}
+                      <div
+                        className="absolute bottom-0 left-0 right-0 h-1"
+                        style={{
+                          background: `linear-gradient(to right, transparent, ${config.color}, transparent)`
+                        }}
+                      />
+                    </div>
+                  );
+                })}
               </CardContent>
             </Card>
           </div>

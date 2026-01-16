@@ -1133,9 +1133,22 @@ export default function CloudShopSimulator() {
       {/* 顶部导航栏 */}
       <header className="bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100 sticky top-0 z-50">
         <div className="container mx-auto px-2 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 flex justify-between items-center">
-          <h1 className="text-base sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            云店
-          </h1>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <h1 className="text-base sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              云店
+            </h1>
+            {comparisonData.length > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleViewComparison}
+                className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200 h-7 sm:h-8 lg:h-9 px-1.5 sm:px-2 lg:px-2.5"
+              >
+                <span className="hidden sm:inline">对比 ({comparisonData.length})</span>
+                <span className="sm:hidden">对比{comparisonData.length}</span>
+              </Button>
+            )}
+          </div>
           <div className="flex items-center gap-1 sm:gap-2 lg:gap-3">
             <Button
               variant="outline"
@@ -1162,17 +1175,6 @@ export default function CloudShopSimulator() {
             >
               智能推荐
             </Button>
-            {comparisonData.length > 0 && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleViewComparison}
-                className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
-              >
-                <span className="hidden sm:inline">对比 ({comparisonData.length})</span>
-                <span className="sm:hidden">对比{comparisonData.length}</span>
-              </Button>
-            )}
             <Button
               variant="outline"
               size="sm"

@@ -1188,38 +1188,41 @@ function CloudShopSimulator() {
                 variant="outline"
                 size="sm"
                 onClick={handleViewComparison}
-                className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200 h-7 sm:h-8 lg:h-9 px-1.5 sm:px-2 lg:px-2.5"
+                className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-2.5"
               >
                 <span className="hidden sm:inline">对比 ({comparisonData.length})</span>
                 <span className="sm:hidden">对比{comparisonData.length}</span>
               </Button>
             )}
           </div>
-          <div className="flex items-center gap-1 sm:gap-2 lg:gap-3">
+          <div className="flex items-center gap-0.5 sm:gap-2 lg:gap-3">
             {/* 移动端隐藏进入平台，通过其他入口访问 */}
             <Button
               variant="outline"
               size="sm"
               onClick={handleOpenPlatform}
-              className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-green-300 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 text-green-700 font-semibold h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-3"
+              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-green-300 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 text-green-700 font-semibold h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-3"
             >
-              进入平台
+              <span className="hidden sm:inline">进入平台</span>
+              <span className="sm:hidden">平台</span>
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={() => setCurrentView('recommendation')}
-              className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-purple-300 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 text-purple-700 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
+              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-purple-300 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 text-purple-700 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
             >
-              智能推荐
+              <span className="hidden sm:inline">智能推荐</span>
+              <span className="sm:hidden">推荐</span>
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={() => setCurrentView('shopLevels')}
-              className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-orange-300 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 text-orange-700 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
+              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-orange-300 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 text-orange-700 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
             >
-              店铺等级
+              <span className="hidden sm:inline">店铺等级</span>
+              <span className="sm:hidden">等级</span>
             </Button>
             <Button
               variant="outline"

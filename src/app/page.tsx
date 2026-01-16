@@ -1783,7 +1783,17 @@ function CloudShopSimulator() {
                 <CardTitle className="text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   {levelConfig.name}详情
                 </CardTitle>
-                <div className="w-10 sm:w-12" />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setShowShareModal(true)}
+                  className="active:scale-90 transition-all duration-200 hover:bg-purple-50 hover:text-purple-600 rounded-full w-10 h-10 sm:w-12 sm:h-12"
+                  title="分享"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                  </svg>
+                </Button>
               </div>
             </CardHeader>
             <CardContent className="space-y-4 sm:space-y-5 lg:space-y-6 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-6">
@@ -1847,12 +1857,6 @@ function CloudShopSimulator() {
                   onClick={handleViewSalesDetails}
                 >
                   查看销售详情
-                </Button>
-                <Button
-                  className="flex-1 h-10 sm:h-12 lg:h-14 text-sm sm:text-base active:scale-95 transition-all duration-200 hover:shadow-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                  onClick={() => setShowShareModal(true)}
-                >
-                  分享
                 </Button>
               </div>
 

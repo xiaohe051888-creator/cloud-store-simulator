@@ -1190,8 +1190,7 @@ function CloudShopSimulator() {
                 onClick={handleViewComparison}
                 className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-2.5"
               >
-                <span className="hidden sm:inline">对比 ({comparisonData.length})</span>
-                <span className="sm:hidden">对比{comparisonData.length}</span>
+                对比 ({comparisonData.length})
               </Button>
             )}
           </div>
@@ -1202,8 +1201,7 @@ function CloudShopSimulator() {
               onClick={handleOpenPlatform}
               className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-green-300 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 text-green-700 font-semibold h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-3"
             >
-              <span className="hidden sm:inline">进入平台</span>
-              <span className="sm:hidden">平台</span>
+              进入平台
             </Button>
             <Button
               variant="outline"
@@ -1211,8 +1209,7 @@ function CloudShopSimulator() {
               onClick={() => setCurrentView('recommendation')}
               className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-purple-300 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 text-purple-700 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
             >
-              <span className="hidden sm:inline">智能推荐</span>
-              <span className="sm:hidden">推荐</span>
+              智能推荐
             </Button>
             <Button
               variant="outline"
@@ -1220,8 +1217,7 @@ function CloudShopSimulator() {
               onClick={() => setCurrentView('shopLevels')}
               className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-orange-300 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 text-orange-700 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
             >
-              <span className="hidden sm:inline">店铺等级</span>
-              <span className="sm:hidden">等级</span>
+              店铺等级
             </Button>
             <Button
               variant="outline"
@@ -1229,8 +1225,7 @@ function CloudShopSimulator() {
               onClick={handleGoHome}
               className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-gray-300 bg-gradient-to-r from-gray-50 to-slate-50 border-gray-200 text-gray-700 font-semibold h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-3"
             >
-              <span className="hidden sm:inline">回到首页</span>
-              <span className="sm:hidden">首页</span>
+              回到首页
             </Button>
           </div>
         </div>

@@ -5,7 +5,7 @@ import html2canvas from 'html2canvas';
 import { QRCodeSVG } from 'qrcode.react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Copy, Download, Share2, MessageCircle, X } from 'lucide-react';
+import { Download, Share2, MessageCircle, X } from 'lucide-react';
 
 interface ShareData {
   shopLevel: string;
@@ -44,18 +44,6 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
 
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
     return `${baseUrl}?${params.toString()}`;
-  };
-
-  // 复制链接
-  const handleCopyLink = async () => {
-    const url = generateShareUrl();
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      console.error('Failed to copy:', error);
-    }
   };
 
   // 分享链接
@@ -215,16 +203,7 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
           </div>
 
           {/* 操作按钮 */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <Button
-              onClick={handleCopyLink}
-              variant="outline"
-              className="flex items-center justify-center gap-2 h-12"
-            >
-              <Copy className="h-4 w-4" />
-              {copied ? '已复制' : '复制链接'}
-            </Button>
-
+          <div className="grid grid-cols-2 gap-3">
             <Button
               onClick={handleDownloadImage}
               variant="outline"
@@ -250,7 +229,7 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
                 className="flex items-center justify-center gap-2 h-12 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700"
               >
                 <MessageCircle className="h-4 w-4" />
-                分享到微信
+                {copied ? '已复制，请粘贴到微信' : '分享到微信'}
               </Button>
             )}
           </div>

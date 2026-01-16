@@ -1865,7 +1865,9 @@ export default function CloudShopSimulator() {
                         {salesData.reduce((sum, s) => sum + s.amount, 0)}⚡
                       </TableCell>
                       <TableCell className="text-center font-bold text-blue-700 hidden sm:table-cell">-</TableCell>
-                      <TableCell className="text-center font-bold text-blue-700 hidden sm:table-cell">-</TableCell>
+                      <TableCell className="text-center font-bold text-blue-700 hidden sm:table-cell">
+                        {salesData.reduce((sum, s) => sum + s.settlementAmount, 0).toFixed(2)}元
+                      </TableCell>
                       <TableCell className="text-center font-bold text-blue-700">
                         {salesData.reduce((sum, s) => sum + s.profit, 0).toFixed(2)}元
                       </TableCell>

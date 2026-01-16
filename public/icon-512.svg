@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景渐变 -->
+  <defs>
+    <linearGradient id="bg-gradient-512" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9333ea;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- 圆角矩形背景 -->
+  <rect width="512" height="512" rx="102.4" ry="102.4" fill="url(#bg-gradient-512)"/>
+
+  <!-- 云朵图标 -->
+  <g transform="translate(76.8, 76.8) scale(3.5839999999999996)">
+    <!-- 主云朵形状 -->
+    <path d="M50 65 C35 65 25 55 25 40 C25 25 35 15 50 15 C55 5 70 5 80 15 C90 15 95 25 95 35 C105 40 105 55 95 60 C95 65 80 70 50 65" fill="white" opacity="0.95"/>
+
+    <!-- 简化的云朵形状 -->
+    <ellipse cx="45" cy="45" rx="25" ry="20" fill="white" opacity="0.9"/>
+    <ellipse cx="65" cy="42" rx="20" ry="18" fill="white" opacity="0.9"/>
+    <ellipse cx="55" cy="38" rx="18" ry="15" fill="white" opacity="0.9"/>
+  </g>
+
+  <!-- 店铺/闪电图标 -->
+  <g transform="translate(179.2, 179.2) scale(1.536)">
+    <polygon points="50,5 20,60 45,60 35,95 80,35 55,35" fill="#fbbf24" stroke="white" stroke-width="4"/>
+  </g>
+
+  <!-- 文字：云店 -->
+  <text x="256" y="435.2" 
+        text-anchor="middle" 
+        font-family="system-ui, -apple-system, sans-serif" 
+        font-size="61.44" 
+        font-weight="bold" 
+        fill="white">云店</text>
+</svg>

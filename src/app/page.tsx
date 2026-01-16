@@ -1158,7 +1158,7 @@ export default function CloudShopSimulator() {
               variant="outline"
               size="sm"
               onClick={() => setCurrentView('recommendation')}
-              className="sm:hidden active:scale-95 transition-all duration-200 hover:shadow-md bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 h-7 px-1.5"
+              className="sm:hidden active:scale-95 transition-all duration-200 hover:shadow-md bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 h-8 px-1.5"
             >
               智能推荐
             </Button>
@@ -1167,7 +1167,7 @@ export default function CloudShopSimulator() {
                 variant="outline"
                 size="sm"
                 onClick={handleViewComparison}
-                className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
+                className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
               >
                 <span className="hidden sm:inline">对比 ({comparisonData.length})</span>
                 <span className="sm:hidden">对比{comparisonData.length}</span>
@@ -1177,7 +1177,7 @@ export default function CloudShopSimulator() {
               variant="outline"
               size="sm"
               onClick={() => setCurrentView('shopLevels')}
-              className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
+              className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-orange-300 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
             >
               店铺等级
             </Button>
@@ -1185,7 +1185,7 @@ export default function CloudShopSimulator() {
               variant="outline"
               size="sm"
               onClick={() => setCurrentView('shopLevels')}
-              className="sm:hidden active:scale-95 transition-all duration-200 hover:shadow-md bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 h-7 px-1.5"
+              className="sm:hidden active:scale-95 transition-all duration-200 hover:shadow-md bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 h-8 px-1.5"
             >
               店铺等级
             </Button>
@@ -1193,7 +1193,7 @@ export default function CloudShopSimulator() {
               variant="outline"
               size="sm"
               onClick={handleGoHome}
-              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-3"
+              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-gray-300 bg-gradient-to-r from-gray-50 to-slate-50 border-gray-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-3"
             >
               <span className="hidden sm:inline">回到首页</span>
               <span className="sm:hidden">回到首页</span>

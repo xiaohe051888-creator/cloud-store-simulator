@@ -64,19 +64,6 @@ export default function CloudShopSimulator() {
   const [touchStart, setTouchStart] = useState<number>(0);
   const [touchEnd, setTouchEnd] = useState<number>(0);
 
-  // 处理横向滚动
-  const handleScrollLeft = () => {
-    if (salesDetailsScrollRef.current) {
-      salesDetailsScrollRef.current.scrollLeft -= 200;
-    }
-  };
-
-  const handleScrollRight = () => {
-    if (salesDetailsScrollRef.current) {
-      salesDetailsScrollRef.current.scrollLeft += 200;
-    }
-  };
-
   // 触摸滑动处理
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
@@ -1835,32 +1822,14 @@ export default function CloudShopSimulator() {
         {currentView === 'salesDetails' && (
           <Card className="max-w-3xl mx-auto w-full bg-white/90 backdrop-blur-lg animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
             <CardHeader className="pb-4 pt-6 px-6">
-              <div className="flex items-center justify-between gap-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={handleScrollLeft}
-                  className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 flex-shrink-0 bg-blue-50 border-2 border-blue-200"
-                  title="向左滚动"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
+              <div className="flex items-center justify-between">
+                <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
+                  <span className="text-2xl font-bold">←</span>
                 </Button>
                 <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   销售详情
                 </CardTitle>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={handleScrollRight}
-                  className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 flex-shrink-0 bg-blue-50 border-2 border-blue-200"
-                  title="向右滚动"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Button>
+                <div className="w-12" />
               </div>
             </CardHeader>
             <CardContent className="px-6 pb-6">
@@ -1932,15 +1901,6 @@ export default function CloudShopSimulator() {
                     {salesData.length}天
                   </p>
                 </div>
-              </div>
-
-              <div className="mt-6 flex justify-center">
-                <Button
-                  onClick={handleBackToLevelDetails}
-                  className="w-full sm:w-auto h-11 px-8 text-base font-semibold bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
-                >
-                  返回等级详情
-                </Button>
               </div>
             </CardContent>
           </Card>

@@ -21,7 +21,6 @@ export default function WeChatLinkGuide({ isVisible, onClose }: WeChatLinkGuideP
   return (
     <div
       className="fixed inset-0 z-[200] bg-black/80 backdrop-blur-sm animate-in fade-in-0 duration-300"
-      onClick={onClose}
     >
       <div className="relative h-full w-full">
         {/* 右上角箭头指示器 */}
@@ -141,7 +140,7 @@ export default function WeChatLinkGuide({ isVisible, onClose }: WeChatLinkGuideP
             {/* 底部提示 */}
             <div className="mt-6 pt-4 border-t border-gray-200">
               <p className="text-center text-xs text-gray-400">
-                点击任意位置关闭此提示
+                点击右上角关闭此提示
               </p>
             </div>
           </div>

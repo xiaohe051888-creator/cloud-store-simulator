@@ -1,11 +1,11 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import html2canvas from 'html2canvas';
 import { QRCodeSVG } from 'qrcode.react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Download, Share2, MessageCircle, X } from 'lucide-react';
+import { Download, Share2, MessageCircle, X, Copy } from 'lucide-react';
 
 interface ShareData {
   shopLevel: string;
@@ -26,6 +26,17 @@ interface ShareModalProps {
 export default function ShareModal({ isOpen, onClose, shareData }: ShareModalProps) {
   const [copied, setCopied] = useState(false);
   const shareCardRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // 检测是否移动端
+  useEffect(() => {
+    const checkMobile = () => {
+      const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+      const isMobileDevice = /android|iphone|ipad|ipod|windows phone|iemobile|blackberry/i.test(userAgent);
+      setIsMobile(isMobileDevice);
+    };
+    checkMobile();
+  }, []);
 
   // 检测是否在微信中
   const isWeChat = () => {
@@ -46,35 +57,31 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     return `${baseUrl}?${params.toString()}`;
   };
 
-  // 分享链接
-  const handleShareLink = async () => {
+  // 复制链接
+  const handleCopyLink = async () => {
     const url = generateShareUrl();
-    if (typeof navigator !== 'undefined' && 'share' in navigator) {
-      try {
-        await navigator.share({
-          title: '云店分享',
-          text: `我的云店：${shareData?.shopLevel}级店铺，总利润${shareData?.totalProfit.toFixed(2)}元`,
-          url,
-        });
-      } catch (error) {
-        console.error('Share failed:', error);
-      }
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error('Failed to copy:', error);
     }
   };
 
   // 分享到微信（在微信环境中显示引导）
-  const handleShareToWeChat = () => {
+  const handleShareToWeChat = async () => {
     const url = generateShareUrl();
-    // 先复制链接到剪贴板
-    navigator.clipboard.writeText(url).then(() => {
+    try {
+      await navigator.clipboard.writeText(url);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    }).catch((error) => {
+    } catch (error) {
       console.error('Failed to copy:', error);
-    });
+    }
 
-    // 显示引导信息（简单使用 alert，或者可以显示一个更友好的提示）
-    alert('链接已复制！\n\n在微信中分享步骤：\n1. 点击右上角 •••\n2. 选择发送给朋友\n3. 粘贴链接发送');
+    // 显示引导信息
+    alert('链接已复制！\n\n在微信中分享步骤：\n1. 点击右上角 •••\n2. 选择"发送给朋友"\n3. 在输入框中粘贴链接发送');
   };
 
   // 生成分享图片
@@ -204,33 +211,59 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
 
           {/* 操作按钮 */}
           <div className="grid grid-cols-2 gap-3">
-            <Button
-              onClick={handleDownloadImage}
-              variant="outline"
-              className="flex items-center justify-center gap-2 h-12"
-            >
-              <Download className="h-4 w-4" />
-              下载图片
-            </Button>
+            {/* 电脑端：下载图片 + 复制链接 */}
+            {!isMobile && (
+              <>
+                <Button
+                  onClick={handleDownloadImage}
+                  variant="outline"
+                  className="flex items-center justify-center gap-2 h-12"
+                >
+                  <Download className="h-4 w-4" />
+                  下载图片
+                </Button>
+                <Button
+                  onClick={handleCopyLink}
+                  variant="outline"
+                  className="flex items-center justify-center gap-2 h-12"
+                >
+                  <Copy className="h-4 w-4" />
+                  {copied ? '已复制' : '复制链接'}
+                </Button>
+              </>
+            )}
 
-            {typeof navigator !== 'undefined' && 'share' in navigator && (
+            {/* 移动端 + 微信：分享到微信 */}
+            {isMobile && isWeChat() && (
               <Button
-                onClick={handleShareLink}
-                className="flex items-center justify-center gap-2 h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                onClick={handleShareToWeChat}
+                className="flex items-center justify-center gap-2 h-12 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 col-span-2"
               >
-                <Share2 className="h-4 w-4" />
-                分享
+                <MessageCircle className="h-4 w-4" />
+                {copied ? '已复制，请在微信中粘贴发送' : '分享到微信'}
               </Button>
             )}
 
-            {!(typeof navigator !== 'undefined' && 'share' in navigator) && (
-              <Button
-                onClick={handleShareToWeChat}
-                className="flex items-center justify-center gap-2 h-12 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700"
-              >
-                <MessageCircle className="h-4 w-4" />
-                {copied ? '已复制，请粘贴到微信' : '分享到微信'}
-              </Button>
+            {/* 移动端 + 浏览器：下载图片 + 复制链接 */}
+            {isMobile && !isWeChat() && (
+              <>
+                <Button
+                  onClick={handleDownloadImage}
+                  variant="outline"
+                  className="flex items-center justify-center gap-2 h-12"
+                >
+                  <Download className="h-4 w-4" />
+                  下载图片
+                </Button>
+                <Button
+                  onClick={handleCopyLink}
+                  variant="outline"
+                  className="flex items-center justify-center gap-2 h-12"
+                >
+                  <Copy className="h-4 w-4" />
+                  {copied ? '已复制' : '复制链接'}
+                </Button>
+              </>
             )}
           </div>
         </CardContent>

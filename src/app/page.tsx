@@ -1196,28 +1196,20 @@ function CloudShopSimulator() {
             )}
           </div>
           <div className="flex items-center gap-1 sm:gap-2 lg:gap-3">
+            {/* 移动端隐藏进入平台，通过其他入口访问 */}
             <Button
               variant="outline"
               size="sm"
               onClick={handleOpenPlatform}
-              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-green-300 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 text-green-700 font-semibold h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-3"
+              className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-green-300 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 text-green-700 font-semibold h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-3"
             >
-              <span className="hidden sm:inline">进入平台</span>
-              <span className="sm:hidden">进入平台</span>
+              进入平台
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={() => setCurrentView('recommendation')}
-              className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-purple-300 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
-            >
-              智能推荐
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentView('recommendation')}
-              className="sm:hidden text-[10px] active:scale-95 transition-all duration-200 hover:shadow-md hover:border-purple-300 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 text-purple-700 h-8 px-1.5"
+              className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-purple-300 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 text-purple-700 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
             >
               智能推荐
             </Button>
@@ -1232,19 +1224,11 @@ function CloudShopSimulator() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setCurrentView('shopLevels')}
-              className="sm:hidden text-[10px] active:scale-95 transition-all duration-200 hover:shadow-md hover:border-orange-300 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 text-orange-700 h-8 px-1.5"
-            >
-              店铺等级
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
               onClick={handleGoHome}
-              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-gray-300 bg-gradient-to-r from-gray-50 to-slate-50 border-gray-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-3"
+              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-gray-300 bg-gradient-to-r from-gray-50 to-slate-50 border-gray-200 text-gray-700 font-semibold h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-3"
             >
               <span className="hidden sm:inline">回到首页</span>
-              <span className="sm:hidden">回到首页</span>
+              <span className="sm:hidden">首页</span>
             </Button>
           </div>
         </div>
@@ -1283,9 +1267,9 @@ function CloudShopSimulator() {
                       {/* 主内容 */}
                       <div className="flex items-center p-4 sm:p-5 lg:p-6 pl-5 sm:pl-7 lg:pl-9">
                         {/* 左侧：店铺名称 */}
-                        <div className="w-28 sm:w-32 lg:w-36 flex-shrink-0">
+                        <div className="w-20 sm:w-28 lg:w-32 md:w-32 lg:w-36 flex-shrink-0">
                           <h3
-                            className="text-base sm:text-lg lg:text-xl font-bold transition-colors duration-200 group-hover:scale-105"
+                            className="text-sm sm:text-base lg:text-xl font-bold transition-colors duration-200 group-hover:scale-105"
                             style={{
                               color: config.color === '#000000' ? '#1f2937' : config.color,
                             }}
@@ -1295,7 +1279,7 @@ function CloudShopSimulator() {
                         </div>
 
                         {/* 中间：提示信息（居中） */}
-                        <div className="flex-1 flex justify-center items-center space-x-2 sm:space-x-3 lg:space-x-4">
+                        <div className="hidden md:flex flex-1 justify-center items-center space-x-2 sm:space-x-3 lg:space-x-4">
                           <div className="flex items-center text-xs sm:text-sm lg:text-base" style={{ color: '#6b7280' }}>
                             <svg className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -1314,11 +1298,21 @@ function CloudShopSimulator() {
                           </div>
                         </div>
 
+                        {/* 移动端：简化信息 */}
+                        <div className="md:hidden flex flex-col space-y-1 flex-1 px-3">
+                          <div className="text-xs font-semibold" style={{ color: config.color === '#000000' ? '#1f2937' : config.color }}>
+                            {config.minStock}-{config.maxStock}⚡
+                          </div>
+                          <div className="text-xs text-blue-600 font-semibold">
+                            {(config.stockDiscount * 10).toFixed(1)}折
+                          </div>
+                        </div>
+
                         {/* 右侧：箭头图标 */}
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
                              style={{ backgroundColor: `${config.color}25` }}>
                           <svg
-                            className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 transition-transform duration-200 group-hover:translate-x-1"
+                            className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-7 transition-transform duration-200 group-hover:translate-x-1"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -1672,7 +1666,7 @@ function CloudShopSimulator() {
             </CardHeader>
             <CardContent className="space-y-4 sm:space-y-5 lg:space-y-6 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-6">
               <div className="space-y-1.5 sm:space-y-2">
-                <Label htmlFor="cloudBalance" className="text-sm sm:text-base font-semibold text-gray-800">
+                <Label htmlFor="cloudBalance" className="text-sm sm:text-base lg:text-lg font-semibold text-gray-800">
                   云店余额（店铺已有额度）
                 </Label>
                 <Input
@@ -1684,21 +1678,21 @@ function CloudShopSimulator() {
                   value={cloudBalanceInputValue}
                   onChange={(e) => handleCloudBalanceInputChange(e.target.value)}
                   onKeyDown={handleCloudBalanceKeyDown}
-                  className={`focus:ring-2 transition-all duration-200 h-12 sm:h-12 border-2 ${
+                  className={`focus:ring-2 transition-all duration-200 h-12 sm:h-13 lg:h-14 border-2 ${
                     cloudBalanceError
                       ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
                       : 'border-gray-300 focus:ring-blue-500/50 focus:border-blue-500'
                   } ${isCloudBalanceShaking ? 'animate-shake' : ''}`}
                 />
                 {cloudBalanceError && (
-                  <p className="text-[10px] sm:text-xs transition-colors duration-200 text-red-500 font-medium">
+                  <p className="text-xs sm:text-xs transition-colors duration-200 text-red-500 font-medium">
                     {cloudBalanceError}
                   </p>
                 )}
               </div>
 
               <div className="space-y-1.5 sm:space-y-2">
-                <Label htmlFor="stockAmount" className="text-sm sm:text-base font-semibold text-gray-800">
+                <Label htmlFor="stockAmount" className="text-sm sm:text-base lg:text-lg font-semibold text-gray-800">
                   进货额度（100的整倍数）
                 </Label>
                 <Input
@@ -1712,19 +1706,19 @@ function CloudShopSimulator() {
                   value={stockInputValue}
                   onChange={(e) => handleStockInputChange(e.target.value)}
                   onKeyDown={handleStockAmountKeyDown}
-                  className={`focus:ring-2 transition-all duration-200 h-12 sm:h-12 border-2 ${
+                  className={`focus:ring-2 transition-all duration-200 h-12 sm:h-13 lg:h-14 border-2 ${
                     stockError
                       ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
                       : 'border-gray-300 focus:ring-blue-500/50 focus:border-blue-500'
                   } ${isStockShaking ? 'animate-shake' : ''}`}
                 />
-                <p className={`text-[10px] sm:text-xs transition-colors duration-200 ${stockError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+                <p className={`text-xs sm:text-xs transition-colors duration-200 ${stockError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
                   {stockError || `进货额度范围：${levelConfig.minStock} - ${levelConfig.maxStock}电费`}
                 </p>
               </div>
 
               <div className="space-y-1.5 sm:space-y-2">
-                <Label htmlFor="maxBalance" className="text-sm sm:text-base font-semibold text-gray-800">
+                <Label htmlFor="maxBalance" className="text-sm sm:text-base lg:text-lg font-semibold text-gray-800">
                   云店历史最高余额
                 </Label>
                 <Input
@@ -1737,7 +1731,7 @@ function CloudShopSimulator() {
                   onChange={(e) => handleMaxBalanceInputChange(e.target.value)}
                   onKeyDown={handleMaxBalanceKeyDown}
                   disabled={isEditMaxBalance}
-                  className={`focus:ring-2 transition-all duration-200 h-12 sm:h-12 border-2 ${
+                  className={`focus:ring-2 transition-all duration-200 h-12 sm:h-13 lg:h-14 border-2 ${
                     maxBalanceError
                       ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
                       : 'border-gray-300 focus:ring-blue-500/50 focus:border-blue-500'
@@ -2034,7 +2028,69 @@ function CloudShopSimulator() {
                 </div>
               ) : (
                 <>
-                  <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+                  {/* 移动端：卡片式布局 */}
+                  <div className="sm:hidden space-y-3">
+                    {comparisonData.map((item) => {
+                      const levelConfig = shopLevelsConfig[item.level];
+                      const isMaxProfit = maxProfitId === item.id;
+                      const isCurrent = currentComparisonId === item.id;
+
+                      return (
+                        <div
+                          key={item.id}
+                          className={`rounded-xl border-2 transition-all duration-300 shadow-sm hover:shadow-md ${
+                            isCurrent ? 'bg-blue-50/50 border-blue-300' : 'bg-white border-gray-200'
+                          }`}
+                        >
+                          <div className="p-4">
+                            <div className="flex items-center justify-between mb-3">
+                              <h3 className="font-bold text-base" style={{ color: levelConfig.color }}>
+                                {item.levelName}
+                              </h3>
+                              {isMaxProfit && (
+                                <span className="bg-green-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold">
+                                  最高利润
+                                </span>
+                              )}
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-3 mb-3">
+                              <div className="bg-gray-50 p-2 rounded-lg">
+                                <p className="text-xs text-gray-500 mb-1">进货额度</p>
+                                <p className="text-sm font-bold text-gray-800">{item.stockAmount}⚡</p>
+                              </div>
+                              <div className="bg-gray-50 p-2 rounded-lg">
+                                <p className="text-xs text-gray-500 mb-1">完成天数</p>
+                                <p className="text-sm font-bold text-gray-800">{item.completionDays}天</p>
+                              </div>
+                              <div className="bg-gray-50 p-2 rounded-lg">
+                                <p className="text-xs text-gray-500 mb-1">投入成本</p>
+                                <p className="text-sm font-bold text-gray-800">{item.stockCost}元</p>
+                              </div>
+                              <div className={`p-2 rounded-lg ${isMaxProfit ? 'bg-green-50' : 'bg-gray-50'}`}>
+                                <p className="text-xs text-gray-500 mb-1">总利润</p>
+                                <p className={`text-base font-bold ${isMaxProfit ? 'text-green-600' : 'text-gray-800'}`}>
+                                  {item.totalProfit}元
+                                </p>
+                              </div>
+                            </div>
+
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              onClick={() => handleDeleteComparison(item.id)}
+                              className="w-full h-10 text-sm"
+                            >
+                              删除
+                            </Button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* 桌面端：表格布局 */}
+                  <div className="hidden sm:block overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
                     <Table>
                       <TableHeader>
                         <TableRow>

@@ -81,7 +81,7 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     }
 
     // 显示引导信息
-    alert('链接已复制！\n\n在微信中分享步骤：\n1. 点击右上角 •••\n2. 选择"发送给朋友"\n3. 在输入框中粘贴链接发送');
+    alert('链接已复制\n\n1.点击右上角的三个点\n2.选择转发给好友\n3.选择好友并发送');
   };
 
   // 生成分享图片

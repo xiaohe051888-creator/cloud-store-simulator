@@ -1,4 +1,4 @@
-const CACHE_NAME = 'yun-dian-v1';
+const CACHE_NAME = 'yun-dian-v2'; // 更新版本号触发更新
 const urlsToCache = [
   '/',
   '/manifest.json',
@@ -10,6 +10,9 @@ const urlsToCache = [
 
 // 安装 Service Worker
 self.addEventListener('install', (event) => {
+  // 立即跳过等待，让新的 Service Worker 立即激活
+  self.skipWaiting();
+
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => cache.addAll(urlsToCache))
@@ -23,13 +26,30 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
+          // 删除旧版本的缓存
           if (!cacheWhitelist.includes(cacheName)) {
+            console.log('Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
+    }).then(() => {
+      // 确保立即控制所有页面
+      return self.clients.claim();
     })
   );
+});
+
+// 监听消息
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  } else if (event.data && event.data.type === 'CHECK_UPDATE') {
+    // 检查更新
+    event.waitUntil(
+      self.update()
+    );
+  }
 });
 
 // 拦截请求
@@ -39,6 +59,14 @@ self.addEventListener('fetch', (event) => {
       .then((response) => {
         // 缓存命中，返回缓存的资源
         if (response) {
+          // 在后台更新缓存
+          fetch(event.request).then((fetchResponse) => {
+            if (fetchResponse && fetchResponse.status === 200) {
+              caches.open(CACHE_NAME).then((cache) => {
+                cache.put(event.request, fetchResponse);
+              });
+            }
+          });
           return response;
         }
         // 缓存未命中，发起网络请求

@@ -20,6 +20,8 @@ import {
 import { Badge } from '@/components/ui/badge';
 import WeChatLinkGuide from '@/components/wechat-link-guide';
 import ShareModal from '@/components/share-modal';
+import PWAInstallPrompt from '@/components/pwa-install-prompt';
+import PWAUpdatePrompt from '@/components/pwa-update-prompt';
 import { useShareParams } from '@/hooks/use-share-params';
 import {
   shopLevelsConfig,
@@ -1183,7 +1185,7 @@ function CloudShopSimulator() {
         <div className="container mx-auto px-2 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 flex justify-between items-center">
           <div className="flex items-center gap-2 sm:gap-3">
             <h1 className="text-base sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              云店
+              模拟器
             </h1>
             {comparisonData.length > 0 && (
               <Button
@@ -2479,6 +2481,12 @@ function CloudShopSimulator() {
           }}
         />
       )}
+
+      {/* PWA安装提示 */}
+      <PWAInstallPrompt />
+
+      {/* PWA更新提示 */}
+      <PWAUpdatePrompt />
     </div>
   );
 }

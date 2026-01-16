@@ -1217,7 +1217,7 @@ function CloudShopSimulator() {
               variant="outline"
               size="sm"
               onClick={() => setCurrentView('recommendation')}
-              className="sm:hidden active:scale-95 transition-all duration-200 hover:shadow-md bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 h-8 px-1.5"
+              className="sm:hidden text-[10px] active:scale-95 transition-all duration-200 hover:shadow-md hover:border-purple-300 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 text-purple-700 h-8 px-1.5"
             >
               智能推荐
             </Button>
@@ -1225,7 +1225,7 @@ function CloudShopSimulator() {
               variant="outline"
               size="sm"
               onClick={() => setCurrentView('shopLevels')}
-              className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-orange-300 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
+              className="hidden sm:flex text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-orange-300 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 text-orange-700 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
             >
               店铺等级
             </Button>
@@ -1233,7 +1233,7 @@ function CloudShopSimulator() {
               variant="outline"
               size="sm"
               onClick={() => setCurrentView('shopLevels')}
-              className="sm:hidden active:scale-95 transition-all duration-200 hover:shadow-md bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 h-8 px-1.5"
+              className="sm:hidden text-[10px] active:scale-95 transition-all duration-200 hover:shadow-md hover:border-orange-300 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 text-orange-700 h-8 px-1.5"
             >
               店铺等级
             </Button>

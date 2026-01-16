@@ -16,10 +16,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: '云店',
-    template: '%s | 云店',
+    default: '模拟器',
+    template: '%s | 模拟器',
   },
-  description: '云店 - 专业的店铺经营管理模拟工具，支持多种店铺等级，详细计算利润和结算周期。',
+  description: '模拟器 - 专业的店铺经营管理模拟工具，支持多种店铺等级，详细计算利润和结算周期。',
   keywords: [
     '扣子编程',
     'Coze Code',
@@ -70,6 +70,11 @@ export default function RootLayout({
         <link rel="icon" href="/icon-192.png" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+        {/* 缓存控制：HTML和JS不缓存，确保刷新即可看到最新版本 */}
+        <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta httpEquiv="Pragma" content="no-cache" />
+        <meta httpEquiv="Expires" content="0" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

@@ -1205,7 +1205,7 @@ export default function CloudShopSimulator() {
       </header>
 
       {/* 主要内容区域 */}
-      <main className="container mx-auto px-2 sm:px-4 lg:px-6 py-1 sm:py-2 lg:py-3 min-h-[calc(100vh-56px)]">
+      <main className="container mx-auto px-2 sm:px-4 lg:px-6 py-3 sm:py-4 lg:py-6 min-h-[calc(100vh-56px)]">
         {/* 店铺选择界面 */}
         {currentView === 'shopSelection' && (
           <div className="w-full">
@@ -1361,10 +1361,10 @@ export default function CloudShopSimulator() {
                       }
                     }}
                     onKeyDown={handleRecommendBudgetKeyDown}
-                    className={`focus:ring-2 transition-all duration-200 h-12 ${
+                    className={`focus:ring-2 transition-all duration-200 h-12 border-2 ${
                       budgetError
                         ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
-                        : 'focus:ring-purple-500/50 focus:border-purple-500'
+                        : 'border-gray-300 focus:ring-purple-500/50 focus:border-purple-500'
                     } ${isBudgetShaking ? 'animate-shake' : ''}`}
                   />
                   <p className={`text-sm transition-colors duration-200 ${budgetError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
@@ -1400,10 +1400,10 @@ export default function CloudShopSimulator() {
                       }
                     }}
                     onKeyDown={handleRecommendProfitKeyDown}
-                    className={`focus:ring-2 transition-all duration-200 h-12 ${
+                    className={`focus:ring-2 transition-all duration-200 h-12 border-2 ${
                       profitError
                         ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
-                        : 'focus:ring-blue-500/50 focus:border-blue-500'
+                        : 'border-gray-300 focus:ring-purple-500/50 focus:border-purple-500'
                     } ${isProfitShaking ? 'animate-shake' : ''}`}
                   />
                   <p className={`text-sm transition-colors duration-200 ${profitError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
@@ -1438,10 +1438,10 @@ export default function CloudShopSimulator() {
                       }
                     }}
                     onKeyDown={handleRecommendPeriodKeyDown}
-                    className={`focus:ring-2 transition-all duration-200 h-12 ${
+                    className={`focus:ring-2 transition-all duration-200 h-12 border-2 ${
                       periodError
                         ? 'border-red-500 ring-red-500 focus:ring-red-500/50 focus:border-red-500'
-                        : 'focus:ring-blue-500/50 focus:border-blue-500'
+                        : 'border-gray-300 focus:ring-purple-500/50 focus:border-purple-500'
                     } ${isPeriodShaking ? 'animate-shake' : ''}`}
                   />
                   <p className={`text-sm transition-colors duration-200 ${periodError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>

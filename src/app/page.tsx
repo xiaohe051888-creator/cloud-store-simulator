@@ -1826,65 +1826,113 @@ export default function CloudShopSimulator() {
               </div>
             </CardHeader>
             <CardContent className="px-6 pb-6">
-              <div
-                ref={salesDetailsScrollRef}
-                className="overflow-x-auto -mx-6 px-6 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent scroll-smooth"
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-              >
-                <Table>
-                  <TableHeader>
-                    <TableRow className="bg-gradient-to-r from-blue-50 to-purple-50 hover:bg-blue-50/50">
-                      <TableHead className="text-center font-semibold text-gray-700">销售日期</TableHead>
-                      <TableHead className="text-center font-semibold text-gray-700">销售额度</TableHead>
-                      <TableHead className="text-center font-semibold text-gray-700 hidden sm:table-cell">结算时间</TableHead>
-                      <TableHead className="text-center font-semibold text-gray-700 hidden sm:table-cell">结算金额</TableHead>
-                      <TableHead className="text-center font-semibold text-gray-700">利润</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {salesData.map((sale, index) => (
-                      <TableRow key={index} className="hover:bg-blue-50/30 transition-colors duration-200">
-                        <TableCell className="text-center font-medium">{sale.date}</TableCell>
-                        <TableCell className="text-center font-semibold text-gray-800">{sale.amount}⚡</TableCell>
-                        <TableCell className="text-center text-gray-600 hidden sm:table-cell">{sale.settlementDate}</TableCell>
-                        <TableCell className="text-center text-gray-800 font-medium hidden sm:table-cell">
-                          {sale.settlementAmount.toFixed(2)}元
-                        </TableCell>
-                        <TableCell className="text-center text-green-600 font-semibold">
-                          {sale.profit.toFixed(2)}元
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                  <TableFooter className="bg-gradient-to-r from-blue-100 to-purple-100">
-                    <TableRow>
-                      <TableCell className="text-center font-bold text-blue-700">合计</TableCell>
-                      <TableCell className="text-center font-bold text-blue-700">
+              {/* 移动端：卡片式布局 */}
+              <div className="sm:hidden space-y-3">
+                {salesData.map((sale, index) => (
+                  <div
+                    key={index}
+                    className="bg-gradient-to-br from-white to-gray-50 p-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100"
+                  >
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1">
+                        <p className="text-xs text-gray-500">销售日期</p>
+                        <p className="text-sm font-semibold text-gray-800">{sale.date}</p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-xs text-gray-500">销售额度</p>
+                        <p className="text-sm font-bold text-gray-800">{sale.amount}⚡</p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-xs text-gray-500">结算时间</p>
+                        <p className="text-sm font-medium text-gray-600">{sale.settlementDate}</p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-xs text-gray-500">结算金额</p>
+                        <p className="text-sm font-bold text-gray-800">{sale.settlementAmount.toFixed(2)}元</p>
+                      </div>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-gray-100">
+                      <div className="flex justify-between items-center">
+                        <p className="text-xs text-gray-500">利润</p>
+                        <p className="text-base font-bold text-green-600">{sale.profit.toFixed(2)}元</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                {/* 移动端合计 */}
+                <div className="bg-gradient-to-r from-blue-100 to-purple-100 p-4 rounded-xl">
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <p className="text-xs text-gray-600">合计销售额度</p>
+                      <p className="text-sm font-bold text-blue-700">
                         {salesData.reduce((sum, s) => sum + s.amount, 0)}⚡
-                      </TableCell>
-                      <TableCell className="text-center font-bold text-blue-700 hidden sm:table-cell">-</TableCell>
-                      <TableCell className="text-center font-bold text-blue-700 hidden sm:table-cell">
+                      </p>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <p className="text-xs text-gray-600">合计结算金额</p>
+                      <p className="text-sm font-bold text-blue-700">
                         {salesData.reduce((sum, s) => sum + s.settlementAmount, 0).toFixed(2)}元
-                      </TableCell>
-                      <TableCell className="text-center font-bold text-blue-700">
+                      </p>
+                    </div>
+                    <div className="flex justify-between items-center pt-2 border-t border-blue-200">
+                      <p className="text-xs text-gray-600">合计利润</p>
+                      <p className="text-base font-bold text-green-600">
                         {salesData.reduce((sum, s) => sum + s.profit, 0).toFixed(2)}元
-                      </TableCell>
-                    </TableRow>
-                  </TableFooter>
-                </Table>
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              {/* 移动端滑动提示 */}
-              <div className="mt-4 flex items-center justify-center gap-2 text-sm text-gray-500 sm:hidden">
-                <svg className="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                </svg>
-                <span>左右滑动查看更多</span>
-                <svg className="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+              {/* 桌面端：表格布局 */}
+              <div className="hidden sm:block">
+                <div
+                  ref={salesDetailsScrollRef}
+                  className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent scroll-smooth"
+                >
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="bg-gradient-to-r from-blue-50 to-purple-50 hover:bg-blue-50/50">
+                        <TableHead className="text-center font-semibold text-gray-700">销售日期</TableHead>
+                        <TableHead className="text-center font-semibold text-gray-700">销售额度</TableHead>
+                        <TableHead className="text-center font-semibold text-gray-700">结算时间</TableHead>
+                        <TableHead className="text-center font-semibold text-gray-700">结算金额</TableHead>
+                        <TableHead className="text-center font-semibold text-gray-700">利润</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {salesData.map((sale, index) => (
+                        <TableRow key={index} className="hover:bg-blue-50/30 transition-colors duration-200">
+                          <TableCell className="text-center font-medium">{sale.date}</TableCell>
+                          <TableCell className="text-center font-semibold text-gray-800">{sale.amount}⚡</TableCell>
+                          <TableCell className="text-center text-gray-600">{sale.settlementDate}</TableCell>
+                          <TableCell className="text-center text-gray-800 font-medium">
+                            {sale.settlementAmount.toFixed(2)}元
+                          </TableCell>
+                          <TableCell className="text-center text-green-600 font-semibold">
+                            {sale.profit.toFixed(2)}元
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                    <TableFooter className="bg-gradient-to-r from-blue-100 to-purple-100">
+                      <TableRow>
+                        <TableCell className="text-center font-bold text-blue-700">合计</TableCell>
+                        <TableCell className="text-center font-bold text-blue-700">
+                          {salesData.reduce((sum, s) => sum + s.amount, 0)}⚡
+                        </TableCell>
+                        <TableCell className="text-center font-bold text-blue-700">-</TableCell>
+                        <TableCell className="text-center font-bold text-blue-700">
+                          {salesData.reduce((sum, s) => sum + s.settlementAmount, 0).toFixed(2)}元
+                        </TableCell>
+                        <TableCell className="text-center font-bold text-blue-700">
+                          {salesData.reduce((sum, s) => sum + s.profit, 0).toFixed(2)}元
+                        </TableCell>
+                      </TableRow>
+                    </TableFooter>
+                  </Table>
+                </div>
               </div>
 
               <div className="mt-6 bg-gradient-to-r from-blue-50 to-purple-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">

@@ -93,14 +93,130 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
         scale: 2,
         backgroundColor: '#f8fafc',
         logging: false,
+        useCORS: true,
+        allowTaint: true,
       });
 
-      const link = document.createElement('a');
-      link.download = `云店分享-${shareData.shopLevel}-${Date.now()}.png`;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
+      // 转换为 blob
+      canvas.toBlob(async (blob) => {
+        if (!blob) {
+          console.error('Failed to generate blob');
+          alert('生成图片失败，请重试');
+          return;
+        }
+
+        // 生成文件名
+        const fileName = `模拟器分享-${shareData.shopLevel}-${Date.now()}.png`;
+
+        // 检测是否为移动端或PWA环境
+        const isPWA = window.matchMedia('(display-mode: standalone)').matches ||
+                     (window.navigator as any).standalone === true;
+
+        if (isMobile || isPWA) {
+          // 移动端或PWA环境：使用兼容方案
+          try {
+            // 尝试使用 Web Share API (支持的浏览器)
+            if (navigator.share && navigator.canShare) {
+              const file = new File([blob], fileName, { type: 'image/png' });
+              if (navigator.canShare({ files: [file] })) {
+                await navigator.share({
+                  files: [file],
+                  title: '模拟器分享',
+                  text: `分享我的店铺经营数据，等级：${shareData.shopLevel}`,
+                });
+                return;
+              }
+            }
+
+            // 不支持 Web Share API，使用 Blob URL 方案
+            const blobUrl = URL.createObjectURL(blob);
+
+            // 尝试创建下载链接
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = fileName;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+
+            try {
+              link.click();
+            } catch (e) {
+              console.log('Download click failed, showing image');
+              // 如果点击失败，显示图片让用户长按保存
+              const imgWindow = window.open('', '_blank');
+              if (imgWindow) {
+                imgWindow.document.write(`
+                  <!DOCTYPE html>
+                  <html>
+                  <head>
+                    <title>保存图片</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <style>
+                      body { margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background: #f0f0f0; }
+                      img { max-width: 100%; height: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin: 20px; }
+                      p { text-align: center; color: #666; font-size: 14px; margin: 10px; }
+                      button { padding: 10px 20px; margin: 10px; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
+                    </style>
+                  </head>
+                  <body>
+                    <p>长按图片保存到相册</p>
+                    <img src="${blobUrl}" alt="分享图片" />
+                    <button onclick="window.close()">关闭</button>
+                  </body>
+                  </html>
+                `);
+              } else {
+                alert('请长按图片保存，或截图分享');
+              }
+            } finally {
+              document.body.removeChild(link);
+              // 延迟释放 URL
+              setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+            }
+
+          } catch (error) {
+            console.error('Mobile download failed:', error);
+            alert('请长按图片保存，或截图分享');
+          }
+        } else {
+          // 桌面端：使用 File System Access API 或传统下载方式
+          try {
+            // 尝试使用 File System Access API (现代浏览器)
+            if ('showSaveFilePicker' in window) {
+              const fileHandle = await (window as any).showSaveFilePicker({
+                suggestedName: fileName,
+                types: [{
+                  description: 'PNG Image',
+                  accept: { 'image/png': ['.png'] },
+                }],
+              });
+              const writable = await fileHandle.createWritable();
+              await writable.write(blob);
+              await writable.close();
+              return;
+            }
+
+            // 回退到传统下载方式
+            const blobUrl = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = fileName;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+
+          } catch (error) {
+            console.error('Desktop download failed:', error);
+            alert('下载失败，请重试');
+          }
+        }
+      }, 'image/png');
+
     } catch (error) {
       console.error('Failed to generate image:', error);
+      alert('生成图片失败，请重试');
     }
   };
 

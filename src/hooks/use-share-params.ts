@@ -12,6 +12,8 @@ export interface ShareParams {
   profit?: number;
 }
 
+const SHARE_PARAMS_STORAGE_KEY = 'cloudshop-share-params';
+
 export function useShareParams() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -26,20 +28,47 @@ export function useShareParams() {
     const profit = searchParams.get('profit');
 
     if (level || stock || balance || max || profit) {
-      setShareParams({
+      const params = {
         level: level || undefined,
         stock: stock ? parseInt(stock) : undefined,
         balance: balance ? parseInt(balance) : undefined,
         max: max ? parseInt(max) : undefined,
         profit: profit ? parseFloat(profit) : undefined,
-      });
+      };
+
+      setShareParams(params);
       setIsFromShare(true);
+
+      // 保存到 localStorage，确保 PWA 启动时也能获取到参数
+      localStorage.setItem(SHARE_PARAMS_STORAGE_KEY, JSON.stringify(params));
 
       // 清除 URL 参数，保持 URL 干净
       const cleanUrl = window.location.pathname;
       router.replace(cleanUrl);
+    } else {
+      // 如果 URL 中没有参数，尝试从 localStorage 读取（PWA 场景）
+      const storedParams = localStorage.getItem(SHARE_PARAMS_STORAGE_KEY);
+      if (storedParams) {
+        try {
+          const params = JSON.parse(storedParams);
+          // 只有当参数有效时才设置
+          if (params.level || params.stock || params.balance || params.max || params.profit) {
+            setShareParams(params);
+            setIsFromShare(true);
+          }
+        } catch (e) {
+          console.error('Failed to parse stored share params:', e);
+        }
+      }
     }
   }, [searchParams, router]);
 
-  return { shareParams, isFromShare };
+  // 清除存储的分享参数（当用户开始新的操作时）
+  const clearShareParams = () => {
+    localStorage.removeItem(SHARE_PARAMS_STORAGE_KEY);
+    setIsFromShare(false);
+    setShareParams({});
+  };
+
+  return { shareParams, isFromShare, clearShareParams };
 }

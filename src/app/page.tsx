@@ -128,13 +128,14 @@ function CloudShopSimulator() {
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
 
   // 获取分享参数
-  const { shareParams, isFromShare } = useShareParams();
+  const { shareParams, isFromShare, clearShareParams } = useShareParams();
 
   // 获取当前等级配置
   const levelConfig = currentLevel ? shopLevelsConfig[currentLevel] : null;
 
   // 选择店铺等级
   const handleSelectLevel = (level: ShopLevel) => {
+    clearShareParams(); // 清除分享参数，避免影响后续操作
     setCurrentLevel(level);
     setCurrentView('stockInput');
     setStockInputValue('');
@@ -157,6 +158,7 @@ function CloudShopSimulator() {
 
   // 返回首页（重置所有状态）
   const handleGoHome = () => {
+    clearShareParams(); // 清除分享参数
     setCurrentLevel(null);
     setStockAmount(0);
     setCloudBalance(0);

@@ -1,8 +1,8 @@
 {
-  "name": "云店",
-  "short_name": "云店",
-  "description": "云店 - 专业的店铺经营管理模拟工具，支持多种店铺等级，详细计算利润和结算周期。",
-  "start_url": "/",
+  "name": "模拟器",
+  "short_name": "模拟器",
+  "description": "模拟器 - 专业的店铺经营管理模拟工具，支持多种店铺等级，详细计算利润和结算周期。",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#2563eb",

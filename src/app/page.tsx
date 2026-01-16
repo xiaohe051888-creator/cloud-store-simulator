@@ -1203,17 +1203,17 @@ export default function CloudShopSimulator() {
       </header>
 
       {/* 主要内容区域 */}
-      <main className="container mx-auto px-2 sm:px-4 lg:px-6 py-2 sm:py-3 lg:py-4 min-h-[calc(100vh-56px)]">
+      <main className="container mx-auto px-2 sm:px-4 lg:px-6 py-1 sm:py-2 lg:py-3 min-h-[calc(100vh-56px)]">
         {/* 店铺选择界面 */}
         {currentView === 'shopSelection' && (
           <div className="w-full">
-            <Card className="w-full bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0 animate-in fade-in-0 slide-in-from-top-4 duration-300">
-              <CardHeader className="pb-3 sm:pb-4 pt-3 sm:pt-4 lg:pt-5 px-4 sm:px-6 lg:px-8">
+            <Card className="w-full bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0 animate-in fade-in-0 slide-in-from-top-2 duration-300">
+              <CardHeader className="pb-2.5 sm:pb-3 pt-2 sm:pt-2.5 lg:pt-3 px-4 sm:px-6 lg:px-8">
                 <CardTitle className="text-lg sm:text-xl lg:text-2xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
                   请选择你的店铺等级
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 sm:space-y-4 px-3 sm:px-4 lg:px-6 pb-5 sm:pb-6 lg:pb-8">
+              <CardContent className="space-y-2.5 sm:space-y-3 lg:space-y-4 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-5 lg:pb-7">
                 {(Object.keys(shopLevelsConfig) as ShopLevel[]).map((level) => {
                   const config = shopLevelsConfig[level];
                   return (

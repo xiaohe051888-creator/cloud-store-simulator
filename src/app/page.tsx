@@ -1470,12 +1470,12 @@ function CloudShopSimulator() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2.5 sm:space-y-3 lg:space-y-4 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-5 lg:pb-7">
-                {(Object.keys(shopLevelsConfig) as ShopLevel[]).map((level) => {
-                  const config = shopLevelsConfig[level];
+                {Object.entries(shopLevelsConfig).map(([level, config]) => {
+                  if (!config || !level) return null;
                   return (
                     <div
                       key={level}
-                      onClick={() => handleSelectLevel(level)}
+                      onClick={() => handleSelectLevel(level as ShopLevel)}
                       className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer bg-white"
                       style={{
                         borderColor: config.color,

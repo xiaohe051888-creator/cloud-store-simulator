@@ -16,10 +16,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: '模拟器',
-    template: '%s | 模拟器',
+    default: '云店模拟器',
+    template: '%s | 云店模拟器',
   },
-  description: '模拟器 - 专业的店铺经营管理模拟工具，支持多种店铺等级，详细计算利润和结算周期。',
+  description: '云店模拟器 - 专业的店铺经营管理模拟工具，支持多种店铺等级，详细计算利润和结算周期。',
   keywords: [
     '扣子编程',
     'Coze Code',

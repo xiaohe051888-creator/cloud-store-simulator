@@ -42,6 +42,7 @@ function CloudShopSimulator() {
   const [cloudBalance, setCloudBalance] = useState<number>(0);      // 云店余额
   const [maxBalance, setMaxBalance] = useState<number>(0);           // 历史最高余额
   const [currentView, setCurrentView] = useState<ViewType>('shopSelection');
+  const [shopSelectionSubView, setShopSelectionSubView] = useState<'menu' | 'levelSelection'>('menu');
   const [isEditMaxBalance, setIsEditMaxBalance] = useState<boolean>(true);      // 最高余额是否可编辑
   
   // 对比数据状态
@@ -156,6 +157,7 @@ function CloudShopSimulator() {
   // 返回店铺选择
   const handleBackToShopSelection = () => {
     setCurrentView('shopSelection');
+    setShopSelectionSubView('menu');
   };
 
   // 返回首页（重置所有状态）
@@ -166,6 +168,7 @@ function CloudShopSimulator() {
     setCloudBalance(0);
     setMaxBalance(0);
     setCurrentView('shopSelection');
+    setShopSelectionSubView('menu');
     setStockInputValue('');
     setCloudBalanceInputValue('');
     setMaxBalanceInputValue('0');
@@ -1184,45 +1187,20 @@ function CloudShopSimulator() {
       <header className="bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100 sticky top-0 z-50">
         <div className="container mx-auto px-2 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 flex justify-between items-center">
           <div className="flex items-center gap-2 sm:gap-3">
-            <h1 className="text-base sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              模拟器
-            </h1>
-            {comparisonData.length > 0 && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleViewComparison}
-                className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-2.5"
-              >
-                对比 ({comparisonData.length})
-              </Button>
-            )}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleViewComparison}
+              disabled={comparisonData.length === 0}
+              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-2.5"
+            >
+              数据对比{comparisonData.length > 0 && ` (${comparisonData.length})`}
+            </Button>
           </div>
           <div className="flex items-center gap-0.5 sm:gap-2 lg:gap-3">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleOpenPlatform}
-              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-green-300 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 text-green-700 font-semibold h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-3"
-            >
-              进入平台
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentView('recommendation')}
-              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-purple-300 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 text-purple-700 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
-            >
-              智能推荐
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentView('shopLevels')}
-              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-orange-300 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 text-orange-700 h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3"
-            >
-              店铺等级
-            </Button>
+            <h1 className="text-base sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              云店模拟器
+            </h1>
             <Button
               variant="outline"
               size="sm"
@@ -1237,12 +1215,247 @@ function CloudShopSimulator() {
 
       {/* 主要内容区域 */}
       <main className="container mx-auto px-2 sm:px-4 lg:px-6 py-3 sm:py-4 lg:py-6 min-h-[calc(100vh-56px)]">
-        {/* 店铺选择界面 */}
+        {/* 首页菜单 */}
         {currentView === 'shopSelection' && (
+          <div className="w-full max-w-4xl mx-auto space-y-3 sm:space-y-4 animate-in fade-in-0 slide-in-from-top-2 duration-300">
+            <Card className="w-full bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
+              <CardHeader className="pb-3 pt-4 sm:pt-5 px-4 sm:px-6 lg:px-8">
+                <CardTitle className="text-lg sm:text-xl lg:text-2xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
+                  功能菜单
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2.5 sm:space-y-3 lg:space-y-4 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-5 lg:pb-7">
+                {/* 进入平台 */}
+                <div
+                  onClick={handleOpenPlatform}
+                  className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer bg-white"
+                  style={{
+                    borderColor: '#10b981',
+                    backgroundColor: '#10b98110'
+                  }}
+                >
+                  {/* 渐变背景条 */}
+                  <div className="absolute left-0 top-0 bottom-0 w-2 rounded-l-xl bg-gradient-to-b from-green-400 to-emerald-500" />
+
+                  {/* 主内容 */}
+                  <div className="flex items-center p-4 sm:p-5 lg:p-6 pl-5 sm:pl-7 lg:pl-9">
+                    {/* 左侧：图标 */}
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                         style={{ backgroundColor: '#10b98125' }}>
+                      <svg className="w-6 h-6 sm:w-7 sm:h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                      </svg>
+                    </div>
+
+                    {/* 中间：标题和说明 */}
+                    <div className="flex-1 px-4 sm:px-5">
+                      <h3 className="text-base sm:text-lg lg:text-xl font-bold text-green-600 mb-1">进入平台</h3>
+                      <p className="text-xs sm:text-sm text-gray-500">登录缴费平台，下载缴费APP，查看群聊</p>
+                    </div>
+
+                    {/* 右侧：箭头图标 */}
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                         style={{ backgroundColor: '#10b98125' }}>
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-7 transition-transform duration-200 group-hover:translate-x-1 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* 底部装饰条 */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, transparent, #10b981, transparent)' }} />
+                </div>
+
+                {/* 模拟进货 */}
+                <div
+                  onClick={() => {
+                    setShopSelectionSubView('levelSelection');
+                  }}
+                  className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer bg-white"
+                  style={{
+                    borderColor: '#2563eb',
+                    backgroundColor: '#2563eb10'
+                  }}
+                >
+                  {/* 渐变背景条 */}
+                  <div className="absolute left-0 top-0 bottom-0 w-2 rounded-l-xl bg-gradient-to-b from-blue-500 to-blue-600" />
+
+                  {/* 主内容 */}
+                  <div className="flex items-center p-4 sm:p-5 lg:p-6 pl-5 sm:pl-7 lg:pl-9">
+                    {/* 左侧：图标 */}
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                         style={{ backgroundColor: '#2563eb25' }}>
+                      <svg className="w-6 h-6 sm:w-7 sm:h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                      </svg>
+                    </div>
+
+                    {/* 中间：标题和说明 */}
+                    <div className="flex-1 px-4 sm:px-5">
+                      <h3 className="text-base sm:text-lg lg:text-xl font-bold text-blue-600 mb-1">模拟进货</h3>
+                      <p className="text-xs sm:text-sm text-gray-500">选择店铺等级，设置进货额度，查看利润计算</p>
+                    </div>
+
+                    {/* 右侧：箭头图标 */}
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                         style={{ backgroundColor: '#2563eb25' }}>
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-7 transition-transform duration-200 group-hover:translate-x-1 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* 底部装饰条 */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, transparent, #2563eb, transparent)' }} />
+                </div>
+
+                {/* 智能推荐 */}
+                <div
+                  onClick={() => setCurrentView('recommendation')}
+                  className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer bg-white"
+                  style={{
+                    borderColor: '#8b5cf6',
+                    backgroundColor: '#8b5cf610'
+                  }}
+                >
+                  {/* 渐变背景条 */}
+                  <div className="absolute left-0 top-0 bottom-0 w-2 rounded-l-xl bg-gradient-to-b from-purple-500 to-pink-500" />
+
+                  {/* 主内容 */}
+                  <div className="flex items-center p-4 sm:p-5 lg:p-6 pl-5 sm:pl-7 lg:pl-9">
+                    {/* 左侧：图标 */}
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                         style={{ backgroundColor: '#8b5cf625' }}>
+                      <svg className="w-6 h-6 sm:w-7 sm:h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                      </svg>
+                    </div>
+
+                    {/* 中间：标题和说明 */}
+                    <div className="flex-1 px-4 sm:px-5">
+                      <h3 className="text-base sm:text-lg lg:text-xl font-bold text-purple-600 mb-1">智能推荐</h3>
+                      <p className="text-xs sm:text-sm text-gray-500">按预算或利润推荐最适合的店铺等级</p>
+                    </div>
+
+                    {/* 右侧：箭头图标 */}
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                         style={{ backgroundColor: '#8b5cf625' }}>
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-7 transition-transform duration-200 group-hover:translate-x-1 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* 底部装饰条 */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, transparent, #8b5cf6, transparent)' }} />
+                </div>
+
+                {/* 店铺等级 */}
+                <div
+                  onClick={() => setCurrentView('shopLevels')}
+                  className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer bg-white"
+                  style={{
+                    borderColor: '#f59e0b',
+                    backgroundColor: '#f59e0b10'
+                  }}
+                >
+                  {/* 渐变背景条 */}
+                  <div className="absolute left-0 top-0 bottom-0 w-2 rounded-l-xl bg-gradient-to-b from-orange-400 to-amber-500" />
+
+                  {/* 主内容 */}
+                  <div className="flex items-center p-4 sm:p-5 lg:p-6 pl-5 sm:pl-7 lg:pl-9">
+                    {/* 左侧：图标 */}
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                         style={{ backgroundColor: '#f59e0b25' }}>
+                      <svg className="w-6 h-6 sm:w-7 sm:h-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                      </svg>
+                    </div>
+
+                    {/* 中间：标题和说明 */}
+                    <div className="flex-1 px-4 sm:px-5">
+                      <h3 className="text-base sm:text-lg lg:text-xl font-bold text-orange-600 mb-1">店铺等级</h3>
+                      <p className="text-xs sm:text-sm text-gray-500">查看各等级说明、升级条件和权益</p>
+                    </div>
+
+                    {/* 右侧：箭头图标 */}
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                         style={{ backgroundColor: '#f59e0b25' }}>
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-7 transition-transform duration-200 group-hover:translate-x-1 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* 底部装饰条 */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, transparent, #f59e0b, transparent)' }} />
+                </div>
+
+                {/* 分享给好友 */}
+                <div
+                  onClick={() => {
+                    if (detailsData && levelConfig) {
+                      setShowShareModal(true);
+                    } else {
+                      alert('请先模拟进货后再分享');
+                    }
+                  }}
+                  className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer bg-white"
+                  style={{
+                    borderColor: '#ec4899',
+                    backgroundColor: '#ec489910'
+                  }}
+                >
+                  {/* 渐变背景条 */}
+                  <div className="absolute left-0 top-0 bottom-0 w-2 rounded-l-xl bg-gradient-to-b from-pink-500 to-rose-500" />
+
+                  {/* 主内容 */}
+                  <div className="flex items-center p-4 sm:p-5 lg:p-6 pl-5 sm:pl-7 lg:pl-9">
+                    {/* 左侧：图标 */}
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                         style={{ backgroundColor: '#ec489925' }}>
+                      <svg className="w-6 h-6 sm:w-7 sm:h-7 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                      </svg>
+                    </div>
+
+                    {/* 中间：标题和说明 */}
+                    <div className="flex-1 px-4 sm:px-5">
+                      <h3 className="text-base sm:text-lg lg:text-xl font-bold text-pink-600 mb-1">分享给好友</h3>
+                      <p className="text-xs sm:text-sm text-gray-500">生成分享图片、复制链接、生成二维码</p>
+                    </div>
+
+                    {/* 右侧：箭头图标 */}
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                         style={{ backgroundColor: '#ec489925' }}>
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-7 transition-transform duration-200 group-hover:translate-x-1 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* 底部装饰条 */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, transparent, #ec4899, transparent)' }} />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* 模拟进货 - 店铺等级选择 */}
+        {currentView === 'shopSelection' && shopSelectionSubView === 'levelSelection' && (
           <div className="w-full">
+            <div className="flex items-center gap-3 mb-3 sm:mb-4">
+              <Button variant="ghost" size="icon" onClick={() => setShopSelectionSubView('menu')} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 sm:w-12 sm:h-12">
+                <span className="text-xl sm:text-2xl font-bold">←</span>
+              </Button>
+              <CardTitle className="text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                模拟进货
+              </CardTitle>
+            </div>
             <Card className="w-full bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0 animate-in fade-in-0 slide-in-from-top-2 duration-300">
               <CardHeader className="pb-2.5 sm:pb-3 pt-2 sm:pt-2.5 lg:pt-3 px-4 sm:px-6 lg:px-8">
-                <CardTitle className="text-lg sm:text-xl lg:text-2xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
+                <CardTitle className="text-base sm:text-lg lg:text-xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
                   请选择你的店铺等级
                 </CardTitle>
               </CardHeader>

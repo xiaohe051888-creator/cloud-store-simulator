@@ -100,18 +100,16 @@ export default function PWAUpdatePrompt() {
 
   return (
     <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:bottom-6 sm:w-96 z-[300] animate-in slide-in-from-bottom-4 duration-300">
-      <Card className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 border-2 border-blue-200 shadow-2xl overflow-hidden">
-        {/* 顶部彩色条 */}
-        <div className="h-1.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
+      <Card className="bg-white border-2 border-gray-200 shadow-lg overflow-hidden">
 
         <CardContent className="p-5">
           {/* 图标和标题 */}
           <div className="flex items-start gap-4 mb-4">
             <div className="relative">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-lg animate-pulse">
+              <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg">
                 <Download className="text-white w-6 h-6" />
               </div>
-              <div className="absolute -top-1 -right-1 w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center border-2 border-white animate-bounce">
+              <div className="absolute -top-1 -right-1 w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center border-2 border-white">
                 <AlertCircle size={12} className="text-white fill-white" />
               </div>
             </div>
@@ -135,7 +133,7 @@ export default function PWAUpdatePrompt() {
           </div>
 
           {/* 更新说明 */}
-          <div className="bg-white/80 rounded-lg p-3 mb-4 border border-blue-100">
+          <div className="bg-gray-50 rounded-lg p-3 mb-4 border border-gray-200">
             <p className="text-xs text-gray-700">
               <span className="font-semibold text-blue-600">更新内容：</span>
               性能优化、功能改进、问题修复等
@@ -147,7 +145,7 @@ export default function PWAUpdatePrompt() {
             <Button
               size="lg"
               onClick={handleUpdate}
-              className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-sm font-semibold shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-sm font-semibold shadow-md flex items-center justify-center gap-2"
             >
               <RefreshCw size={16} className="animate-spin" />
               立即更新

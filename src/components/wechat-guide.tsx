@@ -30,14 +30,12 @@ export default function WeChatGuide() {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4 sm:px-6" style={{ animation: 'wechat-fade-in 0.5s ease-out' }}>
       {/* 引导内容卡片 */}
-      <div className="relative w-full max-w-sm sm:max-w-md overflow-hidden rounded-2xl bg-white/95 backdrop-blur-xl shadow-2xl" style={{ animation: 'wechat-slide-up 0.5s ease-out 0.1s both' }}>
-        {/* 顶部装饰色块 */}
-        <div className="h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+      <div className="relative w-full max-w-sm sm:max-w-md overflow-hidden rounded-2xl bg-white shadow-xl" style={{ animation: 'wechat-slide-up 0.5s ease-out 0.1s both' }}>
 
         <div className="p-5 sm:p-8">
           {/* 图标区域 */}
           <div className="mb-4 sm:mb-6 flex justify-center">
-            <div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg transition-transform duration-300 hover:scale-110" style={{ animation: 'wechat-pulse 2s ease-in-out infinite' }}>
+            <div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-blue-600 shadow-lg transition-transform duration-300 hover:scale-110" style={{ animation: 'wechat-pulse 2s ease-in-out infinite' }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="28"
@@ -56,7 +54,7 @@ export default function WeChatGuide() {
           </div>
 
           {/* 标题 */}
-          <h2 className="mb-3 sm:mb-4 text-center text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <h2 className="mb-3 sm:mb-4 text-center text-xl sm:text-2xl font-bold text-gray-900">
             在浏览器中打开
           </h2>
 

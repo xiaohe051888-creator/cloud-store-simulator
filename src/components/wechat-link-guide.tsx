@@ -63,9 +63,7 @@ export default function WeChatLinkGuide({ isVisible, onClose }: WeChatLinkGuideP
 
         {/* 引导卡片 */}
         <div className="absolute top-8 left-1/2 transform -translate-x-1/2 sm:top-1/4 sm:left-1/4 sm:transform-none w-11/12 sm:w-80 animate-in zoom-in-95 duration-500">
-          <div className="relative bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-4 sm:p-6 lg:p-8 overflow-hidden max-h-[80vh] overflow-y-auto">
-            {/* 顶部彩色条纹 */}
-            <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-red-500 via-yellow-500 to-green-500" />
+          <div className="relative bg-white rounded-3xl shadow-xl p-4 sm:p-6 lg:p-8 overflow-hidden max-h-[80vh] overflow-y-auto">
 
             {/* 关闭按钮 */}
             <button
@@ -80,7 +78,7 @@ export default function WeChatLinkGuide({ isVisible, onClose }: WeChatLinkGuideP
             {/* 微信图标 */}
             <div className="flex justify-center mb-4">
               <div className="relative">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-3xl flex items-center justify-center shadow-2xl">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 bg-green-500 rounded-3xl flex items-center justify-center shadow-xl">
                   <svg className="w-12 h-12 sm:w-14 sm:h-14 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178A1.17 1.17 0 014.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178 1.17 1.17 0 01-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 01.598.082l1.584.926a.272.272 0 00.14.045c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 01-.023-.156.49.49 0 01.201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.269-.022-.407-.026zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 01-.969.983.976.976 0 01-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 01-.969.983.976.976 0 01-.969-.983c0-.542.434-.982.97-.982z" />
                   </svg>
@@ -97,7 +95,7 @@ export default function WeChatLinkGuide({ isVisible, onClose }: WeChatLinkGuideP
             </div>
 
             {/* 标题 */}
-            <h2 className="mb-4 text-xl sm:text-2xl font-bold text-center bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 bg-clip-text text-transparent">
+            <h2 className="mb-4 text-xl sm:text-2xl font-bold text-center text-gray-900">
               请在浏览器中打开
             </h2>
 
@@ -109,7 +107,7 @@ export default function WeChatLinkGuide({ isVisible, onClose }: WeChatLinkGuideP
             {/* 操作步骤 */}
             <div className="space-y-4">
               {/* 步骤1 */}
-              <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl border-2 border-red-100">
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl border-2 border-gray-200">
                 <div className="flex-shrink-0 w-10 h-10 bg-red-500 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-md">
                   1
                 </div>
@@ -123,7 +121,7 @@ export default function WeChatLinkGuide({ isVisible, onClose }: WeChatLinkGuideP
               </div>
 
               {/* 步骤2 */}
-              <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl border-2 border-blue-100">
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl border-2 border-gray-200">
                 <div className="flex-shrink-0 w-10 h-10 bg-blue-500 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-md">
                   2
                 </div>

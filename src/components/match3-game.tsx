@@ -37,6 +37,112 @@ export default function Match3Game({ onClose }: GameProps) {
   const [hasAutoClear, setHasAutoClear] = useState(true);
   const [hasShuffle, setHasShuffle] = useState(true);
 
+  // 游戏次数系统
+  const [gameCount, setGameCount] = useState(3);
+  const [nextRecoveryTime, setNextRecoveryTime] = useState<number | null>(null);
+  const [timeUntilRecovery, setTimeUntilRecovery] = useState<number | null>(null);
+
+  // 检查并恢复游戏次数
+  const checkAndRecoverGameCount = useCallback(() => {
+    const now = Date.now();
+    const lastPlayTime = localStorage.getItem('match3_last_play_time');
+    const lastRefreshDate = localStorage.getItem('match3_last_refresh_date');
+    const today = new Date().toDateString();
+
+    // 每天刷新到3次
+    if (lastRefreshDate !== today) {
+      localStorage.setItem('match3_last_refresh_date', today);
+      localStorage.setItem('match3_game_count', '3');
+      setGameCount(3);
+      setNextRecoveryTime(null);
+      return;
+    }
+
+    // 每60分钟恢复一次
+    if (lastPlayTime) {
+      const lastPlayTimeNum = parseInt(lastPlayTime, 10);
+      const elapsedMinutes = Math.floor((now - lastPlayTimeNum) / (1000 * 60));
+      const currentCount = parseInt(localStorage.getItem('match3_game_count') || '3', 10);
+      
+      if (currentCount < 3 && elapsedMinutes >= 60) {
+        const recoveredCount = Math.min(3, currentCount + Math.floor(elapsedMinutes / 60));
+        localStorage.setItem('match3_game_count', String(recoveredCount));
+        setGameCount(recoveredCount);
+        
+        // 计算下一次恢复时间
+        if (recoveredCount < 3) {
+          const nextRecovery = lastPlayTimeNum + (Math.floor(elapsedMinutes / 60) + 1) * 60 * 1000;
+          setNextRecoveryTime(nextRecovery);
+        } else {
+          setNextRecoveryTime(null);
+        }
+      }
+    }
+  }, []);
+
+  // 初始化游戏次数
+  useEffect(() => {
+    const savedCount = localStorage.getItem('match3_game_count');
+    const lastPlayTime = localStorage.getItem('match3_last_play_time');
+    
+    if (savedCount) {
+      setGameCount(parseInt(savedCount, 10));
+    }
+    
+    if (lastPlayTime) {
+      const lastPlayTimeNum = parseInt(lastPlayTime, 10);
+      const now = Date.now();
+      const elapsedMinutes = Math.floor((now - lastPlayTimeNum) / (1000 * 60));
+      
+      if (elapsedMinutes >= 60 && parseInt(savedCount || '3', 10) < 3) {
+        setNextRecoveryTime(lastPlayTimeNum + 60 * 1000);
+      }
+    }
+    
+    checkAndRecoverGameCount();
+
+    // 每分钟检查一次恢复时间
+    const interval = setInterval(checkAndRecoverGameCount, 60000);
+    
+    // 每秒更新倒计时显示
+    const timerInterval = setInterval(() => {
+      if (nextRecoveryTime) {
+        const remaining = Math.max(0, Math.ceil((nextRecoveryTime - Date.now()) / 60000));
+        setTimeUntilRecovery(remaining);
+      } else {
+        setTimeUntilRecovery(null);
+      }
+    }, 1000);
+    
+    return () => {
+      clearInterval(interval);
+      clearInterval(timerInterval);
+    };
+  }, [checkAndRecoverGameCount, nextRecoveryTime]);
+
+  // 使用游戏次数
+  const useGameCount = () => {
+    if (gameCount > 0) {
+      const newCount = gameCount - 1;
+      localStorage.setItem('match3_game_count', String(newCount));
+      localStorage.setItem('match3_last_play_time', String(Date.now()));
+      setGameCount(newCount);
+      
+      if (newCount < 3) {
+        setNextRecoveryTime(Date.now() + 60 * 1000);
+      }
+    }
+  };
+
+  // 计算奖励金币
+  const calculateRewardCoins = (progressValue: number): number => {
+    if (progressValue >= 100) return 100;
+    if (progressValue >= 80) return 80;
+    if (progressValue >= 70) return 70;
+    if (progressValue >= 60) return 60;
+    return 10;
+  };
+
   // 生成游戏关卡
   const generateLevel = useCallback((targetLevel: 1 | 2) => {
     const cardCount = targetLevel === 1 ? 15 : 25;
@@ -185,6 +291,12 @@ export default function Match3Game({ onClose }: GameProps) {
 
   // 开始游戏
   const handleStartGame = () => {
+    if (gameCount <= 0) {
+      alert('今日游戏次数已用完！请等待60分钟后恢复次数。');
+      return;
+    }
+    
+    useGameCount();
     setLevel(1);
     generateLevel(1);
     setCanRevive(true);
@@ -196,7 +308,18 @@ export default function Match3Game({ onClose }: GameProps) {
 
   // 重新开始
   const handleRestart = () => {
-    handleStartGame();
+    if (gameCount <= 0) {
+      alert('今日游戏次数已用完！请等待60分钟后恢复次数。');
+      return;
+    }
+    useGameCount();
+    setLevel(1);
+    generateLevel(1);
+    setCanRevive(true);
+    setHasSetAside(true);
+    setHasAutoClear(true);
+    setHasShuffle(true);
+    setGameState('playing');
   };
 
   // 下一关
@@ -238,11 +361,28 @@ export default function Match3Game({ onClose }: GameProps) {
                 </p>
               </div>
               
+              {/* 游戏次数显示 */}
+              <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg border-2 border-blue-200 w-full max-w-md">
+                <div className="flex justify-between items-center">
+                  <div className="text-sm">
+                    <span className="text-gray-600">剩余游戏次数：</span>
+                    <span className="font-bold text-purple-600">{gameCount}</span>
+                    <span className="text-gray-600">/3</span>
+                  </div>
+                  {gameCount < 3 && timeUntilRecovery !== null && (
+                    <div className="text-xs text-gray-500">
+                      下次恢复：{timeUntilRecovery} 分钟后
+                    </div>
+                  )}
+                </div>
+              </div>
+              
               <Button 
                 onClick={handleStartGame}
-                className="w-full max-w-xs h-14 text-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                disabled={gameCount <= 0}
+                className="w-full max-w-xs h-14 text-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                开始游戏
+                {gameCount <= 0 ? '次数已用完' : '开始游戏'}
               </Button>
             </div>
           )}
@@ -401,7 +541,8 @@ export default function Match3Game({ onClose }: GameProps) {
                 <Button
                   variant="outline"
                   onClick={handleRestart}
-                  className="flex-1"
+                  disabled={gameCount <= 0}
+                  className="flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   重新开始
                 </Button>
@@ -441,15 +582,15 @@ export default function Match3Game({ onClose }: GameProps) {
                     <h3 className="text-xl font-bold text-amber-700 mb-2">🎁 奖励</h3>
                     <p className="text-gray-700">
                       恭喜通关！您已获得以下奖励：<br />
-                      🐱 {progress >= 100 ? 2930 : progress >= 80 ? 930 : progress >= 70 ? 200 : progress >= 60 ? 150 : 80} 个猫掌<br />
-                      🪙 {progress >= 100 ? 490000 : progress >= 80 ? 90000 : progress >= 70 ? 25000 : progress >= 60 ? 15000 : 0} 枚金币
+                      🪙 <span className="font-bold text-amber-600">{calculateRewardCoins(progress)}</span> 枚金币
                     </p>
                   </div>
                   <div className="flex gap-3 w-full max-w-xs">
                     <Button
                       variant="outline"
                       onClick={handleRestart}
-                      className="flex-1"
+                      disabled={gameCount <= 0}
+                      className="flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       重新开始
                     </Button>

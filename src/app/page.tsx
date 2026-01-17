@@ -1265,7 +1265,7 @@ function CloudShopSimulator() {
                   {/* 标题和说明 */}
                   <div className="flex-1">
                     <h3 className="text-base sm:text-lg font-semibold text-green-700 mb-0.5">进入平台</h3>
-                    <p className="text-xs sm:text-sm text-gray-500">登录缴费平台，下载缴费APP，查看群聊</p>
+                    <p className="text-xs sm:text-sm text-gray-500">登录缴费平台，下载APP</p>
                   </div>
 
                   {/* 箭头图标 */}
@@ -1361,7 +1361,7 @@ function CloudShopSimulator() {
                   {/* 标题和说明 */}
                   <div className="flex-1">
                     <h3 className="text-base sm:text-lg font-semibold text-amber-700 mb-0.5">福利介绍</h3>
-                    <p className="text-xs sm:text-sm text-gray-500">查看平台福利政策、奖励机制和优惠活动</p>
+                    <p className="text-xs sm:text-sm text-gray-500">查看社区福利和平台福利政策、奖励机制等等</p>
                   </div>
 
                   {/* 箭头图标 */}

@@ -47,24 +47,24 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: oklch(0.98 0 0);
   --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
+  --card: oklch(0.98 0 0);
   --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
+  --popover: oklch(0.98 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: oklch(0.5 0.15 250); /* 科技蓝 */
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
+  --secondary: oklch(0.94 0.01 250);
   --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.96 0.01 250);
+  --muted-foreground: oklch(0.5 0 0);
+  --accent: oklch(0.55 0.2 250);
+  --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: oklch(0.88 0.01 250);
+  --input: oklch(0.9 0.01 250);
+  --ring: oklch(0.5 0.15 250);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -78,27 +78,33 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* 科技风额外变量 */
+  --tech-blue: oklch(0.5 0.15 250);
+  --tech-cyan: oklch(0.55 0.2 200);
+  --tech-purple: oklch(0.55 0.2 280);
+  --tech-glow: rgba(59, 130, 246, 0.3);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: oklch(0.12 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+  --card: oklch(0.18 0.01 250);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
+  --popover: oklch(0.18 0.01 250);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
+  --primary: oklch(0.6 0.18 250);
+  --primary-foreground: oklch(0.12 0 0);
+  --secondary: oklch(0.25 0.01 250);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.25 0.01 250);
+  --muted-foreground: oklch(0.65 0 0);
+  --accent: oklch(0.65 0.22 250);
+  --accent-foreground: oklch(0.12 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --border: oklch(0.3 0.01 250);
+  --input: oklch(0.25 0.01 250);
+  --ring: oklch(0.6 0.18 250);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -112,6 +118,12 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* 科技风深色模式变量 */
+  --tech-blue: oklch(0.6 0.18 250);
+  --tech-cyan: oklch(0.65 0.25 200);
+  --tech-purple: oklch(0.65 0.25 280);
+  --tech-glow: rgba(96, 165, 250, 0.4);
 }
 
 @layer base {
@@ -123,6 +135,7 @@
   }
 }
 
+/* 科技风动画定义 */
 @keyframes shake {
   0%, 100% {
     transform: translateX(0);
@@ -137,6 +150,156 @@
 
 .animate-shake {
   animation: shake 0.5s ease-in-out;
+}
+
+/* 波纹扩散动画 */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* 科技风发光效果 */
+@keyframes tech-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3),
+                0 0 10px rgba(59, 130, 246, 0.2),
+                0 0 15px rgba(59, 130, 246, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.5),
+                0 0 20px rgba(59, 130, 246, 0.3),
+                0 0 30px rgba(59, 130, 246, 0.2);
+  }
+}
+
+.tech-glow {
+  animation: tech-glow 3s ease-in-out infinite;
+}
+
+/* 渐入动画 */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+/* 渐入动画（带延迟） */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+/* 缩放动画 */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 脉冲动画 */
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* 流动边框动画 */
+@keyframes border-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-border-flow {
+  background-size: 200% 200%;
+  animation: border-flow 3s linear infinite;
+}
+
+/* 科技感悬浮效果 */
+@keyframes tech-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-tech-float {
+  animation: tech-float 3s ease-in-out infinite;
+}
+
+/* 扫描线动画 */
+@keyframes scan-line {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.animate-scan-line {
+  animation: scan-line 2s linear infinite;
+}
+
+/* 闪烁动画 */
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.animate-blink {
+  animation: blink 1s ease-in-out infinite;
 }
 
 /* 微信引导页面动画 */
@@ -189,6 +352,13 @@ body {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
+  /* 科技风背景 */
+  background: linear-gradient(135deg, oklch(0.98 0 0) 0%, oklch(0.95 0.01 250) 100%);
+  min-height: 100vh;
+}
+
+.dark body {
+  background: linear-gradient(135deg, oklch(0.12 0 0) 0%, oklch(0.15 0.01 250) 100%);
 }
 
 /* 允许选择文本的区域（输入框等） */
@@ -196,6 +366,154 @@ input, textarea, [contenteditable] {
   -webkit-user-select: text;
   user-select: text;
   -webkit-tap-highlight-color: auto;
+}
+
+/* 科技风按钮样式 */
+.tech-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tech-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.tech-button:hover::before {
+  left: 100%;
+}
+
+.tech-button:active {
+  transform: scale(0.98);
+}
+
+/* 科技风输入框 */
+.tech-input {
+  transition: all 0.3s ease;
+  border: 1px solid var(--border);
+}
+
+.tech-input:focus {
+  border-color: var(--tech-blue);
+  box-shadow: 0 0 0 3px var(--tech-glow);
+}
+
+/* 科技风卡片悬停效果 */
+.tech-card-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tech-card-hover:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px -10px var(--tech-glow);
+}
+
+/* 科技风网格背景 */
+.tech-grid-bg {
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* 科技流光效果 */
+.tech-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* 科技风发光文字 */
+.tech-text-glow {
+  text-shadow: 0 0 10px var(--tech-glow);
+}
+
+/* 科技风边框渐变 */
+.tech-border-gradient {
+  position: relative;
+  background: padding-box,
+              linear-gradient(135deg, var(--tech-blue), var(--tech-purple)) border-box;
+  border: 1px solid transparent;
+  border-radius: 0.625rem;
+}
+
+/* 科技风进度条 */
+.tech-progress {
+  background: linear-gradient(90deg, var(--tech-blue), var(--tech-cyan));
+  box-shadow: 0 0 10px var(--tech-glow);
+}
+
+/* 科技风徽章 */
+.tech-badge {
+  background: linear-gradient(135deg, var(--tech-blue), var(--tech-cyan));
+  color: white;
+  box-shadow: 0 2px 8px var(--tech-glow);
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--tech-blue);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--tech-cyan);
+}
+
+/* 页面过渡容器 */
+.page-transition-container {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
 }
 
 /* 移动端滚动优化 */

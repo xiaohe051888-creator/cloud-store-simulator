@@ -46,26 +46,25 @@
 }
 
 :root {
-  /* 苹果官网风格颜色系统 - 浅色模式 */
-  --radius: 20px;
-  --background: oklch(0.99 0 0); /* 纯白背景 */
-  --foreground: oklch(0.15 0 0); /* 深灰文字 */
-  --card: oklch(1 0 0); /* 纯白卡片 */
-  --card-foreground: oklch(0.15 0 0);
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0 0);
-  --primary: oklch(0.55 0.22 250); /* 苹果官网蓝 */
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.97 0 0); /* 极浅灰 */
-  --secondary-foreground: oklch(0.2 0 0);
-  --muted: oklch(0.96 0 0); /* 浅灰 */
-  --muted-foreground: oklch(0.5 0 0); /* 灰色辅助文字 */
-  --accent: oklch(0.94 0 0);
-  --accent-foreground: oklch(0.15 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.88 0 0); /* 超细透明边框 */
-  --input: oklch(0.96 0 0);
-  --ring: oklch(0.55 0.22 250);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -79,62 +78,40 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-
-  /* 苹果官网风格额外变量 */
-  --apple-blue: oklch(0.55 0.22 250);
-  --apple-gray: oklch(0.88 0 0);
-  --apple-text: oklch(0.15 0 0);
-  --apple-subtext: oklch(0.45 0 0);
-  --apple-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-  --apple-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08);
-  --apple-shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.1);
-  --apple-glass: rgba(255, 255, 255, 0.72);
-  --apple-glass-dark: rgba(255, 255, 255, 0.85);
 }
 
 .dark {
-  /* 苹果官网风格颜色系统 - 深色模式 */
-  --background: oklch(0.11 0 0); /* 深灰背景 */
-  --foreground: oklch(0.98 0 0); /* 浅白文字 */
-  --card: oklch(0.15 0 0); /* 深灰卡片 */
-  --card-foreground: oklch(0.98 0 0);
-  --popover: oklch(0.15 0 0);
-  --popover-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.65 0.22 250); /* 亮蓝色 */
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.2 0 0); /* 深灰 */
-  --secondary-foreground: oklch(0.98 0 0);
-  --muted: oklch(0.2 0 0); /* 中灰 */
-  --muted-foreground: oklch(0.6 0 0); /* 灰色辅助文字 */
-  --accent: oklch(0.25 0 0);
-  --accent-foreground: oklch(0.98 0 0);
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(0.25 0 0); /* 深色边框 */
-  --input: oklch(0.2 0 0);
-  --ring: oklch(0.65 0.22 250);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.12 0 0);
-  --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: oklch(0.55 0.22 250);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.18 0 0);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(0.2 0 0);
-  --sidebar-ring: oklch(0.65 0.22 250);
-
-  /* 苹果官网风格深色模式变量 */
-  --apple-blue: oklch(0.65 0.22 250);
-  --apple-gray: oklch(0.25 0 0);
-  --apple-text: oklch(0.98 0 0);
-  --apple-subtext: oklch(0.7 0 0);
-  --apple-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-  --apple-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
-  --apple-glass: rgba(30, 30, 30, 0.72);
-  --apple-glass-dark: rgba(30, 30, 30, 0.85);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
 }
 
 @layer base {
@@ -143,248 +120,26 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  /* 苹果官网风格的排版优化 */
-  h1, h2, h3, h4, h5, h6 {
-    letter-spacing: -0.02em;
-    font-weight: 600;
-  }
-
-  p {
-    letter-spacing: -0.003em;
-    line-height: 1.6;
   }
 }
 
-/* 苹果官网风格动画定义 */
-
-/* 柔和的淡入动画 */
-@keyframes apple-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-apple-fade-in {
-  animation: apple-fade-in 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* 苹果官网风格的滑动效果 */
-@keyframes apple-slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-apple-slide-up {
-  animation: apple-slide-up 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* 苹果官网风格的按钮点击反馈 */
-@keyframes apple-button-press {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0.97);
-  }
-}
-
-.active\:apple-button-press:active {
-  animation: apple-button-press 0.1s ease-out forwards;
-}
-
-/* 苹果官网风格的文本渐变 */
-.apple-text-gradient {
-  background: linear-gradient(135deg, #0066cc 0%, #0071e3 50%, #2997ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* 苹果官网风格的阴影类 */
-.apple-shadow {
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-}
-
-.apple-shadow-lg {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-}
-
-.apple-shadow-xl {
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.1);
-}
-
-/* 苹果官网风格的毛玻璃效果 */
-.apple-glass {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-.apple-glass-dark {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-/* 苹果官网风格的按钮 */
-.apple-button {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 9999px;
-}
-
-.apple-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-}
-
-.apple-button:active {
-  transform: scale(0.97);
-}
-
-/* 苹果官网风格的边框 */
-.apple-border {
-  border: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-/* 闪烁动画（用于错误提示） */
 @keyframes shake {
   0%, 100% {
     transform: translateX(0);
   }
-  25% {
+  10%, 30%, 50%, 70%, 90% {
     transform: translateX(-5px);
   }
-  75% {
+  20%, 40%, 60%, 80% {
     transform: translateX(5px);
   }
 }
 
 .animate-shake {
-  animation: shake 0.3s ease-in-out;
+  animation: shake 0.5s ease-in-out;
 }
 
-/* 滚动条样式 */
-.scrollbar-thin {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
-}
-
-.scrollbar-thin::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-.scrollbar-thin::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb {
-  background-color: rgba(156, 163, 175, 0.5);
-  border-radius: 3px;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(156, 163, 175, 0.7);
-}
-
-/* 苹果官网风格 - 大量留白 */
-.apple-section {
-  padding: 80px 20px;
-}
-
-@media (min-width: 768px) {
-  .apple-section {
-    padding: 120px 40px;
-  }
-}
-
-/* 苹果官网风格 - 大圆角卡片 */
-.apple-card {
-  border-radius: 24px;
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.apple-card:hover {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  transform: translateY(-2px);
-}
-
-/* 苹果官网风格 - 极简导航栏 */
-.apple-nav {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-/* 苹果官网风格 - 主容器 */
-.apple-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-@media (min-width: 768px) {
-  .apple-container {
-    padding: 0 40px;
-  }
-}
-
-/* 苹果官网风格 - 标题 */
-.apple-title {
-  font-size: clamp(28px, 5vw, 48px);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  color: #1d1d1f;
-}
-
-/* 苹果官网风格 - 副标题 */
-.apple-subtitle {
-  font-size: clamp(19px, 3vw, 24px);
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.4;
-  color: #6e6e73;
-}
-
-/* 苹果官网风格 - 响应式字体大小 */
-.apple-text-sm {
-  font-size: clamp(14px, 2vw, 17px);
-}
-
-.apple-text-base {
-  font-size: clamp(15px, 2.5vw, 19px);
-}
-
-.apple-text-lg {
-  font-size: clamp(17px, 3vw, 21px);
-}
-
-.apple-text-xl {
-  font-size: clamp(20px, 3.5vw, 24px);
-}
-
-/* 微信引导动画 */
+/* 微信引导页面动画 */
 @keyframes wechat-fade-in {
   from {
     opacity: 0;
@@ -396,31 +151,62 @@
 
 @keyframes wechat-slide-up {
   from {
-    opacity: 0;
     transform: translateY(20px);
+    opacity: 0;
   }
   to {
-    opacity: 1;
     transform: translateY(0);
+    opacity: 1;
   }
 }
 
 @keyframes wechat-slide-in {
   from {
-    opacity: 0;
     transform: translateX(-20px);
+    opacity: 0;
   }
   to {
-    opacity: 1;
     transform: translateX(0);
+    opacity: 1;
   }
 }
 
 @keyframes wechat-pulse {
   0%, 100% {
     transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
   }
   50% {
     transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
   }
+}
+
+body {
+  @apply font-sans;
+  /* 移动端触摸优化 */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* 允许选择文本的区域（输入框等） */
+input, textarea, [contenteditable] {
+  -webkit-user-select: text;
+  user-select: text;
+  -webkit-tap-highlight-color: auto;
+}
+
+/* 移动端滚动优化 */
+@media (max-width: 640px) {
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* 按钮触摸优化 */
+button {
+  -webkit-tap-highlight-color: transparent;
 }

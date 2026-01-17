@@ -22,6 +22,7 @@ import WeChatLinkGuide from '@/components/wechat-link-guide';
 import ShareModal from '@/components/share-modal';
 import PWAInstallPrompt from '@/components/pwa-install-prompt';
 import PWAUpdatePrompt from '@/components/pwa-update-prompt';
+import Match3Game from '@/components/match3-game';
 import { useShareParams } from '@/hooks/use-share-params';
 import {
   shopLevelsConfig,
@@ -128,6 +129,9 @@ function CloudShopSimulator() {
 
   // 分享弹窗状态
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
+
+  // 游戏弹窗状态
+  const [showGame, setShowGame] = useState<boolean>(false);
 
   // 获取分享参数
   const { shareParams, isFromShare, clearShareParams } = useShareParams();
@@ -491,7 +495,12 @@ function CloudShopSimulator() {
 
   // 玩小游戏
   const handlePlayGame = () => {
-    alert('小游戏功能开发中...');
+    setShowGame(true);
+  };
+
+  // 关闭游戏
+  const handleCloseGame = () => {
+    setShowGame(false);
   };
 
   // 删除对比数据
@@ -2642,6 +2651,9 @@ function CloudShopSimulator() {
 
       {/* PWA更新提示 */}
       <PWAUpdatePrompt />
+
+      {/* 三消游戏 */}
+      {showGame && <Match3Game onClose={handleCloseGame} />}
     </div>
   );
 }

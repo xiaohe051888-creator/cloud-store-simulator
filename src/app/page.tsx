@@ -44,6 +44,9 @@ function CloudShopSimulator() {
   const [currentView, setCurrentView] = useState<ViewType>('shopSelection');
   const [isEditMaxBalance, setIsEditMaxBalance] = useState<boolean>(true);      // 最高余额是否可编辑
   
+  // 福利详情展开状态
+  const [expandedBenefit, setExpandedBenefit] = useState<'community' | 'platform' | null>(null);
+  
   // 对比数据状态
   const [comparisonData, setComparisonData] = useState<ComparisonData[]>([]);
   const [currentComparisonId, setCurrentComparisonId] = useState<string | null>(null);
@@ -481,7 +484,8 @@ function CloudShopSimulator() {
 
   // 查看福利介绍
   const handleViewBenefits = () => {
-    alert('福利介绍功能开发中...');
+    setCurrentView('benefits');
+    setExpandedBenefit(null); // 重置展开状态
   };
 
   // 查看公告
@@ -1463,6 +1467,159 @@ function CloudShopSimulator() {
               </CardContent>
             </Card>
           </div>
+        )}
+
+        {/* 福利介绍 */}
+        {currentView === 'benefits' && (
+          <Card className="w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-lg animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
+            <CardHeader className="pb-4 pt-6 px-6">
+              <div className="flex items-center justify-between">
+                <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
+                  <span className="text-2xl font-bold">←</span>
+                </Button>
+                <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  🎁 福利介绍
+                </CardTitle>
+                <div className="w-12" />
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4 sm:space-y-5 px-6 pb-6">
+              {/* 一、社区福利 */}
+              <div className="border border-orange-200 rounded-lg overflow-hidden">
+                <button
+                  onClick={() => setExpandedBenefit(expandedBenefit === 'community' ? null : 'community')}
+                  className="w-full flex items-center justify-between p-4 sm:p-5 bg-gradient-to-r from-orange-50 to-amber-50 hover:from-orange-100 hover:to-amber-100 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-orange-500 rounded-lg">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="text-base sm:text-lg font-bold text-orange-700">一、社区福利</h3>
+                      <p className="text-xs sm:text-sm text-gray-600">邀请好友开店享多重奖励</p>
+                    </div>
+                  </div>
+                  <svg
+                    className={`w-5 h-5 sm:w-6 sm:h-6 text-orange-600 transition-transform duration-200 ${expandedBenefit === 'community' ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {expandedBenefit === 'community' && (
+                  <div className="p-4 sm:p-5 bg-white border-t border-orange-200">
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-sm sm:text-base font-semibold text-orange-700 mb-2 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full"></span>
+                          1月个人当天邀请奖励
+                        </h4>
+                        <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
+                          <li className="flex items-start gap-2">
+                            <span className="text-orange-500 mt-0.5">•</span>
+                            <span>当天邀请第<span className="font-bold text-orange-600">1个</span>开店奖：<span className="font-bold text-green-600">18元</span></span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-orange-500 mt-0.5">•</span>
+                            <span>当天邀请第<span className="font-bold text-orange-600">2个</span>开店再奖：<span className="font-bold text-green-600">38元</span></span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-orange-500 mt-0.5">•</span>
+                            <span>当天邀请第<span className="font-bold text-orange-600">3个</span>开店再奖：<span className="font-bold text-green-600">108元</span></span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h4 className="text-sm sm:text-base font-semibold text-orange-700 mb-2 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full"></span>
+                          1月个人连续邀请奖励
+                        </h4>
+                        <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
+                          <li className="flex items-start gap-2">
+                            <span className="text-orange-500 mt-0.5">•</span>
+                            <span>连续<span className="font-bold text-orange-600">3天</span>有邀请额外奖励<span className="font-bold text-green-600">68券</span></span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-orange-500 mt-0.5">•</span>
+                            <span>连续<span className="font-bold text-orange-600">7天</span>有邀请再额外奖励<span className="font-bold text-green-600">168券</span></span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div className="mt-4 p-3 bg-orange-50 border border-orange-200 rounded-lg">
+                        <p className="text-sm sm:text-base text-orange-800">
+                          <span className="font-semibold">说明：</span>
+                          完成邀请 联系 <span className="font-bold text-orange-600">阿东</span> 领奖
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 二、平台福利 */}
+              <div className="border border-blue-200 rounded-lg overflow-hidden">
+                <button
+                  onClick={() => setExpandedBenefit(expandedBenefit === 'platform' ? null : 'platform')}
+                  className="w-full flex items-center justify-between p-4 sm:p-5 bg-gradient-to-r from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-blue-500 rounded-lg">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="text-base sm:text-lg font-bold text-blue-700">二、平台福利</h3>
+                      <p className="text-xs sm:text-sm text-gray-600">新店主专享进货奖励</p>
+                    </div>
+                  </div>
+                  <svg
+                    className={`w-5 h-5 sm:w-6 sm:h-6 text-blue-600 transition-transform duration-200 ${expandedBenefit === 'platform' ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {expandedBenefit === 'platform' && (
+                  <div className="p-4 sm:p-5 bg-white border-t border-blue-200">
+                    <div className="space-y-3">
+                      <div>
+                        <h4 className="text-sm sm:text-base font-semibold text-blue-700 mb-2 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></span>
+                          1月新店主奖励
+                        </h4>
+                        <div className="space-y-2 text-sm sm:text-base text-gray-700 ml-3">
+                          <p className="text-gray-600 mb-2">
+                            1月开店的新店主可参与
+                          </p>
+                          <ul className="space-y-1.5">
+                            <li className="flex items-start gap-2">
+                              <span className="text-blue-500 mt-0.5">•</span>
+                              <span>2月1日前首次同一天进货<span className="font-bold text-blue-600">2500及以上</span>，奖励<span className="font-bold text-green-600">38元</span>复缴券</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <span className="text-blue-500 mt-0.5">•</span>
+                              <span>2月1日前累积进货<span className="font-bold text-blue-600">7000及以上</span>，再奖励<span className="font-bold text-green-600">68元</span>复缴券</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
         )}
 
         {/* 推荐系统输入界面 */}

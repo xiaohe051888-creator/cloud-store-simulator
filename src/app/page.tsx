@@ -1634,6 +1634,13 @@ function CloudShopSimulator() {
                           </ul>
                         </div>
                       </div>
+
+                      <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <p className="text-sm sm:text-base text-blue-800">
+                          <span className="font-semibold">领取奖励：</span>
+                          完成要求联系 <span className="font-bold text-blue-600">阿东</span> 登记领取
+                        </p>
+                      </div>
                     </div>
                   </div>
                 )}

@@ -125,6 +125,7 @@ function CloudShopSimulator() {
 
   // 微信链接引导状态
   const [showWeChatLinkGuide, setShowWeChatLinkGuide] = useState<boolean>(false);
+  const [targetUrl, setTargetUrl] = useState<string>('');
 
   // 分享弹窗状态
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
@@ -1128,10 +1129,13 @@ function CloudShopSimulator() {
   const openLink = (url: string) => {
     // 检测是否在微信中打开
     const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
-    
+
     if (isWeChatBrowser) {
-      // 在微信中，显示引导页面
-      setShowWeChatLinkGuide(true);
+      // 在微信中，将目标URL作为参数，跳转到当前页面
+      // 在浏览器打开后，会自动跳转到目标链接
+      const currentUrl = window.location.origin + window.location.pathname;
+      const target = encodeURIComponent(url);
+      window.location.href = `${currentUrl}?target=${target}`;
     } else {
       // 在浏览器中，直接打开链接
       window.open(url, '_blank');
@@ -1179,6 +1183,33 @@ function CloudShopSimulator() {
     }
   }, [isFromShare, shareParams]);
 
+  // 处理目标链接跳转（用于微信中打开后的自动跳转）
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const target = params.get('target');
+
+    if (target) {
+      // 保存目标URL
+      const targetUrl = decodeURIComponent(target);
+      setTargetUrl(targetUrl);
+
+      // 检测是否在微信中
+      const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
+
+      if (!isWeChatBrowser) {
+        // 不在微信中，跳转到目标链接
+        window.location.href = targetUrl;
+      } else {
+        // 在微信中，显示引导页面
+        setShowWeChatLinkGuide(true);
+        // 清除target参数，避免重复显示
+        const url = new URL(window.location.href);
+        url.searchParams.delete('target');
+        window.history.replaceState({}, '', url.toString());
+      }
+    }
+  }, []);
+
   // 处理Enter键（已废弃，改用单个输入框的 onKeyDown 处理）
   const handleKeyDown = (e: React.KeyboardEvent) => {
     // 不再需要全局处理
@@ -1196,7 +1227,7 @@ function CloudShopSimulator() {
                 云店模拟器
               </h1>
               <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text">
-                v1.1.1
+                v1.2.0
               </span>
             </div>
           </div>
@@ -2971,6 +3002,7 @@ function CloudShopSimulator() {
       <WeChatLinkGuide
         isVisible={showWeChatLinkGuide}
         onClose={handleCloseWeChatLinkGuide}
+        targetUrl={targetUrl}
       />
 
       {/* 分享弹窗 */}

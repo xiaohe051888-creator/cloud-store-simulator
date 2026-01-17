@@ -126,6 +126,7 @@ function CloudShopSimulator() {
   // 微信链接引导状态
   const [showWeChatLinkGuide, setShowWeChatLinkGuide] = useState<boolean>(false);
   const [targetUrl, setTargetUrl] = useState<string>('');
+  const hasShownWeChatGuide = useRef(false);
 
   // 分享弹窗状态
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
@@ -1185,13 +1186,13 @@ function CloudShopSimulator() {
 
   // 处理目标链接跳转（用于微信中打开后的自动跳转）
   useEffect(() => {
-    // 检查是否有分享参数，如果有分享参数，不执行跳转（分享功能优先）
+    // 检查是否有分享参数，如果有分享参数，不执行处理（分享功能优先）
     const params = new URLSearchParams(window.location.search);
     const hasShareParams = params.get('level') || params.get('stock') || params.get('balance') || params.get('max') || params.get('profit');
     const target = params.get('target');
 
-    // 只有当有 target 参数且没有分享参数时才处理
-    if (target && !hasShareParams) {
+    // 只有当有 target 参数且没有分享参数且未显示过引导时才处理
+    if (target && !hasShareParams && !hasShownWeChatGuide.current) {
       // 保存目标URL
       const targetUrl = decodeURIComponent(target);
       setTargetUrl(targetUrl);
@@ -1199,19 +1200,13 @@ function CloudShopSimulator() {
       // 检测是否在微信中
       const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
 
-      if (!isWeChatBrowser) {
-        // 不在微信中，跳转到目标链接
-        // 使用 replace 确保替换当前页面，避免历史记录问题
-        console.log('正在跳转到目标链接:', targetUrl);
-        window.location.replace(targetUrl);
-      } else {
+      if (isWeChatBrowser) {
         // 在微信中，显示引导页面
         setShowWeChatLinkGuide(true);
-        // 清除target参数，避免重复显示
-        const url = new URL(window.location.href);
-        url.searchParams.delete('target');
-        window.history.replaceState({}, '', url.toString());
+        hasShownWeChatGuide.current = true;
+        // 注意：不清除target参数，让浏览器打开后可以检测到并跳转
       }
+      // 注意：在浏览器中的跳转逻辑由 useShareParams 处理
     }
   }, []);
 

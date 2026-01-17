@@ -45,7 +45,7 @@ function CloudShopSimulator() {
   const [isEditMaxBalance, setIsEditMaxBalance] = useState<boolean>(true);      // 最高余额是否可编辑
   
   // 福利详情展开状态
-  const [expandedBenefit, setExpandedBenefit] = useState<'community' | 'platform' | null>(null);
+  const [expandedBenefit, setExpandedBenefit] = useState<'community' | 'platform' | 'wechat' | 'buxin' | null>(null);
   
   // 对比数据状态
   const [comparisonData, setComparisonData] = useState<ComparisonData[]>([]);
@@ -1600,6 +1600,208 @@ function CloudShopSimulator() {
                             </li>
                           </ul>
                         </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 三、微信群每日福利 */}
+              <div className="border border-green-200 rounded-lg overflow-hidden">
+                <button
+                  onClick={() => setExpandedBenefit(expandedBenefit === 'wechat' ? null : 'wechat')}
+                  className="w-full flex items-center justify-between p-4 sm:p-5 bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-green-500 rounded-lg">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="text-base sm:text-lg font-bold text-green-700">三、微信群每日福利</h3>
+                      <p className="text-xs sm:text-sm text-gray-600">晒图活动、群抽奖、红包福利</p>
+                    </div>
+                  </div>
+                  <svg
+                    className={`w-5 h-5 sm:w-6 sm:h-6 text-green-600 transition-transform duration-200 ${expandedBenefit === 'wechat' ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {expandedBenefit === 'wechat' && (
+                  <div className="p-4 sm:p-5 bg-white border-t border-green-200">
+                    <div className="space-y-4">
+                      {/* 晒图活动 */}
+                      <div>
+                        <h4 className="text-sm sm:text-base font-semibold text-green-700 mb-2 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></span>
+                          晒图活动
+                        </h4>
+                        <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>店长晒自己店铺利润图，当天店铺有卖出即可晒图</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>晒图人员当天利润排名前40的记录有效晒图一次</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>当天销冠额外奖励<span className="font-bold text-green-600">10元红包</span></span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>晒图时间：每天<span className="font-bold text-green-600">19:00到19:30</span></span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>自己只能晒自己的图</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>有效晒图<span className="font-bold text-green-600">3天</span>奖励<span className="font-bold text-green-600">10元复缴券</span></span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      {/* 群抽奖 */}
+                      <div>
+                        <h4 className="text-sm sm:text-base font-semibold text-green-700 mb-2 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></span>
+                          群抽奖
+                        </h4>
+                        <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>每天群里会举办一次抽奖</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>一等奖<span className="font-bold text-green-600">1名</span>，奖励<span className="font-bold text-green-600">18元</span>现金</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>二等奖<span className="font-bold text-green-600">5名</span>，奖励<span className="font-bold text-green-600">8元</span>现金</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>参加抽奖时间：每天<span className="font-bold text-green-600">11:00-21:00</span></span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>领取奖励说明：中奖后把微信收款码（绿码）发在微信群里领取奖励</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>注意：超过当天24点没有发收款码出来奖励作废</span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      {/* 微信群红包 */}
+                      <div>
+                        <h4 className="text-sm sm:text-base font-semibold text-green-700 mb-2 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></span>
+                          微信群红包
+                        </h4>
+                        <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>发放时间：<span className="font-bold text-green-600">21:30</span></span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>红包个数：<span className="font-bold text-green-600">60个</span></span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>红包初始金额：<span className="font-bold text-green-600">10元</span></span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-green-500 mt-0.5">•</span>
+                            <span>当天本群每新增<span className="font-bold text-green-600">1个</span>店主，当天群红包金额就增加<span className="font-bold text-green-600">10元</span></span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 四、步信群每日福利 */}
+              <div className="border border-purple-200 rounded-lg overflow-hidden">
+                <button
+                  onClick={() => setExpandedBenefit(expandedBenefit === 'buxin' ? null : 'buxin')}
+                  className="w-full flex items-center justify-between p-4 sm:p-5 bg-gradient-to-r from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-purple-500 rounded-lg">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="text-base sm:text-lg font-bold text-purple-700">四、步信群每日福利</h3>
+                      <p className="text-xs sm:text-sm text-gray-600">步信红包、签到奖励</p>
+                    </div>
+                  </div>
+                  <svg
+                    className={`w-5 h-5 sm:w-6 sm:h-6 text-purple-600 transition-transform duration-200 ${expandedBenefit === 'buxin' ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {expandedBenefit === 'buxin' && (
+                  <div className="p-4 sm:p-5 bg-white border-t border-purple-200">
+                    <div className="space-y-4">
+                      {/* 步信上 */}
+                      <div>
+                        <h4 className="text-sm sm:text-base font-semibold text-purple-700 mb-2 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full"></span>
+                          步信上：太极社区交流群
+                        </h4>
+                        <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
+                          <li className="flex items-start gap-2">
+                            <span className="text-purple-500 mt-0.5">•</span>
+                            <span>每天会发<span className="font-bold text-purple-600">2次</span>红包</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-purple-500 mt-0.5">•</span>
+                            <span>第一次：<span className="font-bold text-purple-600">15:00</span></span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-purple-500 mt-0.5">•</span>
+                            <span>第二次：<span className="font-bold text-purple-600">19:40</span></span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      {/* 步信APP签到奖励 */}
+                      <div>
+                        <h4 className="text-sm sm:text-base font-semibold text-purple-700 mb-2 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full"></span>
+                          步信APP签到奖励
+                        </h4>
+                        <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
+                          <li className="flex items-start gap-2">
+                            <span className="text-purple-500 mt-0.5">•</span>
+                            <span>平均每天<span className="font-bold text-purple-600">5元</span></span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-purple-500 mt-0.5">•</span>
+                            <span>每晚<span className="font-bold text-purple-600">8点</span>步信群查看如何进入课程和签到流程</span>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>

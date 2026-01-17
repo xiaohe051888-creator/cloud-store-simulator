@@ -22,7 +22,6 @@ import WeChatLinkGuide from '@/components/wechat-link-guide';
 import ShareModal from '@/components/share-modal';
 import PWAInstallPrompt from '@/components/pwa-install-prompt';
 import PWAUpdatePrompt from '@/components/pwa-update-prompt';
-import CatteaGame from '@/components/cattea-game';
 import { useShareParams } from '@/hooks/use-share-params';
 import {
   shopLevelsConfig,
@@ -129,9 +128,6 @@ function CloudShopSimulator() {
 
   // 分享弹窗状态
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
-
-  // 游戏弹窗状态
-  const [showGame, setShowGame] = useState<boolean>(false);
 
   // 获取分享参数
   const { shareParams, isFromShare, clearShareParams } = useShareParams();
@@ -491,16 +487,6 @@ function CloudShopSimulator() {
   // 查看公告
   const handleViewAnnouncement = () => {
     alert('公告功能开发中...');
-  };
-
-  // 玩小游戏
-  const handlePlayGame = () => {
-    setShowGame(true);
-  };
-
-  // 关闭游戏
-  const handleCloseGame = () => {
-    setShowGame(false);
   };
 
   // 删除对比数据
@@ -1389,30 +1375,6 @@ function CloudShopSimulator() {
 
                   {/* 箭头图标 */}
                   <svg className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-
-                {/* 小游戏 */}
-                <div
-                  onClick={handlePlayGame}
-                  className="group flex items-center p-4 sm:p-5 rounded-lg border border-rose-200 bg-white hover:bg-rose-50 transition-colors cursor-pointer"
-                >
-                  {/* 图标 */}
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center bg-rose-100 rounded-lg mr-4">
-                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-                    </svg>
-                  </div>
-
-                  {/* 标题和说明 */}
-                  <div className="flex-1">
-                    <h3 className="text-base sm:text-lg font-semibold text-rose-700 mb-0.5">小游戏</h3>
-                    <p className="text-xs sm:text-sm text-gray-500">玩游戏免费兑换复缴券</p>
-                  </div>
-
-                  {/* 箭头图标 */}
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-rose-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
@@ -2651,9 +2613,6 @@ function CloudShopSimulator() {
 
       {/* PWA更新提示 */}
       <PWAUpdatePrompt />
-
-      {/* 三消游戏 */}
-      {showGame && <CatteaGame onClose={handleCloseGame} />}
     </div>
   );
 }

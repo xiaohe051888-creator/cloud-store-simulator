@@ -1,67 +1,39 @@
 import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
+
 import { cn } from "@/lib/utils"
 
-/**
- * Apple Style Badge Component
- * 苹果官网风格的徽章组件
- *
- * 设计特点：
- * - 极简设计
- * - 圆形或圆角矩形
- * - 纯色背景（不再使用渐变）
- * - 小字体
- * - 柔和阴影
- */
-
 const badgeVariants = cva(
-  "inline-flex items-center justify-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-300 w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 [&>svg]:pointer-events-none focus-visible:outline-none",
+  "inline-flex items-center rounded-full border",
+  "px-3 py-1",
+  "text-sm font-medium",
+  "transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "shadow-[0_1px_3px_rgba(0,0,0,0.06)]",
   {
     variants: {
       variant: {
         default:
-          "bg-blue-600 text-white shadow-[0_2px_8px_rgba(37,99,235,0.24)]",
+          "border-transparent bg-primary text-primary-foreground",
         secondary:
-          "bg-gray-100 text-gray-900 shadow-[0_2px_8px_rgba(0,0,0,0.04)]",
+          "border-transparent bg-gray-100 text-gray-900 hover:bg-gray-200",
         destructive:
-          "bg-red-600 text-white shadow-[0_2px_8px_rgba(220,38,38,0.24)]",
-        outline:
-          "border-2 border-gray-300 bg-transparent text-gray-700 hover:bg-gray-50",
-        success:
-          "bg-green-600 text-white shadow-[0_2px_8px_rgba(22,163,74,0.24)]",
-        warning:
-          "bg-orange-500 text-white shadow-[0_2px_8px_rgba(249,115,22,0.24)]",
-      },
-      size: {
-        default: "text-xs px-3 py-1.5",
-        sm: "text-[10px] px-2 py-1",
-        lg: "text-sm px-4 py-2",
+          "border-transparent bg-red-500 text-white hover:bg-red-500/90",
+        outline: "text-foreground border-gray-200/50",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "default",
     },
   }
 )
 
-function Badge({
-  className,
-  variant,
-  size,
-  asChild = false,
-  ...props
-}: React.ComponentProps<"span"> &
-  VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot : "span"
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badgeVariants> {}
 
+function Badge({ className, variant, ...props }: BadgeProps) {
   return (
-    <Comp
-      data-slot="badge"
-      className={cn(badgeVariants({ variant, size }), className)}
-      {...props}
-    />
+    <div className={cn(badgeVariants({ variant }), className)} {...props} />
   )
 }
 

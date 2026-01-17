@@ -474,6 +474,16 @@ function CloudShopSimulator() {
     setCurrentView('comparison');
   };
 
+  // 查看福利介绍
+  const handleViewBenefits = () => {
+    alert('福利介绍功能开发中...');
+  };
+
+  // 查看公告
+  const handleViewAnnouncement = () => {
+    alert('公告功能开发中...');
+  };
+
   // 删除对比数据
   const handleDeleteComparison = (id: string) => {
     setComparisonData(prev => prev.filter(item => item.id !== id));
@@ -1182,22 +1192,54 @@ function CloudShopSimulator() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50" onKeyDown={handleKeyDown}>
       {/* 顶部导航栏 */}
       <header className="bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100 sticky top-0 z-50">
-        <div className="container mx-auto px-2 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 flex justify-between items-center">
+        <div className="container mx-auto px-2 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 flex justify-between items-center gap-2 sm:gap-4">
+          {/* 左侧：应用名称和版本号 */}
           <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <h1 className="text-sm sm:text-base lg:text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                云店模拟器
+              </h1>
+              <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium">
+                v0.1.0
+              </span>
+            </div>
+          </div>
+
+          {/* 右侧：功能按钮 */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* 数据对比 - 仅在有对比数据时显示 */}
+            {comparisonData.length > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleViewComparison}
+                className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-2.5 hidden xs:block"
+              >
+                数据对比({comparisonData.length})
+              </Button>
+            )}
+
+            {/* 福利介绍 */}
             <Button
               variant="outline"
               size="sm"
-              onClick={handleViewComparison}
-              disabled={comparisonData.length === 0}
-              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-2.5"
+              onClick={handleViewBenefits}
+              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-orange-300 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-2.5"
             >
-              数据对比{comparisonData.length > 0 && ` (${comparisonData.length})`}
+              福利介绍
             </Button>
-          </div>
-          <div className="flex items-center gap-0.5 sm:gap-2 lg:gap-3">
-            <h1 className="text-base sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              云店模拟器
-            </h1>
+
+            {/* 公告 */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleViewAnnouncement}
+              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-purple-300 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-2.5"
+            >
+              公告
+            </Button>
+
+            {/* 回到首页 */}
             <Button
               variant="outline"
               size="sm"

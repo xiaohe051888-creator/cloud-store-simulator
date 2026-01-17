@@ -1748,7 +1748,7 @@ function CloudShopSimulator() {
                     </div>
                     <div className="text-left">
                       <h3 className="text-base sm:text-lg font-bold text-purple-700">四、步信群每日福利</h3>
-                      <p className="text-xs sm:text-sm text-gray-600">课程和签到流程</p>
+                      <p className="text-xs sm:text-sm text-gray-600">步信红包、签到奖励</p>
                     </div>
                   </div>
                   <svg
@@ -1764,13 +1764,39 @@ function CloudShopSimulator() {
                 {expandedBenefit === 'buxin' && (
                   <div className="p-4 sm:p-5 bg-white border-t border-purple-200">
                     <div className="space-y-4">
-                      {/* 步信群 */}
+                      {/* 步信上：太极社区交流群 */}
                       <div>
                         <h4 className="text-sm sm:text-base font-semibold text-purple-700 mb-2 flex items-center gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full"></span>
-                          步信群
+                          步信上：太极社区交流群
                         </h4>
                         <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
+                          <li className="flex items-start gap-2">
+                            <span className="text-purple-500 mt-0.5">•</span>
+                            <span>每天会发<span className="font-bold text-purple-600">2次</span>红包</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-purple-500 mt-0.5">•</span>
+                            <span>第一次：<span className="font-bold text-purple-600">15:00</span></span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-purple-500 mt-0.5">•</span>
+                            <span>第二次：<span className="font-bold text-purple-600">19:40</span></span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      {/* 步信APP签到奖励 */}
+                      <div>
+                        <h4 className="text-sm sm:text-base font-semibold text-purple-700 mb-2 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full"></span>
+                          步信APP签到奖励
+                        </h4>
+                        <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
+                          <li className="flex items-start gap-2">
+                            <span className="text-purple-500 mt-0.5">•</span>
+                            <span>平均每天<span className="font-bold text-purple-600">5元</span></span>
+                          </li>
                           <li className="flex items-start gap-2">
                             <span className="text-purple-500 mt-0.5">•</span>
                             <span>每天<span className="font-bold text-purple-600">19:40</span>步信群查看如何进入课程和签到流程</span>

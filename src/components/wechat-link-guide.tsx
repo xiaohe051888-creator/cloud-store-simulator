@@ -117,7 +117,7 @@ export default function WeChatLinkGuide({ isVisible, onClose, targetUrl }: WeCha
               <div className="mb-6 p-3 bg-blue-50 border border-blue-200 rounded-xl">
                 <p className="text-xs sm:text-sm text-blue-700 text-center">
                   <span className="font-semibold">提示：</span>
-                  按照下面的流程进入跳转到浏览器
+                  按照下面的流程操作跳转到浏览器
                 </p>
               </div>
             )}

@@ -1185,10 +1185,13 @@ function CloudShopSimulator() {
 
   // 处理目标链接跳转（用于微信中打开后的自动跳转）
   useEffect(() => {
+    // 检查是否有分享参数，如果有分享参数，不执行跳转（分享功能优先）
     const params = new URLSearchParams(window.location.search);
+    const hasShareParams = params.get('level') || params.get('stock') || params.get('balance') || params.get('max') || params.get('profit');
     const target = params.get('target');
 
-    if (target) {
+    // 只有当有 target 参数且没有分享参数时才处理
+    if (target && !hasShareParams) {
       // 保存目标URL
       const targetUrl = decodeURIComponent(target);
       setTargetUrl(targetUrl);
@@ -1198,7 +1201,9 @@ function CloudShopSimulator() {
 
       if (!isWeChatBrowser) {
         // 不在微信中，跳转到目标链接
-        window.location.href = targetUrl;
+        // 使用 replace 确保替换当前页面，避免历史记录问题
+        console.log('正在跳转到目标链接:', targetUrl);
+        window.location.replace(targetUrl);
       } else {
         // 在微信中，显示引导页面
         setShowWeChatLinkGuide(true);
@@ -1227,7 +1232,7 @@ function CloudShopSimulator() {
                 云店模拟器
               </h1>
               <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text">
-                v1.2.0
+                v1.2.1
               </span>
             </div>
           </div>

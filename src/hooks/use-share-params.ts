@@ -42,8 +42,9 @@ export function useShareParams() {
       // 保存到 localStorage，确保 PWA 启动时也能获取到参数
       localStorage.setItem(SHARE_PARAMS_STORAGE_KEY, JSON.stringify(params));
 
-      // 清除 URL 参数，保持 URL 干净
-      const cleanUrl = window.location.pathname;
+      // 清除 URL 参数，保持 URL 干净，但保留 target 参数
+      const target = searchParams.get('target');
+      const cleanUrl = target ? `${window.location.pathname}?target=${target}` : window.location.pathname;
       router.replace(cleanUrl);
     } else {
       // 如果 URL 中没有参数，尝试从 localStorage 读取（PWA 场景）

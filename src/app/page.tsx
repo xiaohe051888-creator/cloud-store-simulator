@@ -1400,7 +1400,7 @@ function CloudShopSimulator() {
                 模拟进货
               </CardTitle>
             </div>
-            <Card className="w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0 animate-in fade-in-0 slide-in-from-top-2 duration-300">
+            <Card className="w-full max-w-4xl mx-auto bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0 animate-in fade-in-0 slide-in-from-top-2 duration-300">
               <CardHeader className="pb-2.5 sm:pb-3 pt-3 sm:pt-4 lg:pt-5 px-4 sm:px-6 lg:px-8">
                 <CardTitle className="text-base sm:text-lg lg:text-xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
                   请选择你的店铺等级

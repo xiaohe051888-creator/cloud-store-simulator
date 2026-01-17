@@ -1234,16 +1234,6 @@ function CloudShopSimulator() {
               公告
             </Button>
 
-            {/* 福利介绍 */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleViewBenefits}
-              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-orange-300 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-2.5"
-            >
-              福利介绍
-            </Button>
-
             {/* 回到首页 */}
             <Button
               variant="outline"
@@ -1365,47 +1355,26 @@ function CloudShopSimulator() {
                   </svg>
                 </div>
 
-                {/* 分享给好友 */}
+                {/* 福利介绍 */}
                 <div
-                  onClick={async () => {
-                    const url = window.location.href;
-                    try {
-                      await navigator.clipboard.writeText(url);
-                      alert('链接已复制到剪贴板！');
-                    } catch (err) {
-                      // 如果复制失败，尝试使用传统的分享方式
-                      if (navigator.share) {
-                        try {
-                          await navigator.share({
-                            title: '云店模拟器',
-                            text: '专业的店铺经营管理模拟工具，支持多种店铺等级，详细计算利润和结算周期。',
-                            url: url
-                          });
-                        } catch (shareErr) {
-                          alert('无法复制链接，请手动复制地址栏链接');
-                        }
-                      } else {
-                        alert('无法复制链接，请手动复制地址栏链接');
-                      }
-                    }
-                  }}
-                  className="group flex items-center p-4 sm:p-5 rounded-lg border border-pink-200 bg-white hover:bg-pink-50 transition-colors cursor-pointer"
+                  onClick={handleViewBenefits}
+                  className="group flex items-center p-4 sm:p-5 rounded-lg border border-amber-200 bg-white hover:bg-amber-50 transition-colors cursor-pointer"
                 >
                   {/* 图标 */}
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center bg-pink-100 rounded-lg mr-4">
-                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center bg-amber-100 rounded-lg mr-4">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                     </svg>
                   </div>
 
                   {/* 标题和说明 */}
                   <div className="flex-1">
-                    <h3 className="text-base sm:text-lg font-semibold text-pink-700 mb-0.5">分享给好友</h3>
-                    <p className="text-xs sm:text-sm text-gray-500">复制网站链接，分享给好友使用</p>
+                    <h3 className="text-base sm:text-lg font-semibold text-amber-700 mb-0.5">福利介绍</h3>
+                    <p className="text-xs sm:text-sm text-gray-500">查看平台福利政策、奖励机制和优惠活动</p>
                   </div>
 
                   {/* 箭头图标 */}
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-pink-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>

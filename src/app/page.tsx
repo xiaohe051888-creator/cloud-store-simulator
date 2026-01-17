@@ -1209,7 +1209,7 @@ function CloudShopSimulator() {
                 variant="outline"
                 size="sm"
                 onClick={handleViewComparison}
-                className="touch-feedback text-[10px] sm:text-xs lg:text-sm font-semibold h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3 rounded-xl border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-700 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20 hover:bg-gradient-to-r hover:from-blue-100 hover:to-cyan-100 transition-all duration-300"
+                className="touch-feedback text-xs sm:text-sm lg:text-base font-bold h-10 sm:h-11 lg:h-12 px-3 sm:px-4 lg:px-5 rounded-xl border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-700 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20 hover:bg-gradient-to-r hover:from-blue-100 hover:to-cyan-100 transition-all duration-300"
               >
                 数据对比({comparisonData.length})
               </Button>
@@ -1220,7 +1220,7 @@ function CloudShopSimulator() {
               variant="outline"
               size="sm"
               onClick={handleViewAnnouncement}
-              className="touch-feedback text-[10px] sm:text-xs lg:text-sm font-semibold h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3 rounded-xl border-2 border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 hover:border-purple-400 hover:shadow-lg hover:shadow-purple-500/20 hover:bg-gradient-to-r hover:from-purple-100 hover:to-pink-100 transition-all duration-300"
+              className="touch-feedback text-xs sm:text-sm lg:text-base font-bold h-10 sm:h-11 lg:h-12 px-3 sm:px-4 lg:px-5 rounded-xl border-2 border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 hover:border-purple-400 hover:shadow-lg hover:shadow-purple-500/20 hover:bg-gradient-to-r hover:from-purple-100 hover:to-pink-100 transition-all duration-300"
             >
               公告
             </Button>
@@ -1230,7 +1230,7 @@ function CloudShopSimulator() {
               variant="outline"
               size="sm"
               onClick={handleGoHome}
-              className="touch-feedback text-[10px] sm:text-xs lg:text-sm font-semibold h-8 sm:h-9 lg:h-10 px-2 sm:px-2.5 lg:px-3 rounded-xl border-2 border-gray-200 bg-gradient-to-r from-gray-50 to-slate-50 text-gray-700 hover:border-gray-400 hover:shadow-lg hover:shadow-gray-500/20 hover:bg-gradient-to-r hover:from-gray-100 hover:to-slate-100 transition-all duration-300"
+              className="touch-feedback text-xs sm:text-sm lg:text-base font-bold h-10 sm:h-11 lg:h-12 px-3 sm:px-4 lg:px-5 rounded-xl border-2 border-gray-200 bg-gradient-to-r from-gray-50 to-slate-50 text-gray-700 hover:border-gray-400 hover:shadow-lg hover:shadow-gray-500/20 hover:bg-gradient-to-r hover:from-gray-100 hover:to-slate-100 transition-all duration-300"
             >
               回到首页
             </Button>

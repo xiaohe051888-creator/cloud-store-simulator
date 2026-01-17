@@ -227,17 +227,17 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white/95 backdrop-blur-xl shadow-2xl animate-in fade-in-0 zoom-in-95 duration-300">
-        <div className="flex flex-row items-center justify-between pb-4 pt-6 px-6 border-b border-gray-100">
-          <h2 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/30 backdrop-blur-sm p-4">
+      <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-background/95 backdrop-blur-xl apple-shadow-lg animate-apple-fade-in">
+        <div className="flex flex-row items-center justify-between pb-4 pt-6 px-6 border-b border-border/60">
+          <h2 className="text-xl font-semibold apple-text-gradient">
             分享我的云店
           </h2>
           <Button
             variant="ghost"
             size="icon"
             onClick={onClose}
-            className="h-8 w-8 rounded-full hover:bg-gray-100 active:scale-90 transition-all duration-200"
+            className="h-8 w-8 rounded-full hover:bg-accent/50 active:scale-90 transition-all duration-200"
           >
             <X className="h-5 w-5" />
           </Button>
@@ -247,21 +247,21 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
           {/* 分享卡片预览 */}
           <div
             ref={shareCardRef}
-            className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 rounded-2xl p-6 shadow-xl border-2 border-blue-100"
+            className="bg-background rounded-[20px] p-6 apple-shadow border border-border/60"
           >
             {/* 顶部标题 */}
             <div className="text-center mb-6">
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+              <h3 className="text-2xl font-semibold apple-text-gradient mb-2">
                 云店经营数据
               </h3>
-              <p className="text-sm text-gray-600">专业的店铺经营管理模拟工具</p>
+              <p className="text-sm text-muted-foreground">专业的店铺经营管理模拟工具</p>
             </div>
 
             {/* 店铺等级 */}
-            <div className="bg-white rounded-xl p-4 mb-4 shadow-md">
+            <div className="bg-muted/50 rounded-[12px] p-4 mb-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">店铺等级</span>
-                <span className="text-xl font-bold text-blue-600">
+                <span className="text-sm text-muted-foreground">店铺等级</span>
+                <span className="text-xl font-semibold text-primary">
                   {shareData.shopLevel}
                 </span>
               </div>
@@ -269,37 +269,37 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
 
             {/* 核心数据 */}
             <div className="grid grid-cols-2 gap-4 mb-4">
-              <div className="bg-white rounded-xl p-4 shadow-md">
-                <p className="text-xs text-gray-500 mb-1">进货额度</p>
-                <p className="text-lg font-bold text-gray-800">
+              <div className="bg-muted/50 rounded-[12px] p-4">
+                <p className="text-xs text-muted-foreground mb-1">进货额度</p>
+                <p className="text-lg font-semibold text-foreground">
                   {shareData.stockAmount}⚡
                 </p>
               </div>
-              <div className="bg-white rounded-xl p-4 shadow-md">
-                <p className="text-xs text-gray-500 mb-1">云店余额</p>
-                <p className="text-lg font-bold text-gray-800">
+              <div className="bg-muted/50 rounded-[12px] p-4">
+                <p className="text-xs text-muted-foreground mb-1">云店余额</p>
+                <p className="text-lg font-semibold text-foreground">
                   {shareData.cloudBalance}⚡
                 </p>
               </div>
-              <div className="bg-white rounded-xl p-4 shadow-md">
-                <p className="text-xs text-gray-500 mb-1">日收益</p>
-                <p className="text-lg font-bold text-green-600">
+              <div className="bg-muted/50 rounded-[12px] p-4">
+                <p className="text-xs text-muted-foreground mb-1">日收益</p>
+                <p className="text-lg font-semibold text-primary">
                   {shareData.dailyCommission.toFixed(2)}元
                 </p>
               </div>
-              <div className="bg-white rounded-xl p-4 shadow-md">
-                <p className="text-xs text-gray-500 mb-1">完成天数</p>
-                <p className="text-lg font-bold text-gray-800">
+              <div className="bg-muted/50 rounded-[12px] p-4">
+                <p className="text-xs text-muted-foreground mb-1">完成天数</p>
+                <p className="text-lg font-semibold text-foreground">
                   {shareData.completionDays}天
                 </p>
               </div>
             </div>
 
             {/* 总利润 */}
-            <div className="bg-gradient-to-r from-green-400 to-emerald-500 rounded-xl p-4 shadow-lg">
+            <div className="bg-primary rounded-[12px] p-4 apple-shadow">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-white font-medium">总利润</span>
-                <span className="text-2xl font-bold text-white">
+                <span className="text-sm text-primary-foreground font-medium">总利润</span>
+                <span className="text-2xl font-semibold text-primary-foreground">
                   {shareData.totalProfit.toFixed(2)}元
                 </span>
               </div>
@@ -307,7 +307,7 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
 
             {/* 底部信息 */}
             <div className="mt-4 text-center">
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-muted-foreground">
                 使用云店模拟器，优化你的店铺经营策略
               </p>
             </div>
@@ -315,7 +315,7 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
 
           {/* 二维码 */}
           <div className="flex justify-center">
-            <div className="bg-white rounded-xl p-4 shadow-md">
+            <div className="bg-muted/50 rounded-[12px] p-4 apple-shadow">
               <QRCodeSVG
                 value={shareUrl}
                 size={180}
@@ -333,7 +333,7 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
                 <Button
                   onClick={handleDownloadImage}
                   variant="outline"
-                  className="flex items-center justify-center gap-2 h-12"
+                  className="flex items-center justify-center gap-2 h-12 apple-button"
                 >
                   <Download className="h-4 w-4" />
                   下载图片
@@ -341,7 +341,7 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
                 <Button
                   onClick={handleCopyLink}
                   variant="outline"
-                  className="flex items-center justify-center gap-2 h-12"
+                  className="flex items-center justify-center gap-2 h-12 apple-button"
                 >
                   <Copy className="h-4 w-4" />
                   {copied ? '已复制' : '复制链接'}
@@ -353,7 +353,7 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
             {isMobile && isWeChat() && (
               <Button
                 onClick={handleShareToWeChat}
-                className="flex items-center justify-center gap-2 h-12 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 col-span-2"
+                className="flex items-center justify-center gap-2 h-12 apple-button col-span-2"
               >
                 <MessageCircle className="h-4 w-4" />
                 {copied ? '已复制，请在微信中粘贴发送' : '分享到微信'}
@@ -366,7 +366,7 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
                 <Button
                   onClick={handleDownloadImage}
                   variant="outline"
-                  className="flex items-center justify-center gap-2 h-12"
+                  className="flex items-center justify-center gap-2 h-12 apple-button"
                 >
                   <Download className="h-4 w-4" />
                   下载图片
@@ -374,7 +374,7 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
                 <Button
                   onClick={handleCopyLink}
                   variant="outline"
-                  className="flex items-center justify-center gap-2 h-12"
+                  className="flex items-center justify-center gap-2 h-12 apple-button"
                 >
                   <Copy className="h-4 w-4" />
                   {copied ? '已复制' : '复制链接'}

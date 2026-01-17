@@ -62,10 +62,10 @@ export default function DownloadPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">正在准备下载...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-foreground">正在准备下载...</p>
         </div>
       </div>
     );
@@ -73,14 +73,14 @@ export default function DownloadPage() {
 
   if (error || !downloadInfo?.success) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 via-white to-pink-50 p-4">
-        <Card className="w-full max-w-md shadow-2xl">
+      <div className="min-h-screen flex items-center justify-center bg-background p-4">
+        <Card className="w-full max-w-md apple-shadow-lg">
           <CardHeader>
-            <CardTitle className="text-red-600">获取下载链接失败</CardTitle>
+            <CardTitle className="text-destructive">获取下载链接失败</CardTitle>
             <CardDescription>{error || downloadInfo?.error || '未知错误'}</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button onClick={fetchDownloadInfo} variant="outline" className="w-full">
+            <Button onClick={fetchDownloadInfo} variant="outline" className="w-full apple-button">
               重试
             </Button>
           </CardContent>
@@ -90,12 +90,12 @@ export default function DownloadPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4">
-      <Card className="w-full max-w-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300">
+    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+      <Card className="w-full max-w-2xl apple-shadow-lg hover:shadow-xl transition-shadow duration-300">
         <CardHeader className="text-center space-y-4">
           <div className="flex justify-center">
-            <div className="bg-blue-100 p-4 rounded-full">
-              <FileArchive className="h-12 w-12 text-blue-600" />
+            <div className="bg-primary/10 p-4 rounded-full">
+              <FileArchive className="h-12 w-12 text-primary" />
             </div>
           </div>
           <CardTitle className="text-2xl">云店模拟器 - 源代码下载</CardTitle>
@@ -105,45 +105,45 @@ export default function DownloadPage() {
         </CardHeader>
         <CardContent className="space-y-6">
           {/* 文件信息 */}
-          <div className="bg-gray-50 rounded-lg p-6 space-y-3">
+          <div className="bg-muted/50 rounded-xl p-6 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">文件名</span>
+              <span className="text-muted-foreground">文件名</span>
               <span className="font-mono text-sm">cloud-shop-simulator.zip</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">文件大小</span>
-              <span className="font-semibold text-blue-600">
+              <span className="text-muted-foreground">文件大小</span>
+              <span className="font-semibold text-primary">
                 {downloadInfo.size ? formatSize(downloadInfo.size) : '未知'}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">有效期</span>
-              <span className="text-gray-800">7 天</span>
+              <span className="text-muted-foreground">有效期</span>
+              <span className="text-foreground">7 天</span>
             </div>
           </div>
 
           {/* 包含内容 */}
           <div className="space-y-2">
-            <h3 className="font-semibold text-gray-800">包含内容</h3>
-            <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
+            <h3 className="font-semibold text-foreground">包含内容</h3>
+            <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
-                <Package className="h-4 w-4 text-green-600" />
+                <Package className="h-4 w-4 text-primary" />
                 完整源代码
               </div>
               <div className="flex items-center gap-2">
-                <Package className="h-4 w-4 text-green-600" />
+                <Package className="h-4 w-4 text-primary" />
                 配置文件
               </div>
               <div className="flex items-center gap-2">
-                <Package className="h-4 w-4 text-green-600" />
+                <Package className="h-4 w-4 text-primary" />
                 组件定义
               </div>
               <div className="flex items-center gap-2">
-                <Package className="h-4 w-4 text-green-600" />
+                <Package className="h-4 w-4 text-primary" />
                 静态资源
               </div>
             </div>
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-muted-foreground mt-2">
               * 不包含 node_modules，解压后需要运行 pnpm install
             </p>
           </div>
@@ -152,20 +152,20 @@ export default function DownloadPage() {
           <Button
             onClick={handleDownload}
             size="lg"
-            className="w-full bg-blue-600 hover:bg-blue-700 active:scale-95 transition-all duration-200"
+            className="w-full apple-button"
           >
             <Download className="mr-2 h-5 w-5" />
             下载源代码
           </Button>
 
           {/* 使用说明 */}
-          <div className="text-sm text-gray-600 space-y-1">
-            <p className="font-semibold">使用方法：</p>
+          <div className="text-sm text-muted-foreground space-y-1">
+            <p className="font-semibold text-foreground">使用方法：</p>
             <ol className="list-decimal list-inside space-y-1 ml-2">
               <li>下载并解压文件</li>
               <li>在终端中进入项目目录</li>
-              <li>运行 <code className="bg-gray-100 px-2 py-1 rounded">pnpm install</code></li>
-              <li>运行 <code className="bg-gray-100 px-2 py-1 rounded">coze dev</code> 启动项目</li>
+              <li>运行 <code className="bg-muted px-2 py-1 rounded text-xs">pnpm install</code></li>
+              <li>运行 <code className="bg-muted px-2 py-1 rounded text-xs">coze dev</code> 启动项目</li>
             </ol>
           </div>
         </CardContent>

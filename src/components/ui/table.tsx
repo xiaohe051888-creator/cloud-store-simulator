@@ -1,14 +1,26 @@
 "use client"
 
 import * as React from "react"
-
 import { cn } from "@/lib/utils"
+
+/**
+ * Apple Style Table Component
+ * 苹果官网风格的表格组件
+ *
+ * 设计特点：
+ * - 清晰的行高（48px）
+ * - 超细透明边框
+ * - 大量留白
+ * - 表头轻微背景色
+ * - 柔和的悬停效果
+ * - 文字居中对齐
+ */
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
     <div
       data-slot="table-container"
-      className="relative w-full overflow-x-auto"
+      className="relative w-full overflow-x-auto rounded-3xl border border-gray-200/50 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.04)]"
     >
       <table
         data-slot="table"
@@ -23,7 +35,10 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
   return (
     <thead
       data-slot="table-header"
-      className={cn("[&_tr]:border-b [&_tr]:bg-muted/30", className)}
+      className={cn(
+        "bg-gray-50/50 [&_tr]:border-b [&_tr]:border-gray-200/50",
+        className
+      )}
       {...props}
     />
   )
@@ -33,7 +48,11 @@ function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
   return (
     <tbody
       data-slot="table-body"
-      className={cn("[&_tr:last-child]:border-0 [&_tr]:transition-colors [&_tr]:duration-200", className)}
+      className={cn(
+        "[&_tr:last-child]:border-0 [&_tr]:border-b [&_tr]:border-gray-100",
+        "[&_tr]:transition-colors [&_tr]:duration-300 [&_tr]:hover:bg-gray-50/80",
+        className
+      )}
       {...props}
     />
   )
@@ -44,7 +63,7 @@ function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
     <tfoot
       data-slot="table-footer"
       className={cn(
-        "bg-muted/50 border-t font-medium [&>tr]:last:border-b-0 [&>tr]:bg-muted/30",
+        "bg-gray-50/80 border-t-2 border-gray-200 font-medium [&>tr]:last:border-b-0",
         className
       )}
       {...props}
@@ -57,7 +76,7 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
     <tr
       data-slot="table-row"
       className={cn(
-        "hover:bg-accent/50 data-[state=selected]:bg-accent/70 border-b border-border/60 transition-all duration-200",
+        "transition-colors duration-300",
         className
       )}
       {...props}
@@ -70,7 +89,8 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
     <th
       data-slot="table-head"
       className={cn(
-        "text-foreground h-12 px-3 text-left align-middle font-semibold whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+        "h-14 px-6 text-left align-middle font-semibold text-gray-700 tracking-tight whitespace-nowrap",
+        "[&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
       {...props}
@@ -83,7 +103,8 @@ function TableCell({ className, ...props }: React.ComponentProps<"td">) {
     <td
       data-slot="table-cell"
       className={cn(
-        "p-3 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+        "h-14 px-6 align-middle text-gray-600 whitespace-nowrap",
+        "[&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
       {...props}
@@ -98,7 +119,7 @@ function TableCaption({
   return (
     <caption
       data-slot="table-caption"
-      className={cn("text-muted-foreground mt-4 text-sm", className)}
+      className={cn("text-gray-500 mt-4 text-sm font-medium", className)}
       {...props}
     />
   )

@@ -1400,20 +1400,20 @@ function CloudShopSimulator() {
                 模拟进货
               </CardTitle>
             </div>
-            <Card className="w-full bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0 animate-in fade-in-0 slide-in-from-top-2 duration-300">
-              <CardHeader className="pb-2.5 sm:pb-3 pt-2 sm:pt-2.5 lg:pt-3 px-4 sm:px-6 lg:px-8">
+            <Card className="w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0 animate-in fade-in-0 slide-in-from-top-2 duration-300">
+              <CardHeader className="pb-2.5 sm:pb-3 pt-3 sm:pt-4 lg:pt-5 px-4 sm:px-6 lg:px-8">
                 <CardTitle className="text-base sm:text-lg lg:text-xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
                   请选择你的店铺等级
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2.5 sm:space-y-3 lg:space-y-4 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-5 lg:pb-7">
+              <CardContent className="space-y-2 sm:space-y-2.5 lg:space-y-3 px-3 sm:px-4 lg:px-6 pb-3 sm:pb-4 lg:pb-5">
                 {Object.entries(shopLevelsConfig).map(([level, config]) => {
                   if (!config || !level) return null;
                   return (
                     <div
                       key={level}
                       onClick={() => handleSelectLevel(level as ShopLevel)}
-                      className="group touch-feedback flex items-center p-4 sm:p-5 rounded-xl border-2 bg-white hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden"
+                      className="group touch-feedback flex items-center p-3 sm:p-3.5 rounded-xl border-2 bg-white hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden"
                       style={{
                         borderColor: config.color,
                       }}
@@ -1427,9 +1427,9 @@ function CloudShopSimulator() {
                       />
 
                       {/* 左侧：店铺名称 */}
-                      <div className="w-20 sm:w-28 lg:w-32 md:w-32 lg:w-36 flex-shrink-0 relative z-10">
+                      <div className="w-16 sm:w-20 flex-shrink-0 relative z-10">
                         <h3
-                          className="text-sm sm:text-base lg:text-xl font-bold group-hover:scale-105 transition-transform duration-300"
+                          className="text-xs sm:text-sm lg:text-base font-bold group-hover:scale-105 transition-transform duration-300"
                           style={{
                             color: config.color === '#000000' ? '#1f2937' : config.color,
                           }}
@@ -1439,32 +1439,32 @@ function CloudShopSimulator() {
                       </div>
 
                       {/* 中间：提示信息（居中） */}
-                      <div className="hidden md:flex flex-1 justify-center items-center space-x-2 sm:space-x-3 lg:space-x-4 relative z-10">
-                        <div className="flex items-center text-xs sm:text-sm lg:text-base bg-white/80 px-3 py-1.5 rounded-full shadow-sm">
-                          <span className="font-bold text-sm sm:text-base lg:text-lg text-green-600">
+                      <div className="hidden md:flex flex-1 justify-center items-center space-x-1.5 sm:space-x-2 relative z-10">
+                        <div className="flex items-center text-xs sm:text-sm bg-white/80 px-2 sm:px-2.5 py-1 rounded-full shadow-sm">
+                          <span className="font-bold text-xs sm:text-sm lg:text-base text-green-600">
                             {config.minStock}-{config.maxStock}⚡
                           </span>
                         </div>
-                        <div className="flex items-center text-xs sm:text-sm lg:text-base bg-white/80 px-3 py-1.5 rounded-full shadow-sm">
-                          <span className="font-bold text-sm sm:text-base lg:text-lg text-blue-600">
+                        <div className="flex items-center text-xs sm:text-sm bg-white/80 px-2 sm:px-2.5 py-1 rounded-full shadow-sm">
+                          <span className="font-bold text-xs sm:text-sm lg:text-base text-blue-600">
                             {(config.stockDiscount * 10).toFixed(1)}折
                           </span>
                         </div>
                       </div>
 
                       {/* 移动端：简化信息 */}
-                      <div className="md:hidden flex flex-col space-y-1.5 flex-1 px-3 relative z-10">
-                        <div className="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full inline-block">
+                      <div className="md:hidden flex flex-col space-y-1 flex-1 px-2 relative z-10">
+                        <div className="text-[10px] sm:text-xs font-bold text-green-600 bg-green-50 px-1.5 sm:px-2 py-0.5 rounded-full inline-block">
                           {config.minStock}-{config.maxStock}⚡
                         </div>
-                        <div className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-full inline-block">
+                        <div className="text-[10px] sm:text-xs font-bold text-blue-600 bg-blue-50 px-1.5 sm:px-2 py-0.5 rounded-full inline-block">
                           {(config.stockDiscount * 10).toFixed(1)}折
                         </div>
                       </div>
 
                       {/* 右侧：箭头图标 */}
                       <svg
-                        className="w-6 h-6 sm:w-7 sm:h-7 text-gray-400 flex-shrink-0 group-hover:translate-x-1 group-hover:opacity-100 transition-all duration-300 relative z-10"
+                        className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 flex-shrink-0 group-hover:translate-x-1 group-hover:opacity-100 transition-all duration-300 relative z-10"
                         style={{
                           color: config.color,
                         }}

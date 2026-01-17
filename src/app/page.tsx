@@ -1406,14 +1406,14 @@ function CloudShopSimulator() {
                   请选择你的店铺等级
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2 sm:space-y-2.5 lg:space-y-3 px-3 sm:px-4 lg:px-6 pb-3 sm:pb-4 lg:pb-5">
+              <CardContent className="space-y-2.5 sm:space-y-3 lg:space-y-4 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-5 lg:pb-7">
                 {Object.entries(shopLevelsConfig).map(([level, config]) => {
                   if (!config || !level) return null;
                   return (
                     <div
                       key={level}
                       onClick={() => handleSelectLevel(level as ShopLevel)}
-                      className="group touch-feedback flex items-center p-3 sm:p-3.5 rounded-xl border-2 bg-white hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden"
+                      className="group touch-feedback flex items-center p-4 sm:p-5 rounded-xl border-2 bg-white hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden"
                       style={{
                         borderColor: config.color,
                       }}
@@ -1429,7 +1429,7 @@ function CloudShopSimulator() {
                       {/* 左侧：店铺名称 */}
                       <div className="w-16 sm:w-20 flex-shrink-0 relative z-10">
                         <h3
-                          className="text-xs sm:text-sm lg:text-base font-bold group-hover:scale-105 transition-transform duration-300"
+                          className="text-base sm:text-lg font-bold group-hover:scale-105 transition-transform duration-300"
                           style={{
                             color: config.color === '#000000' ? '#1f2937' : config.color,
                           }}
@@ -1441,12 +1441,12 @@ function CloudShopSimulator() {
                       {/* 中间：提示信息（居中） */}
                       <div className="hidden md:flex flex-1 justify-center items-center space-x-1.5 sm:space-x-2 relative z-10">
                         <div className="flex items-center text-xs sm:text-sm bg-white/80 px-2 sm:px-2.5 py-1 rounded-full shadow-sm">
-                          <span className="font-bold text-xs sm:text-sm lg:text-base text-green-600">
+                          <span className="font-bold text-sm sm:text-base lg:text-lg text-green-600">
                             {config.minStock}-{config.maxStock}⚡
                           </span>
                         </div>
                         <div className="flex items-center text-xs sm:text-sm bg-white/80 px-2 sm:px-2.5 py-1 rounded-full shadow-sm">
-                          <span className="font-bold text-xs sm:text-sm lg:text-base text-blue-600">
+                          <span className="font-bold text-sm sm:text-base lg:text-lg text-blue-600">
                             {(config.stockDiscount * 10).toFixed(1)}折
                           </span>
                         </div>
@@ -1454,17 +1454,17 @@ function CloudShopSimulator() {
 
                       {/* 移动端：简化信息 */}
                       <div className="md:hidden flex flex-col space-y-1 flex-1 px-2 relative z-10">
-                        <div className="text-[10px] sm:text-xs font-bold text-green-600 bg-green-50 px-1.5 sm:px-2 py-0.5 rounded-full inline-block">
+                        <div className="text-xs sm:text-sm font-bold text-green-600 bg-green-50 px-1.5 sm:px-2 py-0.5 rounded-full inline-block">
                           {config.minStock}-{config.maxStock}⚡
                         </div>
-                        <div className="text-[10px] sm:text-xs font-bold text-blue-600 bg-blue-50 px-1.5 sm:px-2 py-0.5 rounded-full inline-block">
+                        <div className="text-xs sm:text-sm font-bold text-blue-600 bg-blue-50 px-1.5 sm:px-2 py-0.5 rounded-full inline-block">
                           {(config.stockDiscount * 10).toFixed(1)}折
                         </div>
                       </div>
 
                       {/* 右侧：箭头图标 */}
                       <svg
-                        className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 flex-shrink-0 group-hover:translate-x-1 group-hover:opacity-100 transition-all duration-300 relative z-10"
+                        className="w-6 h-6 sm:w-7 sm:h-7 text-gray-400 flex-shrink-0 group-hover:translate-x-1 group-hover:opacity-100 transition-all duration-300 relative z-10"
                         style={{
                           color: config.color,
                         }}

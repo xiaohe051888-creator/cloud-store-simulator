@@ -1213,7 +1213,7 @@ function CloudShopSimulator() {
                 variant="outline"
                 size="sm"
                 onClick={handleViewComparison}
-                className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-2.5 hidden xs:block"
+                className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-blue-300 bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-2.5"
               >
                 数据对比({comparisonData.length})
               </Button>

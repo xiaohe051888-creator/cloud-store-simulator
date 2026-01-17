@@ -1361,13 +1361,13 @@ function CloudShopSimulator() {
                 {/* 福利介绍 */}
                 <div
                   onClick={handleViewBenefits}
-                  className="group touch-feedback flex items-center p-4 sm:p-5 rounded-xl border-2 border-amber-200 bg-white hover:border-amber-400 hover:shadow-lg hover:shadow-amber-500/10 hover:bg-gradient-to-r hover:from-amber-50 hover:to-red-50 transition-all duration-300 cursor-pointer relative overflow-hidden"
+                  className="group touch-feedback flex items-center p-4 sm:p-5 rounded-xl border-2 border-rose-200 bg-white hover:border-rose-400 hover:shadow-lg hover:shadow-rose-500/10 hover:bg-gradient-to-r hover:from-rose-50 hover:to-pink-50 transition-all duration-300 cursor-pointer relative overflow-hidden"
                 >
                   {/* 装饰性背景光晕 */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-amber-500/0 via-amber-500/5 to-amber-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-rose-500/0 via-rose-500/5 to-rose-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                   {/* 图标 */}
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-amber-500 to-red-600 rounded-xl mr-4 sm:mr-5 shadow-lg shadow-amber-500/20 group-hover:scale-110 group-hover:shadow-amber-500/30 transition-all duration-300 relative z-10">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-rose-500 to-pink-600 rounded-xl mr-4 sm:mr-5 shadow-lg shadow-rose-500/20 group-hover:scale-110 group-hover:shadow-rose-500/30 transition-all duration-300 relative z-10">
                     <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                     </svg>
@@ -1375,12 +1375,12 @@ function CloudShopSimulator() {
 
                   {/* 标题和说明 */}
                   <div className="flex-1 relative z-10">
-                    <h3 className="text-base sm:text-lg font-bold text-amber-800 mb-1 group-hover:text-amber-700 transition-colors">福利介绍</h3>
+                    <h3 className="text-base sm:text-lg font-bold text-rose-800 mb-1 group-hover:text-rose-700 transition-colors">福利介绍</h3>
                     <p className="text-xs sm:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">查看社区福利和平台福利政策、奖励机制等等</p>
                   </div>
 
                   {/* 箭头图标 */}
-                  <svg className="w-6 h-6 sm:w-7 sm:h-7 text-amber-500 flex-shrink-0 group-hover:translate-x-1 group-hover:text-amber-600 transition-all duration-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 sm:w-7 sm:h-7 text-rose-500 flex-shrink-0 group-hover:translate-x-1 group-hover:text-rose-600 transition-all duration-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>

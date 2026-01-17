@@ -22,7 +22,7 @@ import WeChatLinkGuide from '@/components/wechat-link-guide';
 import ShareModal from '@/components/share-modal';
 import PWAInstallPrompt from '@/components/pwa-install-prompt';
 import PWAUpdatePrompt from '@/components/pwa-update-prompt';
-import Match3Game3D from '@/components/match3-game-3d';
+import CatteaGame from '@/components/cattea-game';
 import { useShareParams } from '@/hooks/use-share-params';
 import {
   shopLevelsConfig,
@@ -2653,7 +2653,7 @@ function CloudShopSimulator() {
       <PWAUpdatePrompt />
 
       {/* 三消游戏 */}
-      {showGame && <Match3Game3D onClose={handleCloseGame} />}
+      {showGame && <CatteaGame onClose={handleCloseGame} />}
     </div>
   );
 }

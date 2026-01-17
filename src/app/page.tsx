@@ -42,7 +42,6 @@ function CloudShopSimulator() {
   const [cloudBalance, setCloudBalance] = useState<number>(0);      // 云店余额
   const [maxBalance, setMaxBalance] = useState<number>(0);           // 历史最高余额
   const [currentView, setCurrentView] = useState<ViewType>('shopSelection');
-  const [shopSelectionSubView, setShopSelectionSubView] = useState<'menu' | 'levelSelection'>('menu');
   const [isEditMaxBalance, setIsEditMaxBalance] = useState<boolean>(true);      // 最高余额是否可编辑
   
   // 对比数据状态
@@ -157,7 +156,6 @@ function CloudShopSimulator() {
   // 返回店铺选择
   const handleBackToShopSelection = () => {
     setCurrentView('shopSelection');
-    setShopSelectionSubView('menu');
   };
 
   // 返回首页（重置所有状态）
@@ -168,7 +166,6 @@ function CloudShopSimulator() {
     setCloudBalance(0);
     setMaxBalance(0);
     setCurrentView('shopSelection');
-    setShopSelectionSubView('menu');
     setStockInputValue('');
     setCloudBalanceInputValue('');
     setMaxBalanceInputValue('0');
@@ -1243,7 +1240,7 @@ function CloudShopSimulator() {
                     <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
                          style={{ backgroundColor: '#10b98125' }}>
                       <svg className="w-6 h-6 sm:w-7 sm:h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                       </svg>
                     </div>
 
@@ -1268,9 +1265,7 @@ function CloudShopSimulator() {
 
                 {/* 模拟进货 */}
                 <div
-                  onClick={() => {
-                    setShopSelectionSubView('levelSelection');
-                  }}
+                  onClick={() => setCurrentView('levelSelection')}
                   className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer bg-white"
                   style={{
                     borderColor: '#2563eb',
@@ -1286,7 +1281,7 @@ function CloudShopSimulator() {
                     <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
                          style={{ backgroundColor: '#2563eb25' }}>
                       <svg className="w-6 h-6 sm:w-7 sm:h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
                     </div>
 
@@ -1327,7 +1322,7 @@ function CloudShopSimulator() {
                     <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
                          style={{ backgroundColor: '#8b5cf625' }}>
                       <svg className="w-6 h-6 sm:w-7 sm:h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                       </svg>
                     </div>
 
@@ -1368,7 +1363,7 @@ function CloudShopSimulator() {
                     <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
                          style={{ backgroundColor: '#f59e0b25' }}>
                       <svg className="w-6 h-6 sm:w-7 sm:h-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                       </svg>
                     </div>
 
@@ -1393,11 +1388,26 @@ function CloudShopSimulator() {
 
                 {/* 分享给好友 */}
                 <div
-                  onClick={() => {
-                    if (detailsData && levelConfig) {
-                      setShowShareModal(true);
-                    } else {
-                      alert('请先模拟进货后再分享');
+                  onClick={async () => {
+                    const url = window.location.href;
+                    try {
+                      await navigator.clipboard.writeText(url);
+                      alert('链接已复制到剪贴板！');
+                    } catch (err) {
+                      // 如果复制失败，尝试使用传统的分享方式
+                      if (navigator.share) {
+                        try {
+                          await navigator.share({
+                            title: '云店模拟器',
+                            text: '专业的店铺经营管理模拟工具，支持多种店铺等级，详细计算利润和结算周期。',
+                            url: url
+                          });
+                        } catch (shareErr) {
+                          alert('无法复制链接，请手动复制地址栏链接');
+                        }
+                      } else {
+                        alert('无法复制链接，请手动复制地址栏链接');
+                      }
                     }
                   }}
                   className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer bg-white"
@@ -1422,7 +1432,7 @@ function CloudShopSimulator() {
                     {/* 中间：标题和说明 */}
                     <div className="flex-1 px-4 sm:px-5">
                       <h3 className="text-base sm:text-lg lg:text-xl font-bold text-pink-600 mb-1">分享给好友</h3>
-                      <p className="text-xs sm:text-sm text-gray-500">生成分享图片、复制链接、生成二维码</p>
+                      <p className="text-xs sm:text-sm text-gray-500">复制网站链接，分享给好友使用</p>
                     </div>
 
                     {/* 右侧：箭头图标 */}
@@ -1442,11 +1452,11 @@ function CloudShopSimulator() {
           </div>
         )}
 
-        {/* 模拟进货 - 店铺等级选择 */}
-        {currentView === 'shopSelection' && shopSelectionSubView === 'levelSelection' && (
+        {/* 店铺等级选择 - 模拟进货 */}
+        {currentView === 'levelSelection' && (
           <div className="w-full">
             <div className="flex items-center gap-3 mb-3 sm:mb-4">
-              <Button variant="ghost" size="icon" onClick={() => setShopSelectionSubView('menu')} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 sm:w-12 sm:h-12">
+              <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 sm:w-12 sm:h-12">
                 <span className="text-xl sm:text-2xl font-bold">←</span>
               </Button>
               <CardTitle className="text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">

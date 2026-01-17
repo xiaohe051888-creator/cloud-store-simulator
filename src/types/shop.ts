@@ -9,8 +9,9 @@ export type ShopLevel =
   | 'royal';
 
 // 界面类型
-export type ViewType = 
-  | 'shopSelection'
+export type ViewType =
+  | 'shopSelection'      // 首页菜单
+  | 'levelSelection'     // 店铺等级选择（模拟进货）
   | 'stockInput'
   | 'levelDetails'
   | 'salesDetails'

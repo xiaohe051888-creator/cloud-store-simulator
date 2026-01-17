@@ -120,9 +120,6 @@ function CloudShopSimulator() {
   const [isPeriodShaking, setIsPeriodShaking] = useState<boolean>(false);
   const [isProfitShaking, setIsProfitShaking] = useState<boolean>(false);
 
-  // 进入平台弹窗状态
-  const [showPlatformModal, setShowPlatformModal] = useState<boolean>(false);
-  
   // 微信链接引导状态
   const [showWeChatLinkGuide, setShowWeChatLinkGuide] = useState<boolean>(false);
 
@@ -1108,16 +1105,6 @@ function CloudShopSimulator() {
     return /micromessenger/i.test(navigator.userAgent);
   };
 
-  // 打开进入平台弹窗
-  const handleOpenPlatform = () => {
-    setShowPlatformModal(true);
-  };
-
-  // 关闭弹窗
-  const handleClosePlatformModal = () => {
-    setShowPlatformModal(false);
-  };
-
   // 打开链接
   const openLink = (url: string) => {
     // 检测是否在微信中打开
@@ -1224,166 +1211,78 @@ function CloudShopSimulator() {
               <CardContent className="space-y-2.5 sm:space-y-3 lg:space-y-4 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-5 lg:pb-7">
                 {/* 进入平台 */}
                 <div
-                  onClick={handleOpenPlatform}
-                  className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer bg-white"
-                  style={{
-                    borderColor: '#10b981',
-                    backgroundColor: '#10b98110'
-                  }}
+                  onClick={() => setCurrentView('platform')}
+                  className="group flex items-center p-4 sm:p-5 lg:p-6 rounded-xl border border-gray-200 bg-white hover:border-green-400 hover:shadow-md transition-all duration-200 cursor-pointer"
                 >
-                  {/* 渐变背景条 */}
-                  <div className="absolute left-0 top-0 bottom-0 w-2 rounded-l-xl bg-gradient-to-b from-green-400 to-emerald-500" />
-
-                  {/* 主内容 */}
-                  <div className="flex items-center p-4 sm:p-5 lg:p-6 pl-5 sm:pl-7 lg:pl-9">
-                    {/* 左侧：图标 */}
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
-                         style={{ backgroundColor: '#10b98125' }}>
-                      <svg className="w-6 h-6 sm:w-7 sm:h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                      </svg>
-                    </div>
-
-                    {/* 中间：标题和说明 */}
-                    <div className="flex-1 px-4 sm:px-5">
-                      <h3 className="text-base sm:text-lg lg:text-xl font-bold text-green-600 mb-1">进入平台</h3>
-                      <p className="text-xs sm:text-sm text-gray-500">登录缴费平台，下载缴费APP，查看群聊</p>
-                    </div>
-
-                    {/* 右侧：箭头图标 */}
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
-                         style={{ backgroundColor: '#10b98125' }}>
-                      <svg className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-7 transition-transform duration-200 group-hover:translate-x-1 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
-                    </div>
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center rounded-lg bg-green-50">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                    </svg>
                   </div>
-
-                  {/* 底部装饰条 */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, transparent, #10b981, transparent)' }} />
+                  <div className="flex-1 px-4 sm:px-5">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-800">进入平台</h3>
+                    <p className="text-xs sm:text-sm text-gray-500">登录缴费平台，下载APP</p>
+                  </div>
+                  <svg className="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
                 </div>
 
                 {/* 模拟进货 */}
                 <div
                   onClick={() => setCurrentView('levelSelection')}
-                  className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer bg-white"
-                  style={{
-                    borderColor: '#2563eb',
-                    backgroundColor: '#2563eb10'
-                  }}
+                  className="group flex items-center p-4 sm:p-5 lg:p-6 rounded-xl border border-gray-200 bg-white hover:border-blue-400 hover:shadow-md transition-all duration-200 cursor-pointer"
                 >
-                  {/* 渐变背景条 */}
-                  <div className="absolute left-0 top-0 bottom-0 w-2 rounded-l-xl bg-gradient-to-b from-blue-500 to-blue-600" />
-
-                  {/* 主内容 */}
-                  <div className="flex items-center p-4 sm:p-5 lg:p-6 pl-5 sm:pl-7 lg:pl-9">
-                    {/* 左侧：图标 */}
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
-                         style={{ backgroundColor: '#2563eb25' }}>
-                      <svg className="w-6 h-6 sm:w-7 sm:h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                      </svg>
-                    </div>
-
-                    {/* 中间：标题和说明 */}
-                    <div className="flex-1 px-4 sm:px-5">
-                      <h3 className="text-base sm:text-lg lg:text-xl font-bold text-blue-600 mb-1">模拟进货</h3>
-                      <p className="text-xs sm:text-sm text-gray-500">选择店铺等级，设置进货额度，查看利润计算</p>
-                    </div>
-
-                    {/* 右侧：箭头图标 */}
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
-                         style={{ backgroundColor: '#2563eb25' }}>
-                      <svg className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-7 transition-transform duration-200 group-hover:translate-x-1 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
-                    </div>
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center rounded-lg bg-blue-50">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
                   </div>
-
-                  {/* 底部装饰条 */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, transparent, #2563eb, transparent)' }} />
+                  <div className="flex-1 px-4 sm:px-5">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-800">模拟进货</h3>
+                    <p className="text-xs sm:text-sm text-gray-500">选择店铺等级，设置进货额度</p>
+                  </div>
+                  <svg className="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
                 </div>
 
                 {/* 智能推荐 */}
                 <div
                   onClick={() => setCurrentView('recommendation')}
-                  className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer bg-white"
-                  style={{
-                    borderColor: '#8b5cf6',
-                    backgroundColor: '#8b5cf610'
-                  }}
+                  className="group flex items-center p-4 sm:p-5 lg:p-6 rounded-xl border border-gray-200 bg-white hover:border-purple-400 hover:shadow-md transition-all duration-200 cursor-pointer"
                 >
-                  {/* 渐变背景条 */}
-                  <div className="absolute left-0 top-0 bottom-0 w-2 rounded-l-xl bg-gradient-to-b from-purple-500 to-pink-500" />
-
-                  {/* 主内容 */}
-                  <div className="flex items-center p-4 sm:p-5 lg:p-6 pl-5 sm:pl-7 lg:pl-9">
-                    {/* 左侧：图标 */}
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
-                         style={{ backgroundColor: '#8b5cf625' }}>
-                      <svg className="w-6 h-6 sm:w-7 sm:h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                      </svg>
-                    </div>
-
-                    {/* 中间：标题和说明 */}
-                    <div className="flex-1 px-4 sm:px-5">
-                      <h3 className="text-base sm:text-lg lg:text-xl font-bold text-purple-600 mb-1">智能推荐</h3>
-                      <p className="text-xs sm:text-sm text-gray-500">按预算或利润推荐最适合的店铺等级</p>
-                    </div>
-
-                    {/* 右侧：箭头图标 */}
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
-                         style={{ backgroundColor: '#8b5cf625' }}>
-                      <svg className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-7 transition-transform duration-200 group-hover:translate-x-1 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
-                    </div>
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center rounded-lg bg-purple-50">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
                   </div>
-
-                  {/* 底部装饰条 */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, transparent, #8b5cf6, transparent)' }} />
+                  <div className="flex-1 px-4 sm:px-5">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-800">智能推荐</h3>
+                    <p className="text-xs sm:text-sm text-gray-500">按预算或利润推荐最适合的店铺</p>
+                  </div>
+                  <svg className="w-5 h-5 text-gray-400 group-hover:text-purple-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
                 </div>
 
                 {/* 店铺等级 */}
                 <div
                   onClick={() => setCurrentView('shopLevels')}
-                  className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer bg-white"
-                  style={{
-                    borderColor: '#f59e0b',
-                    backgroundColor: '#f59e0b10'
-                  }}
+                  className="group flex items-center p-4 sm:p-5 lg:p-6 rounded-xl border border-gray-200 bg-white hover:border-orange-400 hover:shadow-md transition-all duration-200 cursor-pointer"
                 >
-                  {/* 渐变背景条 */}
-                  <div className="absolute left-0 top-0 bottom-0 w-2 rounded-l-xl bg-gradient-to-b from-orange-400 to-amber-500" />
-
-                  {/* 主内容 */}
-                  <div className="flex items-center p-4 sm:p-5 lg:p-6 pl-5 sm:pl-7 lg:pl-9">
-                    {/* 左侧：图标 */}
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
-                         style={{ backgroundColor: '#f59e0b25' }}>
-                      <svg className="w-6 h-6 sm:w-7 sm:h-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                      </svg>
-                    </div>
-
-                    {/* 中间：标题和说明 */}
-                    <div className="flex-1 px-4 sm:px-5">
-                      <h3 className="text-base sm:text-lg lg:text-xl font-bold text-orange-600 mb-1">店铺等级</h3>
-                      <p className="text-xs sm:text-sm text-gray-500">查看各等级说明、升级条件和权益</p>
-                    </div>
-
-                    {/* 右侧：箭头图标 */}
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
-                         style={{ backgroundColor: '#f59e0b25' }}>
-                      <svg className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-7 transition-transform duration-200 group-hover:translate-x-1 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
-                    </div>
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center rounded-lg bg-orange-50">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
                   </div>
-
-                  {/* 底部装饰条 */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, transparent, #f59e0b, transparent)' }} />
+                  <div className="flex-1 px-4 sm:px-5">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-800">店铺等级</h3>
+                    <p className="text-xs sm:text-sm text-gray-500">查看各等级说明、升级条件和权益</p>
+                  </div>
+                  <svg className="w-5 h-5 text-gray-400 group-hover:text-orange-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
                 </div>
 
                 {/* 分享给好友 */}
@@ -1410,42 +1309,20 @@ function CloudShopSimulator() {
                       }
                     }
                   }}
-                  className="group relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-2xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer bg-white"
-                  style={{
-                    borderColor: '#ec4899',
-                    backgroundColor: '#ec489910'
-                  }}
+                  className="group flex items-center p-4 sm:p-5 lg:p-6 rounded-xl border border-gray-200 bg-white hover:border-pink-400 hover:shadow-md transition-all duration-200 cursor-pointer"
                 >
-                  {/* 渐变背景条 */}
-                  <div className="absolute left-0 top-0 bottom-0 w-2 rounded-l-xl bg-gradient-to-b from-pink-500 to-rose-500" />
-
-                  {/* 主内容 */}
-                  <div className="flex items-center p-4 sm:p-5 lg:p-6 pl-5 sm:pl-7 lg:pl-9">
-                    {/* 左侧：图标 */}
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
-                         style={{ backgroundColor: '#ec489925' }}>
-                      <svg className="w-6 h-6 sm:w-7 sm:h-7 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                      </svg>
-                    </div>
-
-                    {/* 中间：标题和说明 */}
-                    <div className="flex-1 px-4 sm:px-5">
-                      <h3 className="text-base sm:text-lg lg:text-xl font-bold text-pink-600 mb-1">分享给好友</h3>
-                      <p className="text-xs sm:text-sm text-gray-500">复制网站链接，分享给好友使用</p>
-                    </div>
-
-                    {/* 右侧：箭头图标 */}
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-14 flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
-                         style={{ backgroundColor: '#ec489925' }}>
-                      <svg className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-7 transition-transform duration-200 group-hover:translate-x-1 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
-                    </div>
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center rounded-lg bg-pink-50">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                    </svg>
                   </div>
-
-                  {/* 底部装饰条 */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, transparent, #ec4899, transparent)' }} />
+                  <div className="flex-1 px-4 sm:px-5">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-800">分享给好友</h3>
+                    <p className="text-xs sm:text-sm text-gray-500">复制网站链接，分享给好友使用</p>
+                  </div>
+                  <svg className="w-5 h-5 text-gray-400 group-hover:text-pink-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
                 </div>
               </CardContent>
             </Card>
@@ -1557,6 +1434,56 @@ function CloudShopSimulator() {
                     </div>
                   );
                 })}
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* 进入平台页面 */}
+        {currentView === 'platform' && (
+          <div className="w-full max-w-lg mx-auto animate-in fade-in-0 slide-in-from-top-2 duration-300">
+            <div className="flex items-center gap-3 mb-3 sm:mb-4">
+              <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-gray-100 rounded-full w-10 h-10 sm:w-12 sm:h-12">
+                <span className="text-xl sm:text-2xl font-bold">←</span>
+              </Button>
+              <CardTitle className="text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                进入平台
+              </CardTitle>
+            </div>
+            <Card className="w-full bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
+              <CardHeader className="pb-3 sm:pb-4 pt-4 sm:pt-6 px-4 sm:px-6 lg:px-8">
+                <CardTitle className="text-base sm:text-lg lg:text-xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
+                  选择要进入的平台
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 sm:space-y-4 px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6 lg:pb-8">
+                <Button
+                  onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/login/login')}
+                  className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+                >
+                  <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                  登录缴费平台
+                </Button>
+                <Button
+                  onClick={() => openLink('https://www.ugpcgm.cn/#/pages/download/download')}
+                  className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+                >
+                  <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  下载缴费APP
+                </Button>
+                <Button
+                  onClick={() => openLink('https://www.ugpcgm.cn/#/myPages/groupChat/groupChat')}
+                  className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+                >
+                  <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                  下载步信APP
+                </Button>
               </CardContent>
             </Card>
           </div>
@@ -2622,65 +2549,6 @@ function CloudShopSimulator() {
           </Card>
         )}
       </main>
-
-      {/* 进入平台弹窗 */}
-      {showPlatformModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={handleClosePlatformModal}>
-          <Card
-            className="w-full max-w-md mx-4 bg-white/95 backdrop-blur-xl shadow-2xl animate-in fade-in-0 zoom-in-95 duration-300 border-0"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <CardHeader className="pb-4 pt-6 px-6">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  进入平台
-                </CardTitle>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={handleClosePlatformModal}
-                  className="h-8 w-8 rounded-full hover:bg-gray-100 active:scale-90 transition-all duration-200"
-                >
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent className="px-6 pb-6 space-y-4">
-              <div className="space-y-3">
-                <Button
-                  onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/login/login')}
-                  className="w-full h-12 text-base font-semibold bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
-                >
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                  </svg>
-                  登录缴费平台
-                </Button>
-                <Button
-                  onClick={() => openLink('https://www.ugpcgm.cn/#/pages/download/download')}
-                  className="w-full h-12 text-base font-semibold bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
-                >
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                  下载缴费APP
-                </Button>
-                <Button
-                  onClick={() => openLink('https://www.ugpcgm.cn/#/myPages/groupChat/groupChat')}
-                  className="w-full h-12 text-base font-semibold bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
-                >
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                  下载步信APP
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
 
       {/* 微信链接引导 */}
       <WeChatLinkGuide

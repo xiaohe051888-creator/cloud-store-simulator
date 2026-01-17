@@ -11,6 +11,7 @@ export type ShopLevel =
 // 界面类型
 export type ViewType =
   | 'shopSelection'      // 首页菜单
+  | 'platform'           // 进入平台
   | 'levelSelection'     // 店铺等级选择（模拟进货）
   | 'stockInput'
   | 'levelDetails'

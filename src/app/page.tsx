@@ -1132,11 +1132,13 @@ function CloudShopSimulator() {
     const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
 
     if (isWeChatBrowser) {
-      // 在微信中，将目标URL作为参数，跳转到当前页面
-      // 在浏览器打开后，会自动跳转到目标链接
-      const currentUrl = window.location.origin + window.location.pathname;
+      // 在微信中，设置目标URL并显示引导弹窗
+      setTargetUrl(url);
+      setShowWeChatLinkGuide(true);
+      // 更新URL参数，以便在浏览器打开后能检测到
       const target = encodeURIComponent(url);
-      window.location.href = `${currentUrl}?target=${target}`;
+      const newUrl = `${window.location.origin}/?target=${target}`;
+      window.history.replaceState({}, '', newUrl);
     } else {
       // 在浏览器中，直接打开链接
       window.open(url, '_blank');

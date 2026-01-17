@@ -19,7 +19,8 @@ export type ViewType =
   | 'recommendation'
   | 'recommendationResult'
   | 'shopLevels'
-  | 'benefits';           // 福利介绍
+  | 'benefits'           // 福利介绍
+  | 'platform';          // 进入平台
 
 // 店铺配置类型
 export interface ShopLevelConfig {

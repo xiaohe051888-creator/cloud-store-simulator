@@ -1148,6 +1148,10 @@ function CloudShopSimulator() {
   // 关闭微信链接引导
   const handleCloseWeChatLinkGuide = () => {
     setShowWeChatLinkGuide(false);
+    // 清除target参数，避免重复显示
+    const url = new URL(window.location.href);
+    url.searchParams.delete('target');
+    window.history.replaceState({}, '', url.toString());
   };
 
   // 处理分享参数
@@ -1186,15 +1190,15 @@ function CloudShopSimulator() {
     }
   }, [isFromShare, shareParams]);
 
-  // 处理目标链接跳转（用于微信中打开后的自动跳转）
+  // 处理目标链接跳转（用于微信环境检测和浏览器自动跳转）
   useEffect(() => {
     // 检查是否有分享参数，如果有分享参数，不执行处理（分享功能优先）
     const params = new URLSearchParams(window.location.search);
     const hasShareParams = params.get('level') || params.get('stock') || params.get('balance') || params.get('max') || params.get('profit');
     const target = params.get('target');
 
-    // 只有当有 target 参数且没有分享参数且未显示过引导时才处理
-    if (target && !hasShareParams && !hasShownWeChatGuide.current) {
+    // 只有当有 target 参数且没有分享参数时才处理
+    if (target && !hasShareParams) {
       // 保存目标URL
       const targetUrl = decodeURIComponent(target);
       setTargetUrl(targetUrl);
@@ -1203,12 +1207,18 @@ function CloudShopSimulator() {
       const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
 
       if (isWeChatBrowser) {
-        // 在微信中，显示引导页面
-        setShowWeChatLinkGuide(true);
-        hasShownWeChatGuide.current = true;
+        // 在微信中，显示引导页面（只在首次显示）
+        if (!hasShownWeChatGuide.current) {
+          setShowWeChatLinkGuide(true);
+          hasShownWeChatGuide.current = true;
+        }
         // 注意：不清除target参数，让浏览器打开后可以检测到并跳转
+      } else {
+        // 不在微信中，延迟跳转到目标链接
+        setTimeout(() => {
+          window.location.replace(targetUrl);
+        }, 100);
       }
-      // 注意：在浏览器中的跳转逻辑由 useShareParams 处理
     }
   }, []);
 
@@ -1229,7 +1239,7 @@ function CloudShopSimulator() {
                 云店模拟器
               </h1>
               <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text">
-                v1.2.2
+                v1.2.3
               </span>
             </div>
           </div>

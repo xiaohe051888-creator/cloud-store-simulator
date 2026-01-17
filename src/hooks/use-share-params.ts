@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { ShopLevel } from '@/types/shop';
 
@@ -19,31 +19,9 @@ export function useShareParams() {
   const searchParams = useSearchParams();
   const [shareParams, setShareParams] = useState<ShareParams>({});
   const [isFromShare, setIsFromShare] = useState(false);
-  const hasProcessedTarget = useRef(false);
 
   useEffect(() => {
-    // 处理目标链接跳转（用于微信环境检测）
-    const target = searchParams.get('target');
-    if (target && !hasProcessedTarget.current) {
-      hasProcessedTarget.current = true;
-
-      // 延迟跳转，确保页面完全加载后再执行
-      setTimeout(() => {
-        try {
-          const targetUrl = decodeURIComponent(target);
-          // 在新标签页打开目标链接
-          window.open(targetUrl, '_self');
-          // 清除target参数，避免重复跳转
-          router.replace(window.location.pathname);
-        } catch (e) {
-          console.error('Failed to decode target URL:', e);
-        }
-      }, 100);
-
-      return; // 不处理其他参数，优先执行跳转
-    }
-
-    // 处理分享参数
+    // 处理分享参数（不处理target参数，target由page.tsx处理）
     const level = searchParams.get('level') as ShopLevel | null;
     const stock = searchParams.get('stock');
     const balance = searchParams.get('balance');

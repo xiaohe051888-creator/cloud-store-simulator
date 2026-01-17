@@ -1219,16 +1219,6 @@ function CloudShopSimulator() {
               </Button>
             )}
 
-            {/* 福利介绍 */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleViewBenefits}
-              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-orange-300 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-2.5"
-            >
-              福利介绍
-            </Button>
-
             {/* 公告 */}
             <Button
               variant="outline"
@@ -1237,6 +1227,16 @@ function CloudShopSimulator() {
               className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-purple-300 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-2.5"
             >
               公告
+            </Button>
+
+            {/* 福利介绍 */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleViewBenefits}
+              className="text-[10px] sm:text-xs lg:text-sm active:scale-95 transition-all duration-200 hover:shadow-md hover:border-orange-300 bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200 h-8 sm:h-9 lg:h-10 px-1.5 sm:px-2 lg:px-2.5"
+            >
+              福利介绍
             </Button>
 
             {/* 回到首页 */}

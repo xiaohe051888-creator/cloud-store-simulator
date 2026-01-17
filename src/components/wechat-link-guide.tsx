@@ -10,18 +10,6 @@ interface WeChatLinkGuideProps {
 
 export default function WeChatLinkGuide({ isVisible, onClose, targetUrl }: WeChatLinkGuideProps) {
   const [isAnimating, setIsAnimating] = useState(false);
-  const [copied, setCopied] = useState(false);
-
-  // 复制当前页面链接到剪贴板
-  const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      console.error('复制失败:', error);
-    }
-  };
 
   useEffect(() => {
     if (isVisible) {
@@ -110,46 +98,29 @@ export default function WeChatLinkGuide({ isVisible, onClose, targetUrl }: WeCha
             </div>
 
             {/* 标题 */}
-            <h2 className="mb-4 text-xl sm:text-2xl font-bold text-center bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 bg-clip-text text-transparent">
+            <h2 className="mb-6 text-xl sm:text-2xl font-bold text-center bg-gradient-to-r from-red-600 via-orange-600 to-yellow-600 bg-clip-text text-transparent">
               请在浏览器中打开
             </h2>
 
-            {/* 提示文字 */}
-            <p className="mb-3 text-center text-sm sm:text-base text-gray-600 leading-relaxed">
-              检测到您正在微信中访问，为获得完整功能，请切换到浏览器
+            {/* 提示文字 - 第一段 */}
+            <p className="mb-2 text-center text-sm sm:text-base text-gray-600 leading-relaxed font-medium">
+              检测到您正在微信中访问
+            </p>
+
+            {/* 提示文字 - 第二段 */}
+            <p className="mb-4 text-center text-sm sm:text-base text-gray-600 leading-relaxed">
+              为获得完整功能，请切换到浏览器
             </p>
 
             {/* 目标链接提示 */}
             {targetUrl && (
-              <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-xl">
+              <div className="mb-6 p-3 bg-blue-50 border border-blue-200 rounded-xl">
                 <p className="text-xs sm:text-sm text-blue-700 text-center">
                   <span className="font-semibold">提示：</span>
-                  跳转到浏览器后将自动打开目标链接
+                  按照下面的流程进入跳转到浏览器
                 </p>
               </div>
             )}
-
-            {/* 复制链接按钮 */}
-            <button
-              onClick={handleCopyLink}
-              className="mb-6 w-full py-2.5 px-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-xl font-semibold text-sm sm:text-base transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 flex items-center justify-center gap-2"
-            >
-              {copied ? (
-                <>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  已复制链接
-                </>
-              ) : (
-                <>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-                  </svg>
-                  复制链接到剪贴板
-                </>
-              )}
-            </button>
 
             {/* 操作步骤 */}
             <div className="space-y-4">

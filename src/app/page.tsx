@@ -45,7 +45,7 @@ function CloudShopSimulator() {
   const [isEditMaxBalance, setIsEditMaxBalance] = useState<boolean>(true);      // 最高余额是否可编辑
   
   // 福利详情展开状态
-  const [expandedBenefit, setExpandedBenefit] = useState<'community' | 'platform' | 'wechat' | 'buxin' | null>(null);
+  const [expandedBenefit, setExpandedBenefit] = useState<'newbie' | 'community' | 'platform' | 'wechat' | 'buxin' | null>(null);
   
   // 对比数据状态
   const [comparisonData, setComparisonData] = useState<ComparisonData[]>([]);
@@ -1547,7 +1547,69 @@ function CloudShopSimulator() {
               </div>
             </CardHeader>
             <CardContent className="space-y-4 sm:space-y-5 px-6 pb-6">
-              {/* 一、社区福利 */}
+              {/* 一、新人礼品 */}
+              <div className="border-2 border-rose-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                <button
+                  onClick={() => setExpandedBenefit(expandedBenefit === 'newbie' ? null : 'newbie')}
+                  className="touch-feedback w-full flex items-center justify-between p-4 sm:p-5 bg-gradient-to-r from-rose-50 to-pink-50 hover:from-rose-100 hover:to-pink-100 transition-all duration-300"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-rose-500 to-pink-600 rounded-xl shadow-lg shadow-rose-500/20">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="text-base sm:text-lg font-bold text-rose-700">一、新人礼品</h3>
+                      <p className="text-xs sm:text-sm text-gray-600">新人专享礼品奖励</p>
+                    </div>
+                  </div>
+                  <svg
+                    className={`w-5 h-5 sm:w-6 sm:h-6 text-rose-600 transition-transform duration-200 ${expandedBenefit === 'newbie' ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {expandedBenefit === 'newbie' && (
+                  <div className="p-4 sm:p-5 bg-white border-t border-rose-200">
+                    <div className="space-y-4">
+                      <div className="space-y-3">
+                        <h4 className="text-base sm:text-lg font-bold text-rose-700">领取条件</h4>
+                        <ul className="space-y-2 text-sm sm:text-base text-gray-700">
+                          <li className="flex items-start gap-2">
+                            <span className="w-2 h-2 bg-rose-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                            <span>新人注册完成交过电费</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="w-2 h-2 bg-rose-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                            <span>新人注册完成开通了云店</span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div className="p-4 bg-rose-50 rounded-xl border-2 border-rose-200">
+                        <h4 className="text-base sm:text-lg font-bold text-rose-700 mb-3">领取方式</h4>
+                        <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                          安装登录步信后添加阿东的步信
+                        </p>
+                      </div>
+
+                      <div className="p-4 bg-green-50 rounded-xl border-2 border-green-200">
+                        <h4 className="text-base sm:text-lg font-bold text-green-700 mb-2">奖励内容</h4>
+                        <p className="text-lg sm:text-xl font-bold text-green-600 text-center">
+                          20元礼品一份（包邮）
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 二、社区福利 */}
               <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                 <button
                   onClick={() => setExpandedBenefit(expandedBenefit === 'community' ? null : 'community')}
@@ -1560,7 +1622,7 @@ function CloudShopSimulator() {
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h3 className="text-base sm:text-lg font-bold text-orange-700">一、社区福利</h3>
+                      <h3 className="text-base sm:text-lg font-bold text-orange-700">二、社区福利</h3>
                       <p className="text-xs sm:text-sm text-gray-600">邀请好友开店享多重奖励</p>
                     </div>
                   </div>
@@ -1626,7 +1688,7 @@ function CloudShopSimulator() {
                 )}
               </div>
 
-              {/* 二、平台福利 */}
+              {/* 三、平台福利 */}
               <div className="border border-blue-200 rounded-lg overflow-hidden">
                 <button
                   onClick={() => setExpandedBenefit(expandedBenefit === 'platform' ? null : 'platform')}
@@ -1639,7 +1701,7 @@ function CloudShopSimulator() {
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h3 className="text-base sm:text-lg font-bold text-blue-700">二、平台福利</h3>
+                      <h3 className="text-base sm:text-lg font-bold text-blue-700">三、平台福利</h3>
                       <p className="text-xs sm:text-sm text-gray-600">新店主专享进货奖励</p>
                     </div>
                   </div>
@@ -1689,7 +1751,7 @@ function CloudShopSimulator() {
                 )}
               </div>
 
-              {/* 三、微信群每日福利 */}
+              {/* 四、微信群每日福利 */}
               <div className="border-2 border-green-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                 <button
                   onClick={() => setExpandedBenefit(expandedBenefit === 'wechat' ? null : 'wechat')}
@@ -1702,7 +1764,7 @@ function CloudShopSimulator() {
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h3 className="text-base sm:text-lg font-bold text-green-700">三、微信群每日福利</h3>
+                      <h3 className="text-base sm:text-lg font-bold text-green-700">四、微信群每日福利</h3>
                       <p className="text-xs sm:text-sm text-gray-600">晒图活动、群抽奖、红包福利</p>
                     </div>
                   </div>
@@ -1780,7 +1842,7 @@ function CloudShopSimulator() {
                 )}
               </div>
 
-              {/* 四、步信群每日福利 */}
+              {/* 五、步信群每日福利 */}
               <div className="border-2 border-purple-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                 <button
                   onClick={() => setExpandedBenefit(expandedBenefit === 'buxin' ? null : 'buxin')}
@@ -1793,7 +1855,7 @@ function CloudShopSimulator() {
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h3 className="text-base sm:text-lg font-bold text-purple-700">四、步信群每日福利</h3>
+                      <h3 className="text-base sm:text-lg font-bold text-purple-700">五、步信群每日福利</h3>
                       <p className="text-xs sm:text-sm text-gray-600">步信红包、签到奖励</p>
                     </div>
                   </div>

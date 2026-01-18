@@ -2212,11 +2212,11 @@ function CloudShopSimulator() {
                     </div>
 
                     {/* 愿景和使命 */}
-                    <div className="p-3 sm:p-4 bg-gray-50 rounded-xl border-2 border-gray-200 space-y-3 sm:space-y-4">
+                    <div className="p-3 sm:p-4 bg-rose-50 rounded-xl border-2 border-rose-200 space-y-3 sm:space-y-4">
                       {/* 愿景 */}
                       <div>
-                        <h4 className="text-sm sm:text-base sm:text-lg font-bold text-gray-800 mb-2 sm:mb-3 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-teal-500 rounded-full"></span>
+                        <h4 className="text-sm sm:text-base sm:text-lg font-bold text-rose-700 mb-2 sm:mb-3 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-rose-500 rounded-full"></span>
                           愿景 / VISION
                         </h4>
                         <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm sm:text-base text-gray-700">
@@ -2231,7 +2231,7 @@ function CloudShopSimulator() {
 
                       {/* 使命 */}
                       <div>
-                        <h4 className="text-sm sm:text-base sm:text-lg font-bold text-gray-800 mb-2 sm:mb-3 flex items-center gap-2">
+                        <h4 className="text-sm sm:text-base sm:text-lg font-bold text-rose-700 mb-2 sm:mb-3 flex items-center gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-rose-500 rounded-full"></span>
                           使命 / MISSION
                         </h4>

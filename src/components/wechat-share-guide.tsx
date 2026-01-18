@@ -13,44 +13,44 @@ export default function WeChatShareGuide({ isOpen, onClose }: WeChatShareGuidePr
   return (
     <div className="fixed inset-0 z-[200] bg-black/70 backdrop-blur-sm animate-in fade-in-0 duration-300">
       <div className="relative w-full h-full flex flex-col items-center">
-        {/* 箭头指向右上角 */}
-        <div className="absolute top-2 right-0 animate-in slide-in-from-right-8 duration-500 animate-bounce">
+        {/* 箭头指向右上角 - 完全在最右边，与微信菜单垂直对齐 */}
+        <div className="absolute top-4 right-0 animate-in slide-in-from-right-8 duration-500 animate-bounce">
           <svg
-            width="300"
+            width="200"
             height="200"
-            viewBox="0 0 300 200"
-            className="w-56 h-40 sm:w-64 sm:h-48"
-            style={{ overflow: 'visible' }}
+            viewBox="0 0 200 200"
+            className="w-40 h-40 sm:w-48 sm:h-48"
+            style={{ overflow: 'visible', marginLeft: '-40px' }}
           >
-            {/* 箭头 - 从左下方指向右上角微信菜单位置（超出网页边界） */}
+            {/* 箭头 - 垂直向上，尖端在最右边 */}
             <g transform="translate(0, 0)">
               {/* 箭头主线 - 垂直向上 */}
               <line
-                x1="20"
+                x1="200"
                 y1="180"
-                x2="20"
+                x2="200"
                 y2="20"
                 stroke="#07C160"
-                strokeWidth="14"
+                strokeWidth="16"
                 strokeLinecap="round"
               />
               {/* 箭头头部 - 向上 */}
               <line
-                x1="20"
+                x1="200"
                 y1="20"
-                x2="-10"
+                x2="165"
                 y2="55"
                 stroke="#07C160"
-                strokeWidth="14"
+                strokeWidth="16"
                 strokeLinecap="round"
               />
               <line
-                x1="20"
+                x1="200"
                 y1="20"
-                x2="50"
+                x2="235"
                 y2="55"
                 stroke="#07C160"
-                strokeWidth="14"
+                strokeWidth="16"
                 strokeLinecap="round"
               />
             </g>

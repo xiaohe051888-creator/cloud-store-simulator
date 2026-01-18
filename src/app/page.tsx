@@ -132,6 +132,7 @@ function CloudShopSimulator() {
 
   // 分享弹窗状态
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
+  const [shareToast, setShareToast] = useState<{ show: boolean; message: string }>({ show: false, message: '' });
 
   // 获取分享参数
   const { shareParams, isFromShare, clearShareParams } = useShareParams();
@@ -496,27 +497,44 @@ function CloudShopSimulator() {
   };
 
   // 处理分享
-  const handleShare = () => {
+  const handleShare = async () => {
     const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
 
     if (isWeChatBrowser) {
       // 在微信中，显示引导分享给微信好友的弹窗
       setShowWeChatShareGuide(true);
     } else {
-      // 在浏览器中，使用原生分享功能
-      if (navigator.share) {
-        navigator.share({
-          title: '云店模拟器',
-          text: '专业的店铺经营管理模拟工具，支持多种店铺等级，详细计算利润和结算周期',
-          url: window.location.origin
-        }).catch((error) => {
-          console.log('分享失败:', error);
-          // 如果原生分享失败，显示分享弹窗
-          setShowShareModal(true);
-        });
-      } else {
-        // 浏览器不支持原生分享，显示分享弹窗
-        setShowShareModal(true);
+      // 在浏览器中，直接复制当前页面链接到剪贴板
+      const shareUrl = window.location.href;
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        setShareToast({ show: true, message: '链接已复制！可以粘贴发送给好友' });
+        setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
+      } catch (error) {
+        console.error('复制失败:', error);
+        // 如果复制失败，尝试使用降级方案
+        try {
+          const textarea = document.createElement('textarea');
+          textarea.value = shareUrl;
+          textarea.setAttribute('readonly', '');
+          textarea.style.position = 'absolute';
+          textarea.style.left = '-9999px';
+          document.body.appendChild(textarea);
+          textarea.select();
+          const successful = document.execCommand('copy');
+          document.body.removeChild(textarea);
+          if (successful) {
+            setShareToast({ show: true, message: '链接已复制！可以粘贴发送给好友' });
+            setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
+          } else {
+            setShareToast({ show: true, message: '复制失败，请手动复制链接' });
+            setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
+          }
+        } catch (e) {
+          console.error('降级复制失败:', e);
+          setShareToast({ show: true, message: '复制失败，请手动复制链接' });
+          setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
+        }
       }
     }
   };
@@ -1323,7 +1341,7 @@ function CloudShopSimulator() {
                 云店模拟器
               </h1>
               <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text">
-                v1.3.1
+                v1.3.2
               </span>
             </div>
           </div>
@@ -3493,6 +3511,18 @@ function CloudShopSimulator() {
 
       {/* PWA更新提示 */}
       <PWAUpdatePrompt />
+
+      {/* 分享成功提示 */}
+      {shareToast.show && (
+        <div className="fixed bottom-20 sm:bottom-24 left-1/2 transform -translate-x-1/2 z-[300] animate-in slide-in-from-bottom-4 duration-300">
+          <div className="bg-gray-900 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-2">
+            <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            <span className="text-sm font-medium">{shareToast.message}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -2200,7 +2200,7 @@ function CloudShopSimulator() {
                         <p className="text-xs sm:text-sm text-gray-600">
                           保险单号：PZAI202544030000001152
                         </p>
-                        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                        <div className="flex items-center gap-2 sm:gap-3">
                           <Button
                             variant="outline"
                             size="sm"
@@ -2208,7 +2208,7 @@ function CloudShopSimulator() {
                               navigator.clipboard.writeText('PZAI202544030000001152');
                               alert('复制成功');
                             }}
-                            className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-amber-300 bg-amber-100 hover:bg-amber-200 hover:border-amber-400 text-amber-700"
+                            className="active:scale-95 transition-all duration-200 h-8 px-2 py-1 text-xs font-semibold border-amber-300 bg-amber-100 hover:bg-amber-200 hover:border-amber-400 text-amber-700 flex-1"
                           >
                             复制单号
                           </Button>
@@ -2216,7 +2216,7 @@ function CloudShopSimulator() {
                             variant="outline"
                             size="sm"
                             onClick={() => window.location.href = 'tel:95518'}
-                            className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-amber-300 bg-amber-100 hover:bg-amber-200 hover:border-amber-400 text-amber-700"
+                            className="active:scale-95 transition-all duration-200 h-8 px-2 py-1 text-xs font-semibold border-amber-300 bg-amber-100 hover:bg-amber-200 hover:border-amber-400 text-amber-700 flex-1"
                           >
                             拨打人保电话查询
                           </Button>

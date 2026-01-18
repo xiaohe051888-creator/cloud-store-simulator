@@ -2132,7 +2132,7 @@ function CloudShopSimulator() {
                     <div className="text-left">
                       <h3 className="text-sm sm:text-base sm:text-lg font-bold text-purple-700">三、公司介绍</h3>
                       <p className="text-xs text-gray-600 sm:hidden">海南创步科技</p>
-                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">了解我们的公司背景与发展历程</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">了解平台公司的背景与发展历程</p>
                     </div>
                   </div>
                   <svg

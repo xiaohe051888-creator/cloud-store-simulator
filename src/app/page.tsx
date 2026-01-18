@@ -2148,7 +2148,7 @@ function CloudShopSimulator() {
                 {expandedBenefit === 'company' && (
                   <div className="p-3 sm:p-5 bg-white border-t border-purple-200 space-y-3 sm:space-y-4">
                     {/* 公司简介 */}
-                    <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200 space-y-2.5 sm:space-y-3">
+                    <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200 space-y-3 sm:space-y-4">
                       {/* 第一段：百度百科 + 公司成立 */}
                       <div className="space-y-2">
                         <Button

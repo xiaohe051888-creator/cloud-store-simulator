@@ -1260,7 +1260,7 @@ function CloudShopSimulator() {
                 onClick={handleViewComparison}
                 className="touch-feedback text-xs sm:text-sm lg:text-base font-bold h-10 sm:h-11 lg:h-12 px-3 sm:px-4 lg:px-5 rounded-xl border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-700 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20 hover:bg-gradient-to-r hover:from-blue-100 hover:to-cyan-100 transition-all duration-300"
               >
-                数据对比({comparisonData.length})
+                对比({comparisonData.length})
               </Button>
             )}
 

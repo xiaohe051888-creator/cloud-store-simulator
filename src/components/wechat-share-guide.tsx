@@ -14,60 +14,45 @@ export default function WeChatShareGuide({ isOpen, onClose }: WeChatShareGuidePr
     <div className="fixed inset-0 z-[200] bg-black/70 backdrop-blur-sm animate-in fade-in-0 duration-300">
       <div className="relative w-full h-full flex flex-col items-center">
         {/* 箭头指向右上角 */}
-        <div className="absolute top-16 right-0 sm:right-4 animate-in slide-in-from-right-8 duration-500 animate-bounce">
+        <div className="absolute top-8 right-4 sm:right-8 animate-in slide-in-from-right-8 duration-500 animate-bounce">
           <svg
-            width="280"
-            height="250"
-            viewBox="0 0 280 250"
-            className="w-40 h-36 sm:w-48 sm:h-44"
+            width="200"
+            height="180"
+            viewBox="0 0 200 180"
+            className="w-32 h-28 sm:w-40 sm:h-36"
           >
-            {/* 箭头 - 重新设计，确保完整显示 */}
+            {/* 垂直向上的箭头 - 从左下角指向右上角微信菜单位置 */}
             <g transform="translate(0, 0)">
-              {/* 箭头主线 - 从右上角指向左侧 */}
+              {/* 箭头主线 - 垂直向上 */}
               <line
-                x1="220"
-                y1="50"
+                x1="40"
+                y1="160"
                 x2="40"
-                y2="230"
+                y2="40"
                 stroke="#07C160"
-                strokeWidth="12"
+                strokeWidth="10"
                 strokeLinecap="round"
               />
-              {/* 箭头左侧翼 */}
+              {/* 箭头头部 - 向上 */}
               <line
-                x1="220"
-                y1="50"
-                x2="180"
-                y2="90"
+                x1="40"
+                y1="40"
+                x2="15"
+                y2="70"
                 stroke="#07C160"
-                strokeWidth="12"
+                strokeWidth="10"
                 strokeLinecap="round"
               />
-              {/* 箭头右侧翼 */}
               <line
-                x1="220"
-                y1="50"
-                x2="180"
-                y2="10"
+                x1="40"
+                y1="40"
+                x2="65"
+                y2="70"
                 stroke="#07C160"
-                strokeWidth="12"
+                strokeWidth="10"
                 strokeLinecap="round"
               />
             </g>
-          </svg>
-        </div>
-
-        {/* 右上角的三个点图标模拟 */}
-        <div className="absolute top-8 right-4 sm:right-8 animate-in fade-in-0 duration-500">
-          <svg
-            width="60"
-            height="60"
-            viewBox="0 0 60 60"
-            className="w-10 h-10 sm:w-12 sm:h-12"
-          >
-            <circle cx="12" cy="30" r="5" fill="#FFFFFF" />
-            <circle cx="30" cy="30" r="5" fill="#FFFFFF" />
-            <circle cx="48" cy="30" r="5" fill="#FFFFFF" />
           </svg>
         </div>
 

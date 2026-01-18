@@ -1365,7 +1365,7 @@ function CloudShopSimulator() {
                   {/* 标题和说明 */}
                   <div className="flex-1 relative z-10">
                     <h3 className="text-base sm:text-lg font-bold text-purple-800 mb-1 group-hover:text-purple-700 transition-colors">智能推荐</h3>
-                    <p className="text-xs sm:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">按预算或利润推荐最适合的店铺等级</p>
+                    <p className="text-xs sm:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">按预算或利润计算指定周期内的利润</p>
                   </div>
 
                   {/* 箭头图标 */}

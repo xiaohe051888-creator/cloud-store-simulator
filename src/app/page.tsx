@@ -3003,7 +3003,7 @@ function CloudShopSimulator() {
 
         {/* 进入平台 */}
         {currentView === 'platform' && (
-          <div className="w-full max-w-2xl mx-auto animate-fade-in animate-scale-in">
+          <div className="w-full max-w-2xl mx-auto">
             <div className="flex items-center gap-3 mb-3 sm:mb-4">
               <Button
                 variant="ghost"
@@ -3019,7 +3019,7 @@ function CloudShopSimulator() {
                 进入平台
               </CardTitle>
             </div>
-            <Card className="w-full glass shadow-2xl border-0">
+            <Card className="w-full bg-white/90 backdrop-blur-lg animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
               <CardContent className="p-6 sm:p-8">
                 <div className="space-y-4">
                   <Button

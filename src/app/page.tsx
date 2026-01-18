@@ -1654,7 +1654,7 @@ function CloudShopSimulator() {
                           <button
                             onClick={() => {
                               navigator.clipboard.writeText('G2L07V');
-                              alert('已复制到剪贴板');
+                              alert('复制成功');
                             }}
                             className="px-3 py-1.5 sm:px-4 sm:py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs sm:text-sm font-medium transition-colors touch-feedback flex-shrink-0"
                           >
@@ -1676,11 +1676,13 @@ function CloudShopSimulator() {
                     </div>
 
                     {/* 奖励内容 */}
-                    <div className="p-3 sm:p-4 bg-green-50 rounded-xl border-2 border-green-200 flex items-center justify-center">
-                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-green-700 flex items-center">
+                    <div className="p-3 sm:p-4 bg-green-50 rounded-xl border-2 border-green-200">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-green-700 mb-2">
                         奖励内容：
-                        <span className="text-base sm:text-lg sm:text-xl font-bold text-green-600 ml-1 sm:ml-2">价值20元的实物礼品一份（包邮到家）</span>
                       </h4>
+                      <div className="flex items-center justify-center">
+                        <span className="text-base sm:text-lg sm:text-xl font-bold text-green-600">价值20元的实物礼品一份（包邮到家）</span>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -2161,7 +2163,7 @@ function CloudShopSimulator() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => openLink('https://baike.baidu.com/item/%E6%B5%B7%E5%8D%97%E5%88%9B%E6%AD%A5%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/66195114?fromModule=lemma_inlink')}
+                          onClick={() => window.open('https://baike.baidu.com/item/%E6%B5%B7%E5%8D%97%E5%88%9B%E6%AD%A5%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/66195114?fromModule=lemma_inlink', '_blank')}
                           className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-purple-300 bg-purple-100 hover:bg-purple-200 hover:border-purple-400 text-purple-700 flex-shrink-0"
                         >
                           百度百科
@@ -2178,7 +2180,7 @@ function CloudShopSimulator() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => openLink('https://mtz.china.com/touzi/2025/0707/175008.html')}
+                          onClick={() => window.open('https://mtz.china.com/touzi/2025/0707/175008.html', '_blank')}
                           className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-blue-300 bg-blue-100 hover:bg-blue-200 hover:border-blue-400 text-blue-700 flex-shrink-0"
                         >
                           权威媒体
@@ -2192,30 +2194,33 @@ function CloudShopSimulator() {
                     {/* 公司简介 - 第三段：保险承保 + 保险单号 */}
                     <div className="p-3 sm:p-4 bg-amber-50 rounded-xl border-2 border-amber-200 space-y-2">
                       <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
-                        <span className="font-bold text-amber-600">2025年12月11日</span>获中国人民保险集团股份有限公司<span className="font-bold text-green-600">1000万</span>产品责任险承保。
+                        　　<span className="font-bold text-amber-600">2025年12月11日</span>获中国人民保险集团股份有限公司<span className="font-bold text-green-600">1000万</span>产品责任险承保。
                       </p>
-                      <div className="flex flex-wrap sm:flex-row sm:items-center gap-2 sm:gap-4">
+                      <div className="space-y-2">
                         <p className="text-xs sm:text-sm text-gray-600">
                           保险单号：PZAI202544030000001152
                         </p>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => {
-                            navigator.clipboard.writeText('PZAI202544030000001152');
-                          }}
-                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-amber-300 bg-amber-100 hover:bg-amber-200 hover:border-amber-400 text-amber-700"
-                        >
-                          复制单号
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => window.location.href = 'tel:95518'}
-                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-amber-300 bg-amber-100 hover:bg-amber-200 hover:border-amber-400 text-amber-700"
-                        >
-                          拨打人保电话查询
-                        </Button>
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              navigator.clipboard.writeText('PZAI202544030000001152');
+                              alert('复制成功');
+                            }}
+                            className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-amber-300 bg-amber-100 hover:bg-amber-200 hover:border-amber-400 text-amber-700"
+                          >
+                            复制单号
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => window.location.href = 'tel:95518'}
+                            className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-amber-300 bg-amber-100 hover:bg-amber-200 hover:border-amber-400 text-amber-700"
+                          >
+                            拨打人保电话查询
+                          </Button>
+                        </div>
                       </div>
                     </div>
 

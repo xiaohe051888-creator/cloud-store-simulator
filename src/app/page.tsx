@@ -2151,12 +2151,39 @@ function CloudShopSimulator() {
                     <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200 space-y-3 text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
                       <p>
                         　　海南创步科技有限公司，成立于<span className="font-bold text-purple-600">2022年6月9日</span>，位于海南省三沙市，属科技推广和应用服务业。公司聚焦数字生活服务平台研发与运营，核心产品为自主研发的"创缴通"一站式数字缴费平台，整合全国水费、电费、燃气费等生活缴费服务，支持银行卡、第三方支付及HTTPS+RSA加密等多重安全防护机制。
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => openLink('https://baike.baidu.com/item/%E6%B5%B7%E5%8D%97%E5%88%9B%E6%AD%A5%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/66195114?fromModule=lemma_inlink')}
+                          className="active:scale-95 transition-all duration-200 mt-2 h-8 px-3 py-1 text-xs font-semibold border-purple-300 bg-purple-100 hover:bg-purple-200 hover:border-purple-400 text-purple-700"
+                        >
+                          点击查看百度百科
+                        </Button>
                       </p>
                       <p>
                         　　<span className="font-bold text-purple-600">2025年6月</span>正式上线该平台，并于同年<span className="font-bold text-purple-600">7月</span>获得中海洋盛佳投资控股有限公司<span className="font-bold text-green-600">3200万元</span>人民币A轮融资。平台随后扩展为"生活缴费+本地服务"综合入口，覆盖全国<span className="font-bold text-purple-600">300余个</span>城市。
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => openLink('https://mtz.china.com/touzi/2025/0707/175008.html')}
+                          className="active:scale-95 transition-all duration-200 mt-2 h-8 px-3 py-1 text-xs font-semibold border-purple-300 bg-purple-100 hover:bg-purple-200 hover:border-purple-400 text-purple-700"
+                        >
+                          点击查看新闻资讯
+                        </Button>
                       </p>
                       <p>
                         　　<span className="font-bold text-purple-600">2025年12月11日</span>获中国人民保险集团股份有限公司<span className="font-bold text-green-600">1000万</span>产品责任险承保。
+                      </p>
+                      <p className="text-xs text-gray-600 mt-2">
+                        保险单号：PZAI202544030000001152
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.location.href = 'tel:95518'}
+                          className="active:scale-95 transition-all duration-200 ml-2 h-7 px-2 py-1 text-xs font-semibold border-purple-300 bg-purple-100 hover:bg-purple-200 hover:border-purple-400 text-purple-700"
+                        >
+                          拨打人保电话查询
+                        </Button>
                       </p>
                     </div>
 

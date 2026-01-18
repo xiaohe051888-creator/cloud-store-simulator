@@ -20,8 +20,7 @@ export type ViewType =
   | 'recommendationResult'
   | 'shopLevels'
   | 'benefits'           // 福利介绍
-  | 'platform'          // 进入平台
-  | 'storeManager';      // 店长模式
+  | 'platform';          // 进入平台
 
 // 店铺配置类型
 export interface ShopLevelConfig {
@@ -85,14 +84,4 @@ export interface RecommendationResult {
   matchReason: string;
   maxProfit: number;
   minProfit: number;
-}
-
-// 店长复投数据类型
-export interface StoreManagerReinvestData {
-  cycle: number;           // 复投次数
-  dailyProfit: number;     // 单次利润
-  totalProfit: number;     // 累计利润
-  totalWithdrawal: number; // 累计提现
-  totalReinvest: number;   // 累计复投
-  balance: number;         // 余额
 }

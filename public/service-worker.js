@@ -1,4 +1,4 @@
-const CACHE_NAME = '20260118.V21'; // 更新版本号触发更新（2026年1月18日）
+const CACHE_NAME = '20260118.V22'; // 更新版本号触发更新（2026年1月18日）
 const urlsToCache = [
   '/',
   '/manifest.json',

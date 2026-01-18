@@ -1598,6 +1598,11 @@ function CloudShopSimulator() {
                     <div className="p-4 bg-purple-50 rounded-xl border-2 border-purple-200">
                       <h4 className="text-base sm:text-lg font-bold text-purple-700 mb-3">领取方式</h4>
                       <div className="space-y-3">
+                        {/* 下载说明 */}
+                        <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                          在平台上下载安装登录步信添加阿东的步信
+                        </p>
+
                         {/* 步信号 */}
                         <div className="flex items-center justify-between gap-3 p-3 bg-white rounded-lg border border-purple-200">
                           <div className="flex-1">

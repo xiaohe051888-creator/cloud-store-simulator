@@ -1637,7 +1637,7 @@ function CloudShopSimulator() {
                     <div className="p-4 bg-green-50 rounded-xl border-2 border-green-200 flex items-center justify-center">
                       <h4 className="text-base sm:text-lg font-bold text-green-700 flex items-center">
                         奖励内容：
-                        <span className="text-lg sm:text-xl font-bold text-green-600 ml-2">20元礼品一份（包邮）</span>
+                        <span className="text-lg sm:text-xl font-bold text-green-600 ml-2">价值20元的实物礼品一份（包邮到家）</span>
                       </h4>
                     </div>
                   </div>

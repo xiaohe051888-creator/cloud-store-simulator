@@ -2250,6 +2250,17 @@ function CloudShopSimulator() {
                     </div>
                   </div>
                 )}
+
+                {/* 如何注册和开店 */}
+                <div className="p-3 sm:p-4 bg-blue-50 rounded-xl border-2 border-blue-200">
+                  <h4 className="text-sm sm:text-base sm:text-lg font-bold text-blue-700 mb-2 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></span>
+                    如何注册和开店？
+                  </h4>
+                  <p className="text-xs sm:text-sm sm:text-base text-gray-700">
+                    联系邀请人获取邀请码注册和开店。
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -3366,12 +3377,15 @@ function CloudShopSimulator() {
               </div>
               
               {/* 温馨提示 */}
-              <div className="mt-6 p-4 rounded-lg bg-yellow-50 border-2 border-yellow-200">
-                <p className="text-sm sm:text-base text-yellow-800 font-medium flex items-center">
+              <div className="mt-6 p-4 rounded-lg bg-yellow-50 border-2 border-yellow-200 space-y-2">
+                <p className="text-sm sm:text-base text-yellow-800 font-bold flex items-center">
                   <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
-                  温馨提示：如在平台上无法充值请联系平台客服人工充值
+                  温馨提示
+                </p>
+                <p className="text-sm sm:text-base text-yellow-800">
+                  如在平台上无法充值请联系平台客服人工充值
                 </p>
               </div>
               </CardContent>

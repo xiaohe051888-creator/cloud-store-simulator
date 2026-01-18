@@ -2257,12 +2257,10 @@ function CloudShopSimulator() {
                           variant="outline"
                           size="sm"
                           onClick={() => window.open('https://baike.baidu.com/item/%E6%B5%B7%E5%8D%97%E5%88%9B%E6%AD%A5%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/66195114?fromModule=lemma_inlink', '_blank')}
-                          className="active:scale-95 transition-all duration-200 h-auto px-3 py-1 text-sm font-semibold rounded-xl border-purple-300 bg-purple-100 hover:bg-purple-200 hover:border-purple-400 hover:shadow-md hover:-translate-y-0.5 text-purple-700 flex-shrink-0 cursor-pointer flex flex-col justify-center items-center gap-1"
+                          className="active:scale-95 transition-all duration-200 h-[104px] px-3 text-sm font-semibold rounded-xl border-purple-300 bg-purple-100 hover:bg-purple-200 hover:border-purple-400 hover:shadow-md hover:-translate-y-0.5 text-purple-700 flex-shrink-0 cursor-pointer"
+                          style={{ writingMode: 'vertical-rl', letterSpacing: '0.3em' }}
                         >
-                          <span>百</span>
-                          <span>度</span>
-                          <span>百</span>
-                          <span>科</span>
+                          百度百科
                         </Button>
                         <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
                           　　海南创步科技有限公司，成立于<span className="font-bold text-purple-600">2022年6月9日</span>，位于海南省三沙市，属科技推广和应用服务业。公司聚焦数字生活服务平台研发与运营，核心产品为自主研发的"创缴通"一站式数字缴费平台，整合全国水费、电费、燃气费等生活缴费服务，支持银行卡、第三方支付及HTTPS+RSA加密等多重安全防护机制。
@@ -2277,12 +2275,10 @@ function CloudShopSimulator() {
                           variant="outline"
                           size="sm"
                           onClick={() => window.open('https://mtz.china.com/touzi/2025/0707/175008.html', '_blank')}
-                          className="active:scale-95 transition-all duration-200 h-auto px-3 py-1 text-sm font-semibold rounded-xl border-blue-300 bg-blue-100 hover:bg-blue-200 hover:border-blue-400 hover:shadow-md hover:-translate-y-0.5 text-blue-700 flex-shrink-0 cursor-pointer flex flex-col justify-center items-center gap-1"
+                          className="active:scale-95 transition-all duration-200 h-[104px] px-3 text-sm font-semibold rounded-xl border-blue-300 bg-blue-100 hover:bg-blue-200 hover:border-blue-400 hover:shadow-md hover:-translate-y-0.5 text-blue-700 flex-shrink-0 cursor-pointer"
+                          style={{ writingMode: 'vertical-rl', letterSpacing: '0.3em' }}
                         >
-                          <span>权</span>
-                          <span>威</span>
-                          <span>媒</span>
-                          <span>体</span>
+                          权威媒体
                         </Button>
                         <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
                           　　<span className="font-bold text-blue-600">2025年6月</span>正式上线该平台，并于同年<span className="font-bold text-blue-600">7月</span>获得中海洋盛佳投资控股有限公司<span className="font-bold text-green-600">3200万元</span>人民币A轮融资。平台随后扩展为"生活缴费+本地服务"综合入口，覆盖全国<span className="font-bold text-blue-600">300余个</span>城市。

@@ -1239,7 +1239,7 @@ function CloudShopSimulator() {
                 云店模拟器
               </h1>
               <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text">
-                v1.2.3
+                v1.2.4
               </span>
             </div>
           </div>
@@ -1718,99 +1718,64 @@ function CloudShopSimulator() {
 
                 {expandedBenefit === 'wechat' && (
                   <div className="p-4 sm:p-5 bg-white border-t border-green-200">
-                    <div className="space-y-4">
+                    <div className="space-y-5">
                       {/* 晒图活动 */}
                       <div>
-                        <h4 className="text-sm sm:text-base font-semibold text-green-700 mb-2 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></span>
+                        <h4 className="text-base sm:text-lg font-bold text-green-700 mb-3 flex items-center gap-2">
+                          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
                           晒图活动
                         </h4>
-                        <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>店长晒自己店铺利润图，当天店铺有卖出即可晒图</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>晒图人员当天利润排名前40的记录有效晒图一次</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>当天销冠额外奖励<span className="font-bold text-green-600">10元红包</span></span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>晒图时间：每天<span className="font-bold text-green-600">19:00到19:30</span></span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>自己只能晒自己的图</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>有效晒图<span className="font-bold text-green-600">3次</span>奖励<span className="font-bold text-green-600">10元复缴券</span></span>
-                          </li>
-                        </ul>
+                        <div className="space-y-2 text-sm sm:text-base text-gray-700">
+                          <p>当日店铺有成交，即可晒店铺利润图</p>
+                          <p>晒图时间：每日 <span className="font-bold text-green-600">19:00-19:30</span></p>
+                          <p>有效规则：利润排名前<span className="font-bold text-green-600">40</span>记有效<span className="font-bold text-green-600">1次</span></p>
+                          <div className="mt-2 p-3 bg-green-50 rounded-lg border border-green-200">
+                            <p className="font-semibold text-green-700 mb-2">惊喜奖励：</p>
+                            <p>累计有效晒图<span className="font-bold text-green-600">3次</span>奖<span className="font-bold text-green-600">10元复缴券</span></p>
+                            <p>当日晒图销冠额外奖<span className="font-bold text-green-600">10元红包</span></p>
+                          </div>
+                          <p className="font-semibold text-red-600 mt-2">重要提醒：仅限晒本人店铺利润图</p>
+                        </div>
                       </div>
 
                       {/* 群抽奖 */}
                       <div>
-                        <h4 className="text-sm sm:text-base font-semibold text-green-700 mb-2 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></span>
-                          群抽奖
+                        <h4 className="text-base sm:text-lg font-bold text-green-700 mb-3 flex items-center gap-2">
+                          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                          群抽奖活动
                         </h4>
-                        <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>每天群里会举办一次抽奖</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>一等奖<span className="font-bold text-green-600">1名</span>，奖励<span className="font-bold text-green-600">18元</span>现金</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>二等奖<span className="font-bold text-green-600">5名</span>，奖励<span className="font-bold text-green-600">8元</span>现金</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>参加抽奖时间：每天<span className="font-bold text-green-600">11:00-21:00</span></span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>领取奖励说明：中奖后把微信收款码（绿码）发在微信群里领取奖励</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>注意：超过当天24点没有发收款码出来奖励作废</span>
-                          </li>
-                        </ul>
+                        <div className="space-y-2 text-sm sm:text-base text-gray-700">
+                          <p>微信群里每天一期免费抽奖</p>
+                          <p>一等奖<span className="font-bold text-green-600">1名</span>，奖励<span className="font-bold text-green-600">18元</span>现金</p>
+                          <p>二等奖<span className="font-bold text-green-600">5名</span>，奖励<span className="font-bold text-green-600">8元</span>现金</p>
+                          <p>参加抽奖时间：每日 <span className="font-bold text-green-600">11:00-21:00</span></p>
+                          <div className="mt-2 p-3 bg-green-50 rounded-lg border border-green-200">
+                            <p className="font-semibold text-green-700 mb-1">领奖说明：</p>
+                            <p>中奖后发微信收款码（绿码）领奖</p>
+                            <p className="font-semibold text-red-600 mt-1">注意：超过当天24点没有发收款码奖励作废</p>
+                          </div>
+                        </div>
                       </div>
 
                       {/* 微信群红包 */}
                       <div>
-                        <h4 className="text-sm sm:text-base font-semibold text-green-700 mb-2 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></span>
+                        <h4 className="text-base sm:text-lg font-bold text-green-700 mb-3 flex items-center gap-2">
+                          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
                           微信群红包
                         </h4>
-                        <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>发放时间：<span className="font-bold text-green-600">21:30</span></span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>红包个数：<span className="font-bold text-green-600">60个</span></span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>红包初始金额：<span className="font-bold text-green-600">10元</span></span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span>当天本群每新增<span className="font-bold text-green-600">1个</span>店主，当天群红包金额就增加<span className="font-bold text-green-600">10元</span></span>
-                          </li>
-                        </ul>
+                        <div className="space-y-2 text-sm sm:text-base text-gray-700">
+                          <p>发放时间：<span className="font-bold text-green-600">21:30</span></p>
+                          <p>红包个数：<span className="font-bold text-green-600">60个</span></p>
+                          <p>红包初始金额：<span className="font-bold text-green-600">10元</span></p>
+                          <p>当天每新增<span className="font-bold text-green-600">1个</span>店主红包金额增加<span className="font-bold text-green-600">10元</span></p>
+                        </div>
+                      </div>
+
+                      {/* 说明 */}
+                      <div className="mt-4 p-4 bg-yellow-50 rounded-lg border-2 border-yellow-200">
+                        <p className="text-sm sm:text-base text-yellow-800 text-center font-semibold">
+                          说明：以上活动为阿东私人举办的奖励活动
+                        </p>
                       </div>
                     </div>
                   </div>

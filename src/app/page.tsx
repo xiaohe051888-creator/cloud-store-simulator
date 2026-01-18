@@ -2150,7 +2150,7 @@ function CloudShopSimulator() {
                     {/* 公司简介 */}
                     <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200 space-y-3 sm:space-y-4">
                       {/* 第一段：百度百科 + 公司成立 */}
-                      <div className="flex items-start gap-2">
+                      <div className="flex items-center gap-2">
                         <Button
                           variant="outline"
                           size="sm"
@@ -2165,7 +2165,7 @@ function CloudShopSimulator() {
                       </div>
 
                       {/* 第二段：新闻资讯 + 平台上线 */}
-                      <div className="flex items-start gap-2">
+                      <div className="flex items-center gap-2">
                         <Button
                           variant="outline"
                           size="sm"

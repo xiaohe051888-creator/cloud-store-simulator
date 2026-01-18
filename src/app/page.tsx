@@ -1577,11 +1577,9 @@ function CloudShopSimulator() {
                   variant="ghost"
                   size="icon"
                   onClick={handleBackToShopSelection}
-                  className="touch-feedback w-10 h-10 sm:w-12 sm:h-12 rounded-full hover:bg-orange-100 hover:text-orange-600 transition-all duration-300"
+                  className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 sm:w-12 sm:h-12"
                 >
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
+                  <span className="text-xl sm:text-2xl font-bold">←</span>
                 </Button>
                 <CardTitle className="text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-orange-600 via-amber-600 to-red-600 bg-clip-text text-transparent font-bold">
                   🎁 福利介绍
@@ -1995,11 +1993,9 @@ function CloudShopSimulator() {
                   variant="ghost"
                   size="icon"
                   onClick={handleBackToShopSelection}
-                  className="touch-feedback w-10 h-10 sm:w-12 sm:h-12 rounded-full hover:bg-indigo-100 hover:text-indigo-600 transition-all duration-300"
+                  className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 sm:w-12 sm:h-12"
                 >
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
+                  <span className="text-xl sm:text-2xl font-bold">←</span>
                 </Button>
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg shadow-lg shadow-indigo-500/20">
@@ -3274,11 +3270,9 @@ function CloudShopSimulator() {
                   variant="ghost"
                   size="icon"
                   onClick={handleBackToShopSelection}
-                  className="touch-feedback w-10 h-10 sm:w-12 sm:h-12 rounded-full hover:bg-green-100 hover:text-green-600 transition-all duration-300"
+                  className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 sm:w-12 sm:h-12"
                 >
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
+                  <span className="text-xl sm:text-2xl font-bold">←</span>
                 </Button>
                 <CardTitle className="text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent font-bold">
                   进入平台

@@ -2040,7 +2040,17 @@ function CloudShopSimulator() {
                 {expandedBenefit === 'joinus' && (
                   <div className="p-3 sm:p-5 bg-white border-t border-green-200">
                     <div className="p-3 sm:p-4 bg-green-50 rounded-xl border-2 border-green-200">
-                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-green-700 mb-2 sm:mb-3">注册成为平台会员</h4>
+                      <div className="flex items-center justify-between gap-2 mb-2 sm:mb-3">
+                        <h4 className="text-sm sm:text-base sm:text-lg font-bold text-green-700">注册成为平台会员</h4>
+                        <Button
+                          onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/register/register')}
+                          variant="outline"
+                          size="sm"
+                          className="active:scale-95 transition-all duration-200 h-7 sm:h-8 px-2 sm:px-3 text-xs sm:text-sm font-semibold border-green-300 bg-green-100 hover:bg-green-200 hover:border-green-400 text-green-700 flex-shrink-0 whitespace-nowrap"
+                        >
+                          立即注册
+                        </Button>
+                      </div>
                       <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></span>

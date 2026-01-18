@@ -493,9 +493,30 @@ function CloudShopSimulator() {
     setExpandedBenefit(null); // 重置展开状态
   };
 
-  // 查看公告
-  const handleViewAnnouncement = () => {
-    alert('公告功能开发中...');
+  // 处理分享
+  const handleShare = () => {
+    const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
+
+    if (isWeChatBrowser) {
+      // 在微信中，显示引导分享给微信好友的提示
+      alert('请点击右上角菜单，选择"发送给朋友"分享给好友');
+    } else {
+      // 在浏览器中，使用原生分享功能
+      if (navigator.share) {
+        navigator.share({
+          title: '云店模拟器',
+          text: '专业的店铺经营管理模拟工具，支持多种店铺等级，详细计算利润和结算周期',
+          url: window.location.origin
+        }).catch((error) => {
+          console.log('分享失败:', error);
+          // 如果原生分享失败，显示分享弹窗
+          setShowShareModal(true);
+        });
+      } else {
+        // 浏览器不支持原生分享，显示分享弹窗
+        setShowShareModal(true);
+      }
+    }
   };
 
   // 删除对比数据
@@ -1319,14 +1340,14 @@ function CloudShopSimulator() {
               </Button>
             )}
 
-            {/* 公告 */}
+            {/* 分享 */}
             <Button
               variant="outline"
               size="sm"
-              onClick={handleViewAnnouncement}
+              onClick={handleShare}
               className="touch-feedback text-xs sm:text-sm lg:text-base font-bold h-10 sm:h-11 lg:h-12 px-3 sm:px-4 lg:px-5 rounded-xl border-2 border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 hover:border-purple-400 hover:shadow-lg hover:shadow-purple-500/20 hover:bg-gradient-to-r hover:from-purple-100 hover:to-pink-100 transition-all duration-300"
             >
-              公告
+              分享
             </Button>
 
             {/* 进入平台 */}
@@ -2756,17 +2777,7 @@ function CloudShopSimulator() {
                 <CardTitle className="text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   {levelConfig.name}详情
                 </CardTitle>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setShowShareModal(true)}
-                  className="active:scale-90 transition-all duration-200 hover:bg-purple-50 hover:text-purple-600 rounded-full w-10 h-10 sm:w-12 sm:h-12"
-                  title="分享"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                  </svg>
-                </Button>
+                <div className="w-10 h-10 sm:w-12 sm:h-12" />
               </div>
             </CardHeader>
             <CardContent className="space-y-4 sm:space-y-5 lg:space-y-6 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-6">

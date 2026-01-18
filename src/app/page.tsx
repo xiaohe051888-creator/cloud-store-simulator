@@ -2184,7 +2184,7 @@ function CloudShopSimulator() {
                     {/* 公司简介 - 第三段：保险承保 + 保险单号 */}
                     <div className="p-3 sm:p-4 bg-amber-50 rounded-xl border-2 border-amber-200 space-y-2">
                       <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
-                        　　<span className="font-bold text-amber-600">2025年12月11日</span>获中国人民保险集团股份有限公司<span className="font-bold text-green-600">1000万</span>产品责任险承保。
+                        <span className="font-bold text-amber-600">2025年12月11日</span>获中国人民保险集团股份有限公司<span className="font-bold text-green-600">1000万</span>产品责任险承保。
                       </p>
                       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                         <p className="text-xs sm:text-sm text-gray-600">

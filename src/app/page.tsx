@@ -2147,9 +2147,8 @@ function CloudShopSimulator() {
 
                 {expandedBenefit === 'company' && (
                   <div className="p-3 sm:p-5 bg-white border-t border-purple-200 space-y-3 sm:space-y-4">
-                    {/* 公司简介 */}
-                    <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200 space-y-3 sm:space-y-4">
-                      {/* 第一段：百度百科 + 公司成立 */}
+                    {/* 公司简介 - 第一段：百度百科 + 公司成立 */}
+                    <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200">
                       <div className="flex items-center gap-2">
                         <Button
                           variant="outline"
@@ -2163,40 +2162,42 @@ function CloudShopSimulator() {
                           　　海南创步科技有限公司，成立于<span className="font-bold text-purple-600">2022年6月9日</span>，位于海南省三沙市，属科技推广和应用服务业。公司聚焦数字生活服务平台研发与运营，核心产品为自主研发的"创缴通"一站式数字缴费平台，整合全国水费、电费、燃气费等生活缴费服务，支持银行卡、第三方支付及HTTPS+RSA加密等多重安全防护机制。
                         </p>
                       </div>
+                    </div>
 
-                      {/* 第二段：新闻资讯 + 平台上线 */}
+                    {/* 公司简介 - 第二段：新闻资讯 + 平台上线 */}
+                    <div className="p-3 sm:p-4 bg-blue-50 rounded-xl border-2 border-blue-200">
                       <div className="flex items-center gap-2">
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => openLink('https://mtz.china.com/touzi/2025/0707/175008.html')}
-                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-purple-300 bg-purple-100 hover:bg-purple-200 hover:border-purple-400 text-purple-700 flex-shrink-0"
+                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-blue-300 bg-blue-100 hover:bg-blue-200 hover:border-blue-400 text-blue-700 flex-shrink-0"
                         >
                           查看新闻资讯
                         </Button>
                         <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
-                          　　<span className="font-bold text-purple-600">2025年6月</span>正式上线该平台，并于同年<span className="font-bold text-purple-600">7月</span>获得中海洋盛佳投资控股有限公司<span className="font-bold text-green-600">3200万元</span>人民币A轮融资。平台随后扩展为"生活缴费+本地服务"综合入口，覆盖全国<span className="font-bold text-purple-600">300余个</span>城市。
+                          　　<span className="font-bold text-blue-600">2025年6月</span>正式上线该平台，并于同年<span className="font-bold text-blue-600">7月</span>获得中海洋盛佳投资控股有限公司<span className="font-bold text-green-600">3200万元</span>人民币A轮融资。平台随后扩展为"生活缴费+本地服务"综合入口，覆盖全国<span className="font-bold text-blue-600">300余个</span>城市。
                         </p>
                       </div>
+                    </div>
 
-                      {/* 第三段：保险承保 + 保险单号 */}
-                      <div className="space-y-2">
-                        <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
-                          <span className="font-bold text-purple-600">2025年12月11日</span>获中国人民保险集团股份有限公司<span className="font-bold text-green-600">1000万</span>产品责任险承保。
+                    {/* 公司简介 - 第三段：保险承保 + 保险单号 */}
+                    <div className="p-3 sm:p-4 bg-amber-50 rounded-xl border-2 border-amber-200 space-y-2">
+                      <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
+                        　　<span className="font-bold text-amber-600">2025年12月11日</span>获中国人民保险集团股份有限公司<span className="font-bold text-green-600">1000万</span>产品责任险承保。
+                      </p>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                        <p className="text-xs sm:text-sm text-gray-600">
+                          保险单号：PZAI202544030000001152
                         </p>
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                          <p className="text-xs sm:text-sm text-gray-600">
-                            保险单号：PZAI202544030000001152
-                          </p>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => window.location.href = 'tel:95518'}
-                            className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-purple-300 bg-purple-100 hover:bg-purple-200 hover:border-purple-400 text-purple-700"
-                          >
-                            拨打人保电话查询
-                          </Button>
-                        </div>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.location.href = 'tel:95518'}
+                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-amber-300 bg-amber-100 hover:bg-amber-200 hover:border-amber-400 text-amber-700"
+                        >
+                          拨打人保电话查询
+                        </Button>
                       </div>
                     </div>
 

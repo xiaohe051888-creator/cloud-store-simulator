@@ -1338,7 +1338,7 @@ function CloudShopSimulator() {
                   {/* 标题和说明 */}
                   <div className="flex-1 relative z-10">
                     <h3 className="text-base sm:text-lg font-bold text-blue-800 mb-1 group-hover:text-blue-700 transition-colors">模拟进货</h3>
-                    <p className="text-xs sm:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">选择店铺等级，设置进货额度，查看利润计算</p>
+                    <p className="text-xs sm:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">选择店铺输入进货额度计算利润</p>
                   </div>
 
                   {/* 箭头图标 */}
@@ -1392,7 +1392,7 @@ function CloudShopSimulator() {
                   {/* 标题和说明 */}
                   <div className="flex-1 relative z-10">
                     <h3 className="text-base sm:text-lg font-bold text-orange-800 mb-1 group-hover:text-orange-700 transition-colors">店铺等级</h3>
-                    <p className="text-xs sm:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">查看各等级说明、升级条件和权益</p>
+                    <p className="text-xs sm:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">查看各等级的升级条件和权益</p>
                   </div>
 
                   {/* 箭头图标 */}
@@ -1419,7 +1419,7 @@ function CloudShopSimulator() {
                   {/* 标题和说明 */}
                   <div className="flex-1 relative z-10">
                     <h3 className="text-base sm:text-lg font-bold text-rose-800 mb-1 group-hover:text-rose-700 transition-colors">福利介绍</h3>
-                    <p className="text-xs sm:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">查看社区福利和平台福利政策、奖励机制等等</p>
+                    <p className="text-xs sm:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">查看福利政策和奖励活动</p>
                   </div>
 
                   {/* 箭头图标 */}

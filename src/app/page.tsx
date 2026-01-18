@@ -1617,12 +1617,12 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'newbie' && (
-                  <div className="p-3 sm:p-5 bg-white border-t border-rose-200 space-y-3 sm:space-y-4">
+                  <div className="p-3 sm:p-5 bg-rose-50 border-t border-rose-200 space-y-3 sm:space-y-4">
                     {/* 领取条件 */}
-                    <div className="p-3 sm:p-4 bg-rose-50 rounded-xl border-2 border-rose-200">
-                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-rose-700 mb-2 sm:mb-3">
+                    <div className="p-3 sm:p-4 bg-white rounded-xl border border-rose-300">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-gray-800 mb-2 sm:mb-3">
                         领取条件
-                        <span className="text-xs sm:text-sm sm:text-base font-semibold text-rose-600 ml-1 sm:ml-2">（满足其中一条即可）</span>
+                        <span className="text-xs sm:text-sm sm:text-base font-semibold text-gray-600 ml-1 sm:ml-2">（满足其中一条即可）</span>
                       </h4>
                       <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                         <li className="flex items-start gap-1.5 sm:gap-2">
@@ -1637,8 +1637,8 @@ function CloudShopSimulator() {
                     </div>
 
                     {/* 领取方式 */}
-                    <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200">
-                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-purple-700 mb-2 sm:mb-3">领取方式</h4>
+                    <div className="p-3 sm:p-4 bg-white rounded-xl border border-purple-300">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-gray-800 mb-2 sm:mb-3">领取方式</h4>
                       <div className="space-y-2 sm:space-y-3">
                         {/* 下载说明 */}
                         <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
@@ -1646,10 +1646,10 @@ function CloudShopSimulator() {
                         </p>
 
                         {/* 步信号 */}
-                        <div className="flex items-center justify-between gap-2 sm:gap-3 p-2.5 sm:p-3 bg-white rounded-lg border border-purple-200">
+                        <div className="flex items-center justify-between gap-2 sm:gap-3 p-2.5 sm:p-3 bg-purple-50 rounded-lg border border-purple-300">
                           <div className="flex-1">
                             <p className="text-xs text-gray-600 mb-0.5 sm:text-sm sm:mb-1">阿东步信号：</p>
-                            <p className="text-base sm:text-lg font-bold text-purple-700 font-mono">G2L07V</p>
+                            <p className="text-base sm:text-lg font-bold text-purple-800 font-mono">G2L07V</p>
                           </div>
                           <button
                             onClick={() => {
@@ -1664,7 +1664,7 @@ function CloudShopSimulator() {
 
                         {/* 添加步骤 */}
                         <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
-                          <p className="font-semibold text-purple-700">添加步骤：</p>
+                          <p className="font-semibold text-gray-800">添加步骤：</p>
                           <ol className="space-y-1 sm:space-y-1.5 ml-3 sm:ml-4 list-decimal">
                             <li>在步信点击右上角的 +</li>
                             <li>点击"添加好友"</li>
@@ -1676,10 +1676,10 @@ function CloudShopSimulator() {
                     </div>
 
                     {/* 奖励内容 */}
-                    <div className="p-3 sm:p-4 bg-green-50 rounded-xl border-2 border-green-200 flex items-center justify-center">
-                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-green-700 flex items-center">
+                    <div className="p-3 sm:p-4 bg-white rounded-xl border border-green-300 flex items-center justify-center">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-gray-800 flex items-center">
                         奖励内容：
-                        <span className="text-base sm:text-lg sm:text-xl font-bold text-green-600 ml-1 sm:ml-2">价值20元的实物礼品一份（包邮到家）</span>
+                        <span className="text-base sm:text-lg sm:text-xl font-bold text-green-700 ml-1 sm:ml-2">价值20元的实物礼品一份（包邮到家）</span>
                       </h4>
                     </div>
                   </div>
@@ -1715,10 +1715,10 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'community' && (
-                  <div className="p-3 sm:p-5 bg-white border-t border-orange-200 space-y-3 sm:space-y-4">
-                    {/* 1月个人当天邀请奖励 - 橙色背景 */}
-                    <div className="p-3 sm:p-4 bg-orange-50 rounded-xl border-2 border-orange-200">
-                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-orange-700 mb-2 sm:mb-3">1月个人当天邀请奖励</h4>
+                  <div className="p-3 sm:p-5 bg-orange-50 border-t border-orange-200 space-y-3 sm:space-y-4">
+                    {/* 1月个人当天邀请奖励 - 白色背景 */}
+                    <div className="p-3 sm:p-4 bg-white rounded-xl border border-orange-300">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-gray-800 mb-2 sm:mb-3">1月个人当天邀请奖励</h4>
                       <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></span>
@@ -1735,9 +1735,9 @@ function CloudShopSimulator() {
                       </ul>
                     </div>
 
-                    {/* 1月个人连续邀请奖励 - 琥珀色背景 */}
-                    <div className="p-3 sm:p-4 bg-amber-50 rounded-xl border-2 border-amber-200">
-                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-amber-700 mb-2 sm:mb-3">1月个人连续邀请奖励</h4>
+                    {/* 1月个人连续邀请奖励 - 白色背景 */}
+                    <div className="p-3 sm:p-4 bg-white rounded-xl border border-amber-300">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-gray-800 mb-2 sm:mb-3">1月个人连续邀请奖励</h4>
                       <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"></span>
@@ -1750,9 +1750,9 @@ function CloudShopSimulator() {
                       </ul>
                     </div>
 
-                    <div className="mt-2 sm:mt-4 p-2.5 sm:p-3 bg-orange-50 border border-orange-200 rounded-lg">
-                      <p className="text-xs sm:text-sm sm:text-base text-orange-800">
-                        <span className="font-semibold">说明：</span>
+                    <div className="mt-2 sm:mt-4 p-2.5 sm:p-3 bg-white rounded-lg border border-orange-300">
+                      <p className="text-xs sm:text-sm sm:text-base text-gray-700">
+                        <span className="font-semibold text-gray-800">说明：</span>
                         完成邀请 联系 <span className="font-bold text-orange-600">阿东</span> 领奖
                       </p>
                     </div>
@@ -1791,7 +1791,7 @@ function CloudShopSimulator() {
                 {expandedBenefit === 'platform' && (
                   <div className="p-3 sm:p-5 bg-blue-50 border-t border-blue-200 space-y-3">
                       <div>
-                        <h4 className="text-xs sm:text-sm sm:text-base font-semibold text-blue-700 mb-2 sm:mb-2 flex items-center gap-2">
+                        <h4 className="text-xs sm:text-sm sm:text-base font-semibold text-gray-800 mb-2 sm:mb-2 flex items-center gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></span>
                           1月新店主奖励
                         </h4>
@@ -1812,9 +1812,9 @@ function CloudShopSimulator() {
                         </div>
                       </div>
 
-                      <div className="mt-3 sm:mt-4 p-2.5 sm:p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                        <p className="text-xs sm:text-sm sm:text-base text-blue-800">
-                          <span className="font-semibold">领取奖励：</span>
+                      <div className="mt-3 sm:mt-4 p-2.5 sm:p-3 bg-white rounded-lg border border-blue-300">
+                        <p className="text-xs sm:text-sm sm:text-base text-gray-700">
+                          <span className="font-semibold text-gray-800">领取奖励：</span>
                           完成要求联系 <span className="font-bold text-blue-600">阿东</span> 登记领取
                         </p>
                       </div>
@@ -1851,10 +1851,10 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'wechat' && (
-                  <div className="p-3 sm:p-5 bg-white border-t border-green-200 space-y-3 sm:space-y-4">
-                    {/* 晒图活动 - 蓝色背景 */}
-                    <div className="p-3 sm:p-4 bg-blue-50 rounded-xl border-2 border-blue-200">
-                      <h4 className="text-xs sm:text-sm sm:text-base font-bold text-blue-700 mb-2 sm:mb-3 flex items-center gap-2">
+                  <div className="p-3 sm:p-5 bg-green-50 border-t border-green-200 space-y-3 sm:space-y-4">
+                    {/* 晒图活动 - 白色背景 */}
+                    <div className="p-3 sm:p-4 bg-white rounded-xl border border-blue-300">
+                      <h4 className="text-xs sm:text-sm sm:text-base font-bold text-gray-800 mb-2 sm:mb-3 flex items-center gap-2">
                         <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></span>
                         晒图活动
                       </h4>
@@ -1862,8 +1862,8 @@ function CloudShopSimulator() {
                         <p>当日店铺有成交，即可晒店铺利润图</p>
                         <p>晒图时间：每日 <span className="font-bold text-blue-600">19:00-19:30</span></p>
                         <p>有效规则：利润排名前<span className="font-bold text-blue-600">40</span>记有效<span className="font-bold text-blue-600">1次</span></p>
-                        <div className="mt-1.5 sm:mt-2 p-2 sm:p-3 bg-white rounded-lg border border-blue-200">
-                          <p className="font-semibold text-blue-700 mb-1 sm:mb-2">惊喜奖励：</p>
+                        <div className="mt-1.5 sm:mt-2 p-2 sm:p-3 bg-blue-50 rounded-lg border border-blue-300">
+                          <p className="font-semibold text-gray-800 mb-1 sm:mb-2">惊喜奖励：</p>
                           <p>累计有效晒图<span className="font-bold text-blue-600">3次</span>奖<span className="font-bold text-blue-600">10元复缴券</span></p>
                           <p>当日晒图销冠额外奖<span className="font-bold text-blue-600">10元红包</span></p>
                         </div>
@@ -1871,9 +1871,9 @@ function CloudShopSimulator() {
                       </div>
                     </div>
 
-                    {/* 群抽奖活动 - 紫色背景 */}
-                    <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200">
-                      <h4 className="text-xs sm:text-sm sm:text-base font-bold text-purple-700 mb-2 sm:mb-3 flex items-center gap-2">
+                    {/* 群抽奖活动 - 白色背景 */}
+                    <div className="p-3 sm:p-4 bg-white rounded-xl border border-purple-300">
+                      <h4 className="text-xs sm:text-sm sm:text-base font-bold text-gray-800 mb-2 sm:mb-3 flex items-center gap-2">
                         <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full"></span>
                         群抽奖活动
                       </h4>
@@ -1882,17 +1882,17 @@ function CloudShopSimulator() {
                         <p>一等奖<span className="font-bold text-purple-600">1名</span>，奖励<span className="font-bold text-purple-600">18元</span>现金</p>
                         <p>二等奖<span className="font-bold text-purple-600">5名</span>，奖励<span className="font-bold text-purple-600">8元</span>现金</p>
                         <p>参加抽奖时间：每日 <span className="font-bold text-purple-600">11:00-21:00</span></p>
-                        <div className="mt-1.5 sm:mt-2 p-2 sm:p-3 bg-white rounded-lg border border-purple-200">
-                          <p className="font-semibold text-purple-700 mb-1 sm:mb-1">领奖说明：</p>
+                        <div className="mt-1.5 sm:mt-2 p-2 sm:p-3 bg-purple-50 rounded-lg border border-purple-300">
+                          <p className="font-semibold text-gray-800 mb-1 sm:mb-1">领奖说明：</p>
                           <p>中奖后发微信收款码（绿码）领奖</p>
                           <p className="font-semibold text-red-600 mt-1 sm:mt-1">注意：超过当天24点没有发收款码奖励作废</p>
                         </div>
                       </div>
                     </div>
 
-                    {/* 微信群红包 - 橙色背景 */}
-                    <div className="p-3 sm:p-4 bg-orange-50 rounded-xl border-2 border-orange-200">
-                      <h4 className="text-xs sm:text-sm sm:text-base font-bold text-orange-700 mb-2 sm:mb-3 flex items-center gap-2">
+                    {/* 微信群红包 - 白色背景 */}
+                    <div className="p-3 sm:p-4 bg-white rounded-xl border border-orange-300">
+                      <h4 className="text-xs sm:text-sm sm:text-base font-bold text-gray-800 mb-2 sm:mb-3 flex items-center gap-2">
                         <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full"></span>
                         微信群红包
                       </h4>
@@ -1905,8 +1905,8 @@ function CloudShopSimulator() {
                     </div>
 
                     {/* 说明 */}
-                    <div className="p-3 sm:p-4 bg-yellow-50 rounded-lg border-2 border-yellow-200">
-                      <p className="text-xs sm:text-sm sm:text-base text-yellow-800 text-center font-semibold">
+                    <div className="p-3 sm:p-4 bg-white rounded-lg border border-yellow-300">
+                      <p className="text-xs sm:text-sm sm:text-base text-gray-700 text-center font-semibold">
                         说明：以上活动为阿东私人举办的奖励活动
                       </p>
                     </div>
@@ -1943,10 +1943,10 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'buxin' && (
-                  <div className="p-3 sm:p-5 bg-white border-t border-purple-200 space-y-3 sm:space-y-4">
-                    {/* 步信上：太极社区交流群 - 紫色背景 */}
-                    <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200">
-                      <h4 className="text-xs sm:text-sm sm:text-base font-bold text-purple-700 mb-2 sm:mb-3">步信上：太极社区交流群</h4>
+                  <div className="p-3 sm:p-5 bg-purple-50 border-t border-purple-200 space-y-3 sm:space-y-4">
+                    {/* 步信上：太极社区交流群 - 白色背景 */}
+                    <div className="p-3 sm:p-4 bg-white rounded-xl border border-purple-300">
+                      <h4 className="text-xs sm:text-sm sm:text-base font-bold text-gray-800 mb-2 sm:mb-3">步信上：太极社区交流群</h4>
                       <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
@@ -1963,9 +1963,9 @@ function CloudShopSimulator() {
                       </ul>
                     </div>
 
-                    {/* 步信APP签到奖励 - 粉色背景 */}
-                    <div className="p-3 sm:p-4 bg-pink-50 rounded-xl border-2 border-pink-200">
-                      <h4 className="text-xs sm:text-sm sm:text-base font-bold text-pink-700 mb-2 sm:mb-3">步信APP签到奖励</h4>
+                    {/* 步信APP签到奖励 - 白色背景 */}
+                    <div className="p-3 sm:p-4 bg-white rounded-xl border border-pink-300">
+                      <h4 className="text-xs sm:text-sm sm:text-base font-bold text-gray-800 mb-2 sm:mb-3">步信APP签到奖励</h4>
                       <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-pink-500 rounded-full mt-1.5 flex-shrink-0"></span>
@@ -2146,45 +2146,45 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'company' && (
-                  <div className="p-3 sm:p-5 bg-white border-t border-purple-200 space-y-3 sm:space-y-4">
+                  <div className="p-3 sm:p-5 bg-gray-50 border-t border-gray-200 space-y-3 sm:space-y-4">
                     {/* 公司简介 - 第一段：百度百科 + 公司成立 */}
-                    <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200">
+                    <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border border-purple-300">
                       <div className="flex items-center gap-2">
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => openLink('https://baike.baidu.com/item/%E6%B5%B7%E5%8D%97%E5%88%9B%E6%AD%A5%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/66195114?fromModule=lemma_inlink')}
-                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-purple-300 bg-purple-100 hover:bg-purple-200 hover:border-purple-400 text-purple-700 flex-shrink-0"
+                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-purple-400 bg-white hover:bg-purple-50 hover:border-purple-500 text-purple-700 flex-shrink-0"
                         >
                           百度百科
                         </Button>
                         <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
-                          　　海南创步科技有限公司，成立于<span className="font-bold text-purple-600">2022年6月9日</span>，位于海南省三沙市，属科技推广和应用服务业。公司聚焦数字生活服务平台研发与运营，核心产品为自主研发的"创缴通"一站式数字缴费平台，整合全国水费、电费、燃气费等生活缴费服务，支持银行卡、第三方支付及HTTPS+RSA加密等多重安全防护机制。
+                          　　海南创步科技有限公司，成立于<span className="font-bold text-purple-700">2022年6月9日</span>，位于海南省三沙市，属科技推广和应用服务业。公司聚焦数字生活服务平台研发与运营，核心产品为自主研发的"创缴通"一站式数字缴费平台，整合全国水费、电费、燃气费等生活缴费服务，支持银行卡、第三方支付及HTTPS+RSA加密等多重安全防护机制。
                         </p>
                       </div>
                     </div>
 
                     {/* 公司简介 - 第二段：新闻资讯 + 平台上线 */}
-                    <div className="p-3 sm:p-4 bg-blue-50 rounded-xl border-2 border-blue-200">
+                    <div className="p-3 sm:p-4 bg-blue-50 rounded-xl border border-blue-300">
                       <div className="flex items-center gap-2">
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => openLink('https://mtz.china.com/touzi/2025/0707/175008.html')}
-                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-blue-300 bg-blue-100 hover:bg-blue-200 hover:border-blue-400 text-blue-700 flex-shrink-0"
+                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-blue-400 bg-white hover:bg-blue-50 hover:border-blue-500 text-blue-700 flex-shrink-0"
                         >
                           权威媒体
                         </Button>
                         <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
-                          　　<span className="font-bold text-blue-600">2025年6月</span>正式上线该平台，并于同年<span className="font-bold text-blue-600">7月</span>获得中海洋盛佳投资控股有限公司<span className="font-bold text-green-600">3200万元</span>人民币A轮融资。平台随后扩展为"生活缴费+本地服务"综合入口，覆盖全国<span className="font-bold text-blue-600">300余个</span>城市。
+                          　　<span className="font-bold text-blue-700">2025年6月</span>正式上线该平台，并于同年<span className="font-bold text-blue-700">7月</span>获得中海洋盛佳投资控股有限公司<span className="font-bold text-green-600">3200万元</span>人民币A轮融资。平台随后扩展为"生活缴费+本地服务"综合入口，覆盖全国<span className="font-bold text-blue-700">300余个</span>城市。
                         </p>
                       </div>
                     </div>
 
                     {/* 公司简介 - 第三段：保险承保 + 保险单号 */}
-                    <div className="p-3 sm:p-4 bg-amber-50 rounded-xl border-2 border-amber-200 space-y-2">
+                    <div className="p-3 sm:p-4 bg-amber-50 rounded-xl border border-amber-300 space-y-2">
                       <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
-                        <span className="font-bold text-amber-600">2025年12月11日</span>获中国人民保险集团股份有限公司<span className="font-bold text-green-600">1000万</span>产品责任险承保。
+                        <span className="font-bold text-amber-700">2025年12月11日</span>获中国人民保险集团股份有限公司<span className="font-bold text-green-600">1000万</span>产品责任险承保。
                       </p>
                       <div className="flex flex-wrap sm:flex-row sm:items-center gap-2 sm:gap-4">
                         <p className="text-xs sm:text-sm text-gray-600">
@@ -2196,7 +2196,7 @@ function CloudShopSimulator() {
                           onClick={() => {
                             navigator.clipboard.writeText('PZAI202544030000001152');
                           }}
-                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-amber-300 bg-amber-100 hover:bg-amber-200 hover:border-amber-400 text-amber-700"
+                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-amber-400 bg-white hover:bg-amber-50 hover:border-amber-500 text-amber-700"
                         >
                           复制单号
                         </Button>
@@ -2204,7 +2204,7 @@ function CloudShopSimulator() {
                           variant="outline"
                           size="sm"
                           onClick={() => window.location.href = 'tel:95518'}
-                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-amber-300 bg-amber-100 hover:bg-amber-200 hover:border-amber-400 text-amber-700"
+                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-amber-400 bg-white hover:bg-amber-50 hover:border-amber-500 text-amber-700"
                         >
                           拨打人保电话查询
                         </Button>
@@ -2212,11 +2212,11 @@ function CloudShopSimulator() {
                     </div>
 
                     {/* 愿景和使命 */}
-                    <div className="p-3 sm:p-4 bg-rose-50 rounded-xl border-2 border-rose-200 space-y-3 sm:space-y-4">
+                    <div className="p-3 sm:p-4 bg-white rounded-xl border border-gray-300 space-y-3 sm:space-y-4">
                       {/* 愿景 */}
                       <div>
-                        <h4 className="text-sm sm:text-base sm:text-lg font-bold text-rose-700 mb-2 sm:mb-3 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-rose-500 rounded-full"></span>
+                        <h4 className="text-sm sm:text-base sm:text-lg font-bold text-gray-800 mb-2 sm:mb-3 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-teal-500 rounded-full"></span>
                           愿景 / VISION
                         </h4>
                         <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm sm:text-base text-gray-700">
@@ -2224,15 +2224,15 @@ function CloudShopSimulator() {
                             构建中国领先的数字生活服务平台
                           </p>
                           <p className="leading-relaxed">
-                            实现"<span className="font-bold text-blue-600">全民云店</span>+<span className="font-bold text-blue-600">本地服务</span>+<span className="font-bold text-blue-600">聚合电商</span>+<span className="font-bold text-blue-600">数字权益</span>"的闭环生态体系
+                            实现"<span className="font-bold text-teal-700">全民云店</span>+<span className="font-bold text-teal-700">本地服务</span>+<span className="font-bold text-teal-700">聚合电商</span>+<span className="font-bold text-teal-700">数字权益</span>"的闭环生态体系
                           </p>
                         </div>
                       </div>
 
                       {/* 使命 */}
                       <div>
-                        <h4 className="text-sm sm:text-base sm:text-lg font-bold text-rose-700 mb-2 sm:mb-3 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-rose-500 rounded-full"></span>
+                        <h4 className="text-sm sm:text-base sm:text-lg font-bold text-gray-800 mb-2 sm:mb-3 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-teal-500 rounded-full"></span>
                           使命 / MISSION
                         </h4>
                         <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm sm:text-base text-gray-700">
@@ -2240,7 +2240,7 @@ function CloudShopSimulator() {
                             成为国民数字服务平台
                           </p>
                           <p className="leading-relaxed">
-                            让每一个人在获得<span className="font-bold text-purple-600">高效</span>、<span className="font-bold text-purple-600">便捷</span>、<span className="font-bold text-purple-600">低成本</span>的生活服务的同时
+                            让每一个人在获得<span className="font-bold text-gray-700">高效</span>、<span className="font-bold text-gray-700">便捷</span>、<span className="font-bold text-gray-700">低成本</span>的生活服务的同时
                           </p>
                           <p className="leading-relaxed">
                             实现<span className="font-bold text-green-600">行为价值激励</span>，成为<span className="font-bold text-green-600">股东</span>享受<span className="font-bold text-green-600">终生分红</span>

@@ -45,7 +45,7 @@ function CloudShopSimulator() {
   const [isEditMaxBalance, setIsEditMaxBalance] = useState<boolean>(true);      // 最高余额是否可编辑
   
   // 福利详情展开状态
-  const [expandedBenefit, setExpandedBenefit] = useState<'community' | 'platform' | 'wechat-photo' | 'wechat-lottery' | 'wechat-redpacket' | 'buxin' | null>(null);
+  const [expandedBenefit, setExpandedBenefit] = useState<'community' | 'platform' | 'wechat' | 'buxin' | null>(null);
   
   // 对比数据状态
   const [comparisonData, setComparisonData] = useState<ComparisonData[]>([]);
@@ -1689,25 +1689,25 @@ function CloudShopSimulator() {
                 )}
               </div>
 
-              {/* 三、微信群福利 - 晒图活动 */}
+              {/* 三、微信群每日福利 */}
               <div className="border-2 border-green-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                 <button
-                  onClick={() => setExpandedBenefit(expandedBenefit === 'wechat-photo' ? null : 'wechat-photo')}
+                  onClick={() => setExpandedBenefit(expandedBenefit === 'wechat' ? null : 'wechat')}
                   className="touch-feedback w-full flex items-center justify-between p-4 sm:p-5 bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 transition-all duration-300"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg shadow-green-500/20">
                       <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h3 className="text-base sm:text-lg font-bold text-green-700">三、微信群福利 - 晒图活动</h3>
-                      <p className="text-xs sm:text-sm text-gray-600">晒店铺利润图领奖励</p>
+                      <h3 className="text-base sm:text-lg font-bold text-green-700">三、微信群每日福利</h3>
+                      <p className="text-xs sm:text-sm text-gray-600">晒图活动、群抽奖、红包福利</p>
                     </div>
                   </div>
                   <svg
-                    className={`w-5 h-5 sm:w-6 sm:h-6 text-green-600 transition-transform duration-200 ${expandedBenefit === 'wechat-photo' ? 'rotate-180' : ''}`}
+                    className={`w-5 h-5 sm:w-6 sm:h-6 text-green-600 transition-transform duration-200 ${expandedBenefit === 'wechat' ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -1716,115 +1716,71 @@ function CloudShopSimulator() {
                   </svg>
                 </button>
 
-                {expandedBenefit === 'wechat-photo' && (
-                  <div className="p-4 sm:p-5 bg-white border-t border-green-200">
-                    <div className="space-y-3">
-                      <p className="text-sm sm:text-base text-gray-700">当日店铺有成交，即可晒店铺利润图</p>
-                      <p className="text-sm sm:text-base text-gray-700">晒图时间：每日 <span className="font-bold text-green-600">19:00-19:30</span></p>
-                      <p className="text-sm sm:text-base text-gray-700">有效规则：利润排名前<span className="font-bold text-green-600">40</span>记有效<span className="font-bold text-green-600">1次</span></p>
-                      <div className="mt-2 p-3 bg-green-50 rounded-lg border border-green-200">
-                        <p className="font-semibold text-green-700 mb-2">惊喜奖励：</p>
-                        <p className="text-sm sm:text-base text-gray-700">累计有效晒图<span className="font-bold text-green-600">3次</span>奖<span className="font-bold text-green-600">10元复缴券</span></p>
-                        <p className="text-sm sm:text-base text-gray-700">当日晒图销冠额外奖<span className="font-bold text-green-600">10元红包</span></p>
+                {expandedBenefit === 'wechat' && (
+                  <div className="p-4 sm:p-5 bg-white border-t border-green-200 space-y-4">
+                    {/* 晒图活动 - 蓝色背景 */}
+                    <div className="p-4 sm:p-5 bg-blue-50 rounded-xl border-2 border-blue-200">
+                      <h4 className="text-base sm:text-lg font-bold text-blue-700 mb-3 flex items-center gap-2">
+                        <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                        晒图活动
+                      </h4>
+                      <div className="space-y-2 text-sm sm:text-base text-gray-700">
+                        <p>当日店铺有成交，即可晒店铺利润图</p>
+                        <p>晒图时间：每日 <span className="font-bold text-blue-600">19:00-19:30</span></p>
+                        <p>有效规则：利润排名前<span className="font-bold text-blue-600">40</span>记有效<span className="font-bold text-blue-600">1次</span></p>
+                        <div className="mt-2 p-3 bg-white rounded-lg border border-blue-200">
+                          <p className="font-semibold text-blue-700 mb-2">惊喜奖励：</p>
+                          <p>累计有效晒图<span className="font-bold text-blue-600">3次</span>奖<span className="font-bold text-blue-600">10元复缴券</span></p>
+                          <p>当日晒图销冠额外奖<span className="font-bold text-blue-600">10元红包</span></p>
+                        </div>
+                        <p className="font-semibold text-red-600 mt-2">重要提醒：仅限晒本人店铺利润图</p>
                       </div>
-                      <p className="font-semibold text-red-600 text-sm sm:text-base">重要提醒：仅限晒本人店铺利润图</p>
+                    </div>
+
+                    {/* 群抽奖活动 - 紫色背景 */}
+                    <div className="p-4 sm:p-5 bg-purple-50 rounded-xl border-2 border-purple-200">
+                      <h4 className="text-base sm:text-lg font-bold text-purple-700 mb-3 flex items-center gap-2">
+                        <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+                        群抽奖活动
+                      </h4>
+                      <div className="space-y-2 text-sm sm:text-base text-gray-700">
+                        <p>微信群里每天一期免费抽奖</p>
+                        <p>一等奖<span className="font-bold text-purple-600">1名</span>，奖励<span className="font-bold text-purple-600">18元</span>现金</p>
+                        <p>二等奖<span className="font-bold text-purple-600">5名</span>，奖励<span className="font-bold text-purple-600">8元</span>现金</p>
+                        <p>参加抽奖时间：每日 <span className="font-bold text-purple-600">11:00-21:00</span></p>
+                        <div className="mt-2 p-3 bg-white rounded-lg border border-purple-200">
+                          <p className="font-semibold text-purple-700 mb-1">领奖说明：</p>
+                          <p>中奖后发微信收款码（绿码）领奖</p>
+                          <p className="font-semibold text-red-600 mt-1">注意：超过当天24点没有发收款码奖励作废</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 微信群红包 - 橙色背景 */}
+                    <div className="p-4 sm:p-5 bg-orange-50 rounded-xl border-2 border-orange-200">
+                      <h4 className="text-base sm:text-lg font-bold text-orange-700 mb-3 flex items-center gap-2">
+                        <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
+                        微信群红包
+                      </h4>
+                      <div className="space-y-2 text-sm sm:text-base text-gray-700">
+                        <p>发放时间：<span className="font-bold text-orange-600">21:30</span></p>
+                        <p>红包个数：<span className="font-bold text-orange-600">60个</span></p>
+                        <p>红包初始金额：<span className="font-bold text-orange-600">10元</span></p>
+                        <p>当天每新增<span className="font-bold text-orange-600">1个</span>店主红包金额增加<span className="font-bold text-orange-600">10元</span></p>
+                      </div>
+                    </div>
+
+                    {/* 说明 */}
+                    <div className="p-4 bg-yellow-50 rounded-lg border-2 border-yellow-200">
+                      <p className="text-sm sm:text-base text-yellow-800 text-center font-semibold">
+                        说明：以上活动为阿东私人举办的奖励活动
+                      </p>
                     </div>
                   </div>
                 )}
               </div>
 
-              {/* 四、微信群福利 - 群抽奖活动 */}
-              <div className="border-2 border-green-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                <button
-                  onClick={() => setExpandedBenefit(expandedBenefit === 'wechat-lottery' ? null : 'wechat-lottery')}
-                  className="touch-feedback w-full flex items-center justify-between p-4 sm:p-5 bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 transition-all duration-300"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg shadow-green-500/20">
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
-                      </svg>
-                    </div>
-                    <div className="text-left">
-                      <h3 className="text-base sm:text-lg font-bold text-green-700">四、微信群福利 - 群抽奖活动</h3>
-                      <p className="text-xs sm:text-sm text-gray-600">每天一期免费抽奖赢现金</p>
-                    </div>
-                  </div>
-                  <svg
-                    className={`w-5 h-5 sm:w-6 sm:h-6 text-green-600 transition-transform duration-200 ${expandedBenefit === 'wechat-lottery' ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-
-                {expandedBenefit === 'wechat-lottery' && (
-                  <div className="p-4 sm:p-5 bg-white border-t border-green-200">
-                    <div className="space-y-3">
-                      <p className="text-sm sm:text-base text-gray-700">微信群里每天一期免费抽奖</p>
-                      <div className="p-3 bg-green-50 rounded-lg border border-green-200">
-                        <p className="font-semibold text-green-700 mb-2">奖项设置：</p>
-                        <p className="text-sm sm:text-base text-gray-700">一等奖<span className="font-bold text-green-600">1名</span>，奖励<span className="font-bold text-green-600">18元</span>现金</p>
-                        <p className="text-sm sm:text-base text-gray-700">二等奖<span className="font-bold text-green-600">5名</span>，奖励<span className="font-bold text-green-600">8元</span>现金</p>
-                      </div>
-                      <p className="text-sm sm:text-base text-gray-700">参加抽奖时间：每日 <span className="font-bold text-green-600">11:00-21:00</span></p>
-                      <div className="mt-2 p-3 bg-green-50 rounded-lg border border-green-200">
-                        <p className="font-semibold text-green-700 mb-1">领奖说明：</p>
-                        <p className="text-sm sm:text-base text-gray-700">中奖后发微信收款码（绿码）领奖</p>
-                        <p className="font-semibold text-red-600 text-sm sm:text-base mt-1">注意：超过当天24点没有发收款码奖励作废</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* 五、微信群福利 - 红包活动 */}
-              <div className="border-2 border-green-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                <button
-                  onClick={() => setExpandedBenefit(expandedBenefit === 'wechat-redpacket' ? null : 'wechat-redpacket')}
-                  className="touch-feedback w-full flex items-center justify-between p-4 sm:p-5 bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 transition-all duration-300"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg shadow-green-500/20">
-                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <div className="text-left">
-                      <h3 className="text-base sm:text-lg font-bold text-green-700">五、微信群福利 - 红包活动</h3>
-                      <p className="text-xs sm:text-sm text-gray-600">每日定时发红包</p>
-                    </div>
-                  </div>
-                  <svg
-                    className={`w-5 h-5 sm:w-6 sm:h-6 text-green-600 transition-transform duration-200 ${expandedBenefit === 'wechat-redpacket' ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-
-                {expandedBenefit === 'wechat-redpacket' && (
-                  <div className="p-4 sm:p-5 bg-white border-t border-green-200">
-                    <div className="space-y-3">
-                      <p className="text-sm sm:text-base text-gray-700">发放时间：<span className="font-bold text-green-600">21:30</span></p>
-                      <p className="text-sm sm:text-base text-gray-700">红包个数：<span className="font-bold text-green-600">60个</span></p>
-                      <p className="text-sm sm:text-base text-gray-700">红包初始金额：<span className="font-bold text-green-600">10元</span></p>
-                      <p className="text-sm sm:text-base text-gray-700">当天每新增<span className="font-bold text-green-600">1个</span>店主红包金额增加<span className="font-bold text-green-600">10元</span></p>
-                      <div className="mt-2 p-4 bg-yellow-50 rounded-lg border-2 border-yellow-200">
-                        <p className="text-sm sm:text-base text-yellow-800 text-center font-semibold">
-                          说明：以上活动为阿东私人举办的奖励活动
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* 六、步信群每日福利 */}
+              {/* 四、步信群每日福利 */}
               <div className="border-2 border-purple-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                 <button
                   onClick={() => setExpandedBenefit(expandedBenefit === 'buxin' ? null : 'buxin')}
@@ -1837,7 +1793,7 @@ function CloudShopSimulator() {
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h3 className="text-base sm:text-lg font-bold text-purple-700">六、步信群每日福利</h3>
+                      <h3 className="text-base sm:text-lg font-bold text-purple-700">四、步信群每日福利</h3>
                       <p className="text-xs sm:text-sm text-gray-600">步信红包、签到奖励</p>
                     </div>
                   </div>

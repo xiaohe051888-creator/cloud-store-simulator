@@ -2250,17 +2250,6 @@ function CloudShopSimulator() {
                     </div>
                   </div>
                 )}
-
-                {/* 如何注册和开店 */}
-                <div className="p-3 sm:p-4 bg-blue-50 rounded-xl border-2 border-blue-200">
-                  <h4 className="text-sm sm:text-base sm:text-lg font-bold text-blue-700 mb-2 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></span>
-                    如何注册和开店？
-                  </h4>
-                  <p className="text-xs sm:text-sm sm:text-base text-gray-700">
-                    联系邀请人获取邀请码注册和开店。
-                  </p>
-                </div>
               </div>
             </CardContent>
           </Card>

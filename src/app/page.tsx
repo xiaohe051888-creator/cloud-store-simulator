@@ -2140,7 +2140,8 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'company' && (
-                  <div className="p-3 sm:p-5 bg-white border-t border-purple-200">
+                  <div className="p-3 sm:p-5 bg-white border-t border-purple-200 space-y-3 sm:space-y-4">
+                    {/* 公司简介 */}
                     <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200 space-y-3 text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
                       <p>
                         　　海南创步科技有限公司，成立于<span className="font-bold text-purple-600">2022年6月9日</span>，位于海南省三沙市，属科技推广和应用服务业。公司聚焦数字生活服务平台研发与运营，核心产品为自主研发的"创缴通"一站式数字缴费平台，整合全国水费、电费、燃气费等生活缴费服务，支持银行卡、第三方支付及HTTPS+RSA加密等多重安全防护机制。
@@ -2151,6 +2152,41 @@ function CloudShopSimulator() {
                       <p>
                         　　<span className="font-bold text-purple-600">2025年12月11日</span>获中国人民保险集团股份有限公司<span className="font-bold text-green-600">1000万</span>产品责任险承保。
                       </p>
+                    </div>
+
+                    {/* 愿景 */}
+                    <div className="p-3 sm:p-4 bg-blue-50 rounded-xl border-2 border-blue-200">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-blue-700 mb-2 sm:mb-3 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></span>
+                        愿景 / VISION
+                      </h4>
+                      <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm sm:text-base text-gray-700">
+                        <p className="leading-relaxed">
+                          构建中国领先的数字生活服务平台
+                        </p>
+                        <p className="leading-relaxed">
+                          实现"<span className="font-bold text-blue-600">全民云店</span>+<span className="font-bold text-blue-600">本地服务</span>+<span className="font-bold text-blue-600">聚合电商</span>+<span className="font-bold text-blue-600">数字权益</span>"的闭环生态体系
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* 使命 */}
+                    <div className="p-3 sm:p-4 bg-amber-50 rounded-xl border-2 border-amber-200">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-amber-700 mb-2 sm:mb-3 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-amber-500 rounded-full"></span>
+                        使命 / MISSION
+                      </h4>
+                      <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm sm:text-base text-gray-700">
+                        <p className="leading-relaxed">
+                          成为国民数字服务平台
+                        </p>
+                        <p className="leading-relaxed">
+                          让每一个人在获得<span className="font-bold text-amber-600">高效</span>、<span className="font-bold text-amber-600">便捷</span>、<span className="font-bold text-amber-600">低成本</span>的生活服务的同时
+                        </p>
+                        <p className="leading-relaxed">
+                          实现<span className="font-bold text-green-600">行为价值激励</span>，成为<span className="font-bold text-green-600">股东</span>享受<span className="font-bold text-green-600">终生分红</span>
+                        </p>
+                      </div>
                     </div>
                   </div>
                 )}

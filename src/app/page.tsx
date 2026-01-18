@@ -2897,7 +2897,7 @@ function CloudShopSimulator() {
                     <Table>
                       <TableHeader>
                         <TableRow>
-                          <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">等级</TableHead>
+                          <TableHead className="sticky left-0 z-10 text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">等级</TableHead>
                           <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">预缴折扣</TableHead>
                           <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">最高余额</TableHead>
                           <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">代缴比例</TableHead>
@@ -2909,7 +2909,7 @@ function CloudShopSimulator() {
                       </TableHeader>
                       <TableBody>
                         <TableRow className="hover:bg-gray-50">
-                          <TableCell className="px-2 py-2 sm:px-3 text-center">
+                          <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
                             <Badge className="bg-gradient-to-r from-orange-400 to-orange-600 text-xs sm:text-sm">青铜</Badge>
                           </TableCell>
                           <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">88折</TableCell>
@@ -2921,7 +2921,7 @@ function CloudShopSimulator() {
                           <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">-</TableCell>
                         </TableRow>
                         <TableRow className="hover:bg-gray-50">
-                          <TableCell className="px-2 py-2 sm:px-3 text-center">
+                          <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
                             <Badge className="bg-gradient-to-r from-gray-300 to-gray-400 text-xs sm:text-sm">白银</Badge>
                           </TableCell>
                           <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">87折</TableCell>
@@ -2933,7 +2933,7 @@ function CloudShopSimulator() {
                           <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">3%</TableCell>
                         </TableRow>
                         <TableRow className="hover:bg-gray-50">
-                          <TableCell className="px-2 py-2 sm:px-3 text-center">
+                          <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
                             <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-xs sm:text-sm">黄金</Badge>
                           </TableCell>
                           <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">86折</TableCell>
@@ -2945,7 +2945,7 @@ function CloudShopSimulator() {
                           <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">6%</TableCell>
                         </TableRow>
                         <TableRow className="hover:bg-gray-50">
-                          <TableCell className="px-2 py-2 sm:px-3 text-center">
+                          <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
                             <Badge className="bg-gradient-to-r from-gray-200 to-gray-300 text-xs sm:text-sm">铂金</Badge>
                           </TableCell>
                           <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">85折</TableCell>
@@ -2957,7 +2957,7 @@ function CloudShopSimulator() {
                           <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">8%</TableCell>
                         </TableRow>
                         <TableRow className="hover:bg-gray-50">
-                          <TableCell className="px-2 py-2 sm:px-3 text-center">
+                          <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
                             <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">钻石</Badge>
                           </TableCell>
                           <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">84折</TableCell>
@@ -2969,7 +2969,7 @@ function CloudShopSimulator() {
                           <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">10%</TableCell>
                         </TableRow>
                         <TableRow className="hover:bg-gray-50">
-                          <TableCell className="px-2 py-2 sm:px-3 text-center">
+                          <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
                             <Badge className="bg-gradient-to-r from-gray-600 to-gray-800 text-white text-xs sm:text-sm">黑钻</Badge>
                           </TableCell>
                           <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">83折</TableCell>
@@ -2981,7 +2981,7 @@ function CloudShopSimulator() {
                           <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">15%</TableCell>
                         </TableRow>
                         <TableRow className="hover:bg-gray-50">
-                          <TableCell className="px-2 py-2 sm:px-3 text-center">
+                          <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
                             <Badge className="bg-gradient-to-r from-purple-500 to-purple-700 text-white text-xs sm:text-sm">至尊</Badge>
                           </TableCell>
                           <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">82折</TableCell>

@@ -1294,32 +1294,35 @@ function CloudShopSimulator() {
               </CardHeader>
               <CardContent className="space-y-2.5 sm:space-y-3 lg:space-y-4 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-5 lg:pb-7">
                 {/* 项目介绍 */}
-                <div className="rounded-xl border-2 border-indigo-200 overflow-hidden bg-white hover:shadow-lg transition-all duration-300">
-                  <button
+                <div className="rounded-xl border-2 border-indigo-200 overflow-hidden bg-white hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300">
+                  <div
                     onClick={() => setExpandedBenefit(expandedBenefit === 'project' ? null : 'project')}
-                    className="touch-feedback w-full flex items-center justify-between p-4 sm:p-5 bg-gradient-to-r from-indigo-50 to-blue-50 hover:from-indigo-100 hover:to-blue-100 transition-all duration-300"
+                    className="group touch-feedback flex items-center justify-between p-4 sm:p-5 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-blue-50 transition-all duration-300 cursor-pointer relative overflow-hidden"
                   >
-                    <div className="flex items-center gap-2 sm:gap-3">
-                      <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl shadow-lg shadow-indigo-500/20">
-                        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    {/* 装饰性背景光晕 */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-indigo-500/5 to-indigo-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    <div className="flex items-center gap-2 sm:gap-3 relative z-10">
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl mr-4 sm:mr-5 shadow-lg shadow-indigo-500/20 group-hover:scale-110 group-hover:shadow-indigo-500/30 transition-all duration-300">
+                        <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       </div>
                       <div className="text-left">
-                        <h3 className="text-sm sm:text-base sm:text-lg font-bold text-indigo-700">项目介绍</h3>
+                        <h3 className="text-base sm:text-lg font-bold text-indigo-800 mb-1 group-hover:text-indigo-700 transition-colors">项目介绍</h3>
                         <p className="text-xs text-gray-600 sm:hidden">加入我们、公司介绍</p>
                         <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">加入我们、公司介绍</p>
                       </div>
                     </div>
                     <svg
-                      className={`w-4 h-4 sm:w-6 sm:h-6 text-indigo-600 transition-transform duration-200 ${expandedBenefit === 'project' ? 'rotate-180' : ''}`}
+                      className={`w-4 h-4 sm:w-6 sm:h-6 text-indigo-500 flex-shrink-0 group-hover:text-indigo-600 transition-all duration-300 relative z-10 ${expandedBenefit === 'project' ? 'rotate-180' : ''}`}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
-                  </button>
+                  </div>
 
                   {expandedBenefit === 'project' && (
                     <div className="p-4 sm:p-5 bg-white border-t border-indigo-200 space-y-4 sm:space-y-5">

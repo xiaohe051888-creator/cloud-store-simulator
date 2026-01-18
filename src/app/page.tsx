@@ -45,7 +45,7 @@ function CloudShopSimulator() {
   const [isEditMaxBalance, setIsEditMaxBalance] = useState<boolean>(true);      // 最高余额是否可编辑
   
   // 福利详情展开状态
-  const [expandedBenefit, setExpandedBenefit] = useState<'newbie' | 'community' | 'platform' | 'wechat' | 'buxin' | null>(null);
+  const [expandedBenefit, setExpandedBenefit] = useState<'newbie' | 'community' | 'platform' | 'wechat' | 'buxin' | 'project' | null>(null);
   
   // 对比数据状态
   const [comparisonData, setComparisonData] = useState<ComparisonData[]>([]);
@@ -1293,6 +1293,114 @@ function CloudShopSimulator() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2.5 sm:space-y-3 lg:space-y-4 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-5 lg:pb-7">
+                {/* 项目介绍 */}
+                <div className="rounded-xl border-2 border-indigo-200 overflow-hidden bg-white hover:shadow-lg transition-all duration-300">
+                  <button
+                    onClick={() => setExpandedBenefit(expandedBenefit === 'project' ? null : 'project')}
+                    className="touch-feedback w-full flex items-center justify-between p-4 sm:p-5 bg-gradient-to-r from-indigo-50 to-blue-50 hover:from-indigo-100 hover:to-blue-100 transition-all duration-300"
+                  >
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl shadow-lg shadow-indigo-500/20">
+                        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div className="text-left">
+                        <h3 className="text-sm sm:text-base sm:text-lg font-bold text-indigo-700">项目介绍</h3>
+                        <p className="text-xs text-gray-600 sm:hidden">加入我们、公司介绍</p>
+                        <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">加入我们、公司介绍</p>
+                      </div>
+                    </div>
+                    <svg
+                      className={`w-4 h-4 sm:w-6 sm:h-6 text-indigo-600 transition-transform duration-200 ${expandedBenefit === 'project' ? 'rotate-180' : ''}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  {expandedBenefit === 'project' && (
+                    <div className="p-4 sm:p-5 bg-white border-t border-indigo-200 space-y-4 sm:space-y-5">
+                      {/* 加入我们 */}
+                      <div className="space-y-3 sm:space-y-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <div className="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-blue-600 rounded-lg shadow-md">
+                            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                          </div>
+                          <h4 className="text-base sm:text-lg font-bold text-indigo-700">加入我们</h4>
+                        </div>
+
+                        {/* 注册会员 */}
+                        <div className="p-3 sm:p-4 bg-green-50 rounded-xl border-2 border-green-200">
+                          <h5 className="text-sm sm:text-base font-bold text-green-700 mb-2 sm:mb-3">注册成为平台会员</h5>
+                          <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-gray-700">
+                            <li className="flex items-start gap-1.5 sm:gap-2">
+                              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                              <span>永久享受95折缴电费</span>
+                            </li>
+                            <li className="flex items-start gap-1.5 sm:gap-2">
+                              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                              <span>首次缴费完成领20元实物礼品（包邮到家）</span>
+                            </li>
+                          </ul>
+                        </div>
+
+                        {/* 开通云店 */}
+                        <div className="p-3 sm:p-4 bg-blue-50 rounded-xl border-2 border-blue-200">
+                          <h5 className="text-sm sm:text-base font-bold text-blue-700 mb-2 sm:mb-3">开通云店</h5>
+                          <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-gray-700">
+                            <li className="flex items-start gap-1.5 sm:gap-2">
+                              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                              <span>首次开通云店享90折进货500电费额度</span>
+                            </li>
+                            <li className="flex items-start gap-1.5 sm:gap-2">
+                              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                              <span>使用新人18元云店抵用券实付432元</span>
+                            </li>
+                            <li className="flex items-start gap-1.5 sm:gap-2">
+                              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                              <span>系统自动派单销售，3天即可销售完成</span>
+                            </li>
+                            <li className="flex items-start gap-1.5 sm:gap-2">
+                              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                              <span>95折销售，销售结算完成收入475元</span>
+                            </li>
+                            <li className="flex items-start gap-1.5 sm:gap-2">
+                              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                              <span>可提现、可复投、可给家里户号缴费</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      {/* 公司介绍 */}
+                      <div className="space-y-2 sm:space-y-3">
+                        <div className="flex items-center gap-2 mb-3">
+                          <div className="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg shadow-md">
+                            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                          </div>
+                          <h4 className="text-base sm:text-lg font-bold text-purple-700">公司介绍</h4>
+                        </div>
+
+                        <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200 text-xs sm:text-sm text-gray-700 leading-relaxed">
+                          <p className="mb-2 sm:mb-3">
+                            海南创步科技有限公司，成立于2022年6月9日，位于海南省三沙市，属科技推广和应用服务业。公司聚焦数字生活服务平台研发与运营，核心产品为自主研发的"创缴通"一站式数字缴费平台，整合全国水费、电费、燃气费等生活缴费服务，支持银行卡、第三方支付及HTTPS+RSA加密等多重安全防护机制。
+                          </p>
+                          <p>
+                            2025年6月正式上线该平台，并于同年7月获得中海洋盛佳投资控股有限公司3200万元人民币A轮融资。平台随后扩展为"生活缴费+本地服务"综合入口，覆盖全国300余个城市。2025年12月11日获中国人民保险集团股份有限公司1000万产品责任险承保。
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
                 {/* 进入平台 */}
                 <div
                   onClick={() => setCurrentView('platform')}

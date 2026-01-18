@@ -1408,33 +1408,6 @@ function CloudShopSimulator() {
                   </svg>
                 </div>
 
-                {/* 店铺等级 */}
-                <div
-                  onClick={() => setCurrentView('shopLevels')}
-                  className="group touch-feedback flex items-center p-4 sm:p-5 rounded-xl border-2 border-orange-200 bg-white hover:border-orange-400 hover:shadow-lg hover:shadow-orange-500/10 hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 transition-all duration-300 cursor-pointer relative overflow-hidden"
-                >
-                  {/* 装饰性背景光晕 */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-orange-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                  {/* 图标 */}
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-orange-500 to-amber-600 rounded-xl mr-4 sm:mr-5 shadow-lg shadow-orange-500/20 group-hover:scale-110 group-hover:shadow-orange-500/30 transition-all duration-300 relative z-10">
-                    <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                    </svg>
-                  </div>
-
-                  {/* 标题和说明 */}
-                  <div className="flex-1 relative z-10">
-                    <h3 className="text-base sm:text-lg font-bold text-orange-800 mb-1 group-hover:text-orange-700 transition-colors">店铺等级</h3>
-                    <p className="text-xs sm:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">查看各等级的升级条件和权益</p>
-                  </div>
-
-                  {/* 箭头图标 */}
-                  <svg className="w-6 h-6 sm:w-7 sm:h-7 text-orange-500 flex-shrink-0 group-hover:translate-x-1 group-hover:text-orange-600 transition-all duration-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-
                 {/* 福利介绍 */}
                 <div
                   onClick={handleViewBenefits}
@@ -1458,6 +1431,33 @@ function CloudShopSimulator() {
 
                   {/* 箭头图标 */}
                   <svg className="w-6 h-6 sm:w-7 sm:h-7 text-rose-500 flex-shrink-0 group-hover:translate-x-1 group-hover:text-rose-600 transition-all duration-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+
+                {/* 店铺等级 */}
+                <div
+                  onClick={() => setCurrentView('shopLevels')}
+                  className="group touch-feedback flex items-center p-4 sm:p-5 rounded-xl border-2 border-orange-200 bg-white hover:border-orange-400 hover:shadow-lg hover:shadow-orange-500/10 hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 transition-all duration-300 cursor-pointer relative overflow-hidden"
+                >
+                  {/* 装饰性背景光晕 */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/5 to-orange-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  {/* 图标 */}
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-orange-500 to-amber-600 rounded-xl mr-4 sm:mr-5 shadow-lg shadow-orange-500/20 group-hover:scale-110 group-hover:shadow-orange-500/30 transition-all duration-300 relative z-10">
+                    <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                  </div>
+
+                  {/* 标题和说明 */}
+                  <div className="flex-1 relative z-10">
+                    <h3 className="text-base sm:text-lg font-bold text-orange-800 mb-1 group-hover:text-orange-700 transition-colors">店铺等级</h3>
+                    <p className="text-xs sm:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">查看各等级的升级条件和权益</p>
+                  </div>
+
+                  {/* 箭头图标 */}
+                  <svg className="w-6 h-6 sm:w-7 sm:h-7 text-orange-500 flex-shrink-0 group-hover:translate-x-1 group-hover:text-orange-600 transition-all duration-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>

@@ -1575,35 +1575,62 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'newbie' && (
-                  <div className="p-4 sm:p-5 bg-white border-t border-rose-200">
-                    <div className="space-y-4">
+                  <div className="p-4 sm:p-5 bg-white border-t border-rose-200 space-y-4">
+                    {/* 领取条件 */}
+                    <div className="p-4 bg-rose-50 rounded-xl border-2 border-rose-200">
+                      <h4 className="text-base sm:text-lg font-bold text-rose-700 mb-3">领取条件</h4>
+                      <ul className="space-y-2 text-sm sm:text-base text-gray-700">
+                        <li className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-rose-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>新人注册完成交过电费</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-rose-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>新人注册完成开通了云店</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    {/* 领取方式 */}
+                    <div className="p-4 bg-purple-50 rounded-xl border-2 border-purple-200">
+                      <h4 className="text-base sm:text-lg font-bold text-purple-700 mb-3">领取方式</h4>
                       <div className="space-y-3">
-                        <h4 className="text-base sm:text-lg font-bold text-rose-700">领取条件</h4>
-                        <ul className="space-y-2 text-sm sm:text-base text-gray-700">
-                          <li className="flex items-start gap-2">
-                            <span className="w-2 h-2 bg-rose-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                            <span>新人注册完成交过电费</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="w-2 h-2 bg-rose-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                            <span>新人注册完成开通了云店</span>
-                          </li>
-                        </ul>
-                      </div>
+                        {/* 步信号 */}
+                        <div className="flex items-center justify-between gap-3 p-3 bg-white rounded-lg border border-purple-200">
+                          <div className="flex-1">
+                            <p className="text-sm text-gray-600 mb-1">阿东步信号：</p>
+                            <p className="text-lg font-bold text-purple-700 font-mono">G2L07V</p>
+                          </div>
+                          <button
+                            onClick={() => {
+                              navigator.clipboard.writeText('G2L07V');
+                              alert('已复制到剪贴板');
+                            }}
+                            className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors touch-feedback flex-shrink-0"
+                          >
+                            点击复制
+                          </button>
+                        </div>
 
-                      <div className="p-4 bg-rose-50 rounded-xl border-2 border-rose-200">
-                        <h4 className="text-base sm:text-lg font-bold text-rose-700 mb-3">领取方式</h4>
-                        <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                          安装登录步信后添加阿东的步信
-                        </p>
+                        {/* 添加步骤 */}
+                        <div className="space-y-2 text-sm sm:text-base text-gray-700">
+                          <p className="font-semibold text-purple-700">添加步骤：</p>
+                          <ol className="space-y-1.5 ml-4 list-decimal">
+                            <li>在步信点击右上角的 +</li>
+                            <li>点击"添加好友"</li>
+                            <li>粘贴已经复制好的步信号</li>
+                            <li>点击"添加好友"</li>
+                          </ol>
+                        </div>
                       </div>
+                    </div>
 
-                      <div className="p-4 bg-green-50 rounded-xl border-2 border-green-200">
-                        <h4 className="text-base sm:text-lg font-bold text-green-700 mb-2">奖励内容</h4>
-                        <p className="text-lg sm:text-xl font-bold text-green-600 text-center">
-                          20元礼品一份（包邮）
-                        </p>
-                      </div>
+                    {/* 奖励内容 */}
+                    <div className="p-4 bg-green-50 rounded-xl border-2 border-green-200">
+                      <h4 className="text-base sm:text-lg font-bold text-green-700 mb-2">奖励内容</h4>
+                      <p className="text-lg sm:text-xl font-bold text-green-600 text-center">
+                        20元礼品一份（包邮）
+                      </p>
                     </div>
                   </div>
                 )}

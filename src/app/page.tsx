@@ -1619,7 +1619,7 @@ function CloudShopSimulator() {
                             <li>在步信点击右上角的 +</li>
                             <li>点击"添加好友"</li>
                             <li>粘贴已经复制好的步信号</li>
-                            <li>点击"添加好友"</li>
+                            <li>点击搜索后完成添加</li>
                           </ol>
                         </div>
                       </div>

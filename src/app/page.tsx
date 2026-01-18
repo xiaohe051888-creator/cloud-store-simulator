@@ -1274,6 +1274,16 @@ function CloudShopSimulator() {
               公告
             </Button>
 
+            {/* 进入平台 */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentView('platform')}
+              className="touch-feedback text-xs sm:text-sm lg:text-base font-bold h-10 sm:h-11 lg:h-12 px-3 sm:px-4 lg:px-5 rounded-xl border-2 border-green-200 bg-gradient-to-r from-green-50 to-emerald-50 text-green-700 hover:border-green-400 hover:shadow-lg hover:shadow-green-500/20 hover:bg-gradient-to-r hover:from-green-100 hover:to-emerald-100 transition-all duration-300"
+            >
+              进入平台
+            </Button>
+
             {/* 回到首页 */}
             <Button
               variant="outline"

@@ -1789,30 +1789,28 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'platform' && (
-                  <div className="p-3 sm:p-5 bg-white border-t border-blue-200 space-y-3">
-                      <div>
-                        <h4 className="text-xs sm:text-sm sm:text-base font-semibold text-blue-700 mb-2 sm:mb-2 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></span>
-                          1月新店主奖励
-                        </h4>
-                        <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700 ml-2 sm:ml-3">
+                  <div className="p-3 sm:p-5 bg-white border-t border-blue-200 space-y-3 sm:space-y-4">
+                      {/* 1月新店主奖励 */}
+                      <div className="p-3 sm:p-4 bg-blue-50 rounded-xl border-2 border-blue-200">
+                        <h4 className="text-sm sm:text-base sm:text-lg font-bold text-blue-700 mb-2 sm:mb-3">1月新店主奖励</h4>
+                        <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                           <p className="text-gray-600 mb-1.5 sm:mb-2">
                             1月开店的新店主可参与
                           </p>
                           <ul className="space-y-1 sm:space-y-1.5">
                             <li className="flex items-start gap-1.5 sm:gap-2">
-                              <span className="text-blue-500 mt-0.5">•</span>
+                              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
                               <span>2月1日前首次同一天进货<span className="font-bold text-blue-600">2500及以上</span>，奖励<span className="font-bold text-green-600">38元</span>复缴券</span>
                             </li>
                             <li className="flex items-start gap-1.5 sm:gap-2">
-                              <span className="text-blue-500 mt-0.5">•</span>
+                              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
                               <span>2月1日前累积进货<span className="font-bold text-blue-600">7000及以上</span>，再奖励<span className="font-bold text-green-600">68元</span>复缴券</span>
                             </li>
                           </ul>
                         </div>
                       </div>
 
-                      <div className="mt-3 sm:mt-4 p-2.5 sm:p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                      <div className="p-2.5 sm:p-3 bg-blue-50 border border-blue-200 rounded-lg">
                         <p className="text-xs sm:text-sm sm:text-base text-blue-800">
                           <span className="font-semibold">领取奖励：</span>
                           完成要求联系 <span className="font-bold text-blue-600">阿东</span> 登记领取

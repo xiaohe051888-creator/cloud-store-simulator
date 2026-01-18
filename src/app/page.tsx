@@ -1943,7 +1943,7 @@ function CloudShopSimulator() {
 
         {/* 推荐系统输入界面 */}
         {currentView === 'recommendation' && (
-          <Card className="w-full max-w-4xl mx-auto bg-white/90 backdrop-blur-lg animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
+          <Card className="w-full max-w-lg mx-auto bg-white/90 backdrop-blur-lg animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
             <CardHeader className="pb-4 pt-6 px-6">
               <div className="flex items-center justify-between">
                 <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
@@ -2255,7 +2255,7 @@ function CloudShopSimulator() {
 
         {/* 进货额度输入界面 */}
         {currentView === 'stockInput' && levelConfig && (
-          <Card className="w-full max-w-4xl mx-auto animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
+          <Card className="w-full max-w-lg mx-auto animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
             <CardHeader className="pb-3 sm:pb-4 pt-4 sm:pt-6 px-3 sm:px-4 lg:px-6">
               <div className="flex items-center justify-between">
                 <Button variant="ghost" size="icon" onClick={handleBackToLevelSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 sm:w-12 sm:h-12">
@@ -2371,7 +2371,7 @@ function CloudShopSimulator() {
 
         {/* 店铺详情界面 */}
         {currentView === 'levelDetails' && levelConfig && detailsData && (
-          <Card className="w-full max-w-4xl mx-auto animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
+          <Card className="w-full max-w-3xl mx-auto animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
             <CardHeader className="pb-3 sm:pb-4 pt-4 sm:pt-6 px-3 sm:px-4 lg:px-6">
               <div className="flex items-center justify-between">
                 <Button variant="ghost" size="icon" onClick={handleBackToStockInput} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 sm:w-12 sm:h-12">
@@ -2468,7 +2468,7 @@ function CloudShopSimulator() {
 
         {/* 销售详情界面 */}
         {currentView === 'salesDetails' && (
-          <Card className="max-w-4xl mx-auto w-full bg-white/90 backdrop-blur-lg animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
+          <Card className="max-w-3xl mx-auto w-full bg-white/90 backdrop-blur-lg animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
             <CardHeader className="pb-4 pt-6 px-6">
               <div className="flex items-center justify-between">
                 <Button variant="ghost" size="icon" onClick={handleBackToLevelDetails} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">

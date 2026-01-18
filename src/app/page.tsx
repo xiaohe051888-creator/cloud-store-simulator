@@ -1778,7 +1778,6 @@ function CloudShopSimulator() {
                         </p>
                       </div>
                     </div>
-                  </div>
                 )}
               </div>
 
@@ -1829,6 +1828,7 @@ function CloudShopSimulator() {
                         </div>
                         <p className="font-semibold text-red-600 mt-1.5 sm:mt-2">重要提醒：仅限晒本人店铺利润图</p>
                       </div>
+                    </div>
 
                     {/* 群抽奖活动 - 紫色背景 */}
                     <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200">

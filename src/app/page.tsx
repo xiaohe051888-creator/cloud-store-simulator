@@ -45,7 +45,7 @@ function CloudShopSimulator() {
   const [isEditMaxBalance, setIsEditMaxBalance] = useState<boolean>(true);      // 最高余额是否可编辑
   
   // 福利详情展开状态
-  const [expandedBenefit, setExpandedBenefit] = useState<'newbie' | 'community' | 'platform' | 'wechat' | 'buxin' | 'project' | null>(null);
+  const [expandedBenefit, setExpandedBenefit] = useState<'newbie' | 'community' | 'platform' | 'wechat' | 'buxin' | 'joinus' | 'becomemanager' | 'company' | null>(null);
   
   // 对比数据状态
   const [comparisonData, setComparisonData] = useState<ComparisonData[]>([]);
@@ -484,6 +484,12 @@ function CloudShopSimulator() {
   // 查看福利介绍
   const handleViewBenefits = () => {
     setCurrentView('benefits');
+    setExpandedBenefit(null); // 重置展开状态
+  };
+
+  // 查看项目介绍
+  const handleViewProject = () => {
+    setCurrentView('project');
     setExpandedBenefit(null); // 重置展开状态
   };
 
@@ -1294,123 +1300,31 @@ function CloudShopSimulator() {
               </CardHeader>
               <CardContent className="space-y-2.5 sm:space-y-3 lg:space-y-4 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-5 lg:pb-7">
                 {/* 项目介绍 */}
-                <div className="rounded-xl border-2 border-indigo-200 overflow-hidden bg-white hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300">
-                  <div
-                    onClick={() => setExpandedBenefit(expandedBenefit === 'project' ? null : 'project')}
-                    className="group touch-feedback flex items-center justify-between p-4 sm:p-5 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-blue-50 transition-all duration-300 cursor-pointer relative overflow-hidden"
-                  >
-                    {/* 装饰性背景光晕 */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-indigo-500/5 to-indigo-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div
+                  onClick={handleViewProject}
+                  className="group touch-feedback flex items-center p-4 sm:p-5 rounded-xl border-2 border-indigo-200 bg-white hover:border-indigo-400 hover:shadow-lg hover:shadow-indigo-500/10 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-blue-50 transition-all duration-300 cursor-pointer relative overflow-hidden"
+                >
+                  {/* 装饰性背景光晕 */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-indigo-500/5 to-indigo-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                    <div className="flex items-center gap-2 sm:gap-3 relative z-10">
-                      <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl mr-4 sm:mr-5 shadow-lg shadow-indigo-500/20 group-hover:scale-110 group-hover:shadow-indigo-500/30 transition-all duration-300">
-                        <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <div className="text-left">
-                        <h3 className="text-base sm:text-lg font-bold text-indigo-800 mb-1 group-hover:text-indigo-700 transition-colors">项目介绍</h3>
-                        <p className="text-xs text-gray-600 sm:hidden">加入我们、公司介绍</p>
-                        <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">加入我们、公司介绍</p>
-                      </div>
-                    </div>
-                    <svg
-                      className={`w-4 h-4 sm:w-6 sm:h-6 text-indigo-500 flex-shrink-0 group-hover:text-indigo-600 transition-all duration-300 relative z-10 ${expandedBenefit === 'project' ? 'rotate-180' : ''}`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  {/* 图标 */}
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl mr-4 sm:mr-5 shadow-lg shadow-indigo-500/20 group-hover:scale-110 group-hover:shadow-indigo-500/30 transition-all duration-300 relative z-10">
+                    <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
 
-                  {expandedBenefit === 'project' && (
-                    <div className="p-4 sm:p-5 bg-white border-t border-indigo-200 space-y-4 sm:space-y-5">
-                      {/* 加入我们 */}
-                      <div className="p-3 sm:p-4 bg-green-50 rounded-xl border-2 border-green-200">
-                        <div className="flex items-center gap-2 mb-3">
-                          <div className="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg shadow-md">
-                            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                          </div>
-                          <h4 className="text-base sm:text-lg font-bold text-green-700">加入我们</h4>
-                        </div>
+                  {/* 标题和说明 */}
+                  <div className="flex-1 relative z-10">
+                    <h3 className="text-base sm:text-lg font-bold text-indigo-800 mb-1 group-hover:text-indigo-700 transition-colors">项目介绍</h3>
+                    <p className="text-xs text-gray-600 sm:hidden">加入我们、公司介绍</p>
+                    <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">加入我们、成为店长、公司介绍</p>
+                  </div>
 
-                        <h5 className="text-sm sm:text-base font-bold text-green-700 mb-2 sm:mb-3">注册成为平台会员</h5>
-                        <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-gray-700">
-                          <li className="flex items-start gap-1.5 sm:gap-2">
-                            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                            <span>永久享受95折缴电费</span>
-                          </li>
-                          <li className="flex items-start gap-1.5 sm:gap-2">
-                            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                            <span>首次缴费完成领20元实物礼品（包邮到家）</span>
-                          </li>
-                        </ul>
-                      </div>
-
-                      {/* 成为店长 */}
-                      <div className="p-3 sm:p-4 bg-blue-50 rounded-xl border-2 border-blue-200">
-                        <div className="flex items-center gap-2 mb-3">
-                          <div className="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg shadow-md">
-                            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                            </svg>
-                          </div>
-                          <h4 className="text-base sm:text-lg font-bold text-blue-700">成为店长</h4>
-                        </div>
-
-                        <h5 className="text-sm sm:text-base font-bold text-blue-700 mb-2 sm:mb-3">开通云店</h5>
-                        <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-gray-700">
-                          <li className="flex items-start gap-1.5 sm:gap-2">
-                            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                            <span>首次开通云店享90折进货500电费额度</span>
-                          </li>
-                          <li className="flex items-start gap-1.5 sm:gap-2">
-                            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                            <span>使用新人18元云店抵用券实付432元</span>
-                          </li>
-                          <li className="flex items-start gap-1.5 sm:gap-2">
-                            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                            <span>系统自动派单销售，3天即可销售完成</span>
-                          </li>
-                          <li className="flex items-start gap-1.5 sm:gap-2">
-                            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                            <span>95折销售，销售结算完成收入475元</span>
-                          </li>
-                          <li className="flex items-start gap-1.5 sm:gap-2">
-                            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                            <span>可提现、可复投、可给家里户号缴费</span>
-                          </li>
-                        </ul>
-                      </div>
-
-                      {/* 公司介绍 */}
-                      <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200">
-                        <div className="flex items-center gap-2 mb-3">
-                          <div className="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg shadow-md">
-                            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                            </svg>
-                          </div>
-                          <h4 className="text-base sm:text-lg font-bold text-purple-700">公司介绍</h4>
-                        </div>
-
-                        <div className="space-y-3 text-xs sm:text-sm text-gray-700 leading-relaxed">
-                          <p>
-                            　　海南创步科技有限公司，成立于2022年6月9日，位于海南省三沙市，属科技推广和应用服务业。公司聚焦数字生活服务平台研发与运营，核心产品为自主研发的"创缴通"一站式数字缴费平台，整合全国水费、电费、燃气费等生活缴费服务，支持银行卡、第三方支付及HTTPS+RSA加密等多重安全防护机制。
-                          </p>
-                          <p>
-                            　　2025年6月正式上线该平台，并于同年7月获得中海洋盛佳投资控股有限公司3200万元人民币A轮融资。平台随后扩展为"生活缴费+本地服务"综合入口，覆盖全国300余个城市。
-                          </p>
-                          <p>
-                            　　2025年12月11日获中国人民保险集团股份有限公司1000万产品责任险承保。
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  {/* 箭头图标 */}
+                  <svg className="w-6 h-6 sm:w-7 sm:h-7 text-indigo-500 flex-shrink-0 group-hover:translate-x-1 group-hover:text-indigo-600 transition-all duration-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                 </div>
 
                 {/* 进入平台 */}
@@ -2054,6 +1968,182 @@ function CloudShopSimulator() {
                           <span>每天<span className="font-bold text-pink-600">19:40</span>步信群查看如何进入课程和签到流程</span>
                         </li>
                       </ul>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* 项目介绍 */}
+        {currentView === 'project' && (
+          <Card className="w-full max-w-4xl mx-auto glass animate-fade-in animate-scale-in shadow-2xl border-0">
+            <CardHeader className="pb-3 sm:pb-4 pt-4 sm:pt-6 px-4 sm:px-6">
+              <div className="flex items-center justify-between">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={handleBackToShopSelection}
+                  className="touch-feedback w-10 h-10 sm:w-12 sm:h-12 rounded-full hover:bg-indigo-100 hover:text-indigo-600 transition-all duration-300"
+                >
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </Button>
+                <CardTitle className="text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-indigo-600 via-blue-600 to-purple-600 bg-clip-text text-transparent font-bold">
+                  📋 项目介绍
+                </CardTitle>
+                <div className="w-10 sm:w-12" />
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-3 sm:space-y-5 px-4 sm:px-6 pb-5 sm:pb-6">
+              {/* 一、加入我们 */}
+              <div className="border-2 border-green-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                <button
+                  onClick={() => setExpandedBenefit(expandedBenefit === 'joinus' ? null : 'joinus')}
+                  className="touch-feedback w-full flex items-center justify-between p-3 sm:p-5 bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 transition-all duration-300"
+                >
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg shadow-green-500/20">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="text-sm sm:text-base sm:text-lg font-bold text-green-700">一、加入我们</h3>
+                      <p className="text-xs text-gray-600 sm:hidden">注册会员福利</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">注册成为平台会员，享受专属福利</p>
+                    </div>
+                  </div>
+                  <svg
+                    className={`w-4 h-4 sm:w-6 sm:h-6 text-green-600 transition-transform duration-200 ${expandedBenefit === 'joinus' ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {expandedBenefit === 'joinus' && (
+                  <div className="p-3 sm:p-5 bg-white border-t border-green-200">
+                    <div className="p-3 sm:p-4 bg-green-50 rounded-xl border-2 border-green-200">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-green-700 mb-2 sm:mb-3">注册成为平台会员</h4>
+                      <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>永久享受95折缴电费</span>
+                        </li>
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>首次缴费完成领20元实物礼品（包邮到家）</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 二、成为店长 */}
+              <div className="border-2 border-blue-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                <button
+                  onClick={() => setExpandedBenefit(expandedBenefit === 'becomemanager' ? null : 'becomemanager')}
+                  className="touch-feedback w-full flex items-center justify-between p-3 sm:p-5 bg-gradient-to-r from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 transition-all duration-300"
+                >
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl shadow-lg shadow-blue-500/20">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="text-sm sm:text-base sm:text-lg font-bold text-blue-700">二、成为店长</h3>
+                      <p className="text-xs text-gray-600 sm:hidden">开通云店福利</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">开通云店，开启赚钱之旅</p>
+                    </div>
+                  </div>
+                  <svg
+                    className={`w-4 h-4 sm:w-6 sm:h-6 text-blue-600 transition-transform duration-200 ${expandedBenefit === 'becomemanager' ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {expandedBenefit === 'becomemanager' && (
+                  <div className="p-3 sm:p-5 bg-white border-t border-blue-200">
+                    <div className="p-3 sm:p-4 bg-blue-50 rounded-xl border-2 border-blue-200">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-blue-700 mb-2 sm:mb-3">开通云店</h4>
+                      <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>首次开通云店享90折进货500电费额度</span>
+                        </li>
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>使用新人18元云店抵用券实付432元</span>
+                        </li>
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>系统自动派单销售，3天即可销售完成</span>
+                        </li>
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>95折销售，销售结算完成收入475元</span>
+                        </li>
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>可提现、可复投、可给家里户号缴费</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 三、公司介绍 */}
+              <div className="border-2 border-purple-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                <button
+                  onClick={() => setExpandedBenefit(expandedBenefit === 'company' ? null : 'company')}
+                  className="touch-feedback w-full flex items-center justify-between p-3 sm:p-5 bg-gradient-to-r from-purple-50 to-indigo-50 hover:from-purple-100 hover:to-indigo-100 transition-all duration-300"
+                >
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl shadow-lg shadow-purple-500/20">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="text-sm sm:text-base sm:text-lg font-bold text-purple-700">三、公司介绍</h3>
+                      <p className="text-xs text-gray-600 sm:hidden">海南创步科技</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">了解我们的公司背景与发展历程</p>
+                    </div>
+                  </div>
+                  <svg
+                    className={`w-4 h-4 sm:w-6 sm:h-6 text-purple-600 transition-transform duration-200 ${expandedBenefit === 'company' ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {expandedBenefit === 'company' && (
+                  <div className="p-3 sm:p-5 bg-white border-t border-purple-200">
+                    <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200 space-y-3 text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
+                      <p>
+                        　　海南创步科技有限公司，成立于2022年6月9日，位于海南省三沙市，属科技推广和应用服务业。公司聚焦数字生活服务平台研发与运营，核心产品为自主研发的"创缴通"一站式数字缴费平台，整合全国水费、电费、燃气费等生活缴费服务，支持银行卡、第三方支付及HTTPS+RSA加密等多重安全防护机制。
+                      </p>
+                      <p>
+                        　　2025年6月正式上线该平台，并于同年7月获得中海洋盛佳投资控股有限公司3200万元人民币A轮融资。平台随后扩展为"生活缴费+本地服务"综合入口，覆盖全国300余个城市。
+                      </p>
+                      <p>
+                        　　2025年12月11日获中国人民保险集团股份有限公司1000万产品责任险承保。
+                      </p>
                     </div>
                   </div>
                 )}

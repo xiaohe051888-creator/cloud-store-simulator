@@ -20,6 +20,7 @@ export type ViewType =
   | 'recommendationResult'
   | 'shopLevels'
   | 'benefits'           // 福利介绍
+  | 'project'            // 项目介绍
   | 'platform';          // 进入平台
 
 // 店铺配置类型

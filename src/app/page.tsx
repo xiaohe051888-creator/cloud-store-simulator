@@ -1528,44 +1528,45 @@ function CloudShopSimulator() {
         {/* 福利介绍 */}
         {currentView === 'benefits' && (
           <Card className="w-full max-w-2xl mx-auto glass animate-fade-in animate-scale-in shadow-2xl border-0">
-            <CardHeader className="pb-4 pt-6 px-6">
+            <CardHeader className="pb-3 sm:pb-4 pt-4 sm:pt-6 px-4 sm:px-6">
               <div className="flex items-center justify-between">
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={handleBackToShopSelection}
-                  className="touch-feedback w-12 h-12 rounded-full hover:bg-orange-100 hover:text-orange-600 transition-all duration-300"
+                  className="touch-feedback w-10 h-10 sm:w-12 sm:h-12 rounded-full hover:bg-orange-100 hover:text-orange-600 transition-all duration-300"
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </Button>
-                <CardTitle className="text-xl sm:text-2xl lg:text-3xl bg-gradient-to-r from-orange-600 via-amber-600 to-red-600 bg-clip-text text-transparent font-bold">
+                <CardTitle className="text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-orange-600 via-amber-600 to-red-600 bg-clip-text text-transparent font-bold">
                   🎁 福利介绍
                 </CardTitle>
-                <div className="w-12" />
+                <div className="w-10 sm:w-12" />
               </div>
             </CardHeader>
-            <CardContent className="space-y-4 sm:space-y-5 px-6 pb-6">
+            <CardContent className="space-y-3 sm:space-y-5 px-4 sm:px-6 pb-5 sm:pb-6">
               {/* 一、新人礼品 */}
               <div className="border-2 border-rose-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                 <button
                   onClick={() => setExpandedBenefit(expandedBenefit === 'newbie' ? null : 'newbie')}
-                  className="touch-feedback w-full flex items-center justify-between p-4 sm:p-5 bg-gradient-to-r from-rose-50 to-pink-50 hover:from-rose-100 hover:to-pink-100 transition-all duration-300"
+                  className="touch-feedback w-full flex items-center justify-between p-3 sm:p-5 bg-gradient-to-r from-rose-50 to-pink-50 hover:from-rose-100 hover:to-pink-100 transition-all duration-300"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-rose-500 to-pink-600 rounded-xl shadow-lg shadow-rose-500/20">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-rose-500 to-pink-600 rounded-xl shadow-lg shadow-rose-500/20">
                       <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h3 className="text-base sm:text-lg font-bold text-rose-700">一、新人礼品</h3>
-                      <p className="text-xs sm:text-sm text-gray-600">新人专享礼品奖励</p>
+                      <h3 className="text-sm sm:text-base sm:text-lg font-bold text-rose-700">一、新人礼品</h3>
+                      <p className="text-xs text-gray-600 sm:hidden">新人专享礼品</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">新人专享礼品奖励</p>
                     </div>
                   </div>
                   <svg
-                    className={`w-5 h-5 sm:w-6 sm:h-6 text-rose-600 transition-transform duration-200 ${expandedBenefit === 'newbie' ? 'rotate-180' : ''}`}
+                    className={`w-4 h-4 sm:w-6 sm:h-6 text-rose-600 transition-transform duration-200 ${expandedBenefit === 'newbie' ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -1575,55 +1576,55 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'newbie' && (
-                  <div className="p-4 sm:p-5 bg-white border-t border-rose-200 space-y-4">
+                  <div className="p-3 sm:p-5 bg-white border-t border-rose-200 space-y-3 sm:space-y-4">
                     {/* 领取条件 */}
-                    <div className="p-4 bg-rose-50 rounded-xl border-2 border-rose-200">
-                      <h4 className="text-base sm:text-lg font-bold text-rose-700 mb-3">
+                    <div className="p-3 sm:p-4 bg-rose-50 rounded-xl border-2 border-rose-200">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-rose-700 mb-2 sm:mb-3">
                         领取条件
-                        <span className="text-sm sm:text-base font-semibold text-rose-600 ml-2">（满足其中一条即可）</span>
+                        <span className="text-xs sm:text-sm sm:text-base font-semibold text-rose-600 ml-1 sm:ml-2">（满足其中一条即可）</span>
                       </h4>
-                      <ul className="space-y-2 text-sm sm:text-base text-gray-700">
-                        <li className="flex items-start gap-2">
-                          <span className="w-2 h-2 bg-rose-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                      <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-rose-500 rounded-full mt-1.5 flex-shrink-0"></span>
                           <span>新人注册完成交过电费</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="w-2 h-2 bg-rose-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-rose-500 rounded-full mt-1.5 flex-shrink-0"></span>
                           <span>新人注册完成开通了云店</span>
                         </li>
                       </ul>
                     </div>
 
                     {/* 领取方式 */}
-                    <div className="p-4 bg-purple-50 rounded-xl border-2 border-purple-200">
-                      <h4 className="text-base sm:text-lg font-bold text-purple-700 mb-3">领取方式</h4>
-                      <div className="space-y-3">
+                    <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-purple-700 mb-2 sm:mb-3">领取方式</h4>
+                      <div className="space-y-2 sm:space-y-3">
                         {/* 下载说明 */}
-                        <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                        <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
                           在平台上下载安装登录步信添加阿东的步信
                         </p>
 
                         {/* 步信号 */}
-                        <div className="flex items-center justify-between gap-3 p-3 bg-white rounded-lg border border-purple-200">
+                        <div className="flex items-center justify-between gap-2 sm:gap-3 p-2.5 sm:p-3 bg-white rounded-lg border border-purple-200">
                           <div className="flex-1">
-                            <p className="text-sm text-gray-600 mb-1">阿东步信号：</p>
-                            <p className="text-lg font-bold text-purple-700 font-mono">G2L07V</p>
+                            <p className="text-xs text-gray-600 mb-0.5 sm:text-sm sm:mb-1">阿东步信号：</p>
+                            <p className="text-base sm:text-lg font-bold text-purple-700 font-mono">G2L07V</p>
                           </div>
                           <button
                             onClick={() => {
                               navigator.clipboard.writeText('G2L07V');
                               alert('已复制到剪贴板');
                             }}
-                            className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors touch-feedback flex-shrink-0"
+                            className="px-3 py-1.5 sm:px-4 sm:py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs sm:text-sm font-medium transition-colors touch-feedback flex-shrink-0"
                           >
                             点击复制
                           </button>
                         </div>
 
                         {/* 添加步骤 */}
-                        <div className="space-y-2 text-sm sm:text-base text-gray-700">
+                        <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                           <p className="font-semibold text-purple-700">添加步骤：</p>
-                          <ol className="space-y-1.5 ml-4 list-decimal">
+                          <ol className="space-y-1 sm:space-y-1.5 ml-3 sm:ml-4 list-decimal">
                             <li>在步信点击右上角的 +</li>
                             <li>点击"添加好友"</li>
                             <li>粘贴已经复制好的步信号</li>
@@ -1634,10 +1635,10 @@ function CloudShopSimulator() {
                     </div>
 
                     {/* 奖励内容 */}
-                    <div className="p-4 bg-green-50 rounded-xl border-2 border-green-200 flex items-center justify-center">
-                      <h4 className="text-base sm:text-lg font-bold text-green-700 flex items-center">
+                    <div className="p-3 sm:p-4 bg-green-50 rounded-xl border-2 border-green-200 flex items-center justify-center">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-green-700 flex items-center">
                         奖励内容：
-                        <span className="text-lg sm:text-xl font-bold text-green-600 ml-2">价值20元的实物礼品一份（包邮到家）</span>
+                        <span className="text-base sm:text-lg sm:text-xl font-bold text-green-600 ml-1 sm:ml-2">价值20元的实物礼品一份（包邮到家）</span>
                       </h4>
                     </div>
                   </div>
@@ -1648,21 +1649,22 @@ function CloudShopSimulator() {
               <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                 <button
                   onClick={() => setExpandedBenefit(expandedBenefit === 'community' ? null : 'community')}
-                  className="touch-feedback w-full flex items-center justify-between p-4 sm:p-5 bg-gradient-to-r from-orange-50 to-amber-50 hover:from-orange-100 hover:to-amber-100 transition-all duration-300"
+                  className="touch-feedback w-full flex items-center justify-between p-3 sm:p-5 bg-gradient-to-r from-orange-50 to-amber-50 hover:from-orange-100 hover:to-amber-100 transition-all duration-300"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-orange-500 to-amber-600 rounded-xl shadow-lg shadow-orange-500/20">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-orange-500 to-amber-600 rounded-xl shadow-lg shadow-orange-500/20">
                       <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h3 className="text-base sm:text-lg font-bold text-orange-700">二、社区福利</h3>
-                      <p className="text-xs sm:text-sm text-gray-600">邀请好友开店享多重奖励</p>
+                      <h3 className="text-sm sm:text-base sm:text-lg font-bold text-orange-700">二、社区福利</h3>
+                      <p className="text-xs text-gray-600 sm:hidden">邀请好友开店</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">邀请好友开店享多重奖励</p>
                     </div>
                   </div>
                   <svg
-                    className={`w-5 h-5 sm:w-6 sm:h-6 text-orange-600 transition-transform duration-200 ${expandedBenefit === 'community' ? 'rotate-180' : ''}`}
+                    className={`w-4 h-4 sm:w-6 sm:h-6 text-orange-600 transition-transform duration-200 ${expandedBenefit === 'community' ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -1672,43 +1674,43 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'community' && (
-                  <div className="p-4 sm:p-5 bg-white border-t border-orange-200 space-y-4">
+                  <div className="p-3 sm:p-5 bg-white border-t border-orange-200 space-y-3 sm:space-y-4">
                     {/* 1月个人当天邀请奖励 - 橙色背景 */}
-                    <div className="p-4 sm:p-5 bg-orange-50 rounded-xl border-2 border-orange-200">
-                      <h4 className="text-base sm:text-lg font-bold text-orange-700 mb-3">1月个人当天邀请奖励</h4>
-                      <ul className="space-y-2 text-sm sm:text-base text-gray-700">
-                        <li className="flex items-start gap-2">
-                          <span className="w-2 h-2 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                    <div className="p-3 sm:p-4 bg-orange-50 rounded-xl border-2 border-orange-200">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-orange-700 mb-2 sm:mb-3">1月个人当天邀请奖励</h4>
+                      <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></span>
                           <span>当天邀请第<span className="font-bold text-orange-600">1个</span>开店奖：<span className="font-bold text-green-600">18元</span></span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="w-2 h-2 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></span>
                           <span>当天邀请第<span className="font-bold text-orange-600">2个</span>开店再奖：<span className="font-bold text-green-600">38元</span></span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="w-2 h-2 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></span>
                           <span>当天邀请第<span className="font-bold text-orange-600">3个</span>开店再奖：<span className="font-bold text-green-600">108元</span></span>
                         </li>
                       </ul>
                     </div>
 
                     {/* 1月个人连续邀请奖励 - 琥珀色背景 */}
-                    <div className="p-4 sm:p-5 bg-amber-50 rounded-xl border-2 border-amber-200">
-                      <h4 className="text-base sm:text-lg font-bold text-amber-700 mb-3">1月个人连续邀请奖励</h4>
-                      <ul className="space-y-2 text-sm sm:text-base text-gray-700">
-                        <li className="flex items-start gap-2">
-                          <span className="w-2 h-2 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                    <div className="p-3 sm:p-4 bg-amber-50 rounded-xl border-2 border-amber-200">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-amber-700 mb-2 sm:mb-3">1月个人连续邀请奖励</h4>
+                      <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"></span>
                           <span>连续<span className="font-bold text-amber-600">3天</span>有邀请额外奖励<span className="font-bold text-green-600">68券</span></span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="w-2 h-2 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"></span>
                           <span>连续<span className="font-bold text-amber-600">7天</span>有邀请再额外奖励<span className="font-bold text-green-600">168券</span></span>
                         </li>
                       </ul>
                     </div>
 
-                    <div className="p-3 bg-orange-50 border border-orange-200 rounded-lg">
-                      <p className="text-sm sm:text-base text-orange-800">
+                    <div className="mt-2 sm:mt-4 p-2.5 sm:p-3 bg-orange-50 border border-orange-200 rounded-lg">
+                      <p className="text-xs sm:text-sm sm:text-base text-orange-800">
                         <span className="font-semibold">说明：</span>
                         完成邀请 联系 <span className="font-bold text-orange-600">阿东</span> 领奖
                       </p>
@@ -1718,24 +1720,25 @@ function CloudShopSimulator() {
               </div>
 
               {/* 三、平台福利 */}
-              <div className="border border-blue-200 rounded-lg overflow-hidden">
+              <div className="border-2 border-blue-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                 <button
                   onClick={() => setExpandedBenefit(expandedBenefit === 'platform' ? null : 'platform')}
-                  className="w-full flex items-center justify-between p-4 sm:p-5 bg-gradient-to-r from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 transition-colors"
+                  className="touch-feedback w-full flex items-center justify-between p-3 sm:p-5 bg-gradient-to-r from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 transition-all duration-300"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-blue-500 rounded-lg">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl shadow-lg shadow-blue-500/20">
                       <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h3 className="text-base sm:text-lg font-bold text-blue-700">三、平台福利</h3>
-                      <p className="text-xs sm:text-sm text-gray-600">新店主专享进货奖励</p>
+                      <h3 className="text-sm sm:text-base sm:text-lg font-bold text-blue-700">三、平台福利</h3>
+                      <p className="text-xs text-gray-600 sm:hidden">新店主专享奖励</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">新店主专享进货奖励</p>
                     </div>
                   </div>
                   <svg
-                    className={`w-5 h-5 sm:w-6 sm:h-6 text-blue-600 transition-transform duration-200 ${expandedBenefit === 'platform' ? 'rotate-180' : ''}`}
+                    className={`w-4 h-4 sm:w-6 sm:h-6 text-blue-600 transition-transform duration-200 ${expandedBenefit === 'platform' ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -1745,23 +1748,22 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'platform' && (
-                  <div className="p-4 sm:p-5 bg-white border-t border-blue-200">
-                    <div className="space-y-3">
+                  <div className="p-3 sm:p-5 bg-white border-t border-blue-200 space-y-3">
                       <div>
-                        <h4 className="text-sm sm:text-base font-semibold text-blue-700 mb-2 flex items-center gap-2">
+                        <h4 className="text-xs sm:text-sm sm:text-base font-semibold text-blue-700 mb-2 sm:mb-2 flex items-center gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></span>
                           1月新店主奖励
                         </h4>
-                        <div className="space-y-2 text-sm sm:text-base text-gray-700 ml-3">
-                          <p className="text-gray-600 mb-2">
+                        <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700 ml-2 sm:ml-3">
+                          <p className="text-gray-600 mb-1.5 sm:mb-2">
                             1月开店的新店主可参与
                           </p>
-                          <ul className="space-y-1.5">
-                            <li className="flex items-start gap-2">
+                          <ul className="space-y-1 sm:space-y-1.5">
+                            <li className="flex items-start gap-1.5 sm:gap-2">
                               <span className="text-blue-500 mt-0.5">•</span>
                               <span>2月1日前首次同一天进货<span className="font-bold text-blue-600">2500及以上</span>，奖励<span className="font-bold text-green-600">38元</span>复缴券</span>
                             </li>
-                            <li className="flex items-start gap-2">
+                            <li className="flex items-start gap-1.5 sm:gap-2">
                               <span className="text-blue-500 mt-0.5">•</span>
                               <span>2月1日前累积进货<span className="font-bold text-blue-600">7000及以上</span>，再奖励<span className="font-bold text-green-600">68元</span>复缴券</span>
                             </li>
@@ -1769,8 +1771,8 @@ function CloudShopSimulator() {
                         </div>
                       </div>
 
-                      <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                        <p className="text-sm sm:text-base text-blue-800">
+                      <div className="mt-3 sm:mt-4 p-2.5 sm:p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <p className="text-xs sm:text-sm sm:text-base text-blue-800">
                           <span className="font-semibold">领取奖励：</span>
                           完成要求联系 <span className="font-bold text-blue-600">阿东</span> 登记领取
                         </p>
@@ -1784,21 +1786,22 @@ function CloudShopSimulator() {
               <div className="border-2 border-green-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                 <button
                   onClick={() => setExpandedBenefit(expandedBenefit === 'wechat' ? null : 'wechat')}
-                  className="touch-feedback w-full flex items-center justify-between p-4 sm:p-5 bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 transition-all duration-300"
+                  className="touch-feedback w-full flex items-center justify-between p-3 sm:p-5 bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 transition-all duration-300"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg shadow-green-500/20">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg shadow-green-500/20">
                       <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h3 className="text-base sm:text-lg font-bold text-green-700">四、微信群每日福利</h3>
-                      <p className="text-xs sm:text-sm text-gray-600">晒图活动、群抽奖、红包福利</p>
+                      <h3 className="text-sm sm:text-base sm:text-lg font-bold text-green-700">四、微信群每日福利</h3>
+                      <p className="text-xs text-gray-600 sm:hidden">晒图、群抽奖、红包</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">晒图活动、群抽奖、红包福利</p>
                     </div>
                   </div>
                   <svg
-                    className={`w-5 h-5 sm:w-6 sm:h-6 text-green-600 transition-transform duration-200 ${expandedBenefit === 'wechat' ? 'rotate-180' : ''}`}
+                    className={`w-4 h-4 sm:w-6 sm:h-6 text-green-600 transition-transform duration-200 ${expandedBenefit === 'wechat' ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -1808,52 +1811,51 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'wechat' && (
-                  <div className="p-4 sm:p-5 bg-white border-t border-green-200 space-y-4">
+                  <div className="p-3 sm:p-5 bg-white border-t border-green-200 space-y-3 sm:space-y-4">
                     {/* 晒图活动 - 蓝色背景 */}
-                    <div className="p-4 sm:p-5 bg-blue-50 rounded-xl border-2 border-blue-200">
-                      <h4 className="text-base sm:text-lg font-bold text-blue-700 mb-3 flex items-center gap-2">
-                        <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                    <div className="p-3 sm:p-4 bg-blue-50 rounded-xl border-2 border-blue-200">
+                      <h4 className="text-xs sm:text-sm sm:text-base font-bold text-blue-700 mb-2 sm:mb-3 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></span>
                         晒图活动
                       </h4>
-                      <div className="space-y-2 text-sm sm:text-base text-gray-700">
+                      <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                         <p>当日店铺有成交，即可晒店铺利润图</p>
                         <p>晒图时间：每日 <span className="font-bold text-blue-600">19:00-19:30</span></p>
                         <p>有效规则：利润排名前<span className="font-bold text-blue-600">40</span>记有效<span className="font-bold text-blue-600">1次</span></p>
-                        <div className="mt-2 p-3 bg-white rounded-lg border border-blue-200">
-                          <p className="font-semibold text-blue-700 mb-2">惊喜奖励：</p>
+                        <div className="mt-1.5 sm:mt-2 p-2 sm:p-3 bg-white rounded-lg border border-blue-200">
+                          <p className="font-semibold text-blue-700 mb-1 sm:mb-2">惊喜奖励：</p>
                           <p>累计有效晒图<span className="font-bold text-blue-600">3次</span>奖<span className="font-bold text-blue-600">10元复缴券</span></p>
                           <p>当日晒图销冠额外奖<span className="font-bold text-blue-600">10元红包</span></p>
                         </div>
-                        <p className="font-semibold text-red-600 mt-2">重要提醒：仅限晒本人店铺利润图</p>
+                        <p className="font-semibold text-red-600 mt-1.5 sm:mt-2">重要提醒：仅限晒本人店铺利润图</p>
                       </div>
-                    </div>
 
                     {/* 群抽奖活动 - 紫色背景 */}
-                    <div className="p-4 sm:p-5 bg-purple-50 rounded-xl border-2 border-purple-200">
-                      <h4 className="text-base sm:text-lg font-bold text-purple-700 mb-3 flex items-center gap-2">
-                        <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+                    <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200">
+                      <h4 className="text-xs sm:text-sm sm:text-base font-bold text-purple-700 mb-2 sm:mb-3 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full"></span>
                         群抽奖活动
                       </h4>
-                      <div className="space-y-2 text-sm sm:text-base text-gray-700">
+                      <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                         <p>微信群里每天一期免费抽奖</p>
                         <p>一等奖<span className="font-bold text-purple-600">1名</span>，奖励<span className="font-bold text-purple-600">18元</span>现金</p>
                         <p>二等奖<span className="font-bold text-purple-600">5名</span>，奖励<span className="font-bold text-purple-600">8元</span>现金</p>
                         <p>参加抽奖时间：每日 <span className="font-bold text-purple-600">11:00-21:00</span></p>
-                        <div className="mt-2 p-3 bg-white rounded-lg border border-purple-200">
-                          <p className="font-semibold text-purple-700 mb-1">领奖说明：</p>
+                        <div className="mt-1.5 sm:mt-2 p-2 sm:p-3 bg-white rounded-lg border border-purple-200">
+                          <p className="font-semibold text-purple-700 mb-1 sm:mb-1">领奖说明：</p>
                           <p>中奖后发微信收款码（绿码）领奖</p>
-                          <p className="font-semibold text-red-600 mt-1">注意：超过当天24点没有发收款码奖励作废</p>
+                          <p className="font-semibold text-red-600 mt-1 sm:mt-1">注意：超过当天24点没有发收款码奖励作废</p>
                         </div>
                       </div>
                     </div>
 
                     {/* 微信群红包 - 橙色背景 */}
-                    <div className="p-4 sm:p-5 bg-orange-50 rounded-xl border-2 border-orange-200">
-                      <h4 className="text-base sm:text-lg font-bold text-orange-700 mb-3 flex items-center gap-2">
-                        <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
+                    <div className="p-3 sm:p-4 bg-orange-50 rounded-xl border-2 border-orange-200">
+                      <h4 className="text-xs sm:text-sm sm:text-base font-bold text-orange-700 mb-2 sm:mb-3 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full"></span>
                         微信群红包
                       </h4>
-                      <div className="space-y-2 text-sm sm:text-base text-gray-700">
+                      <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                         <p>发放时间：<span className="font-bold text-orange-600">21:30</span></p>
                         <p>红包个数：<span className="font-bold text-orange-600">60个</span></p>
                         <p>红包初始金额：<span className="font-bold text-orange-600">10元</span></p>
@@ -1862,8 +1864,8 @@ function CloudShopSimulator() {
                     </div>
 
                     {/* 说明 */}
-                    <div className="p-4 bg-yellow-50 rounded-lg border-2 border-yellow-200">
-                      <p className="text-sm sm:text-base text-yellow-800 text-center font-semibold">
+                    <div className="p-3 sm:p-4 bg-yellow-50 rounded-lg border-2 border-yellow-200">
+                      <p className="text-xs sm:text-sm sm:text-base text-yellow-800 text-center font-semibold">
                         说明：以上活动为阿东私人举办的奖励活动
                       </p>
                     </div>
@@ -1875,21 +1877,22 @@ function CloudShopSimulator() {
               <div className="border-2 border-purple-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                 <button
                   onClick={() => setExpandedBenefit(expandedBenefit === 'buxin' ? null : 'buxin')}
-                  className="touch-feedback w-full flex items-center justify-between p-4 sm:p-5 bg-gradient-to-r from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 transition-all duration-300"
+                  className="touch-feedback w-full flex items-center justify-between p-3 sm:p-5 bg-gradient-to-r from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 transition-all duration-300"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl shadow-lg shadow-purple-500/20">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl shadow-lg shadow-purple-500/20">
                       <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h3 className="text-base sm:text-lg font-bold text-purple-700">五、步信群每日福利</h3>
-                      <p className="text-xs sm:text-sm text-gray-600">步信红包、签到奖励</p>
+                      <h3 className="text-sm sm:text-base sm:text-lg font-bold text-purple-700">五、步信群每日福利</h3>
+                      <p className="text-xs text-gray-600 sm:hidden">步信红包、签到</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">步信红包、签到奖励</p>
                     </div>
                   </div>
                   <svg
-                    className={`w-5 h-5 sm:w-6 sm:h-6 text-purple-600 transition-transform duration-200 ${expandedBenefit === 'buxin' ? 'rotate-180' : ''}`}
+                    className={`w-4 h-4 sm:w-6 sm:h-6 text-purple-600 transition-transform duration-200 ${expandedBenefit === 'buxin' ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -1899,36 +1902,36 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'buxin' && (
-                  <div className="p-4 sm:p-5 bg-white border-t border-purple-200 space-y-4">
+                  <div className="p-3 sm:p-5 bg-white border-t border-purple-200 space-y-3 sm:space-y-4">
                     {/* 步信上：太极社区交流群 - 紫色背景 */}
-                    <div className="p-4 sm:p-5 bg-purple-50 rounded-xl border-2 border-purple-200">
-                      <h4 className="text-base sm:text-lg font-bold text-purple-700 mb-3">步信上：太极社区交流群</h4>
-                      <ul className="space-y-2 text-sm sm:text-base text-gray-700">
-                        <li className="flex items-start gap-2">
-                          <span className="w-2 h-2 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                    <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200">
+                      <h4 className="text-xs sm:text-sm sm:text-base font-bold text-purple-700 mb-2 sm:mb-3">步信上：太极社区交流群</h4>
+                      <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
                           <span>每天会发<span className="font-bold text-purple-600">2次</span>红包</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="w-2 h-2 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
                           <span>第一次：<span className="font-bold text-purple-600">15:00</span></span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="w-2 h-2 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
                           <span>第二次：<span className="font-bold text-purple-600">19:40</span></span>
                         </li>
                       </ul>
                     </div>
 
                     {/* 步信APP签到奖励 - 粉色背景 */}
-                    <div className="p-4 sm:p-5 bg-pink-50 rounded-xl border-2 border-pink-200">
-                      <h4 className="text-base sm:text-lg font-bold text-pink-700 mb-3">步信APP签到奖励</h4>
-                      <ul className="space-y-2 text-sm sm:text-base text-gray-700">
-                        <li className="flex items-start gap-2">
-                          <span className="w-2 h-2 bg-pink-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                    <div className="p-3 sm:p-4 bg-pink-50 rounded-xl border-2 border-pink-200">
+                      <h4 className="text-xs sm:text-sm sm:text-base font-bold text-pink-700 mb-2 sm:mb-3">步信APP签到奖励</h4>
+                      <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-pink-500 rounded-full mt-1.5 flex-shrink-0"></span>
                           <span>平均每天<span className="font-bold text-pink-600">5元</span></span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="w-2 h-2 bg-pink-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                        <li className="flex items-start gap-1.5 sm:gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-pink-500 rounded-full mt-1.5 flex-shrink-0"></span>
                           <span>每天<span className="font-bold text-pink-600">19:40</span>步信群查看如何进入课程和签到流程</span>
                         </li>
                       </ul>

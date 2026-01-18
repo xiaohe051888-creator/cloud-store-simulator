@@ -2150,12 +2150,12 @@ function CloudShopSimulator() {
                     {/* 公司简介 */}
                     <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200 space-y-3 sm:space-y-4">
                       {/* 第一段：百度百科 + 公司成立 */}
-                      <div className="space-y-2">
+                      <div className="flex items-start gap-2">
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => openLink('https://baike.baidu.com/item/%E6%B5%B7%E5%8D%97%E5%88%9B%E6%AD%A5%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/66195114?fromModule=lemma_inlink')}
-                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-purple-300 bg-purple-100 hover:bg-purple-200 hover:border-purple-400 text-purple-700"
+                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-purple-300 bg-purple-100 hover:bg-purple-200 hover:border-purple-400 text-purple-700 flex-shrink-0"
                         >
                           查看百度百科
                         </Button>
@@ -2165,12 +2165,12 @@ function CloudShopSimulator() {
                       </div>
 
                       {/* 第二段：新闻资讯 + 平台上线 */}
-                      <div className="space-y-2">
+                      <div className="flex items-start gap-2">
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => openLink('https://mtz.china.com/touzi/2025/0707/175008.html')}
-                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-purple-300 bg-purple-100 hover:bg-purple-200 hover:border-purple-400 text-purple-700"
+                          className="active:scale-95 transition-all duration-200 h-8 px-3 py-1 text-xs font-semibold border-purple-300 bg-purple-100 hover:bg-purple-200 hover:border-purple-400 text-purple-700 flex-shrink-0"
                         >
                           查看新闻资讯
                         </Button>

@@ -5,6 +5,7 @@ import { Suspense } from 'react';
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -33,7 +34,7 @@ import {
   validateCloudBalance,
   validateMaxBalance,
 } from '@/lib/shop-utils';
-import type { ShopLevel, ViewType, SalesData, ComparisonData, RecommendationResult } from '@/types/shop';
+import type { ShopLevel, ViewType, SalesData, ComparisonData, RecommendationResult, StoreManagerReinvestData } from '@/types/shop';
 
 function CloudShopSimulator() {
   // 应用状态
@@ -46,6 +47,10 @@ function CloudShopSimulator() {
   
   // 福利详情展开状态
   const [expandedBenefit, setExpandedBenefit] = useState<'newbie' | 'community' | 'platform' | 'wechat' | 'buxin' | null>(null);
+
+  // 店长模式状态
+  const [storeManagerReinvestCount, setStoreManagerReinvestCount] = useState<number>(10);  // 复投次数
+  const [storeManagerMode, setStoreManagerMode] = useState<'single' | 'reinvest'>('single');  // 店长模式：单次/复投
   
   // 对比数据状态
   const [comparisonData, setComparisonData] = useState<ComparisonData[]>([]);
@@ -861,6 +866,56 @@ function CloudShopSimulator() {
     };
   }, []);
 
+  // 店长模式复投计算函数
+  const calculateStoreManagerReinvest = useCallback((reinvestCount: number): StoreManagerReinvestData[] => {
+    const INITIAL_INVESTMENT = 432;    // 初始投入
+    const STOCK_AMOUNT = 500;           // 进货金额
+    const SETTLEMENT_RATE = 0.95;      // 95折回款
+    const DAYS_PER_CYCLE = 3;           // 每次周期天数
+
+    // 单次结算金额
+    const settlementAmount = Math.round(STOCK_AMOUNT * SETTLEMENT_RATE);  // 475元
+    // 单次利润
+    const singleProfit = settlementAmount - INITIAL_INVESTMENT;  // 43元
+
+    const results: StoreManagerReinvestData[] = [];
+
+    let totalProfit = 0;           // 累计利润
+    let totalWithdrawal = 0;       // 累计提现
+    let totalReinvest = 0;         // 累计复投
+    let balance = 0;               // 余额（复投的钱）
+
+    // 计算每次复投的情况
+    for (let cycle = 1; cycle <= reinvestCount; cycle++) {
+      // 每次结算得到475元
+      balance += settlementAmount;  // 回款到账
+      totalProfit += singleProfit;  // 利润+43元
+
+      // 假设每次都复投，用432元进货，剩余43元作为利润
+      if (cycle < reinvestCount) {
+        // 复投
+        balance -= INITIAL_INVESTMENT;  // 用432元进货
+        totalReinvest += INITIAL_INVESTMENT;  // 累计复投金额
+        balance += singleProfit;  // 剩余43元作为余额
+      } else {
+        // 最后一次不复投，全部提现
+        totalWithdrawal += balance;
+        balance = 0;
+      }
+
+      results.push({
+        cycle,
+        dailyProfit: singleProfit,
+        totalProfit,
+        totalWithdrawal,
+        totalReinvest,
+        balance
+      });
+    }
+
+    return results;
+  }, []);
+
   // 推荐算法：根据预算或期望利润计算推荐方案
   const generateRecommendations = useCallback((): RecommendationResult[] => {
     let results: RecommendationResult[] = [];
@@ -1424,6 +1479,33 @@ function CloudShopSimulator() {
 
                   {/* 箭头图标 */}
                   <svg className="w-6 h-6 sm:w-7 sm:h-7 text-rose-500 flex-shrink-0 group-hover:translate-x-1 group-hover:text-rose-600 transition-all duration-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+
+                {/* 店长模式 */}
+                <div
+                  onClick={() => setCurrentView('storeManager')}
+                  className="group touch-feedback flex items-center p-4 sm:p-5 rounded-xl border-2 border-indigo-200 bg-white hover:border-indigo-400 hover:shadow-lg hover:shadow-indigo-500/10 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-violet-50 transition-all duration-300 cursor-pointer relative overflow-hidden"
+                >
+                  {/* 装饰性背景光晕 */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 via-indigo-500/5 to-indigo-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  {/* 图标 */}
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-violet-600 rounded-xl mr-4 sm:mr-5 shadow-lg shadow-indigo-500/20 group-hover:scale-110 group-hover:shadow-indigo-500/30 transition-all duration-300 relative z-10">
+                    <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+
+                  {/* 标题和说明 */}
+                  <div className="flex-1 relative z-10">
+                    <h3 className="text-base sm:text-lg font-bold text-indigo-800 mb-1 group-hover:text-indigo-700 transition-colors">店长模式</h3>
+                    <p className="text-xs sm:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">店长432元开3天500电费复投收益</p>
+                  </div>
+
+                  {/* 箭头图标 */}
+                  <svg className="w-6 h-6 sm:w-7 sm:h-7 text-indigo-500 flex-shrink-0 group-hover:translate-x-1 group-hover:text-indigo-600 transition-all duration-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
@@ -3065,6 +3147,274 @@ function CloudShopSimulator() {
               </div>
               </CardContent>
             </Card>
+        )}
+
+        {/* 店长模式 */}
+        {currentView === 'storeManager' && (
+          <Card className="w-full max-w-4xl mx-auto bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0 animate-in fade-in-0 slide-in-from-top-2 duration-300">
+            <CardHeader className="pb-2.5 sm:pb-3 pt-3 sm:pt-4 lg:pt-5 px-4 sm:px-6 lg:px-8">
+              <div className="flex items-center gap-3">
+                <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-600 rounded-full w-10 h-10 sm:w-12 sm:h-12">
+                  <span className="text-xl sm:text-2xl font-bold">←</span>
+                </Button>
+                <CardTitle className="flex-1 text-center text-base sm:text-lg lg:text-xl bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 bg-clip-text text-transparent font-semibold">
+                  店长模式模拟
+                </CardTitle>
+                <div className="w-10 h-10 sm:w-12 sm:h-12" />
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4 sm:space-y-6 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-5 lg:pb-7">
+              {/* 模式切换 */}
+              <div className="flex gap-2 bg-gray-100 p-1 rounded-xl">
+                <Button
+                  onClick={() => setStoreManagerMode('single')}
+                  className={`flex-1 transition-all duration-300 ${
+                    storeManagerMode === 'single'
+                      ? 'bg-white shadow-md text-indigo-700 font-semibold'
+                      : 'text-gray-600 hover:text-gray-800'
+                  }`}
+                >
+                  单次模拟
+                </Button>
+                <Button
+                  onClick={() => setStoreManagerMode('reinvest')}
+                  className={`flex-1 transition-all duration-300 ${
+                    storeManagerMode === 'reinvest'
+                      ? 'bg-white shadow-md text-indigo-700 font-semibold'
+                      : 'text-gray-600 hover:text-gray-800'
+                  }`}
+                >
+                  复投计算
+                </Button>
+              </div>
+
+              {/* 单次模拟 */}
+              {storeManagerMode === 'single' && (
+                <div className="space-y-4 sm:space-y-6">
+                  {/* 单次收益展示 */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                    <div className="bg-gradient-to-br from-indigo-50 to-violet-50 p-4 sm:p-5 rounded-xl border-2 border-indigo-200">
+                      <p className="text-xs sm:text-sm text-gray-600 mb-1 sm:mb-2">投入金额</p>
+                      <p className="text-xl sm:text-2xl font-bold text-indigo-700">432元</p>
+                    </div>
+                    <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-4 sm:p-5 rounded-xl border-2 border-blue-200">
+                      <p className="text-xs sm:text-sm text-gray-600 mb-1 sm:mb-2">进货额度</p>
+                      <p className="text-xl sm:text-2xl font-bold text-blue-700">500电费</p>
+                    </div>
+                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 sm:p-5 rounded-xl border-2 border-green-200">
+                      <p className="text-xs sm:text-sm text-gray-600 mb-1 sm:mb-2">结算金额</p>
+                      <p className="text-xl sm:text-2xl font-bold text-green-700">475元</p>
+                    </div>
+                    <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-4 sm:p-5 rounded-xl border-2 border-amber-200">
+                      <p className="text-xs sm:text-sm text-gray-600 mb-1 sm:mb-2">单次利润</p>
+                      <p className="text-xl sm:text-2xl font-bold text-amber-700">43元</p>
+                    </div>
+                  </div>
+
+                  {/* 详细说明 */}
+                  <div className="bg-gray-50 rounded-xl p-4 sm:p-5 space-y-3 sm:space-y-4">
+                    <h4 className="font-bold text-gray-800 text-base sm:text-lg">店长模式说明</h4>
+                    <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-gray-700">
+                      <div className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-indigo-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                        <span><strong>投入金额：</strong>432元购买500电费</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-indigo-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                        <span><strong>销售周期：</strong>3天卖完500电费</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-indigo-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                        <span><strong>结算规则：</strong>500电费95折回款 = 475元</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-indigo-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                        <span><strong>单次利润：</strong>475 - 432 = 43元</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                        <span><strong>自动升级：</strong>卖完自动升级到青铜店铺</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                        <span><strong>灵活操作：</strong>可以随时提现或复投</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 复投计算 */}
+              {storeManagerMode === 'reinvest' && (
+                <div className="space-y-4 sm:space-y-6">
+                  {/* 复投次数选择 */}
+                  <div>
+                    <label className="block text-sm sm:text-base font-semibold text-gray-700 mb-2 sm:mb-3">
+                      复投次数
+                    </label>
+                    <div className="flex gap-2 flex-wrap">
+                      {[1, 3, 5, 10, 15, 20].map((count) => (
+                        <Button
+                          key={count}
+                          onClick={() => setStoreManagerReinvestCount(count)}
+                          className={`transition-all duration-300 ${
+                            storeManagerReinvestCount === count
+                              ? 'bg-indigo-600 text-white shadow-lg'
+                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          }`}
+                        >
+                          {count}次
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 复投结果展示 */}
+                  {(() => {
+                    const results = calculateStoreManagerReinvest(storeManagerReinvestCount);
+                    const lastResult = results[results.length - 1];
+
+                    return (
+                      <>
+                        {/* 收益概览 */}
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+                          <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-3 sm:p-4 rounded-xl border-2 border-green-200">
+                            <p className="text-xs text-gray-600 mb-1">总周期</p>
+                            <p className="text-lg sm:text-xl font-bold text-green-700">{lastResult.cycle * 3}天</p>
+                          </div>
+                          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-3 sm:p-4 rounded-xl border-2 border-blue-200">
+                            <p className="text-xs text-gray-600 mb-1">累计利润</p>
+                            <p className="text-lg sm:text-xl font-bold text-blue-700">{lastResult.totalProfit}元</p>
+                          </div>
+                          <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-3 sm:p-4 rounded-xl border-2 border-purple-200 col-span-2 sm:col-span-1">
+                            <p className="text-xs text-gray-600 mb-1">最终可提现</p>
+                            <p className="text-lg sm:text-xl font-bold text-purple-700">{lastResult.totalWithdrawal}元</p>
+                          </div>
+                        </div>
+
+                        {/* 复投详情表格 */}
+                        <div className="rounded-lg border overflow-hidden">
+                          <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+                            <Table>
+                              <TableHeader>
+                                <TableRow>
+                                  <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">第几次</TableHead>
+                                  <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">单次利润</TableHead>
+                                  <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">累计利润</TableHead>
+                                  <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">累计复投</TableHead>
+                                  <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">可提现</TableHead>
+                                </TableRow>
+                              </TableHeader>
+                              <TableBody>
+                                {results.map((result) => (
+                                  <TableRow key={result.cycle} className="hover:bg-gray-50">
+                                    <TableCell className="text-center text-sm sm:text-base font-medium text-gray-800">
+                                      第{result.cycle}次
+                                    </TableCell>
+                                    <TableCell className="text-center text-sm sm:text-base text-green-600 font-semibold">
+                                      +{result.dailyProfit}元
+                                    </TableCell>
+                                    <TableCell className="text-center text-sm sm:text-base text-blue-600 font-semibold">
+                                      {result.totalProfit}元
+                                    </TableCell>
+                                    <TableCell className="text-center text-sm sm:text-base text-gray-700">
+                                      {result.totalReinvest}元
+                                    </TableCell>
+                                    <TableCell className="text-center text-sm sm:text-base text-purple-600 font-semibold">
+                                      {result.totalWithdrawal}元
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </div>
+                        </div>
+
+                        {/* 收益曲线图 */}
+                        <div className="bg-white rounded-xl border-2 border-indigo-200 p-4 sm:p-5">
+                          <h4 className="font-bold text-gray-800 mb-3 sm:mb-4 text-sm sm:text-base flex items-center">
+                            <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3-3M12 3v9m-1.797 1.797a3 3 0 01-5.196 0 3.724 3.724 0 00-.104.414l-2 6a3 3 0 00.104 2.586l6 2a3 3 0 002.586-.104l6-2a3 3 0 00.104-2.586l-2-6a3 3 0 00-5.196 0z" />
+                            </svg>
+                            复投收益增长曲线
+                          </h4>
+                          <div className="h-64 sm:h-80">
+                            <ResponsiveContainer width="100%" height="100%">
+                              <LineChart data={results} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+                                <XAxis 
+                                  dataKey="cycle" 
+                                  label={{ value: '复投次数', position: 'insideBottom', offset: -5 }}
+                                  tick={{ fontSize: 12 }}
+                                />
+                                <YAxis 
+                                  label={{ value: '利润(元)', angle: -90, position: 'insideLeft' }}
+                                  tick={{ fontSize: 12 }}
+                                />
+                                <Tooltip 
+                                  contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', border: '1px solid #e0e0e0' }}
+                                  itemStyle={{ color: '#1f2937' }}
+                                />
+                                <Legend />
+                                <Line 
+                                  type="monotone" 
+                                  dataKey="totalProfit" 
+                                  stroke="#6366f1" 
+                                  strokeWidth={2}
+                                  name="累计利润"
+                                  dot={{ fill: '#6366f1', strokeWidth: 2, r: 3 }}
+                                  activeDot={{ r: 5 }}
+                                />
+                                <Line 
+                                  type="monotone" 
+                                  dataKey="totalWithdrawal" 
+                                  stroke="#10b981" 
+                                  strokeWidth={2}
+                                  name="可提现"
+                                  dot={{ fill: '#10b981', strokeWidth: 2, r: 3 }}
+                                  activeDot={{ r: 5 }}
+                                />
+                              </LineChart>
+                            </ResponsiveContainer>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  })()}
+                </div>
+              )}
+
+              {/* 对比青铜店铺 */}
+              <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-4 sm:p-5 border-2 border-orange-200">
+                <h4 className="font-bold text-gray-800 text-base sm:text-lg mb-3 sm:mb-4 flex items-center">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                  店长模式 vs 青铜店铺对比
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
+                  <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm border border-gray-200">
+                    <p className="font-bold text-gray-800 mb-2 text-sm sm:text-base">🏪 店长模式</p>
+                    <div className="space-y-1 sm:space-y-1.5 text-gray-700">
+                      <p>• 投入：<span className="font-semibold text-indigo-700">432元</span></p>
+                      <p>• 周期：<span className="font-semibold text-indigo-700">3天</span></p>
+                      <p>• 利润：<span className="font-semibold text-green-600">43元/次</span></p>
+                      <p>• 特点：<span className="font-semibold">快速回本，灵活复投</span></p>
+                    </div>
+                  </div>
+                  <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm border border-gray-200">
+                    <p className="font-bold text-gray-800 mb-2 text-sm sm:text-base">⚡ 青铜店铺</p>
+                    <div className="space-y-1 sm:space-y-1.5 text-gray-700">
+                      <p>• 投入：<span className="font-semibold text-orange-700">440元</span></p>
+                      <p>• 周期：<span className="font-semibold text-orange-700">5天</span></p>
+                      <p>• 利润：<span className="font-semibold text-green-600">37元/次</span></p>
+                      <p>• 特点：<span className="font-semibold">稳定长期收益</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         )}
 
       </main>

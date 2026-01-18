@@ -1151,23 +1151,25 @@ function CloudShopSimulator() {
     }
   };
 
-  // 备用复制方法（兼容旧浏览器）
+  // 备用复制方法（兼容旧浏览器和微信）
   const fallbackCopyTextToClipboard = (text: string, callback?: () => void) => {
     const textArea = document.createElement('textarea');
     textArea.value = text;
+    textArea.style.position = 'fixed'; // 固定定位
+    textArea.style.left = '-9999px'; // 移出可视区域
+    textArea.style.top = '0';
+    textArea.style.opacity = '0'; // 透明
+    textArea.setAttribute('readonly', ''); // 只读
     
-    // 设置样式确保元素不可见但可复制
-    textArea.style.position = 'fixed';
-    textArea.style.left = '-999999px';
-    textArea.style.top = '-999999px';
     document.body.appendChild(textArea);
     
+    // 确保在移动端选中
     textArea.focus();
+    textArea.setSelectionRange(0, text.length);
     textArea.select();
     
     try {
       const successful = document.execCommand('copy');
-      document.body.removeChild(textArea);
       
       if (successful) {
         if (callback) callback();
@@ -1176,9 +1178,13 @@ function CloudShopSimulator() {
         alert('复制失败，请手动复制');
       }
     } catch (err) {
-      document.body.removeChild(textArea);
       alert('复制失败，请手动复制');
     }
+    
+    // 延迟移除元素，确保复制完成
+    setTimeout(() => {
+      document.body.removeChild(textArea);
+    }, 100);
   };
 
   // 打开链接

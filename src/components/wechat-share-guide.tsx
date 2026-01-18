@@ -13,51 +13,67 @@ export default function WeChatShareGuide({ isOpen, onClose }: WeChatShareGuidePr
   return (
     <div className="fixed inset-0 z-[200] bg-black/70 backdrop-blur-sm animate-in fade-in-0 duration-300">
       <div className="relative w-full h-full flex flex-col items-center">
-        {/* 关闭按钮 - 右上角 */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-10 bg-white/90 hover:bg-white rounded-full p-2 transition-all duration-200 active:scale-90"
-        >
-          <X className="w-6 h-6 text-gray-800" />
-        </button>
-
         {/* 箭头指向右上角 */}
-        <div className="absolute top-20 right-8 sm:right-16 animate-in slide-in-from-right-8 duration-500">
+        <div className="absolute top-16 right-8 sm:right-16 animate-in slide-in-from-right-8 duration-500">
           <svg
-            width="120"
-            height="100"
-            viewBox="0 0 120 100"
-            className="w-20 h-16 sm:w-24 sm:h-20"
+            width="200"
+            height="180"
+            viewBox="0 0 200 180"
+            className="w-32 h-28 sm:w-40 sm:h-36"
           >
-            {/* 箭头 */}
-            <path
-              d="M 100 10 L 90 20 M 100 10 L 90 0 M 100 10 L 20 80"
-              stroke="#07C160"
-              strokeWidth="4"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="animate-bounce"
-            />
+            {/* 箭头 - 重新设计，确保完整显示 */}
+            <g transform="translate(0, 0)">
+              {/* 箭头主线 */}
+              <line
+                x1="150"
+                y1="30"
+                x2="40"
+                y2="140"
+                stroke="#07C160"
+                strokeWidth="8"
+                strokeLinecap="round"
+                className="animate-pulse"
+              />
+              {/* 箭头左侧翼 */}
+              <line
+                x1="150"
+                y1="30"
+                x2="130"
+                y2="50"
+                stroke="#07C160"
+                strokeWidth="8"
+                strokeLinecap="round"
+              />
+              {/* 箭头右侧翼 */}
+              <line
+                x1="150"
+                y1="30"
+                x2="130"
+                y2="10"
+                stroke="#07C160"
+                strokeWidth="8"
+                strokeLinecap="round"
+              />
+            </g>
           </svg>
         </div>
 
         {/* 右上角的三个点图标模拟 */}
-        <div className="absolute top-16 right-4 sm:right-12 animate-in fade-in-0 duration-500">
+        <div className="absolute top-12 right-4 sm:right-12 animate-in fade-in-0 duration-500">
           <svg
             width="40"
             height="40"
             viewBox="0 0 40 40"
             className="w-8 h-8 sm:w-10 sm:h-10"
           >
-            <circle cx="8" cy="20" r="3" fill="#FFFFFF" />
-            <circle cx="20" cy="20" r="3" fill="#FFFFFF" />
-            <circle cx="32" cy="20" r="3" fill="#FFFFFF" />
+            <circle cx="8" cy="20" r="4" fill="#FFFFFF" />
+            <circle cx="20" cy="20" r="4" fill="#FFFFFF" />
+            <circle cx="32" cy="20" r="4" fill="#FFFFFF" />
           </svg>
         </div>
 
         {/* 提示内容 */}
-        <div className="mt-40 sm:mt-52 px-6 sm:px-12 max-w-2xl animate-in slide-in-from-bottom-8 duration-500">
+        <div className="mt-36 sm:mt-44 px-6 sm:px-12 max-w-2xl animate-in slide-in-from-bottom-8 duration-500">
           {/* 主标题 */}
           <h2 className="text-white text-2xl sm:text-3xl font-bold text-center mb-8">
             分享给好友
@@ -132,6 +148,17 @@ export default function WeChatShareGuide({ isOpen, onClose }: WeChatShareGuidePr
                 <p className="text-sm text-gray-600">选择要分享的好友</p>
               </div>
             </div>
+          </div>
+
+          {/* 关闭按钮 - 弹窗下方中间 */}
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={onClose}
+              className="bg-white/90 hover:bg-white text-gray-700 hover:text-gray-900 rounded-full px-6 py-3 transition-all duration-200 active:scale-95 flex items-center gap-2 shadow-lg"
+            >
+              <X className="w-5 h-5" />
+              <span className="font-semibold">关闭</span>
+            </button>
           </div>
         </div>
       </div>

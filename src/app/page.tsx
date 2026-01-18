@@ -1789,7 +1789,7 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'platform' && (
-                  <div className="p-3 sm:p-5 bg-white border-t border-blue-200 space-y-3">
+                  <div className="p-3 sm:p-5 bg-blue-50 border-t border-blue-200 space-y-3">
                       <div>
                         <h4 className="text-xs sm:text-sm sm:text-base font-semibold text-blue-700 mb-2 sm:mb-2 flex items-center gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></span>

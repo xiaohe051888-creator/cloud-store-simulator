@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import WeChatLinkGuide from '@/components/wechat-link-guide';
+import WeChatShareGuide from '@/components/wechat-share-guide';
 import ShareModal from '@/components/share-modal';
 import PWAInstallPrompt from '@/components/pwa-install-prompt';
 import PWAUpdatePrompt from '@/components/pwa-update-prompt';
@@ -125,6 +126,7 @@ function CloudShopSimulator() {
 
   // 微信链接引导状态
   const [showWeChatLinkGuide, setShowWeChatLinkGuide] = useState<boolean>(false);
+  const [showWeChatShareGuide, setShowWeChatShareGuide] = useState<boolean>(false);
   const [targetUrl, setTargetUrl] = useState<string>('');
   const hasShownWeChatGuide = useRef(false);
 
@@ -498,8 +500,8 @@ function CloudShopSimulator() {
     const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
 
     if (isWeChatBrowser) {
-      // 在微信中，显示引导分享给微信好友的提示
-      alert('请点击右上角菜单，选择"发送给朋友"分享给好友');
+      // 在微信中，显示引导分享给微信好友的弹窗
+      setShowWeChatShareGuide(true);
     } else {
       // 在浏览器中，使用原生分享功能
       if (navigator.share) {
@@ -3461,6 +3463,12 @@ function CloudShopSimulator() {
         isVisible={showWeChatLinkGuide}
         onClose={handleCloseWeChatLinkGuide}
         targetUrl={targetUrl}
+      />
+
+      {/* 微信分享引导 */}
+      <WeChatShareGuide
+        isOpen={showWeChatShareGuide}
+        onClose={() => setShowWeChatShareGuide(false)}
       />
 
       {/* 分享弹窗 */}

@@ -1637,52 +1637,46 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'community' && (
-                  <div className="p-4 sm:p-5 bg-white border-t border-orange-200">
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="text-sm sm:text-base font-semibold text-orange-700 mb-2 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full"></span>
-                          1月个人当天邀请奖励
-                        </h4>
-                        <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
-                          <li className="flex items-start gap-2">
-                            <span className="text-orange-500 mt-0.5">•</span>
-                            <span>当天邀请第<span className="font-bold text-orange-600">1个</span>开店奖：<span className="font-bold text-green-600">18元</span></span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-orange-500 mt-0.5">•</span>
-                            <span>当天邀请第<span className="font-bold text-orange-600">2个</span>开店再奖：<span className="font-bold text-green-600">38元</span></span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-orange-500 mt-0.5">•</span>
-                            <span>当天邀请第<span className="font-bold text-orange-600">3个</span>开店再奖：<span className="font-bold text-green-600">108元</span></span>
-                          </li>
-                        </ul>
-                      </div>
+                  <div className="p-4 sm:p-5 bg-white border-t border-orange-200 space-y-4">
+                    {/* 1月个人当天邀请奖励 - 橙色背景 */}
+                    <div className="p-4 sm:p-5 bg-orange-50 rounded-xl border-2 border-orange-200">
+                      <h4 className="text-base sm:text-lg font-bold text-orange-700 mb-3">1月个人当天邀请奖励</h4>
+                      <ul className="space-y-2 text-sm sm:text-base text-gray-700">
+                        <li className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>当天邀请第<span className="font-bold text-orange-600">1个</span>开店奖：<span className="font-bold text-green-600">18元</span></span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>当天邀请第<span className="font-bold text-orange-600">2个</span>开店再奖：<span className="font-bold text-green-600">38元</span></span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>当天邀请第<span className="font-bold text-orange-600">3个</span>开店再奖：<span className="font-bold text-green-600">108元</span></span>
+                        </li>
+                      </ul>
+                    </div>
 
-                      <div>
-                        <h4 className="text-sm sm:text-base font-semibold text-orange-700 mb-2 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full"></span>
-                          1月个人连续邀请奖励
-                        </h4>
-                        <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
-                          <li className="flex items-start gap-2">
-                            <span className="text-orange-500 mt-0.5">•</span>
-                            <span>连续<span className="font-bold text-orange-600">3天</span>有邀请额外奖励<span className="font-bold text-green-600">68券</span></span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-orange-500 mt-0.5">•</span>
-                            <span>连续<span className="font-bold text-orange-600">7天</span>有邀请再额外奖励<span className="font-bold text-green-600">168券</span></span>
-                          </li>
-                        </ul>
-                      </div>
+                    {/* 1月个人连续邀请奖励 - 琥珀色背景 */}
+                    <div className="p-4 sm:p-5 bg-amber-50 rounded-xl border-2 border-amber-200">
+                      <h4 className="text-base sm:text-lg font-bold text-amber-700 mb-3">1月个人连续邀请奖励</h4>
+                      <ul className="space-y-2 text-sm sm:text-base text-gray-700">
+                        <li className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>连续<span className="font-bold text-amber-600">3天</span>有邀请额外奖励<span className="font-bold text-green-600">68券</span></span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>连续<span className="font-bold text-amber-600">7天</span>有邀请再额外奖励<span className="font-bold text-green-600">168券</span></span>
+                        </li>
+                      </ul>
+                    </div>
 
-                      <div className="mt-4 p-3 bg-orange-50 border border-orange-200 rounded-lg">
-                        <p className="text-sm sm:text-base text-orange-800">
-                          <span className="font-semibold">说明：</span>
-                          完成邀请 联系 <span className="font-bold text-orange-600">阿东</span> 领奖
-                        </p>
-                      </div>
+                    <div className="p-3 bg-orange-50 border border-orange-200 rounded-lg">
+                      <p className="text-sm sm:text-base text-orange-800">
+                        <span className="font-semibold">说明：</span>
+                        完成邀请 联系 <span className="font-bold text-orange-600">阿东</span> 领奖
+                      </p>
                     </div>
                   </div>
                 )}
@@ -1870,47 +1864,39 @@ function CloudShopSimulator() {
                 </button>
 
                 {expandedBenefit === 'buxin' && (
-                  <div className="p-4 sm:p-5 bg-white border-t border-purple-200">
-                    <div className="space-y-4">
-                      {/* 步信上：太极社区交流群 */}
-                      <div>
-                        <h4 className="text-sm sm:text-base font-semibold text-purple-700 mb-2 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full"></span>
-                          步信上：太极社区交流群
-                        </h4>
-                        <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
-                          <li className="flex items-start gap-2">
-                            <span className="text-purple-500 mt-0.5">•</span>
-                            <span>每天会发<span className="font-bold text-purple-600">2次</span>红包</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-purple-500 mt-0.5">•</span>
-                            <span>第一次：<span className="font-bold text-purple-600">15:00</span></span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-purple-500 mt-0.5">•</span>
-                            <span>第二次：<span className="font-bold text-purple-600">19:40</span></span>
-                          </li>
-                        </ul>
-                      </div>
+                  <div className="p-4 sm:p-5 bg-white border-t border-purple-200 space-y-4">
+                    {/* 步信上：太极社区交流群 - 紫色背景 */}
+                    <div className="p-4 sm:p-5 bg-purple-50 rounded-xl border-2 border-purple-200">
+                      <h4 className="text-base sm:text-lg font-bold text-purple-700 mb-3">步信上：太极社区交流群</h4>
+                      <ul className="space-y-2 text-sm sm:text-base text-gray-700">
+                        <li className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>每天会发<span className="font-bold text-purple-600">2次</span>红包</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>第一次：<span className="font-bold text-purple-600">15:00</span></span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-purple-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>第二次：<span className="font-bold text-purple-600">19:40</span></span>
+                        </li>
+                      </ul>
+                    </div>
 
-                      {/* 步信APP签到奖励 */}
-                      <div>
-                        <h4 className="text-sm sm:text-base font-semibold text-purple-700 mb-2 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full"></span>
-                          步信APP签到奖励
-                        </h4>
-                        <ul className="space-y-1.5 text-sm sm:text-base text-gray-700 ml-3">
-                          <li className="flex items-start gap-2">
-                            <span className="text-purple-500 mt-0.5">•</span>
-                            <span>平均每天<span className="font-bold text-purple-600">5元</span></span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-purple-500 mt-0.5">•</span>
-                            <span>每天<span className="font-bold text-purple-600">19:40</span>步信群查看如何进入课程和签到流程</span>
-                          </li>
-                        </ul>
-                      </div>
+                    {/* 步信APP签到奖励 - 粉色背景 */}
+                    <div className="p-4 sm:p-5 bg-pink-50 rounded-xl border-2 border-pink-200">
+                      <h4 className="text-base sm:text-lg font-bold text-pink-700 mb-3">步信APP签到奖励</h4>
+                      <ul className="space-y-2 text-sm sm:text-base text-gray-700">
+                        <li className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-pink-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>平均每天<span className="font-bold text-pink-600">5元</span></span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-pink-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>每天<span className="font-bold text-pink-600">19:40</span>步信群查看如何进入课程和签到流程</span>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 )}

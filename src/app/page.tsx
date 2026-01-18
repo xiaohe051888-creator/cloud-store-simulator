@@ -2212,9 +2212,9 @@ function CloudShopSimulator() {
                     </div>
 
                     {/* 愿景和使命 */}
-                    <div className="p-3 sm:p-4 bg-white rounded-xl border-2 border-purple-200 space-y-3 sm:space-y-4">
+                    <div className="p-3 sm:p-4 bg-teal-50 rounded-xl border-2 border-teal-200 space-y-3 sm:space-y-4">
                       {/* 愿景 */}
-                      <div className="p-3 sm:p-4 bg-teal-50 rounded-lg border-2 border-teal-200">
+                      <div>
                         <h4 className="text-sm sm:text-base sm:text-lg font-bold text-teal-700 mb-2 sm:mb-3 flex items-center gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-teal-500 rounded-full"></span>
                           愿景 / VISION
@@ -2230,9 +2230,9 @@ function CloudShopSimulator() {
                       </div>
 
                       {/* 使命 */}
-                      <div className="p-3 sm:p-4 bg-rose-50 rounded-lg border-2 border-rose-200">
-                        <h4 className="text-sm sm:text-base sm:text-lg font-bold text-rose-700 mb-2 sm:mb-3 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-rose-500 rounded-full"></span>
+                      <div>
+                        <h4 className="text-sm sm:text-base sm:text-lg font-bold text-teal-700 mb-2 sm:mb-3 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-teal-500 rounded-full"></span>
                           使命 / MISSION
                         </h4>
                         <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm sm:text-base text-gray-700">
@@ -2240,7 +2240,7 @@ function CloudShopSimulator() {
                             成为国民数字服务平台
                           </p>
                           <p className="leading-relaxed">
-                            让每一个人在获得<span className="font-bold text-rose-600">高效</span>、<span className="font-bold text-rose-600">便捷</span>、<span className="font-bold text-rose-600">低成本</span>的生活服务的同时
+                            让每一个人在获得<span className="font-bold text-teal-600">高效</span>、<span className="font-bold text-teal-600">便捷</span>、<span className="font-bold text-teal-600">低成本</span>的生活服务的同时
                           </p>
                           <p className="leading-relaxed">
                             实现<span className="font-bold text-green-600">行为价值激励</span>，成为<span className="font-bold text-green-600">股东</span>享受<span className="font-bold text-green-600">终生分红</span>

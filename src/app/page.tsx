@@ -1132,6 +1132,55 @@ function CloudShopSimulator() {
     return /micromessenger/i.test(navigator.userAgent);
   };
 
+  // 复制文本到剪贴板（支持多种浏览器）
+  const copyToClipboard = (text: string, callback?: () => void) => {
+    // 方法1：使用现代 Clipboard API
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          if (callback) callback();
+          else alert('复制成功');
+        })
+        .catch(() => {
+          // 如果失败，尝试备用方法
+          fallbackCopyTextToClipboard(text, callback);
+        });
+    } else {
+      // 如果不支持，直接使用备用方法
+      fallbackCopyTextToClipboard(text, callback);
+    }
+  };
+
+  // 备用复制方法（兼容旧浏览器）
+  const fallbackCopyTextToClipboard = (text: string, callback?: () => void) => {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    
+    // 设置样式确保元素不可见但可复制
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    
+    textArea.focus();
+    textArea.select();
+    
+    try {
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textArea);
+      
+      if (successful) {
+        if (callback) callback();
+        else alert('复制成功');
+      } else {
+        alert('复制失败，请手动复制');
+      }
+    } catch (err) {
+      document.body.removeChild(textArea);
+      alert('复制失败，请手动复制');
+    }
+  };
+
   // 打开链接
   const openLink = (url: string) => {
     // 检测是否在微信中打开
@@ -1652,10 +1701,7 @@ function CloudShopSimulator() {
                             <p className="text-base sm:text-lg font-bold text-purple-700 font-mono">G2L07V</p>
                           </div>
                           <button
-                            onClick={() => {
-                              navigator.clipboard.writeText('G2L07V');
-                              alert('复制成功');
-                            }}
+                            onClick={() => copyToClipboard('G2L07V')}
                             className="px-3 py-1.5 sm:px-4 sm:py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs sm:text-sm font-medium transition-colors touch-feedback flex-shrink-0"
                           >
                             点击复制
@@ -2204,10 +2250,7 @@ function CloudShopSimulator() {
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => {
-                              navigator.clipboard.writeText('PZAI202544030000001152');
-                              alert('复制成功');
-                            }}
+                            onClick={() => copyToClipboard('PZAI202544030000001152')}
                             className="active:scale-95 transition-all duration-200 h-8 px-2 py-1 text-xs font-semibold border-amber-300 bg-amber-100 hover:bg-amber-200 hover:border-amber-400 text-amber-700 flex-1"
                           >
                             复制单号

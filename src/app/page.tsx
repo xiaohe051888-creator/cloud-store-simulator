@@ -2033,11 +2033,11 @@ function CloudShopSimulator() {
                       <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                          <span>永久享受95折缴电费</span>
+                          <span>永久享受<span className="font-bold text-green-600">95折</span>缴电费</span>
                         </li>
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                          <span>首次缴费完成领20元实物礼品（包邮到家）</span>
+                          <span>首次缴费完成领<span className="font-bold text-green-600">20元</span>实物礼品（包邮到家）</span>
                         </li>
                       </ul>
                     </div>
@@ -2080,19 +2080,19 @@ function CloudShopSimulator() {
                       <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                          <span>首次开通云店享90折进货500电费额度</span>
+                          <span>首次开通云店享<span className="font-bold text-blue-600">90折</span>进货<span className="font-bold text-blue-600">500</span>电费额度</span>
                         </li>
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                          <span>使用新人18元云店抵用券实付432元</span>
+                          <span>使用新人<span className="font-bold text-blue-600">18元</span>云店抵用券实付<span className="font-bold text-green-600">432元</span></span>
                         </li>
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                          <span>系统自动派单销售，3天即可销售完成</span>
+                          <span>系统自动派单销售，<span className="font-bold text-blue-600">3天</span>即可销售完成</span>
                         </li>
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                          <span>95折销售，销售结算完成收入475元</span>
+                          <span><span className="font-bold text-blue-600">95折</span>销售，销售结算完成收入<span className="font-bold text-green-600">475元</span></span>
                         </li>
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
@@ -2136,13 +2136,13 @@ function CloudShopSimulator() {
                   <div className="p-3 sm:p-5 bg-white border-t border-purple-200">
                     <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200 space-y-3 text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
                       <p>
-                        　　海南创步科技有限公司，成立于2022年6月9日，位于海南省三沙市，属科技推广和应用服务业。公司聚焦数字生活服务平台研发与运营，核心产品为自主研发的"创缴通"一站式数字缴费平台，整合全国水费、电费、燃气费等生活缴费服务，支持银行卡、第三方支付及HTTPS+RSA加密等多重安全防护机制。
+                        　　海南创步科技有限公司，成立于<span className="font-bold text-purple-600">2022年6月9日</span>，位于海南省三沙市，属科技推广和应用服务业。公司聚焦数字生活服务平台研发与运营，核心产品为自主研发的"创缴通"一站式数字缴费平台，整合全国水费、电费、燃气费等生活缴费服务，支持银行卡、第三方支付及HTTPS+RSA加密等多重安全防护机制。
                       </p>
                       <p>
-                        　　2025年6月正式上线该平台，并于同年7月获得中海洋盛佳投资控股有限公司3200万元人民币A轮融资。平台随后扩展为"生活缴费+本地服务"综合入口，覆盖全国300余个城市。
+                        　　<span className="font-bold text-purple-600">2025年6月</span>正式上线该平台，并于同年<span className="font-bold text-purple-600">7月</span>获得中海洋盛佳投资控股有限公司<span className="font-bold text-green-600">3200万元</span>人民币A轮融资。平台随后扩展为"生活缴费+本地服务"综合入口，覆盖全国<span className="font-bold text-purple-600">300余个</span>城市。
                       </p>
                       <p>
-                        　　2025年12月11日获中国人民保险集团股份有限公司1000万产品责任险承保。
+                        　　<span className="font-bold text-purple-600">2025年12月11日</span>获中国人民保险集团股份有限公司<span className="font-bold text-green-600">1000万</span>产品责任险承保。
                       </p>
                     </div>
                   </div>

@@ -2252,7 +2252,7 @@ function CloudShopSimulator() {
                   <div className="p-3 sm:p-5 bg-white border-t border-purple-200 space-y-3 sm:space-y-4">
                     {/* 公司简介 - 第一段：百度百科 + 公司成立 */}
                     <div className="p-3 sm:p-4 bg-purple-50 rounded-xl border-2 border-purple-200">
-                      <div className="flex items-center gap-2">
+                      <div className="flex gap-2 sm:gap-3">
                         <Button
                           variant="outline"
                           size="sm"
@@ -2261,7 +2261,7 @@ function CloudShopSimulator() {
                         >
                           百度百科
                         </Button>
-                        <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
+                        <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed flex-1">
                           　　海南创步科技有限公司，成立于<span className="font-bold text-purple-600">2022年6月9日</span>，位于海南省三沙市，属科技推广和应用服务业。公司聚焦数字生活服务平台研发与运营，核心产品为自主研发的"创缴通"一站式数字缴费平台，整合全国水费、电费、燃气费等生活缴费服务，支持银行卡、第三方支付及HTTPS+RSA加密等多重安全防护机制。
                         </p>
                       </div>
@@ -2269,7 +2269,7 @@ function CloudShopSimulator() {
 
                     {/* 公司简介 - 第二段：新闻资讯 + 平台上线 */}
                     <div className="p-3 sm:p-4 bg-blue-50 rounded-xl border-2 border-blue-200">
-                      <div className="flex items-center gap-2">
+                      <div className="flex gap-2 sm:gap-3">
                         <Button
                           variant="outline"
                           size="sm"
@@ -2278,7 +2278,7 @@ function CloudShopSimulator() {
                         >
                           权威媒体
                         </Button>
-                        <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
+                        <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed flex-1">
                           　　<span className="font-bold text-blue-600">2025年6月</span>正式上线该平台，并于同年<span className="font-bold text-blue-600">7月</span>获得中海洋盛佳投资控股有限公司<span className="font-bold text-green-600">3200万元</span>人民币A轮融资。平台随后扩展为"生活缴费+本地服务"综合入口，覆盖全国<span className="font-bold text-blue-600">300余个</span>城市。
                         </p>
                       </div>

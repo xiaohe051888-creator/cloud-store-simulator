@@ -2257,7 +2257,7 @@ function CloudShopSimulator() {
                           variant="outline"
                           size="sm"
                           onClick={() => window.open('https://baike.baidu.com/item/%E6%B5%B7%E5%8D%97%E5%88%9B%E6%AD%A5%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/66195114?fromModule=lemma_inlink', '_blank')}
-                          className="active:scale-95 transition-all duration-200 h-[104px] px-3 text-sm font-semibold rounded-xl border-purple-300 bg-purple-100 hover:bg-purple-200 hover:border-purple-400 hover:shadow-md hover:-translate-y-0.5 text-purple-700 flex-shrink-0 cursor-pointer"
+                          className="active:scale-95 transition-all duration-200 h-[104px] px-5 text-sm font-semibold rounded-xl border-purple-300 bg-purple-100 hover:bg-purple-200 hover:border-purple-400 hover:shadow-md hover:-translate-y-0.5 text-purple-700 flex-shrink-0 cursor-pointer"
                           style={{ writingMode: 'vertical-rl', letterSpacing: '0.3em' }}
                         >
                           百度百科
@@ -2275,7 +2275,7 @@ function CloudShopSimulator() {
                           variant="outline"
                           size="sm"
                           onClick={() => window.open('https://mtz.china.com/touzi/2025/0707/175008.html', '_blank')}
-                          className="active:scale-95 transition-all duration-200 h-[104px] px-3 text-sm font-semibold rounded-xl border-blue-300 bg-blue-100 hover:bg-blue-200 hover:border-blue-400 hover:shadow-md hover:-translate-y-0.5 text-blue-700 flex-shrink-0 cursor-pointer"
+                          className="active:scale-95 transition-all duration-200 h-[104px] px-5 text-sm font-semibold rounded-xl border-blue-300 bg-blue-100 hover:bg-blue-200 hover:border-blue-400 hover:shadow-md hover:-translate-y-0.5 text-blue-700 flex-shrink-0 cursor-pointer"
                           style={{ writingMode: 'vertical-rl', letterSpacing: '0.3em' }}
                         >
                           权威媒体

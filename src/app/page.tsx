@@ -1468,11 +1468,12 @@ function CloudShopSimulator() {
                       />
 
                       {/* 左侧：店铺名称 */}
-                      <div className="w-16 sm:w-20 flex-shrink-0 relative z-10">
+                      <div className="w-24 sm:w-28 flex-shrink-0 relative z-10">
                         <h3
-                          className="text-base sm:text-lg font-bold group-hover:scale-105 transition-transform duration-300"
+                          className="text-sm sm:text-base lg:text-lg font-bold group-hover:scale-105 transition-transform duration-300"
                           style={{
                             color: config.color === '#000000' ? '#1f2937' : config.color,
+                            textShadow: '0 0 1px rgba(0,0,0,0.3)',
                           }}
                         >
                           {config.name}

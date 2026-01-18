@@ -133,11 +133,6 @@ export default function WeChatShareGuide({ isOpen, onClose }: WeChatShareGuidePr
               </div>
             </div>
           </div>
-
-          {/* 温馨提示 */}
-          <p className="text-white/90 text-center mt-6 text-sm sm:text-base">
-            💡 温馨提示：也可以通过点击右上角菜单中的"分享到朋友圈"分享
-          </p>
         </div>
       </div>
     </div>

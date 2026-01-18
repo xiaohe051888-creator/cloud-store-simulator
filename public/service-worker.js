@@ -1,4 +1,4 @@
-const CACHE_NAME = '20260117.V8'; // 更新版本号触发更新
+const CACHE_NAME = '20260117.V9'; // 更新版本号触发更新
 const urlsToCache = [
   '/',
   '/manifest.json',

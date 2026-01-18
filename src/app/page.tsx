@@ -1578,20 +1578,20 @@ function CloudShopSimulator() {
                   <div className="p-4 sm:p-5 bg-white border-t border-rose-200 space-y-4">
                     {/* 领取条件 */}
                     <div className="p-4 bg-rose-50 rounded-xl border-2 border-rose-200">
-                      <h4 className="text-base sm:text-lg font-bold text-rose-700 mb-3">领取条件</h4>
-                      <div className="space-y-3">
-                        <p className="text-sm sm:text-base font-semibold text-rose-600">满足其中一条即可</p>
-                        <ul className="space-y-2 text-sm sm:text-base text-gray-700">
-                          <li className="flex items-start gap-2">
-                            <span className="w-2 h-2 bg-rose-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                            <span>新人注册完成交过电费</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="w-2 h-2 bg-rose-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                            <span>新人注册完成开通了云店</span>
-                          </li>
-                        </ul>
-                      </div>
+                      <h4 className="text-base sm:text-lg font-bold text-rose-700 mb-3">
+                        领取条件
+                        <span className="text-sm sm:text-base font-semibold text-rose-600 ml-2">（满足其中一条即可）</span>
+                      </h4>
+                      <ul className="space-y-2 text-sm sm:text-base text-gray-700">
+                        <li className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-rose-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>新人注册完成交过电费</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-rose-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>新人注册完成开通了云店</span>
+                        </li>
+                      </ul>
                     </div>
 
                     {/* 领取方式 */}
@@ -1635,10 +1635,10 @@ function CloudShopSimulator() {
 
                     {/* 奖励内容 */}
                     <div className="p-4 bg-green-50 rounded-xl border-2 border-green-200">
-                      <h4 className="text-base sm:text-lg font-bold text-green-700 mb-2">奖励内容</h4>
-                      <p className="text-lg sm:text-xl font-bold text-green-600 text-center">
-                        20元礼品一份（包邮）
-                      </p>
+                      <h4 className="text-base sm:text-lg font-bold text-green-700 mb-3">
+                        奖励内容：
+                        <span className="text-lg sm:text-xl font-bold text-green-600 ml-2">20元礼品一份（包邮）</span>
+                      </h4>
                     </div>
                   </div>
                 )}

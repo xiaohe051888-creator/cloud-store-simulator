@@ -3433,7 +3433,7 @@ function CloudShopSimulator() {
               <div className="space-y-6">
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/register/register')}
-                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
+                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-red-500 to-red-500 hover:from-red-600 hover:to-red-600 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
                   >
                     <div className="flex items-center gap-2 mb-1.5">
                       <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3445,7 +3445,7 @@ function CloudShopSimulator() {
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/login/login')}
-                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
+                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
                   >
                     <div className="flex items-center gap-2 mb-1.5">
                       <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3457,7 +3457,7 @@ function CloudShopSimulator() {
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/download/download')}
-                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
+                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-violet-600 to-violet-600 hover:from-violet-700 hover:to-violet-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
                   >
                     <div className="flex items-center gap-2 mb-1.5">
                       <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3469,7 +3469,7 @@ function CloudShopSimulator() {
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/myPages/groupChat/groupChat')}
-                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
+                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-teal-600 to-teal-600 hover:from-teal-700 hover:to-teal-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
                   >
                     <div className="flex items-center gap-2 mb-1.5">
                       <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">

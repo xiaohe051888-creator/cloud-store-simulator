@@ -1341,7 +1341,7 @@ function CloudShopSimulator() {
                 云店模拟器
               </h1>
               <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text">
-                v1.4.2
+                v1.4.3
               </span>
             </div>
           </div>
@@ -1394,17 +1394,17 @@ function CloudShopSimulator() {
       </header>
 
       {/* 主要内容区域 */}
-      <main className="container mx-auto px-2 sm:px-4 lg:px-6 py-3 sm:py-4 lg:py-6 min-h-[calc(100vh-56px)]">
+      <main className="container mx-auto px-2 sm:px-4 lg:px-6 py-0 sm:py-4 lg:py-6 min-h-[calc(100vh-56px)]">
         {/* 首页菜单 */}
         {currentView === 'shopSelection' && (
-          <div className="w-full max-w-4xl mx-auto space-y-3 sm:space-y-4 animate-in fade-in-0 slide-in-from-top-2 duration-300">
-            <Card className="w-full bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
-              <CardHeader className="pb-2 pt-3 sm:pt-4 px-4 sm:px-6 lg:px-8">
-                <CardTitle className="text-lg sm:text-xl lg:text-2xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
+          <div className="w-full max-w-4xl mx-auto flex flex-col min-h-[calc(100vh-56px)] sm:min-h-0 sm:space-y-3 sm:space-y-4 animate-in fade-in-0 slide-in-from-top-2 duration-300">
+            <Card className="w-full flex-1 bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
+              <CardHeader className="pb-2 pt-2 sm:pt-4 px-4 sm:px-6 lg:px-8 flex-shrink-0">
+                <CardTitle className="text-base sm:text-xl lg:text-2xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
                   功能菜单
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2.5 sm:space-y-3 lg:space-y-4 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-5 lg:pb-7">
+              <CardContent className="flex-1 flex flex-col justify-between space-y-2 sm:space-y-3 lg:space-y-4 px-3 sm:px-4 lg:px-6 py-2 sm:py-4 lg:py-5 overflow-y-auto">
                 {/* 项目介绍 */}
                 <div
                   onClick={handleViewProject}
@@ -1574,9 +1574,9 @@ function CloudShopSimulator() {
 
         {/* 店铺等级选择 - 模拟进货 */}
         {currentView === 'levelSelection' && (
-          <div className="w-full">
-            <Card className="w-full max-w-4xl mx-auto bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0 animate-in fade-in-0 slide-in-from-top-2 duration-300">
-              <CardHeader className="pb-2.5 sm:pb-3 pt-3 sm:pt-4 lg:pt-5 px-4 sm:px-6 lg:px-8">
+          <div className="w-full flex flex-col min-h-[calc(100vh-56px)]">
+            <Card className="w-full max-w-4xl mx-auto flex-1 bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0 animate-in fade-in-0 slide-in-from-top-2 duration-300">
+              <CardHeader className="pb-2 pt-2 sm:pt-4 lg:pt-5 px-4 sm:px-6 lg:px-8 flex-shrink-0">
                 <div className="flex items-center gap-3">
                   <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 sm:w-12 sm:h-12">
                     <span className="text-xl sm:text-2xl font-bold">←</span>
@@ -1587,7 +1587,7 @@ function CloudShopSimulator() {
                   <div className="w-10 h-10 sm:w-12 sm:h-12" />
                 </div>
               </CardHeader>
-              <CardContent className="space-y-2.5 sm:space-y-3 lg:space-y-4 px-3 sm:px-4 lg:px-6 pb-4 sm:pb-5 lg:pb-7">
+              <CardContent className="flex-1 flex flex-col justify-between space-y-2 sm:space-y-3 lg:space-y-4 px-3 sm:px-4 lg:px-6 py-2 sm:py-4 lg:py-5 overflow-y-auto">
                 {Object.entries(shopLevelsConfig).map(([level, config]) => {
                   if (!config || !level) return null;
                   return (

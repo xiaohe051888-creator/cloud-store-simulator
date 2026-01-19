@@ -1667,7 +1667,7 @@ function CloudShopSimulator() {
         {/* 福利介绍 */}
         {currentView === 'benefits' && (
           <Card className="w-full max-w-4xl mx-auto glass animate-fade-in animate-scale-in shadow-2xl border-0">
-            <CardHeader className="pb-3 sm:pb-4 pt-3 sm:pt-4 px-4 sm:px-6">
+            <CardHeader className="pb-2 sm:pb-3 pt-2 sm:pt-3 px-4 sm:px-6">
               <div className="flex items-center justify-between">
                 <Button
                   variant="ghost"
@@ -3429,13 +3429,13 @@ function CloudShopSimulator() {
                 <div className="w-10 sm:w-12" />
               </div>
             </CardHeader>
-            <CardContent className="p-4 sm:p-5">
-              <div className="space-y-2.5">
+            <CardContent className="p-3 sm:p-4">
+              <div className="space-y-2">
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/register/register')}
-                    className="w-full h-auto min-h-[88px] sm:min-h-[100px] bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-white"
+                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
                   >
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-2 mb-1.5">
                       <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                       </svg>
@@ -3445,9 +3445,9 @@ function CloudShopSimulator() {
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/login/login')}
-                    className="w-full h-auto min-h-[88px] sm:min-h-[100px] bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-white"
+                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
                   >
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-2 mb-1.5">
                       <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                       </svg>
@@ -3457,9 +3457,9 @@ function CloudShopSimulator() {
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/download/download')}
-                    className="w-full h-auto min-h-[88px] sm:min-h-[100px] bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-white"
+                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
                   >
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-2 mb-1.5">
                       <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                       </svg>
@@ -3469,9 +3469,9 @@ function CloudShopSimulator() {
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/myPages/groupChat/groupChat')}
-                    className="w-full h-auto min-h-[88px] sm:min-h-[100px] bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-white"
+                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
                   >
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-2 mb-1.5">
                       <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                       </svg>
@@ -3482,8 +3482,8 @@ function CloudShopSimulator() {
               </div>
               
               {/* 温馨提示 */}
-              <div className="mt-4 p-3 rounded-lg bg-yellow-50 border-2 border-yellow-200 space-y-2">
-                <p className="text-sm sm:text-base text-yellow-800 font-bold flex items-center">
+              <div className="mt-3 p-2.5 sm:p-3 rounded-lg bg-yellow-50 border-2 border-yellow-200 space-y-2 text-center">
+                <p className="text-sm sm:text-base text-yellow-800 font-bold flex items-center justify-center">
                   <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>

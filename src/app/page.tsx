@@ -3469,7 +3469,7 @@ function CloudShopSimulator() {
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/myPages/groupChat/groupChat')}
-                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-br from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white border-b-4 border-teal-900"
+                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white border-b-4 border-orange-800"
                   >
                     <div className="flex items-center gap-2 mb-1.5">
                       <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">

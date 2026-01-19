@@ -3433,7 +3433,7 @@ function CloudShopSimulator() {
               <div className="space-y-6">
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/register/register')}
-                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-emerald-500 to-emerald-500 hover:from-emerald-600 hover:to-emerald-600 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
+                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-br from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white border-b-4 border-emerald-900"
                   >
                     <div className="flex items-center gap-2 mb-1.5">
                       <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3441,11 +3441,11 @@ function CloudShopSimulator() {
                       </svg>
                       <span className="text-lg sm:text-xl font-bold">注册账号</span>
                     </div>
-                    <span className="text-xs sm:text-sm text-white">没有账号我要注册</span>
+                    <span className="text-xs sm:text-sm text-white/95">没有账号我要注册</span>
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/login/login')}
-                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
+                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white border-b-4 border-blue-900"
                   >
                     <div className="flex items-center gap-2 mb-1.5">
                       <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3453,11 +3453,11 @@ function CloudShopSimulator() {
                       </svg>
                       <span className="text-lg sm:text-xl font-bold">登录缴费平台</span>
                     </div>
-                    <span className="text-xs sm:text-sm text-white">已有账号我要登录</span>
+                    <span className="text-xs sm:text-sm text-white/95">已有账号我要登录</span>
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/download/download')}
-                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-violet-600 to-violet-600 hover:from-violet-700 hover:to-violet-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
+                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-br from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white border-b-4 border-violet-900"
                   >
                     <div className="flex items-center gap-2 mb-1.5">
                       <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3465,11 +3465,11 @@ function CloudShopSimulator() {
                       </svg>
                       <span className="text-lg sm:text-xl font-bold">下载缴费APP</span>
                     </div>
-                    <span className="text-xs sm:text-sm text-white">安装后方便进入平台</span>
+                    <span className="text-xs sm:text-sm text-white/95">安装后方便进入平台</span>
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/myPages/groupChat/groupChat')}
-                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-teal-600 to-teal-600 hover:from-teal-700 hover:to-teal-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"
+                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-br from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white border-b-4 border-teal-900"
                   >
                     <div className="flex items-center gap-2 mb-1.5">
                       <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3477,19 +3477,19 @@ function CloudShopSimulator() {
                       </svg>
                       <span className="text-lg sm:text-xl font-bold">下载步信APP</span>
                     </div>
-                    <span className="text-xs sm:text-sm text-white">安装官方聊天工具不失联</span>
+                    <span className="text-xs sm:text-sm text-white/95">安装官方聊天工具不失联</span>
                   </button>
               </div>
-              
+
               {/* 温馨提示 */}
-              <div className="mt-6 p-2.5 sm:p-3 rounded-lg bg-yellow-50 border-2 border-yellow-200 space-y-2 text-center">
-                <p className="text-sm sm:text-base text-yellow-800 font-bold flex items-center justify-center">
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              <div className="mt-6 p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-orange-100 to-amber-100 border-2 border-orange-300 shadow-lg shadow-orange-200/50 space-y-2.5 text-center">
+                <p className="text-base sm:text-lg text-orange-900 font-black flex items-center justify-center tracking-wide">
+                  <svg className="w-6 h-6 sm:w-7 sm:h-7 mr-2 flex-shrink-0 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
                   温馨提示
                 </p>
-                <p className="text-sm sm:text-base text-yellow-800">
+                <p className="text-sm sm:text-base text-orange-800 font-semibold leading-relaxed">
                   如在平台上无法充值请联系平台客服人工充值
                 </p>
               </div>

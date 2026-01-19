@@ -1341,7 +1341,7 @@ function CloudShopSimulator() {
                 云店模拟器
               </h1>
               <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text">
-                v1.4.1
+                v1.4.2
               </span>
             </div>
           </div>
@@ -1387,7 +1387,7 @@ function CloudShopSimulator() {
               onClick={handleGoHome}
               className="touch-feedback text-xs sm:text-sm lg:text-base font-bold h-10 sm:h-11 lg:h-12 px-3 sm:px-4 lg:px-5 rounded-xl border-2 border-gray-200 bg-gradient-to-r from-gray-50 to-slate-50 text-gray-700 hover:border-gray-400 hover:shadow-lg hover:shadow-gray-500/20 hover:bg-gradient-to-r hover:from-gray-100 hover:to-slate-100 transition-all duration-300"
             >
-              回到首页
+              首页
             </Button>
           </div>
         </div>
@@ -1399,7 +1399,7 @@ function CloudShopSimulator() {
         {currentView === 'shopSelection' && (
           <div className="w-full max-w-4xl mx-auto space-y-3 sm:space-y-4 animate-in fade-in-0 slide-in-from-top-2 duration-300">
             <Card className="w-full bg-white/90 backdrop-blur-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
-              <CardHeader className="pb-3 pt-4 sm:pt-5 px-4 sm:px-6 lg:px-8">
+              <CardHeader className="pb-2 pt-3 sm:pt-4 px-4 sm:px-6 lg:px-8">
                 <CardTitle className="text-lg sm:text-xl lg:text-2xl text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">
                   功能菜单
                 </CardTitle>

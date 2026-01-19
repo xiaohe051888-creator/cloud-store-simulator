@@ -166,11 +166,11 @@ export async function GET(request: NextRequest) {
       userGrowth: parseFloat(userGrowth),
       simulationGrowth: parseFloat(simulationGrowth),
       simulationTrend,
-      levelDistribution: levelDistribution.map(item => ({
+      levelDistribution: levelDistribution.map((item: any) => ({
         level: item.level,
         count: item._count.id,
       })),
-      recentSimulations: recentSimulations.map(sim => ({
+      recentSimulations: recentSimulations.map((sim: any) => ({
         id: sim.id,
         userId: sim.user.userId,
         phone: sim.user.phone,

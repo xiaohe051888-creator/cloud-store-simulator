@@ -110,6 +110,13 @@ export async function DELETE(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
+    if (!id) {
+      return NextResponse.json(
+        { success: false, message: '缺少公告ID' },
+        { status: 400 }
+      );
+    }
+
     await prisma.announcement.delete({
       where: { id },
     });

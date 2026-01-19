@@ -106,6 +106,13 @@ export async function DELETE(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
+    if (!id) {
+      return NextResponse.json(
+        { success: false, message: '缺少福利ID' },
+        { status: 400 }
+      );
+    }
+
     await prisma.benefit.delete({
       where: { id },
     });

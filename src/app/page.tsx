@@ -3441,7 +3441,7 @@ function CloudShopSimulator() {
                       </svg>
                       <span className="text-lg sm:text-xl font-bold">注册账号</span>
                     </div>
-                    <span className="text-xs sm:text-sm text-indigo-100">没有账号我要注册</span>
+                    <span className="text-xs sm:text-sm text-white/90">没有账号我要注册</span>
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/login/login')}
@@ -3453,7 +3453,7 @@ function CloudShopSimulator() {
                       </svg>
                       <span className="text-lg sm:text-xl font-bold">登录缴费平台</span>
                     </div>
-                    <span className="text-xs sm:text-sm text-blue-100">已有账号我要登录</span>
+                    <span className="text-xs sm:text-sm text-white/90">已有账号我要登录</span>
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/download/download')}
@@ -3465,7 +3465,7 @@ function CloudShopSimulator() {
                       </svg>
                       <span className="text-lg sm:text-xl font-bold">下载缴费APP</span>
                     </div>
-                    <span className="text-xs sm:text-sm text-purple-100">安装后方便进入平台</span>
+                    <span className="text-xs sm:text-sm text-white/90">安装后方便进入平台</span>
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/myPages/groupChat/groupChat')}
@@ -3477,7 +3477,7 @@ function CloudShopSimulator() {
                       </svg>
                       <span className="text-lg sm:text-xl font-bold">下载步信APP</span>
                     </div>
-                    <span className="text-xs sm:text-sm text-emerald-100">安装官方聊天工具不失联</span>
+                    <span className="text-xs sm:text-sm text-white/90">安装官方聊天工具不失联</span>
                   </button>
               </div>
               

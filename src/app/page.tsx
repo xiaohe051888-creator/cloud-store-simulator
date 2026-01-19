@@ -3429,67 +3429,67 @@ function CloudShopSimulator() {
                 <div className="w-8 sm:w-10" />
               </div>
             </CardHeader>
-            <CardContent className="pt-1.5 sm:pt-2 pb-3 px-4 sm:px-6">
-              <div className="space-y-6">
+            <CardContent className="pt-1.5 sm:pt-2 pb-2 sm:pb-3 px-4 sm:px-6">
+              <div className="space-y-3 sm:space-y-6">
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/register/register')}
-                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-br from-rose-600 to-rose-700 hover:from-rose-700 hover:to-rose-800 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white border-b-4 border-rose-900"
+                    className="w-full h-auto min-h-[70px] sm:min-h-[90px] bg-gradient-to-br from-rose-600 to-rose-700 hover:from-rose-700 hover:to-rose-800 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl rounded-2xl p-2.5 sm:p-4 flex flex-col items-center justify-center text-white border-b-4 border-rose-900"
                   >
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center gap-1.5 sm:gap-2 mb-1">
+                      <svg className="w-5 h-5 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                       </svg>
-                      <span className="text-lg sm:text-xl font-bold">注册账号</span>
+                      <span className="text-base sm:text-xl font-bold">注册账号</span>
                     </div>
                     <span className="text-xs sm:text-sm text-white/95">没有账号我要注册</span>
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/login/login')}
-                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white border-b-4 border-blue-900"
+                    className="w-full h-auto min-h-[70px] sm:min-h-[90px] bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl rounded-2xl p-2.5 sm:p-4 flex flex-col items-center justify-center text-white border-b-4 border-blue-900"
                   >
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center gap-1.5 sm:gap-2 mb-1">
+                      <svg className="w-5 h-5 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                       </svg>
-                      <span className="text-lg sm:text-xl font-bold">登录缴费平台</span>
+                      <span className="text-base sm:text-xl font-bold">登录缴费平台</span>
                     </div>
                     <span className="text-xs sm:text-sm text-white/95">已有账号我要登录</span>
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/download/download')}
-                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-br from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white border-b-4 border-violet-900"
+                    className="w-full h-auto min-h-[70px] sm:min-h-[90px] bg-gradient-to-br from-violet-600 to-violet-700 hover:from-violet-700 hover:to-violet-800 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl rounded-2xl p-2.5 sm:p-4 flex flex-col items-center justify-center text-white border-b-4 border-violet-900"
                   >
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center gap-1.5 sm:gap-2 mb-1">
+                      <svg className="w-5 h-5 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                       </svg>
-                      <span className="text-lg sm:text-xl font-bold">下载缴费APP</span>
+                      <span className="text-base sm:text-xl font-bold">下载缴费APP</span>
                     </div>
                     <span className="text-xs sm:text-sm text-white/95">安装后方便进入平台</span>
                   </button>
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/myPages/groupChat/groupChat')}
-                    className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white border-b-4 border-orange-800"
+                    className="w-full h-auto min-h-[70px] sm:min-h-[90px] bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl rounded-2xl p-2.5 sm:p-4 flex flex-col items-center justify-center text-white border-b-4 border-orange-800"
                   >
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-center gap-1.5 sm:gap-2 mb-1">
+                      <svg className="w-5 h-5 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                       </svg>
-                      <span className="text-lg sm:text-xl font-bold">下载步信APP</span>
+                      <span className="text-base sm:text-xl font-bold">下载步信APP</span>
                     </div>
                     <span className="text-xs sm:text-sm text-white/95">安装官方聊天工具不失联</span>
                   </button>
               </div>
 
               {/* 温馨提示 */}
-              <div className="mt-6 p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-orange-100 to-amber-100 border-2 border-orange-300 shadow-lg shadow-orange-200/50 space-y-2.5 text-center">
-                <p className="text-base sm:text-lg text-orange-900 font-black flex items-center justify-center tracking-wide">
-                  <svg className="w-6 h-6 sm:w-7 sm:h-7 mr-2 flex-shrink-0 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="mt-4 sm:mt-6 p-2.5 sm:p-4 rounded-2xl bg-gradient-to-r from-orange-100 to-amber-100 border-2 border-orange-300 shadow-lg shadow-orange-200/50 space-y-1.5 sm:space-y-2.5 text-center">
+                <p className="text-sm sm:text-base sm:text-lg text-orange-900 font-black flex items-center justify-center tracking-wide">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 sm:w-7 sm:h-7 mr-1.5 sm:mr-2 flex-shrink-0 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
                   温馨提示
                 </p>
-                <p className="text-sm sm:text-base text-orange-800 font-semibold leading-relaxed">
+                <p className="text-xs sm:text-sm sm:text-base text-orange-800 font-semibold leading-relaxed">
                   如在平台上无法充值请联系平台客服人工充值
                 </p>
               </div>

@@ -3431,33 +3431,42 @@ function CloudShopSimulator() {
             </CardHeader>
             <CardContent className="p-6 sm:p-8">
               <div className="space-y-4">
-                  <Button
-                    onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/login/login')}
-                    className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
-                  >
-                    <svg className="w-6 h-6 sm:w-7 sm:h-7 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                    登录缴费平台
-                  </Button>
-                  <Button
-                    onClick={() => openLink('https://www.ugpcgm.cn/#/pages/download/download')}
-                    className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
-                  >
-                    <svg className="w-6 h-6 sm:w-7 sm:h-7 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                    下载缴费APP
-                  </Button>
-                  <Button
-                    onClick={() => openLink('https://www.ugpcgm.cn/#/myPages/groupChat/groupChat')}
-                    className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
-                  >
-                    <svg className="w-6 h-6 sm:w-7 sm:h-7 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                    下载步信APP
-                  </Button>
+                  <div>
+                    <p className="text-sm text-gray-600 mb-2 text-center">已有账号我要登录</p>
+                    <Button
+                      onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/login/login')}
+                      className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+                    >
+                      <svg className="w-6 h-6 sm:w-7 sm:h-7 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                      </svg>
+                      登录缴费平台
+                    </Button>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600 mb-2 text-center">安装后方便进入平台</p>
+                    <Button
+                      onClick={() => openLink('https://www.ugpcgm.cn/#/pages/download/download')}
+                      className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+                    >
+                      <svg className="w-6 h-6 sm:w-7 sm:h-7 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                      下载缴费APP
+                    </Button>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600 mb-2 text-center">安装官方聊天工具不失联</p>
+                    <Button
+                      onClick={() => openLink('https://www.ugpcgm.cn/#/myPages/groupChat/groupChat')}
+                      className="w-full h-14 sm:h-16 text-base sm:text-lg font-semibold bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg"
+                    >
+                      <svg className="w-6 h-6 sm:w-7 sm:h-7 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                      下载步信APP
+                    </Button>
+                  </div>
               </div>
               
               {/* 温馨提示 */}

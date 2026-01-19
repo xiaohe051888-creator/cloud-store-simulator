@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Menu, X, Save, RefreshCw } from 'lucide-react';
+import { authStorage } from '@/lib/adminStorage';
 
 interface ShopLevel {
   id: string;
@@ -26,6 +27,92 @@ interface ShopLevel {
   isActive: boolean;
 }
 
+// 默认店铺等级配置
+const DEFAULT_LEVELS: ShopLevel[] = [
+  {
+    id: '1',
+    level: '1',
+    name: '1级小店',
+    minStock: 5000,
+    maxStock: 15000,
+    commissionRate: 0.15,
+    stockDiscount: 1,
+    saleDiscount: 1,
+    color: '#3b82f6',
+    completionDays: 15,
+    settlementDays: 15,
+    settlementDiscount: 1,
+    sellRatio: 0.08,
+    isActive: true,
+  },
+  {
+    id: '2',
+    level: '2',
+    name: '2级店铺',
+    minStock: 15000,
+    maxStock: 50000,
+    commissionRate: 0.12,
+    stockDiscount: 0.98,
+    saleDiscount: 0.98,
+    color: '#8b5cf6',
+    completionDays: 15,
+    settlementDays: 15,
+    settlementDiscount: 1,
+    sellRatio: 0.09,
+    isActive: true,
+  },
+  {
+    id: '3',
+    level: '3',
+    name: '3级店铺',
+    minStock: 50000,
+    maxStock: 150000,
+    commissionRate: 0.1,
+    stockDiscount: 0.95,
+    saleDiscount: 0.95,
+    color: '#ec4899',
+    completionDays: 15,
+    settlementDays: 15,
+    settlementDiscount: 1,
+    sellRatio: 0.1,
+    isActive: true,
+  },
+  {
+    id: '4',
+    level: '4',
+    name: '4级店铺',
+    minStock: 150000,
+    maxStock: 500000,
+    commissionRate: 0.08,
+    stockDiscount: 0.92,
+    saleDiscount: 0.92,
+    color: '#f59e0b',
+    completionDays: 15,
+    settlementDays: 15,
+    settlementDiscount: 1,
+    sellRatio: 0.11,
+    isActive: true,
+  },
+  {
+    id: '5',
+    level: '5',
+    name: '5级店铺',
+    minStock: 500000,
+    maxStock: 1000000,
+    commissionRate: 0.06,
+    stockDiscount: 0.9,
+    saleDiscount: 0.9,
+    color: '#10b981',
+    completionDays: 15,
+    settlementDays: 15,
+    settlementDiscount: 1,
+    sellRatio: 0.12,
+    isActive: true,
+  },
+];
+
+const STORAGE_KEY = 'admin_shop_levels';
+
 export default function ShopLevelsPage() {
   const [levels, setLevels] = useState<ShopLevel[]>([]);
   const [loading, setLoading] = useState(true);
@@ -35,22 +122,34 @@ export default function ShopLevelsPage() {
   const [editedData, setEditedData] = useState<Partial<ShopLevel>>({});
 
   useEffect(() => {
+    // 检查是否已登录
+    if (!authStorage.isAuthenticated()) {
+      window.location.href = '/admin';
+      return;
+    }
+    
     fetchLevels();
   }, []);
 
-  const fetchLevels = async () => {
-    setLoading(true);
+  const fetchLevels = () => {
     try {
-      const response = await fetch('/api/admin/shop-levels');
-      const data = await response.json();
-
-      if (data.success) {
-        setLevels(data.data);
-      }
+      setLoading(true);
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const data = saved ? JSON.parse(saved) : DEFAULT_LEVELS;
+      setLevels(data);
     } catch (error) {
       console.error('获取店铺等级配置失败:', error);
+      setLevels(DEFAULT_LEVELS);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const saveLevels = (newLevels: ShopLevel[]) => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newLevels));
+    } catch (error) {
+      console.error('保存店铺等级配置失败:', error);
     }
   };
 
@@ -59,24 +158,18 @@ export default function ShopLevelsPage() {
     setEditedData({ ...level });
   };
 
-  const handleSave = async () => {
+  const handleSave = () => {
     if (!editingLevel) return;
 
     setSaving(true);
     try {
-      const response = await fetch('/api/admin/shop-levels', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(editedData),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setLevels(levels.map((l) => (l.id === editingLevel.id ? data.data : l)));
-        setEditingLevel(null);
-        setEditedData({});
-      }
+      const newLevels = levels.map((l) =>
+        l.id === editingLevel.id ? { ...l, ...editedData } : l
+      );
+      setLevels(newLevels);
+      saveLevels(newLevels);
+      setEditingLevel(null);
+      setEditedData({});
     } catch (error) {
       console.error('保存配置失败:', error);
     } finally {
@@ -84,19 +177,13 @@ export default function ShopLevelsPage() {
     }
   };
 
-  const handleToggleActive = async (level: ShopLevel) => {
+  const handleToggleActive = (level: ShopLevel) => {
     try {
-      const response = await fetch('/api/admin/shop-levels', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: level.id, isActive: !level.isActive }),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setLevels(levels.map((l) => (l.id === level.id ? data.data : l)));
-      }
+      const newLevels = levels.map((l) =>
+        l.id === level.id ? { ...l, isActive: !l.isActive } : l
+      );
+      setLevels(newLevels);
+      saveLevels(newLevels);
     } catch (error) {
       console.error('切换状态失败:', error);
     }

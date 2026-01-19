@@ -27,6 +27,7 @@ import {
   Cell,
   Legend,
 } from 'recharts';
+import { dashboardStorage, authStorage, userStorage, type User } from '@/lib/adminStorage';
 
 interface DashboardStats {
   totalUsers: number;
@@ -60,17 +61,60 @@ export default function DashboardPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
+    // 检查是否已登录
+    if (!authStorage.isAuthenticated()) {
+      window.location.href = '/admin';
+      return;
+    }
+    
     fetchStats();
   }, []);
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/api/admin/dashboard/stats');
-      const data = await response.json();
+      setLoading(true);
+      
+      // 从localStorage获取数据
+      const dashboardStats = dashboardStorage.getStats();
+      const userGrowthData = dashboardStorage.getUserGrowthData();
+      const levelDist = dashboardStorage.getLevelDistribution();
 
-      if (data.success) {
-        setStats(data.data);
-      }
+      // 生成最近7天的模拟趋势数据（模拟）
+      const last7Days = Array.from({ length: 7 }, (_, i) => {
+        const date = new Date();
+        date.setDate(date.getDate() - (6 - i));
+        return date.toISOString().split('T')[0];
+      });
+
+      const simulationTrend = last7Days.map(date => ({
+        date,
+        count: Math.floor(Math.random() * 50) + 10, // 模拟数据
+      }));
+
+      // 获取最近10个用户作为模拟记录
+      const allUsers = userStorage.getAll();
+      const recentSimulations = allUsers.slice(0, 10).map((user: User) => ({
+        id: user.id,
+        userId: user.id,
+        phone: user.phone,
+        level: `${user.shopLevel}级`,
+        stockAmount: user.initialStock,
+        period: user.shopDays,
+        totalProfit: user.totalProfit,
+        createdAt: new Date(user.lastLoginAt),
+      }));
+
+      setStats({
+        ...dashboardStats,
+        totalSimulations: allUsers.length * 5, // 模拟每个用户平均5次模拟
+        totalRevenue: dashboardStats.totalSales,
+        todaySimulations: Math.floor(Math.random() * 20) + 5,
+        userGrowth: Math.random() * 20 - 5, // -5% 到 +15%
+        simulationGrowth: Math.random() * 25 - 5,
+        simulationTrend,
+        levelDistribution: levelDist.map(d => ({ ...d, level: `${d.level}级` })),
+        recentSimulations,
+      });
     } catch (error) {
       console.error('获取统计数据失败:', error);
     } finally {

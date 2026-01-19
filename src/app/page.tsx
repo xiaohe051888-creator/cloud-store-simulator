@@ -3432,6 +3432,18 @@ function CloudShopSimulator() {
             <CardContent className="p-6 sm:p-8">
               <div className="space-y-4">
                   <button
+                    onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/register/register')}
+                    className="w-full h-auto min-h-[88px] sm:min-h-[100px] bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-white"
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                      </svg>
+                      <span className="text-lg sm:text-xl font-bold">注册账号</span>
+                    </div>
+                    <span className="text-xs sm:text-sm text-indigo-100">没有账号我要注册</span>
+                  </button>
+                  <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/login/login')}
                     className="w-full h-auto min-h-[88px] sm:min-h-[100px] bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-white"
                   >

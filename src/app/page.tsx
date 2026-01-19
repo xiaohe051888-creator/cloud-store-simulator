@@ -3413,20 +3413,20 @@ function CloudShopSimulator() {
         {/* 进入平台 */}
         {currentView === 'platform' && (
           <Card className="w-full max-w-4xl mx-auto glass animate-fade-in animate-scale-in shadow-2xl border-0">
-            <CardHeader className="pb-3 sm:pb-4 pt-4 sm:pt-6 px-4 sm:px-6">
+            <CardHeader className="pb-1.5 sm:pb-2 pt-1.5 sm:pt-2 px-4 sm:px-6">
               <div className="flex items-center justify-between">
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={handleBackToShopSelection}
-                  className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 sm:w-12 sm:h-12"
+                  className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-8 h-8 sm:w-10 sm:h-10"
                 >
-                  <span className="text-xl sm:text-2xl font-bold">←</span>
+                  <span className="text-lg sm:text-xl font-bold">←</span>
                 </Button>
-                <CardTitle className="text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent font-bold">
+                <CardTitle className="text-base sm:text-lg lg:text-xl bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent font-bold">
                   进入平台
                 </CardTitle>
-                <div className="w-10 sm:w-12" />
+                <div className="w-8 sm:w-10" />
               </div>
             </CardHeader>
             <CardContent className="p-3 sm:p-4">

@@ -197,7 +197,7 @@ export default function PosterPage() {
                       扫码立即体验
                     </p>
                     <p className="text-gray-600 text-xs sm:text-sm">
-                      云店模拟器 v1.4.3
+                      云店模拟器 v1.4.4
                     </p>
                   </div>
                 </div>

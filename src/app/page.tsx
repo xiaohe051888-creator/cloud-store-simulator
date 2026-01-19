@@ -1341,7 +1341,7 @@ function CloudShopSimulator() {
                 云店模拟器
               </h1>
               <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text">
-                v1.4.4
+                v1.4.3
               </span>
             </div>
           </div>
@@ -1564,33 +1564,6 @@ function CloudShopSimulator() {
 
                   {/* 箭头图标 */}
                   <svg className="w-6 h-6 sm:w-7 sm:h-7 text-orange-500 flex-shrink-0 group-hover:translate-x-1 group-hover:text-orange-600 transition-all duration-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-
-                {/* 生成海报 */}
-                <div
-                  onClick={() => window.location.href = '/poster'}
-                  className="group touch-feedback flex items-center p-4 sm:p-5 rounded-xl border-2 border-violet-200 bg-white hover:border-violet-400 hover:shadow-lg hover:shadow-violet-500/10 hover:bg-gradient-to-r hover:from-violet-50 hover:to-fuchsia-50 transition-all duration-300 cursor-pointer relative overflow-hidden"
-                >
-                  {/* 装饰性背景光晕 */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-violet-500/0 via-violet-500/5 to-violet-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                  {/* 图标 */}
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-violet-500 to-fuchsia-600 rounded-xl mr-4 sm:mr-5 shadow-lg shadow-violet-500/20 group-hover:scale-110 group-hover:shadow-violet-500/30 transition-all duration-300 relative z-10">
-                    <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-
-                  {/* 标题和说明 */}
-                  <div className="flex-1 relative z-10">
-                    <h3 className="text-base sm:text-lg font-bold text-violet-800 mb-1 group-hover:text-violet-700 transition-colors">生成海报</h3>
-                    <p className="text-xs sm:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">生成宣传海报，方便分享推广</p>
-                  </div>
-
-                  {/* 箭头图标 */}
-                  <svg className="w-6 h-6 sm:w-7 sm:h-7 text-violet-500 flex-shrink-0 group-hover:translate-x-1 group-hover:text-violet-600 transition-all duration-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>

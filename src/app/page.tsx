@@ -3430,7 +3430,7 @@ function CloudShopSimulator() {
               </div>
             </CardHeader>
             <CardContent className="p-3 sm:p-4">
-              <div className="space-y-2">
+              <div className="space-y-3">
                   <button
                     onClick={() => openLink('https://www.ugpcgm.cn/#/pages/index/register/register')}
                     className="w-full h-auto min-h-[80px] sm:min-h-[90px] bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center text-white"

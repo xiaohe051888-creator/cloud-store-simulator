@@ -3626,7 +3626,7 @@ function CloudShopSimulator() {
                                 <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V1</Badge>
                               </TableCell>
                               <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">1%</span> 差额奖
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">1%</span>
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3634,7 +3634,7 @@ function CloudShopSimulator() {
                                 <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V2</Badge>
                               </TableCell>
                               <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">2%</span> 差额奖
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">2%</span>
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3642,7 +3642,7 @@ function CloudShopSimulator() {
                                 <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V3</Badge>
                               </TableCell>
                               <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">3%</span> 差额奖
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">3%</span>
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3650,7 +3650,7 @@ function CloudShopSimulator() {
                                 <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V4</Badge>
                               </TableCell>
                               <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">4%</span> 差额奖
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">4%</span>
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3658,7 +3658,7 @@ function CloudShopSimulator() {
                                 <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V5</Badge>
                               </TableCell>
                               <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">5%</span> 差额奖
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">5%</span>
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3666,7 +3666,7 @@ function CloudShopSimulator() {
                                 <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V6</Badge>
                               </TableCell>
                               <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">6%</span> 差额奖
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">6%</span>
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3674,7 +3674,7 @@ function CloudShopSimulator() {
                                 <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V7</Badge>
                               </TableCell>
                               <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">7%</span> 差额奖
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">7%</span>
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3682,7 +3682,7 @@ function CloudShopSimulator() {
                                 <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V8</Badge>
                               </TableCell>
                               <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">9%</span> 差额奖
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">9%</span>
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3690,7 +3690,7 @@ function CloudShopSimulator() {
                                 <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V9</Badge>
                               </TableCell>
                               <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">11%</span> 差额奖
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">11%</span>
                               </TableCell>
                             </TableRow>
                           </TableBody>

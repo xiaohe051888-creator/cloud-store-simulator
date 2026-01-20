@@ -36,9 +36,9 @@
   "categories": ["business", "finance"],
   "shortcuts": [
     {
-      "name": "店铺等级",
-      "short_name": "店铺等级",
-      "description": "查看店铺等级详情",
+      "name": "等级介绍",
+      "short_name": "等级介绍",
+      "description": "查看店铺等级和社区等级",
       "url": "/?view=shopLevels",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },

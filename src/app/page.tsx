@@ -48,6 +48,9 @@ function CloudShopSimulator() {
   // 福利详情展开状态
   const [expandedBenefit, setExpandedBenefit] = useState<'newbie' | 'community' | 'platform' | 'wechat' | 'buxin' | 'joinus' | 'becomemanager' | 'company' | null>(null);
   
+  // 等级介绍展开状态
+  const [expandedLevelInfo, setExpandedLevelInfo] = useState<'howUpgrade' | 'upgradeBenefit' | 'communityLevel' | 'communityBonus' | 'communitySalary' | null>(null);
+  
   // 对比数据状态
   const [comparisonData, setComparisonData] = useState<ComparisonData[]>([]);
   const [currentComparisonId, setCurrentComparisonId] = useState<string | null>(null);
@@ -1541,7 +1544,7 @@ function CloudShopSimulator() {
                   </svg>
                 </div>
 
-                {/* 店铺等级 */}
+                {/* 等级介绍 */}
                 <div
                   onClick={() => setCurrentView('shopLevels')}
                   className="group touch-feedback flex items-center p-4 sm:p-5 rounded-xl border-2 border-orange-200 bg-white hover:border-orange-400 hover:shadow-lg hover:shadow-orange-500/10 hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 transition-all duration-300 cursor-pointer relative overflow-hidden"
@@ -1558,8 +1561,8 @@ function CloudShopSimulator() {
 
                   {/* 标题和说明 */}
                   <div className="flex-1 relative z-10">
-                    <h3 className="text-base sm:text-lg font-bold text-orange-800 mb-1 group-hover:text-orange-700 transition-colors">店铺等级</h3>
-                    <p className="text-xs sm:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">查看各等级的升级条件和权益</p>
+                    <h3 className="text-base sm:text-lg font-bold text-orange-800 mb-1 group-hover:text-orange-700 transition-colors">等级介绍</h3>
+                    <p className="text-xs sm:text-sm text-gray-600 group-hover:text-gray-700 transition-colors">查看店铺等级和社区等级</p>
                   </div>
 
                   {/* 箭头图标 */}
@@ -3215,196 +3218,625 @@ function CloudShopSimulator() {
           </Card>
         )}
 
-        {/* 店铺等级页面 */}
+        {/* 等级介绍 */}
         {currentView === 'shopLevels' && (
-          <Card className="max-w-4xl mx-auto bg-white/90 backdrop-blur-lg animate-in fade-in-0 slide-in-from-top-4 duration-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 border-0">
-            <CardHeader>
+          <Card className="w-full max-w-4xl mx-auto glass animate-fade-in animate-scale-in shadow-2xl border-0">
+            <CardHeader className="pb-2 sm:pb-3 pt-2 sm:pt-3 px-4 sm:px-6">
               <div className="flex items-center justify-between">
-                <Button variant="ghost" size="icon" onClick={handleBackToShopSelection} className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-12 h-12">
-                  <span className="text-2xl font-bold">←</span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={handleBackToShopSelection}
+                  className="active:scale-90 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600 rounded-full w-10 h-10 sm:w-12 sm:h-12"
+                >
+                  <span className="text-xl sm:text-2xl font-bold">←</span>
                 </Button>
-                <CardTitle className="text-xl sm:text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">店铺等级说明</CardTitle>
-                <div className="w-12" />
+                <CardTitle className="text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-orange-600 via-amber-600 to-red-600 bg-clip-text text-transparent font-bold">
+                  等级介绍
+                </CardTitle>
+                <div className="w-10 sm:w-12" />
               </div>
             </CardHeader>
-            <CardContent className="space-y-8">
-              {/* 如何提升店铺等级 */}
-              <div>
-                <h3 className="font-bold text-lg sm:text-xl text-gray-800 mb-4 flex items-center">
-                  <span className="mr-2">📈</span> 如何提升店铺等级？
-                </h3>
-                <div className="rounded-lg border overflow-hidden">
-                  <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">升级条件</TableHead>
-                          <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">目标等级</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        <TableRow className="hover:bg-gray-50">
-                          <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center">
-                            <div className="space-y-2 text-sm sm:text-base">
-                              <div>开店选择新手店500额度卖完自动升级</div>
-                              <div>开店选择老手店开店完成之后自动升级</div>
-                            </div>
-                          </TableCell>
-                          <TableCell className="px-3 py-3 sm:px-4 text-center">
-                            <Badge className="bg-gradient-to-r from-orange-400 to-orange-600 text-xs sm:text-sm">青铜</Badge>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow className="hover:bg-gray-50">
-                          <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">推荐 1 个用户开启云店</TableCell>
-                          <TableCell className="px-3 py-3 sm:px-4 text-center">
-                            <Badge className="bg-gradient-to-r from-gray-300 to-gray-400 text-xs sm:text-sm">白银</Badge>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow className="hover:bg-gray-50">
-                          <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">推荐 2 个用户开启云店</TableCell>
-                          <TableCell className="px-3 py-3 sm:px-4 text-center">
-                            <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-xs sm:text-sm">黄金</Badge>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow className="hover:bg-gray-50">
-                          <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">推荐 4 个用户开启云店</TableCell>
-                          <TableCell className="px-3 py-3 sm:px-4 text-center">
-                            <Badge className="bg-gradient-to-r from-gray-200 to-gray-300 text-xs sm:text-sm">铂金</Badge>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow className="hover:bg-gray-50">
-                          <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">推荐 7 个用户开启云店</TableCell>
-                          <TableCell className="px-3 py-3 sm:px-4 text-center">
-                            <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">钻石</Badge>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow className="hover:bg-gray-50">
-                          <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">推荐 10 个用户开启云店</TableCell>
-                          <TableCell className="px-3 py-3 sm:px-4 text-center">
-                            <Badge className="bg-gradient-to-r from-gray-600 to-gray-800 text-white text-xs sm:text-sm">黑钻</Badge>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow className="hover:bg-gray-50">
-                          <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">推荐 15 个用户开启云店</TableCell>
-                          <TableCell className="px-3 py-3 sm:px-4 text-center">
-                            <Badge className="bg-gradient-to-r from-purple-500 to-purple-700 text-white text-xs sm:text-sm">至尊</Badge>
-                          </TableCell>
-                        </TableRow>
-                    </TableBody>
-                  </Table>
+            <CardContent className="space-y-3 sm:space-y-5 px-4 sm:px-6 pb-5 sm:pb-6">
+              {/* 一、如何提升店铺等级 */}
+              <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                <button
+                  onClick={() => setExpandedLevelInfo(expandedLevelInfo === 'howUpgrade' ? null : 'howUpgrade')}
+                  className="touch-feedback w-full flex items-center justify-between p-3 sm:p-5 bg-gradient-to-r from-orange-50 to-amber-50 hover:from-orange-100 hover:to-amber-100 transition-all duration-300"
+                >
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-orange-500 to-amber-600 rounded-xl shadow-lg shadow-orange-500/20">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="text-sm sm:text-base sm:text-lg font-bold text-orange-700">一、如何提升店铺等级</h3>
+                      <p className="text-xs text-gray-600 sm:hidden">店铺升级条件</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">开店及推荐升级店铺等级</p>
+                    </div>
                   </div>
-                </div>
+                  <svg
+                    className={`w-4 h-4 sm:w-6 sm:h-6 text-orange-600 transition-transform duration-200 ${expandedLevelInfo === 'howUpgrade' ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {expandedLevelInfo === 'howUpgrade' && (
+                  <div className="p-3 sm:p-5 bg-white border-t border-orange-200">
+                    <div className="rounded-lg border overflow-hidden">
+                      <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">升级条件</TableHead>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">目标等级</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center">
+                                <div className="space-y-2 text-sm sm:text-base">
+                                  <div>开店选择新手店500额度卖完自动升级</div>
+                                  <div>开店选择老手店开店完成之后自动升级</div>
+                                </div>
+                              </TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-orange-400 to-orange-600 text-xs sm:text-sm">青铜</Badge>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">推荐 1 个用户开启云店</TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-gray-300 to-gray-400 text-xs sm:text-sm">白银</Badge>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">推荐 2 个用户开启云店</TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-xs sm:text-sm">黄金</Badge>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">推荐 4 个用户开启云店</TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-gray-200 to-gray-300 text-xs sm:text-sm">铂金</Badge>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">推荐 7 个用户开启云店</TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">钻石</Badge>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">推荐 10 个用户开启云店</TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-gray-600 to-gray-800 text-white text-xs sm:text-sm">黑钻</Badge>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">推荐 15 个用户开启云店</TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-purple-500 to-purple-700 text-white text-xs sm:text-sm">至尊</Badge>
+                              </TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* 升级店铺的权益 */}
-              <div>
-                <h3 className="font-bold text-lg sm:text-xl text-gray-800 mb-4 flex items-center">
-                  <span className="mr-2">💎</span> 升级店铺的权益
-                </h3>
-                <div className="rounded-lg border overflow-hidden">
-                  <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className="sticky left-0 z-10 text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">等级</TableHead>
-                          <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">预缴折扣</TableHead>
-                          <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">最高余额</TableHead>
-                          <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">代缴比例</TableHead>
-                          <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">提现手续费</TableHead>
-                          <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">抽奖</TableHead>
-                          <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">E积分</TableHead>
-                          <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">股权</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        <TableRow className="hover:bg-gray-50">
-                          <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
-                            <Badge className="bg-gradient-to-r from-orange-400 to-orange-600 text-xs sm:text-sm">青铜</Badge>
-                          </TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">88折</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">3000</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">20%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">1%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">-</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">1%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">-</TableCell>
-                        </TableRow>
-                        <TableRow className="hover:bg-gray-50">
-                          <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
-                            <Badge className="bg-gradient-to-r from-gray-300 to-gray-400 text-xs sm:text-sm">白银</Badge>
-                          </TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">87折</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">6000</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">19%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">0.95%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">1次/月</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">2%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">3%</TableCell>
-                        </TableRow>
-                        <TableRow className="hover:bg-gray-50">
-                          <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
-                            <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-xs sm:text-sm">黄金</Badge>
-                          </TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">86折</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">10000</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">18%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">0.9%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">1次/月</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">5%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">6%</TableCell>
-                        </TableRow>
-                        <TableRow className="hover:bg-gray-50">
-                          <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
-                            <Badge className="bg-gradient-to-r from-gray-200 to-gray-300 text-xs sm:text-sm">铂金</Badge>
-                          </TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">85折</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">30000</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">17%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">0.85%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">1次/月</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">6%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">8%</TableCell>
-                        </TableRow>
-                        <TableRow className="hover:bg-gray-50">
-                          <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
-                            <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">钻石</Badge>
-                          </TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">84折</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">70000</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">16%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">0.8%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">2次/月</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">7%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">10%</TableCell>
-                        </TableRow>
-                        <TableRow className="hover:bg-gray-50">
-                          <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
-                            <Badge className="bg-gradient-to-r from-gray-600 to-gray-800 text-white text-xs sm:text-sm">黑钻</Badge>
-                          </TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">83折</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">130000</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">15%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">0.75%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">2次/月</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">8%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">15%</TableCell>
-                        </TableRow>
-                        <TableRow className="hover:bg-gray-50">
-                          <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
-                            <Badge className="bg-gradient-to-r from-purple-500 to-purple-700 text-white text-xs sm:text-sm">至尊</Badge>
-                          </TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">82折</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">200000</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">14%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">0.65%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">3次/月</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">10%</TableCell>
-                          <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">20%</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
+              {/* 二、提升店铺等级的好处 */}
+              <div className="border-2 border-amber-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                <button
+                  onClick={() => setExpandedLevelInfo(expandedLevelInfo === 'upgradeBenefit' ? null : 'upgradeBenefit')}
+                  className="touch-feedback w-full flex items-center justify-between p-3 sm:p-5 bg-gradient-to-r from-amber-50 to-yellow-50 hover:from-amber-100 hover:to-yellow-100 transition-all duration-300"
+                >
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-amber-500 to-yellow-600 rounded-xl shadow-lg shadow-amber-500/20">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="text-sm sm:text-base sm:text-lg font-bold text-amber-700">二、提升店铺等级的好处</h3>
+                      <p className="text-xs text-gray-600 sm:hidden">店铺等级权益</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">升级享受更多权益和优惠</p>
+                    </div>
                   </div>
-                </div>
+                  <svg
+                    className={`w-4 h-4 sm:w-6 sm:h-6 text-amber-600 transition-transform duration-200 ${expandedLevelInfo === 'upgradeBenefit' ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {expandedLevelInfo === 'upgradeBenefit' && (
+                  <div className="p-3 sm:p-5 bg-white border-t border-amber-200">
+                    <div className="rounded-lg border overflow-hidden">
+                      <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead className="sticky left-0 z-10 text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">等级</TableHead>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">预缴折扣</TableHead>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">最高余额</TableHead>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">代缴比例</TableHead>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">提现手续费</TableHead>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">抽奖</TableHead>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">E积分</TableHead>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap text-xs sm:text-sm">股权</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
+                                <Badge className="bg-gradient-to-r from-orange-400 to-orange-600 text-xs sm:text-sm">青铜</Badge>
+                              </TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">88折</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">3000</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">20%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">1%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">-</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">1%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">-</TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
+                                <Badge className="bg-gradient-to-r from-gray-300 to-gray-400 text-xs sm:text-sm">白银</Badge>
+                              </TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">87折</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">6000</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">19%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">0.95%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">1次/月</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">2%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">3%</TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
+                                <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-xs sm:text-sm">黄金</Badge>
+                              </TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">86折</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">10000</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">18%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">0.9%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">1次/月</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">5%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">6%</TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
+                                <Badge className="bg-gradient-to-r from-gray-200 to-gray-300 text-xs sm:text-sm">铂金</Badge>
+                              </TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">85折</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">30000</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">17%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">0.85%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">1次/月</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">6%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">8%</TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">钻石</Badge>
+                              </TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">84折</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">70000</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">16%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">0.8%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">2次/月</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">7%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">10%</TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
+                                <Badge className="bg-gradient-to-r from-gray-600 to-gray-800 text-white text-xs sm:text-sm">黑钻</Badge>
+                              </TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">83折</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">130000</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">15%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">0.75%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">2次/月</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">8%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">15%</TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="sticky left-0 z-10 px-2 py-2 sm:px-3 text-center bg-white/95 after:content-[''] after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[1px] after:bg-gray-200">
+                                <Badge className="bg-gradient-to-r from-purple-500 to-purple-700 text-white text-xs sm:text-sm">至尊</Badge>
+                              </TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">82折</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">200000</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">14%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">0.65%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">3次/月</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">10%</TableCell>
+                              <TableCell className="px-1 sm:px-2 py-2 text-center text-gray-700 text-xs sm:text-sm">20%</TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 三、如何提升社区等级 */}
+              <div className="border-2 border-blue-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                <button
+                  onClick={() => setExpandedLevelInfo(expandedLevelInfo === 'communityLevel' ? null : 'communityLevel')}
+                  className="touch-feedback w-full flex items-center justify-between p-3 sm:p-5 bg-gradient-to-r from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 transition-all duration-300"
+                >
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl shadow-lg shadow-blue-500/20">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="text-sm sm:text-base sm:text-lg font-bold text-blue-700">三、如何提升社区等级</h3>
+                      <p className="text-xs text-gray-600 sm:hidden">社区等级升级</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">社区总代缴升级V1-V9</p>
+                    </div>
+                  </div>
+                  <svg
+                    className={`w-4 h-4 sm:w-6 sm:h-6 text-blue-600 transition-transform duration-200 ${expandedLevelInfo === 'communityLevel' ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {expandedLevelInfo === 'communityLevel' && (
+                  <div className="p-3 sm:p-5 bg-white border-t border-blue-200">
+                    <div className="rounded-lg border overflow-hidden">
+                      <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">社区总代缴</TableHead>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">目标等级</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-blue-600">5000</TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V1</Badge>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-blue-600">25000</TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V2</Badge>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-blue-600">118000</TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V3</Badge>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-blue-600">380000</TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V4</Badge>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-blue-600">1250000</TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V5</Badge>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-blue-600">4650000</TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V6</Badge>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-blue-600">12500000</TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V7</Badge>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-blue-600">34000000</TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V8</Badge>
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-blue-600">85000000</TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V9</Badge>
+                              </TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </div>
+                    <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                      <p className="text-sm sm:text-base text-blue-800">
+                        你下面所有店主的店铺代缴全部都记录在您的<span className="font-bold text-blue-600">社区总代缴</span>里面
+                      </p>
+                      <p className="text-sm sm:text-base text-blue-800 mt-2">
+                        在平台点击<span className="font-bold text-blue-600">我的</span>，点击<span className="font-bold text-blue-600">社区</span>，可以查看到自己的社区等级和社区总代缴
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 四、社区等级差额奖 */}
+              <div className="border-2 border-purple-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                <button
+                  onClick={() => setExpandedLevelInfo(expandedLevelInfo === 'communityBonus' ? null : 'communityBonus')}
+                  className="touch-feedback w-full flex items-center justify-between p-3 sm:p-5 bg-gradient-to-r from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 transition-all duration-300"
+                >
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl shadow-lg shadow-purple-500/20">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="text-sm sm:text-base sm:text-lg font-bold text-purple-700">四、社区等级差额奖</h3>
+                      <p className="text-xs text-gray-600 sm:hidden">团队代缴差额奖励</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">享受团队店铺代缴结算金额差额奖</p>
+                    </div>
+                  </div>
+                  <svg
+                    className={`w-4 h-4 sm:w-6 sm:h-6 text-purple-600 transition-transform duration-200 ${expandedLevelInfo === 'communityBonus' ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {expandedLevelInfo === 'communityBonus' && (
+                  <div className="p-3 sm:p-5 bg-white border-t border-purple-200">
+                    <div className="rounded-lg border overflow-hidden">
+                      <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">社区等级</TableHead>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">差额奖比例</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V1</Badge>
+                              </TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">1%</span> 差额奖
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V2</Badge>
+                              </TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">2%</span> 差额奖
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V3</Badge>
+                              </TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">3%</span> 差额奖
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V4</Badge>
+                              </TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">4%</span> 差额奖
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V5</Badge>
+                              </TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">5%</span> 差额奖
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V6</Badge>
+                              </TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">6%</span> 差额奖
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V7</Badge>
+                              </TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">7%</span> 差额奖
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V8</Badge>
+                              </TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">9%</span> 差额奖
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-3 py-3 sm:px-4 text-center">
+                                <Badge className="bg-gradient-to-r from-blue-400 to-blue-600 text-xs sm:text-sm">V9</Badge>
+                              </TableCell>
+                              <TableCell className="px-3 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                享受团队所有店铺代缴结算金额的 <span className="font-bold text-purple-600">11%</span> 差额奖
+                              </TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </div>
+                    <div className="mt-3 p-3 sm:p-4 bg-purple-50 border-2 border-purple-200 rounded-xl">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-purple-700 mb-2">社区等级差额奖说明：</h4>
+                      <p className="text-sm sm:text-base text-gray-700">
+                        奖励 = 自己的社区等级减去直属的社区等级对应的百分比差额 × 团队成员店铺代缴结算的金额，<span className="font-bold text-red-600">平级无奖励</span>
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* 五、团队长每月社区薪资 */}
+              <div className="border-2 border-indigo-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                <button
+                  onClick={() => setExpandedLevelInfo(expandedLevelInfo === 'communitySalary' ? null : 'communitySalary')}
+                  className="touch-feedback w-full flex items-center justify-between p-3 sm:p-5 bg-gradient-to-r from-indigo-50 to-violet-50 hover:from-indigo-100 hover:to-violet-100 transition-all duration-300"
+                >
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-indigo-500 to-violet-600 rounded-xl shadow-lg shadow-indigo-500/20">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="text-sm sm:text-base sm:text-lg font-bold text-indigo-700">五、团队长每月社区薪资</h3>
+                      <p className="text-xs text-gray-600 sm:hidden">直推团队工资</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">直推V1-V7享受每月团队工资</p>
+                    </div>
+                  </div>
+                  <svg
+                    className={`w-4 h-4 sm:w-6 sm:h-6 text-indigo-600 transition-transform duration-200 ${expandedLevelInfo === 'communitySalary' ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {expandedLevelInfo === 'communitySalary' && (
+                  <div className="p-3 sm:p-5 bg-white border-t border-indigo-200">
+                    <div className="rounded-lg border overflow-hidden">
+                      <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">直推条件</TableHead>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">月工资</TableHead>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">递增工资</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推 <span className="font-bold text-indigo-600">2个V1</span>
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
+                                <span className="font-bold">600</span>元
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推中每增加<span className="font-bold text-indigo-600">1个V1</span>，工资加<span className="font-bold text-green-600">300</span>元
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推 <span className="font-bold text-indigo-600">2个V2</span>
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
+                                <span className="font-bold">2000</span>元
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推中每增加<span className="font-bold text-indigo-600">1个V2</span>，工资加<span className="font-bold text-green-600">1000</span>元
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推 <span className="font-bold text-indigo-600">2个V3</span>
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
+                                <span className="font-bold">6000</span>元
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推中每增加<span className="font-bold text-indigo-600">1个V3</span>，工资加<span className="font-bold text-green-600">3000</span>元
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推 <span className="font-bold text-indigo-600">2个V4</span>
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
+                                <span className="font-bold">12000</span>元
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推中每增加<span className="font-bold text-indigo-600">1个V4</span>，工资加<span className="font-bold text-green-600">6000</span>元
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推 <span className="font-bold text-indigo-600">2个V5</span>
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
+                                <span className="font-bold">24000</span>元
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推中每增加<span className="font-bold text-indigo-600">1个V5</span>，工资加<span className="font-bold text-green-600">12000</span>元
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推 <span className="font-bold text-indigo-600">2个V6</span>
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
+                                <span className="font-bold">48000</span>元
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推中每增加<span className="font-bold text-indigo-600">1个V6</span>，工资加<span className="font-bold text-green-600">24000</span>元
+                              </TableCell>
+                            </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推 <span className="font-bold text-indigo-600">2个V7</span>
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
+                                <span className="font-bold">96000</span>元
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推中每增加<span className="font-bold text-indigo-600">1个V7</span>，工资加<span className="font-bold text-green-600">48000</span>元
+                              </TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </div>
+                    <div className="mt-3 p-3 sm:p-4 bg-indigo-50 border-2 border-indigo-200 rounded-xl">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-indigo-700 mb-2">查看方法：</h4>
+                      <p className="text-sm sm:text-base text-gray-700">
+                        点击 <span className="font-bold text-indigo-600">我的</span>-点击 <span className="font-bold text-indigo-600">社区</span>-点击直属右边的<span className="font-bold text-indigo-600">查看</span>，查看直推店主头像上面的V等级
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>

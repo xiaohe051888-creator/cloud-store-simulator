@@ -3722,7 +3722,7 @@ function CloudShopSimulator() {
                     <div className="text-left">
                       <h3 className="text-sm sm:text-base sm:text-lg font-bold text-indigo-700">五、团队长每月社区薪资</h3>
                       <p className="text-xs text-gray-600 sm:hidden">直推社区薪资</p>
-                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">直推V1-V7享受每月社区薪资</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">直推V1到V8享受每月社区薪资</p>
                     </div>
                   </div>
                   <svg
@@ -3744,7 +3744,7 @@ function CloudShopSimulator() {
                             <TableRow>
                               <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">直推条件</TableHead>
                               <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">月工资</TableHead>
-                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">递增工资</TableHead>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">额外补贴</TableHead>
                             </TableRow>
                           </TableHeader>
                           <TableBody>
@@ -3756,7 +3756,7 @@ function CloudShopSimulator() {
                                 <span className="font-bold">600</span>元
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                直推中每增加<span className="font-bold text-indigo-600">1个V1</span>，工资加<span className="font-bold text-green-600">300</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V1</span>，工资加<span className="font-bold text-green-600">300</span>元
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3767,7 +3767,7 @@ function CloudShopSimulator() {
                                 <span className="font-bold">2000</span>元
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                直推中每增加<span className="font-bold text-indigo-600">1个V2</span>，工资加<span className="font-bold text-green-600">1000</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V2</span>，工资加<span className="font-bold text-green-600">1000</span>元
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3778,7 +3778,7 @@ function CloudShopSimulator() {
                                 <span className="font-bold">6000</span>元
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                直推中每增加<span className="font-bold text-indigo-600">1个V3</span>，工资加<span className="font-bold text-green-600">3000</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V3</span>，工资加<span className="font-bold text-green-600">3000</span>元
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3789,7 +3789,7 @@ function CloudShopSimulator() {
                                 <span className="font-bold">12000</span>元
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                直推中每增加<span className="font-bold text-indigo-600">1个V4</span>，工资加<span className="font-bold text-green-600">6000</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V4</span>，工资加<span className="font-bold text-green-600">6000</span>元
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3800,7 +3800,7 @@ function CloudShopSimulator() {
                                 <span className="font-bold">24000</span>元
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                直推中每增加<span className="font-bold text-indigo-600">1个V5</span>，工资加<span className="font-bold text-green-600">12000</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V5</span>，工资加<span className="font-bold text-green-600">12000</span>元
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3811,7 +3811,7 @@ function CloudShopSimulator() {
                                 <span className="font-bold">48000</span>元
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                直推中每增加<span className="font-bold text-indigo-600">1个V6</span>，工资加<span className="font-bold text-green-600">24000</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V6</span>，工资加<span className="font-bold text-green-600">24000</span>元
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3822,7 +3822,7 @@ function CloudShopSimulator() {
                                 <span className="font-bold">96000</span>元
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                直推中每增加<span className="font-bold text-indigo-600">1个V7</span>，工资加<span className="font-bold text-green-600">48000</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V7</span>，工资加<span className="font-bold text-green-600">48000</span>元
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3833,7 +3833,7 @@ function CloudShopSimulator() {
                                 <span className="font-bold">192000</span>元
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                直推中每增加<span className="font-bold text-indigo-600">1个V8</span>，工资加<span className="font-bold text-green-600">96000</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V8</span>，工资加<span className="font-bold text-green-600">96000</span>元
                               </TableCell>
                             </TableRow>
                           </TableBody>

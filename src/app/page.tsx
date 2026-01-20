@@ -3811,7 +3811,7 @@ function CloudShopSimulator() {
                           <TableHeader>
                             <TableRow>
                               <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">社区等级</TableHead>
-                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">差额奖比例</TableHead>
+                              <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">差额奖提成比例</TableHead>
                             </TableRow>
                           </TableHeader>
                           <TableBody>

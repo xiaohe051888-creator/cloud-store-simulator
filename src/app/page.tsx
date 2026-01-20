@@ -3832,7 +3832,7 @@ function CloudShopSimulator() {
                     <div className="mt-3 p-3 sm:p-4 bg-indigo-50 border-2 border-indigo-200 rounded-xl">
                       <h4 className="text-sm sm:text-base sm:text-lg font-bold text-indigo-700 mb-2">查看方法：</h4>
                       <p className="text-sm sm:text-base text-gray-700">
-                        点击 <span className="font-bold text-indigo-600">我的</span>-点击 <span className="font-bold text-indigo-600">社区</span>-点击直属右边的<span className="font-bold text-indigo-600">查看</span>，查看直推店主头像上面的V等级
+                        点击 <span className="font-bold text-indigo-600">我的</span> <span className="text-lg sm:text-xl font-bold text-indigo-600 mx-1">—</span> 点击 <span className="font-bold text-indigo-600">社区</span> <span className="text-lg sm:text-xl font-bold text-indigo-600 mx-1">—</span> 点击直属右边的<span className="font-bold text-indigo-600">查看</span>，查看直推店主头像上面的V等级
                       </p>
                     </div>
                   </div>

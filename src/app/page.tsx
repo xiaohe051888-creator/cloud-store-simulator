@@ -46,7 +46,7 @@ function CloudShopSimulator() {
   const [isEditMaxBalance, setIsEditMaxBalance] = useState<boolean>(true);      // 最高余额是否可编辑
   
   // 福利详情展开状态
-  const [expandedBenefit, setExpandedBenefit] = useState<'newbie' | 'community' | 'platform' | 'wechat' | 'buxin' | 'joinus' | 'becomemanager' | 'company' | null>(null);
+  const [expandedBenefit, setExpandedBenefit] = useState<'newbie' | 'community' | 'platform' | 'wechat' | 'buxin' | 'recharge' | 'joinus' | 'becomemanager' | 'company' | null>(null);
   
   // 等级介绍展开状态
   const [expandedLevelInfo, setExpandedLevelInfo] = useState<'howUpgrade' | 'upgradeBenefit' | 'communityLevel' | 'communityBonus' | 'communitySalary' | null>(null);
@@ -1344,7 +1344,7 @@ function CloudShopSimulator() {
                 云店模拟器
               </h1>
               <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text">
-                v1.4.5
+                v1.4.6
               </span>
             </div>
           </div>

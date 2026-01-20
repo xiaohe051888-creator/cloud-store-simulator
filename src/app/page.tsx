@@ -2076,6 +2076,200 @@ function CloudShopSimulator() {
                   </div>
                 )}
               </div>
+
+              {/* 六、复缴余额进货福利 */}
+              <div className="border-2 border-teal-200 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                <button
+                  onClick={() => setExpandedBenefit(expandedBenefit === 'recharge' ? null : 'recharge')}
+                  className="touch-feedback w-full flex items-center justify-between p-3 sm:p-5 bg-gradient-to-r from-teal-50 to-cyan-50 hover:from-teal-100 hover:to-cyan-100 transition-all duration-300"
+                >
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl shadow-lg shadow-teal-500/20">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h3 className="text-sm sm:text-base sm:text-lg font-bold text-teal-700">六、复缴余额进货福利</h3>
+                      <p className="text-xs text-gray-600 sm:hidden">单笔赠送、提速福利</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">单笔复缴赠送、累积复缴提速</p>
+                    </div>
+                  </div>
+                  <svg
+                    className={`w-4 h-4 sm:w-6 sm:h-6 text-teal-600 transition-transform duration-200 ${expandedBenefit === 'recharge' ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {expandedBenefit === 'recharge' && (
+                  <div className="p-3 sm:p-5 bg-white border-t border-teal-200 space-y-3 sm:space-y-4">
+                    {/* 单笔复缴赠送 */}
+                    <div className="p-3 sm:p-4 bg-teal-50 rounded-xl border-2 border-teal-200">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-teal-700 mb-2 sm:mb-3">单笔复缴赠送</h4>
+                      <p className="text-xs sm:text-sm text-gray-700 mb-3 sm:mb-4">
+                        用户在使用复缴余额进货时，单笔复缴余额进货达到以下标准，即可获得对应比例加赠额度，自动计入云店余额，无需申请：
+                      </p>
+                      <div className="rounded-lg border overflow-hidden">
+                        <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+                          <Table>
+                            <TableHeader>
+                              <TableRow>
+                                <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">复缴余额进货区间</TableHead>
+                                <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">赠送比例</TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              <TableRow className="hover:bg-gray-50">
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  <span className="font-bold text-teal-600">100</span> – <span className="font-bold text-teal-600">2400</span>
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm font-bold text-green-600">
+                                  <span className="font-bold">1.0%</span>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow className="hover:bg-gray-50">
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  <span className="font-bold text-teal-600">2500</span> – <span className="font-bold text-teal-600">5400</span>
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm font-bold text-green-600">
+                                  <span className="font-bold">1.2%</span>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow className="hover:bg-gray-50">
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  <span className="font-bold text-teal-600">5500</span> – <span className="font-bold text-teal-600">10900</span>
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm font-bold text-green-600">
+                                  <span className="font-bold">1.5%</span>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow className="hover:bg-gray-50">
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  <span className="font-bold text-teal-600">11000</span> – <span className="font-bold text-teal-600">30500</span>
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm font-bold text-green-600">
+                                  <span className="font-bold">1.8%</span>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow className="hover:bg-gray-50">
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  <span className="font-bold text-teal-600">30600</span> 以上
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm font-bold text-green-600">
+                                  <span className="font-bold">2.2%</span>
+                                </TableCell>
+                              </TableRow>
+                            </TableBody>
+                          </Table>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 累积复缴余额进货代缴提速 */}
+                    <div className="p-3 sm:p-4 bg-cyan-50 rounded-xl border-2 border-cyan-200">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-cyan-700 mb-2 sm:mb-3">累积复缴余额进货代缴提速</h4>
+                      <p className="text-xs sm:text-sm text-gray-700 mb-3 sm:mb-4">
+                        用户累计使用复缴余额进货越多，将解锁更高【每日销售提速】特权，系统每日自动计算提速比例，有效期长期有效。
+                      </p>
+                      <div className="rounded-lg border overflow-hidden mb-3 sm:mb-4">
+                        <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+                          <Table>
+                            <TableHeader>
+                              <TableRow>
+                                <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">复缴等级</TableHead>
+                                <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">累计金额</TableHead>
+                                <TableHead className="text-center font-semibold text-gray-700 whitespace-nowrap">提速比例</TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              <TableRow className="hover:bg-gray-50">
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  入门
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  ≥ <span className="font-bold text-cyan-600">¥6000</span>
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm font-bold text-green-600">
+                                  <span className="font-bold">3%</span>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow className="hover:bg-gray-50">
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  进阶
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  ≥ <span className="font-bold text-cyan-600">¥16000</span>
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm font-bold text-green-600">
+                                  <span className="font-bold">5%</span>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow className="hover:bg-gray-50">
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  高阶
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  ≥ <span className="font-bold text-cyan-600">¥50000</span>
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm font-bold text-green-600">
+                                  <span className="font-bold">6%</span>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow className="hover:bg-gray-50">
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  精英
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  ≥ <span className="font-bold text-cyan-600">¥124000</span>
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm font-bold text-green-600">
+                                  <span className="font-bold">7%</span>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow className="hover:bg-gray-50">
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  大师
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  ≥ <span className="font-bold text-cyan-600">¥260000</span>
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm font-bold text-green-600">
+                                  <span className="font-bold">8%</span>
+                                </TableCell>
+                              </TableRow>
+                              <TableRow className="hover:bg-gray-50">
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  至尊
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm text-gray-700">
+                                  ≥ <span className="font-bold text-cyan-600">¥500000</span>
+                                </TableCell>
+                                <TableCell className="px-2 py-2 sm:px-4 text-center text-xs sm:text-sm font-bold text-green-600">
+                                  <span className="font-bold">9%</span>
+                                </TableCell>
+                              </TableRow>
+                            </TableBody>
+                          </Table>
+                        </div>
+                      </div>
+                      <p className="text-xs sm:text-sm text-gray-700 mb-3 sm:mb-4">
+                        <span className="font-bold text-cyan-600">提升档位后提速增加不是累加，达到那个档位就享受那个档位的提速</span>
+                      </p>
+                      <div className="p-3 sm:p-4 bg-yellow-50 rounded-xl border-2 border-yellow-200">
+                        <h4 className="text-xs sm:text-sm sm:text-base font-bold text-yellow-700 mb-2">销售提速计算方式：</h4>
+                        <p className="text-xs sm:text-sm text-gray-700">
+                          如用户当前每日平台帮代缴比例为 <span className="font-bold text-blue-600">20%</span>，且复缴等级为「<span className="font-bold text-cyan-600">进阶（+5%提速）</span>」<br />
+                          → 实际每日代缴比例为 = 20% ×（2 + 5%）= <span className="font-bold text-green-600">20.5%</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </CardContent>
           </Card>
         )}

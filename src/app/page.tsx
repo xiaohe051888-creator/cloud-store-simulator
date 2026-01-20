@@ -3700,7 +3700,7 @@ function CloudShopSimulator() {
                     <div className="mt-3 p-3 sm:p-4 bg-purple-50 border-2 border-purple-200 rounded-xl">
                       <h4 className="text-sm sm:text-base sm:text-lg font-bold text-purple-700 mb-2">社区等级差额奖说明：</h4>
                       <p className="text-sm sm:text-base text-gray-700">
-                        奖励<span className="text-xl sm:text-2xl font-bold text-purple-600 mx-1">等于</span> 自己的社区等级 <span className="text-xl sm:text-2xl font-bold text-purple-600 mx-1">减去</span> 直属的社区等级剩余的百分比 <span className="text-xl sm:text-2xl font-bold text-purple-600 mx-1">乘以</span> 团队成员店铺代缴结算的金额，<span className="font-bold text-red-600">平级无奖励</span>
+                        奖励<span className="text-base sm:text-lg font-bold text-purple-600 mx-1">等于</span> 自己的社区等级 <span className="text-base sm:text-lg font-bold text-purple-600 mx-1">减去</span> 直属的社区等级剩余的百分比 <span className="text-base sm:text-lg font-bold text-purple-600 mx-1">乘以</span> 团队成员店铺代缴结算的金额，<span className="font-bold text-red-600">平级无奖励</span>
                       </p>
                     </div>
                   </div>

@@ -14,13 +14,13 @@ const storage = new S3Storage({
 export async function POST() {
   try {
     // 读取压缩文件
-    const filePath = path.join(process.cwd(), 'public', 'cloud-shop-simulator-v1.4.4.tar.gz');
+    const filePath = path.join(process.cwd(), 'public', 'cloud-shop-simulator-v1.4.5.tar.gz');
     const fileBuffer = await readFile(filePath);
 
     // 上传到对象存储
     const fileKey = await storage.uploadFile({
       fileContent: fileBuffer,
-      fileName: 'cloud-shop-simulator-v1.4.4.tar.gz',
+      fileName: 'cloud-shop-simulator-v1.4.5.tar.gz',
       contentType: 'application/gzip',
     });
 
@@ -33,7 +33,7 @@ export async function POST() {
     return NextResponse.json({
       success: true,
       downloadUrl,
-      fileName: 'cloud-shop-simulator-v1.4.4.tar.gz',
+      fileName: 'cloud-shop-simulator-v1.4.5.tar.gz',
       fileSize: '731 KB',
     });
   } catch (error) {

@@ -39,7 +39,7 @@ export default function GetDownloadLinkPage() {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = downloadInfo.fileName || 'cloud-shop-simulator-v1.4.4.tar.gz';
+      a.download = downloadInfo.fileName || 'cloud-shop-simulator-v1.4.5.tar.gz';
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -92,7 +92,7 @@ export default function GetDownloadLinkPage() {
               {downloadInfo?.success ? '下载链接已生成' : '获取失败'}
             </h1>
             <p className="text-gray-600">
-              云店模拟器 v1.4.4 完整源代码
+              云店模拟器 v1.4.5 完整源代码
             </p>
           </div>
 

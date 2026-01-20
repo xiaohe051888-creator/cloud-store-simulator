@@ -1344,7 +1344,7 @@ function CloudShopSimulator() {
                 云店模拟器
               </h1>
               <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text">
-                v1.4.4
+                v1.4.5
               </span>
             </div>
           </div>
@@ -3721,8 +3721,8 @@ function CloudShopSimulator() {
                     </div>
                     <div className="text-left">
                       <h3 className="text-sm sm:text-base sm:text-lg font-bold text-indigo-700">五、团队长每月社区薪资</h3>
-                      <p className="text-xs text-gray-600 sm:hidden">直推团队工资</p>
-                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">直推V1-V7享受每月团队工资</p>
+                      <p className="text-xs text-gray-600 sm:hidden">直推社区薪资</p>
+                      <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">直推V1-V7享受每月社区薪资</p>
                     </div>
                   </div>
                   <svg
@@ -3853,7 +3853,7 @@ function CloudShopSimulator() {
                         </li>
                         <li className="flex items-start gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                          <span>推荐满<span className="font-bold text-amber-600">2位</span>符合等级的伙伴，即可获得<span className="font-bold text-amber-600">星推月薪</span></span>
+                          <span>推荐满<span className="font-bold text-amber-600">2位</span>符合等级的伙伴，即可获得<span className="font-bold text-amber-600">社区薪资</span></span>
                         </li>
                         <li className="flex items-start gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"></span>

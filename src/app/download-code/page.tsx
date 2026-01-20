@@ -17,7 +17,7 @@ export default function DownloadCodePage() {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'cloud-shop-simulator-v1.4.4.tar.gz';
+      a.download = 'cloud-shop-simulator-v1.4.5.tar.gz';
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -56,7 +56,7 @@ export default function DownloadCodePage() {
           {/* 标题 */}
           <div>
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
-              云店模拟器 v1.4.4
+              云店模拟器 v1.4.5
             </h1>
             <p className="text-gray-600">
               完整源代码下载
@@ -67,7 +67,7 @@ export default function DownloadCodePage() {
           <div className="bg-gray-50 rounded-xl p-4 space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">文件名：</span>
-              <span className="font-medium text-gray-900">cloud-shop-simulator-v1.4.4.tar.gz</span>
+              <span className="font-medium text-gray-900">cloud-shop-simulator-v1.4.5.tar.gz</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">文件大小：</span>

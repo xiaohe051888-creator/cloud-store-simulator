@@ -3825,9 +3825,49 @@ function CloudShopSimulator() {
                                 直推中每增加<span className="font-bold text-indigo-600">1个V7</span>，工资加<span className="font-bold text-green-600">48000</span>元
                               </TableCell>
                             </TableRow>
+                            <TableRow className="hover:bg-gray-50">
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推 <span className="font-bold text-indigo-600">2个V8</span>
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
+                                <span className="font-bold">192000</span>元
+                              </TableCell>
+                              <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
+                                直推中每增加<span className="font-bold text-indigo-600">1个V8</span>，工资加<span className="font-bold text-green-600">96000</span>元
+                              </TableCell>
+                            </TableRow>
                           </TableBody>
                         </Table>
                       </div>
+                    </div>
+                    <div className="mt-3 p-3 sm:p-4 bg-amber-50 border-2 border-amber-200 rounded-xl">
+                      <h4 className="text-sm sm:text-base sm:text-lg font-bold text-amber-700 mb-2">领取每月薪资说明：</h4>
+                      <ul className="space-y-2 text-sm sm:text-base text-gray-700">
+                        <li className="flex items-start gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>每月分<span className="font-bold text-amber-600">2次</span>发工资，<span className="font-bold text-amber-600">15号</span>和<span className="font-bold text-amber-600">月底</span>，必须审核</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>如达到条件但团队用户已没有正常的预缴云店行为，将<span className="font-bold text-red-600">拒绝工资的发放</span></span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>推荐满<span className="font-bold text-amber-600">2位</span>符合等级的伙伴，即可获得<span className="font-bold text-amber-600">星推月薪</span></span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>每新增<span className="font-bold text-amber-600">1位</span>同等级伙伴，立享<span className="font-bold text-amber-600">【额外补贴】</span></span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>所有工资、补贴于每月<span className="font-bold text-amber-600">15日</span>和<span className="font-bold text-amber-600">月末</span>进行<span className="font-bold text-amber-600">2次</span>统一发放</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-amber-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                          <span>推荐用户若未持续参与云店服务，平台有权<span className="font-bold text-red-600">暂停工资发放</span></span>
+                        </li>
+                      </ul>
                     </div>
                     <div className="mt-3 p-3 sm:p-4 bg-indigo-50 border-2 border-indigo-200 rounded-xl">
                       <h4 className="text-sm sm:text-base sm:text-lg font-bold text-indigo-700 mb-2">查看方法：</h4>

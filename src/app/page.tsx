@@ -23,7 +23,10 @@ import WeChatShareGuide from '@/components/wechat-share-guide';
 import ShareModal from '@/components/share-modal';
 import PWAInstallPrompt from '@/components/pwa-install-prompt';
 import PWAUpdatePrompt from '@/components/pwa-update-prompt';
+import OnboardingGuide from '@/components/onboarding-guide';
+import HelpDialog from '@/components/help-dialog';
 import { useShareParams } from '@/hooks/use-share-params';
+import { useSwipeBack } from '@/hooks/use-swipe-back';
 import {
   shopLevelsConfig,
 } from '@/lib/shop-config';
@@ -134,6 +137,10 @@ function CloudShopSimulator() {
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
   const [shareToast, setShareToast] = useState<{ show: boolean; message: string }>({ show: false, message: '' });
 
+  // 引导和帮助状态
+  const [showOnboarding, setShowOnboarding] = useState<boolean>(false);
+  const [showHelp, setShowHelp] = useState<boolean>(false);
+
   // 获取分享参数
   const { shareParams, isFromShare, clearShareParams } = useShareParams();
 
@@ -197,6 +204,38 @@ function CloudShopSimulator() {
   const handleBackToLevelDetails = () => {
     setCurrentView('levelDetails');
   };
+
+  // 根据当前视图获取对应的返回函数
+  const getSwipeBackHandler = () => {
+    switch (currentView) {
+      case 'stockInput':
+        return handleBackToLevelSelection;
+      case 'levelDetails':
+        return handleBackToLevelSelection;
+      case 'salesDetails':
+        return handleBackToLevelDetails;
+      case 'comparison':
+        return handleGoHome;
+      case 'recommendation':
+      case 'recommendationResult':
+        return handleGoHome;
+      case 'shopLevels':
+      case 'benefits':
+      case 'project':
+      case 'platform':
+        return handleBackToShopSelection;
+      default:
+        return null;
+    }
+  };
+
+  // 左滑返回手势支持
+  const swipeBackHandler = getSwipeBackHandler();
+  useSwipeBack({
+    onSwipeBack: () => swipeBackHandler?.(),
+    threshold: 100,
+    disabled: !swipeBackHandler || currentView === 'shopSelection',
+  });
 
   // 处理进货额度输入
   const handleStockInputChange = (value: string) => {
@@ -1324,6 +1363,18 @@ function CloudShopSimulator() {
     }
   }, []);
 
+  // 首次使用引导检查
+  useEffect(() => {
+    const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
+    if (!hasSeenOnboarding) {
+      // 延迟1秒后显示引导，让用户先看到页面
+      const timer = setTimeout(() => {
+        setShowOnboarding(true);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   // 处理Enter键（已废弃，改用单个输入框的 onKeyDown 处理）
   const handleKeyDown = (e: React.KeyboardEvent) => {
     // 不再需要全局处理
@@ -1341,7 +1392,7 @@ function CloudShopSimulator() {
                 云店模拟器
               </h1>
               <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text">
-                v1.4.4
+                v1.5.0
               </span>
             </div>
           </div>
@@ -1388,6 +1439,16 @@ function CloudShopSimulator() {
               className="touch-feedback text-xs sm:text-sm lg:text-base font-bold h-10 sm:h-11 lg:h-12 px-3 sm:px-4 lg:px-5 rounded-xl border-2 border-gray-200 bg-gradient-to-r from-gray-50 to-slate-50 text-gray-700 hover:border-gray-400 hover:shadow-lg hover:shadow-gray-500/20 hover:bg-gradient-to-r hover:from-gray-100 hover:to-slate-100 transition-all duration-300"
             >
               首页
+            </Button>
+
+            {/* 帮助 */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowHelp(true)}
+              className="touch-feedback text-xs sm:text-sm lg:text-base font-bold h-10 sm:h-11 lg:h-12 px-3 sm:px-4 lg:px-5 rounded-xl border-2 border-cyan-200 bg-gradient-to-r from-cyan-50 to-sky-50 text-cyan-700 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 hover:bg-gradient-to-r hover:from-cyan-100 hover:to-sky-100 transition-all duration-300"
+            >
+              帮助
             </Button>
           </div>
         </div>
@@ -2890,6 +2951,53 @@ function CloudShopSimulator() {
               </div>
             </CardHeader>
             <CardContent className="px-6 pb-6">
+              {/* 关键指标卡片 */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div className="p-4 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl text-white shadow-lg hover:shadow-xl transition-shadow">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs text-blue-100">总销售额度</span>
+                    <span className="text-lg">💰</span>
+                  </div>
+                  <p className="text-xl sm:text-2xl font-bold">
+                    {salesData.reduce((sum, s) => sum + s.amount, 0)}
+                    <span className="text-sm">⚡</span>
+                  </p>
+                </div>
+
+                <div className="p-4 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl text-white shadow-lg hover:shadow-xl transition-shadow">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs text-purple-100">总结算金额</span>
+                    <span className="text-lg">💵</span>
+                  </div>
+                  <p className="text-xl sm:text-2xl font-bold">
+                    {salesData.reduce((sum, s) => sum + s.settlementAmount, 0).toFixed(2)}
+                    <span className="text-sm">元</span>
+                  </p>
+                </div>
+
+                <div className="p-4 bg-gradient-to-br from-green-500 to-green-600 rounded-xl text-white shadow-lg hover:shadow-xl transition-shadow">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs text-green-100">总利润</span>
+                    <span className="text-lg">📈</span>
+                  </div>
+                  <p className="text-xl sm:text-2xl font-bold">
+                    {salesData.reduce((sum, s) => sum + s.profit, 0).toFixed(2)}
+                    <span className="text-sm">元</span>
+                  </p>
+                </div>
+
+                <div className="p-4 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl text-white shadow-lg hover:shadow-xl transition-shadow">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs text-orange-100">销售天数</span>
+                    <span className="text-lg">📅</span>
+                  </div>
+                  <p className="text-xl sm:text-2xl font-bold">
+                    {salesData.length}
+                    <span className="text-sm">天</span>
+                  </p>
+                </div>
+              </div>
+
               {/* 移动端：卡片式布局 */}
               <div className="sm:hidden space-y-3">
                 {salesData.map((sale, index) => (
@@ -3546,6 +3654,12 @@ function CloudShopSimulator() {
           </div>
         </div>
       )}
+
+      {/* 首次使用引导 */}
+      <OnboardingGuide isOpen={showOnboarding} onClose={() => setShowOnboarding(false)} />
+
+      {/* 帮助中心 */}
+      <HelpDialog isOpen={showHelp} onClose={() => setShowHelp(false)} />
     </div>
   );
 }

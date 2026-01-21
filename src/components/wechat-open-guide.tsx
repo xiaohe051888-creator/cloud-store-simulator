@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { X, MoreVertical, ExternalLink } from 'lucide-react';
+import { X, MoreVertical, ExternalLink, BookOpen } from 'lucide-react';
 
 interface WeChatOpenGuideProps {
   onClose?: () => void;
@@ -126,13 +126,22 @@ export default function WeChatOpenGuide({ onClose }: WeChatOpenGuideProps) {
             </div>
 
             {/* 关闭按钮 */}
-            <div className="mt-5 sm:mt-6">
+            <div className="mt-5 sm:mt-6 space-y-3">
               <Button
                 onClick={handleClose}
                 className="w-full bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-semibold py-3 sm:py-3.5 text-base sm:text-base"
               >
                 我知道了
               </Button>
+              <button
+                onClick={() => {
+                  window.location.href = '/wechat-guide.html';
+                }}
+                className="w-full flex items-center justify-center gap-2 text-sm sm:text-base text-green-600 hover:text-green-700 font-medium py-2.5 sm:py-3 transition-colors active:scale-95"
+              >
+                <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
+                查看详细说明
+              </button>
             </div>
           </div>
         </div>

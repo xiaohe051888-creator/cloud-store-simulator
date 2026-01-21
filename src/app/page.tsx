@@ -502,43 +502,37 @@ function CloudShopSimulator() {
 
   // 处理分享
   const handleShare = async () => {
-    const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
-
-    if (isWeChatBrowser) {
-      // 在微信中，显示引导分享给微信好友的弹窗
-      setShowWeChatShareGuide(true);
-    } else {
-      // 在浏览器中，复制纯净的基础URL到剪贴板（移除所有查询参数和hash）
-      const baseUrl = window.location.origin;
+    // 固定复制指定的纯净基础链接，不包含任何查询参数
+    const shareUrl = 'https://cs5mtq7j5q.coze.site/';
+    
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setShareToast({ show: true, message: '链接已复制！可以粘贴发送给好友' });
+      setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
+    } catch (error) {
+      console.error('复制失败:', error);
+      // 如果复制失败，尝试使用降级方案
       try {
-        await navigator.clipboard.writeText(baseUrl);
-        setShareToast({ show: true, message: '链接已复制！可以粘贴发送给好友' });
-        setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
-      } catch (error) {
-        console.error('复制失败:', error);
-        // 如果复制失败，尝试使用降级方案
-        try {
-          const textarea = document.createElement('textarea');
-          textarea.value = baseUrl;
-          textarea.setAttribute('readonly', '');
-          textarea.style.position = 'absolute';
-          textarea.style.left = '-9999px';
-          document.body.appendChild(textarea);
-          textarea.select();
-          const successful = document.execCommand('copy');
-          document.body.removeChild(textarea);
-          if (successful) {
-            setShareToast({ show: true, message: '链接已复制！可以粘贴发送给好友' });
-            setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
-          } else {
-            setShareToast({ show: true, message: '复制失败，请手动复制链接' });
-            setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
-          }
-        } catch (e) {
-          console.error('降级复制失败:', e);
+        const textarea = document.createElement('textarea');
+        textarea.value = shareUrl;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'absolute';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        const successful = document.execCommand('copy');
+        document.body.removeChild(textarea);
+        if (successful) {
+          setShareToast({ show: true, message: '链接已复制！可以粘贴发送给好友' });
+          setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
+        } else {
           setShareToast({ show: true, message: '复制失败，请手动复制链接' });
           setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
         }
+      } catch (e) {
+        console.error('降级复制失败:', e);
+        setShareToast({ show: true, message: '复制失败，请手动复制链接' });
+        setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
       }
     }
   };

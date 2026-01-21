@@ -508,10 +508,10 @@ function CloudShopSimulator() {
       // 在微信中，显示引导分享给微信好友的弹窗
       setShowWeChatShareGuide(true);
     } else {
-      // 在浏览器中，直接复制当前页面链接到剪贴板
-      const shareUrl = window.location.href;
+      // 在浏览器中，复制纯净的基础URL到剪贴板（移除所有查询参数和hash）
+      const baseUrl = window.location.origin;
       try {
-        await navigator.clipboard.writeText(shareUrl);
+        await navigator.clipboard.writeText(baseUrl);
         setShareToast({ show: true, message: '链接已复制！可以粘贴发送给好友' });
         setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
       } catch (error) {
@@ -519,7 +519,7 @@ function CloudShopSimulator() {
         // 如果复制失败，尝试使用降级方案
         try {
           const textarea = document.createElement('textarea');
-          textarea.value = shareUrl;
+          textarea.value = baseUrl;
           textarea.setAttribute('readonly', '');
           textarea.style.position = 'absolute';
           textarea.style.left = '-9999px';

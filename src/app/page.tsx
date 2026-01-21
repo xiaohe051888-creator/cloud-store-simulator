@@ -611,7 +611,7 @@ function CloudShopSimulator() {
       minProfit,
       profitDiff,
       profitDiffRate: profitDiffRate + '%',
-      profitDiffText: `${profitDiff}元`,
+      profitDiffText: `${profitDiff}¥`,
       minLevelName: minItem?.levelName || ''
     };
   }, [comparisonData]);
@@ -913,9 +913,9 @@ function CloudShopSimulator() {
     const targetProfit = recommendInputType === 'profit' ? parseInt(recommendProfit) || 0 : 0;
     const period = parseInt(recommendPeriod) || 0; // 周期天数，0表示不考虑周期
 
-    // 如果是按利润推荐，计算目标利润范围（不能低于期望利润，可以高0-19元）
+    // 如果是按利润推荐，计算目标利润范围（不能低于期望利润，可以高0-19¥）
     const targetProfitMin = targetProfit; // 不能低于期望利润
-    const targetProfitMax = targetProfit + 19; // 最多高19元
+    const targetProfitMax = targetProfit + 19; // 最多高19¥
 
     // 遍历所有店铺等级，计算推荐方案
     for (const [level, config] of Object.entries(shopLevelsConfig) as [ShopLevel, typeof shopLevelsConfig[ShopLevel]][]) {
@@ -963,7 +963,7 @@ function CloudShopSimulator() {
 
         // 匹配度稍后在所有结果计算完后统一重新计算（基于利润最大化）
         matchScore = 0; // 临时值，会被覆盖
-        matchReason = `周期${period}天复利利润${estimatedProfit}元（实际投入总成本${result.totalStockCost}元）`;
+        matchReason = `周期${period}天复利利润${estimatedProfit}¥（实际投入总成本${result.totalStockCost}¥）`;
 
         results.push({
           level,
@@ -994,7 +994,7 @@ function CloudShopSimulator() {
           const dailyCommission = Math.round(stock * config.commissionRate);
           const completionDays = Math.ceil(stock / dailyCommission); // 单次销售完成天数
 
-          // 检查利润是否在目标利润范围内（630-649元）
+          // 检查利润是否在目标利润范围内（630-649¥）
           if (profit >= targetProfitMin && profit <= targetProfitMax) {
             // 如果还没有找到方案，或者当前方案比之前的方案更优
             // 优先级1：成本最低
@@ -1010,7 +1010,7 @@ function CloudShopSimulator() {
                 estimatedProfit: profit,
                 completionDays,
                 matchScore: 0, // 稍后统一计算
-                matchReason: `单次利润${profit}元`,
+                matchReason: `单次利润${profit}¥`,
                 maxProfit,
                 minProfit
               };
@@ -1093,7 +1093,7 @@ function CloudShopSimulator() {
       // 验证预算
       const budget = parseInt(recommendBudget) || 0;
       if (!recommendBudget || budget < 100 || budget > 100000) {
-        setBudgetError('预算必须在100-100000元之间');
+        setBudgetError('预算必须在100-100000¥之间');
         isValid = false;
       } else {
         setBudgetError('');
@@ -1111,7 +1111,7 @@ function CloudShopSimulator() {
       // 验证期望利润
       const profit = parseInt(recommendProfit) || 0;
       if (!recommendProfit || profit < 7 || profit > 9100) {
-        setProfitError('期望利润必须在7-9100元之间');
+        setProfitError('期望利润必须在7-9100¥之间');
         isValid = false;
       } else {
         setProfitError('');
@@ -1220,7 +1220,7 @@ function CloudShopSimulator() {
       alert('复制失败，请手动复制');
     }
     
-    // 延迟移除元素，确保复制完成
+    // 延迟移除¥素，确保复制完成
     setTimeout(() => {
       document.body.removeChild(textArea);
     }, 100);
@@ -1772,7 +1772,7 @@ function CloudShopSimulator() {
                         奖励内容：
                       </h4>
                       <div className="flex items-center justify-center">
-                        <span className="text-base sm:text-lg sm:text-xl font-bold text-green-600">价值20元的实物礼品一份（包邮到家）</span>
+                        <span className="text-base sm:text-lg sm:text-xl font-bold text-green-600">价值20¥的实物礼品一份（包邮到家）</span>
                       </div>
                     </div>
                   </div>
@@ -1815,15 +1815,15 @@ function CloudShopSimulator() {
                       <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                          <span>当天邀请第<span className="font-bold text-orange-600">1个</span>开店奖：<span className="font-bold text-green-600">18元</span></span>
+                          <span>当天邀请第<span className="font-bold text-orange-600">1个</span>开店奖：<span className="font-bold text-green-600">18¥</span></span>
                         </li>
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                          <span>当天邀请第<span className="font-bold text-orange-600">2个</span>开店再奖：<span className="font-bold text-green-600">38元</span></span>
+                          <span>当天邀请第<span className="font-bold text-orange-600">2个</span>开店再奖：<span className="font-bold text-green-600">38¥</span></span>
                         </li>
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                          <span>当天邀请第<span className="font-bold text-orange-600">3个</span>开店再奖：<span className="font-bold text-green-600">108元</span></span>
+                          <span>当天邀请第<span className="font-bold text-orange-600">3个</span>开店再奖：<span className="font-bold text-green-600">108¥</span></span>
                         </li>
                       </ul>
                     </div>
@@ -1893,11 +1893,11 @@ function CloudShopSimulator() {
                           <ul className="space-y-1 sm:space-y-1.5">
                             <li className="flex items-start gap-1.5 sm:gap-2">
                               <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                              <span>2月1日前首次同一天进货<span className="font-bold text-blue-600">2500及以上</span>，奖励<span className="font-bold text-green-600">38元</span>复缴券</span>
+                              <span>2月1日前首次同一天进货<span className="font-bold text-blue-600">2500及以上</span>，奖励<span className="font-bold text-green-600">38¥</span>复缴券</span>
                             </li>
                             <li className="flex items-start gap-1.5 sm:gap-2">
                               <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                              <span>2月1日前累积进货<span className="font-bold text-blue-600">7000及以上</span>，再奖励<span className="font-bold text-green-600">68元</span>复缴券</span>
+                              <span>2月1日前累积进货<span className="font-bold text-blue-600">7000及以上</span>，再奖励<span className="font-bold text-green-600">68¥</span>复缴券</span>
                             </li>
                           </ul>
                         </div>
@@ -1955,8 +1955,8 @@ function CloudShopSimulator() {
                         <p>有效规则：利润排名前<span className="font-bold text-blue-600">40</span>记有效<span className="font-bold text-blue-600">1次</span></p>
                         <div className="mt-1.5 sm:mt-2 p-2 sm:p-3 bg-white rounded-lg border border-blue-200">
                           <p className="font-semibold text-blue-700 mb-1 sm:mb-2">惊喜奖励：</p>
-                          <p>累计有效晒图<span className="font-bold text-blue-600">3次</span>奖<span className="font-bold text-blue-600">10元复缴券</span></p>
-                          <p>当日晒图销冠额外奖<span className="font-bold text-blue-600">10元红包</span></p>
+                          <p>累计有效晒图<span className="font-bold text-blue-600">3次</span>奖<span className="font-bold text-blue-600">10¥复缴券</span></p>
+                          <p>当日晒图销冠额外奖<span className="font-bold text-blue-600">10¥红包</span></p>
                         </div>
                         <p className="font-semibold text-red-600 mt-1.5 sm:mt-2">重要提醒：仅限晒本人店铺利润图</p>
                       </div>
@@ -1970,8 +1970,8 @@ function CloudShopSimulator() {
                       </h4>
                       <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                         <p>微信群里每天一期免费抽奖</p>
-                        <p>一等奖<span className="font-bold text-purple-600">1名</span>，奖励<span className="font-bold text-purple-600">18元</span>现金</p>
-                        <p>二等奖<span className="font-bold text-purple-600">5名</span>，奖励<span className="font-bold text-purple-600">8元</span>现金</p>
+                        <p>一等奖<span className="font-bold text-purple-600">1名</span>，奖励<span className="font-bold text-purple-600">18¥</span>现金</p>
+                        <p>二等奖<span className="font-bold text-purple-600">5名</span>，奖励<span className="font-bold text-purple-600">8¥</span>现金</p>
                         <p>参加抽奖时间：每日 <span className="font-bold text-purple-600">11:00-21:00</span></p>
                         <div className="mt-1.5 sm:mt-2 p-2 sm:p-3 bg-white rounded-lg border border-purple-200">
                           <p className="font-semibold text-purple-700 mb-1 sm:mb-1">领奖说明：</p>
@@ -1990,8 +1990,8 @@ function CloudShopSimulator() {
                       <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                         <p>发放时间：<span className="font-bold text-orange-600">21:30</span></p>
                         <p>红包个数：<span className="font-bold text-orange-600">60个</span></p>
-                        <p>红包初始金额：<span className="font-bold text-orange-600">10元</span></p>
-                        <p>当天每新增<span className="font-bold text-orange-600">1个</span>店主红包金额增加<span className="font-bold text-orange-600">10元</span></p>
+                        <p>红包初始金额：<span className="font-bold text-orange-600">10¥</span></p>
+                        <p>当天每新增<span className="font-bold text-orange-600">1个</span>店主红包金额增加<span className="font-bold text-orange-600">10¥</span></p>
                       </div>
                     </div>
 
@@ -2060,7 +2060,7 @@ function CloudShopSimulator() {
                       <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm sm:text-base text-gray-700">
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-pink-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                          <span>平均每天<span className="font-bold text-pink-600">5元</span></span>
+                          <span>平均每天<span className="font-bold text-pink-600">5¥</span></span>
                         </li>
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-pink-500 rounded-full mt-1.5 flex-shrink-0"></span>
@@ -2345,7 +2345,7 @@ function CloudShopSimulator() {
                         </li>
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                          <span>首次缴费完成领<span className="font-bold text-green-600">20元</span>实物礼品（包邮到家）</span>
+                          <span>首次缴费完成领<span className="font-bold text-green-600">20¥</span>实物礼品（包邮到家）</span>
                         </li>
                       </ul>
                     </div>
@@ -2392,7 +2392,7 @@ function CloudShopSimulator() {
                         </li>
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                          <span>使用新人<span className="font-bold text-blue-600">18元</span>云店抵用券实付<span className="font-bold text-green-600">432元</span></span>
+                          <span>使用新人<span className="font-bold text-blue-600">18¥</span>云店抵用券实付<span className="font-bold text-green-600">432¥</span></span>
                         </li>
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
@@ -2400,7 +2400,7 @@ function CloudShopSimulator() {
                         </li>
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                          <span><span className="font-bold text-blue-600">95折</span>销售，销售结算完成收入<span className="font-bold text-green-600">475元</span></span>
+                          <span><span className="font-bold text-blue-600">95折</span>销售，销售结算完成收入<span className="font-bold text-green-600">475¥</span></span>
                         </li>
                         <li className="flex items-start gap-1.5 sm:gap-2">
                           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
@@ -2473,7 +2473,7 @@ function CloudShopSimulator() {
                           权威媒体
                         </Button>
                         <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
-                          　　<span className="font-bold text-blue-600">2025年6月</span>正式上线该平台，并于同年<span className="font-bold text-blue-600">7月</span>获得中海洋盛佳投资控股有限公司<span className="font-bold text-green-600">3200万元</span>人民币A轮融资。平台随后扩展为"生活缴费+本地服务"综合入口，覆盖全国<span className="font-bold text-blue-600">300余个</span>城市。
+                          　　<span className="font-bold text-blue-600">2025年6月</span>正式上线该平台，并于同年<span className="font-bold text-blue-600">7月</span>获得中海洋盛佳投资控股有限公司<span className="font-bold text-green-600">3200万¥</span>人民币A轮融资。平台随后扩展为"生活缴费+本地服务"综合入口，覆盖全国<span className="font-bold text-blue-600">300余个</span>城市。
                         </p>
                       </div>
                     </div>
@@ -2592,13 +2592,13 @@ function CloudShopSimulator() {
               {recommendInputType === 'budget' && (
                 <div className="space-y-2">
                   <Label htmlFor="recommendBudget" className="text-sm font-medium text-gray-700">
-                    预算金额（元）
+                    预算金额（¥）
                   </Label>
                   <Input
                     id="recommendBudget"
                     ref={recommendBudgetRef}
                     type="number"
-                    placeholder="预算金额（100-100000元）"
+                    placeholder="预算金额（100-100000¥）"
                     min="100"
                     max="100000"
                     step="100"
@@ -2607,7 +2607,7 @@ function CloudShopSimulator() {
                       setRecommendBudget(e.target.value);
                       const value = parseInt(e.target.value) || 0;
                       if (e.target.value && (value < 100 || value > 100000)) {
-                        setBudgetError('预算必须在100-100000元之间');
+                        setBudgetError('预算必须在100-100000¥之间');
                       } else if (e.target.value && value >= 100 && value <= 100000) {
                         setBudgetError('');
                       } else if (!e.target.value) {
@@ -2622,7 +2622,7 @@ function CloudShopSimulator() {
                     } ${isBudgetShaking ? 'animate-shake' : ''}`}
                   />
                   <p className={`text-sm transition-colors duration-200 ${budgetError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
-                    {budgetError || '预算范围：100-100000元，系统将根据您的预算推荐最合适的店铺等级和进货额度（投入总成本不超过预算）'}
+                    {budgetError || '预算范围：100-100000¥，系统将根据您的预算推荐最合适的店铺等级和进货额度（投入总成本不超过预算）'}
                   </p>
                 </div>
               )}
@@ -2631,13 +2631,13 @@ function CloudShopSimulator() {
               {recommendInputType === 'profit' && (
                 <div className="space-y-2">
                   <Label htmlFor="recommendProfit" className="text-sm font-medium text-gray-700">
-                    期望利润（元）
+                    期望利润（¥）
                   </Label>
                   <Input
                     id="recommendProfit"
                     ref={recommendProfitRef}
                     type="number"
-                    placeholder="期望利润（7-9100元）"
+                    placeholder="期望利润（7-9100¥）"
                     min="7"
                     max="9100"
                     step="1"
@@ -2646,7 +2646,7 @@ function CloudShopSimulator() {
                       setRecommendProfit(e.target.value);
                       const value = parseInt(e.target.value) || 0;
                       if (e.target.value && (value < 7 || value > 9100)) {
-                        setProfitError('期望利润必须在7-9100元之间');
+                        setProfitError('期望利润必须在7-9100¥之间');
                       } else if (e.target.value && value >= 7 && value <= 9100) {
                         setProfitError('');
                       } else if (!e.target.value) {
@@ -2661,7 +2661,7 @@ function CloudShopSimulator() {
                     } ${isProfitShaking ? 'animate-shake' : ''}`}
                   />
                   <p className={`text-sm transition-colors duration-200 ${profitError ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
-                    {profitError || '期望利润范围：7-9100元，系统将根据您的期望利润推荐最合适的店铺等级（利润可浮动0-19元）'}
+                    {profitError || '期望利润范围：7-9100¥，系统将根据您的期望利润推荐最合适的店铺等级（利润可浮动0-19¥）'}
                   </p>
                 </div>
               )}
@@ -2715,8 +2715,8 @@ function CloudShopSimulator() {
               <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-l-4 border-purple-400 p-4 rounded-xl">
                 <h4 className="font-semibold text-purple-800 mb-2 text-sm">💡 使用提示</h4>
                 <ul className="text-xs sm:text-sm text-purple-700 space-y-1 list-disc list-inside">
-                  <li>按预算推荐：系统会根据您的预算（100-100000元）和周期（1-30天），推荐最匹配的进货额度和店铺等级（复利计算）</li>
-                  <li>按利润推荐：系统会基于单次销售利润，推荐最低成本、最短周期的方案（利润可浮动0-19元）</li>
+                  <li>按预算推荐：系统会根据您的预算（100-100000¥）和周期（1-30天），推荐最匹配的进货额度和店铺等级（复利计算）</li>
+                  <li>按利润推荐：系统会基于单次销售利润，推荐最低成本、最短周期的方案（利润可浮动0-19¥）</li>
                   <li>周期天数：按预算推荐时必须输入周期天数，推荐结果的完成天数显示为您输入的周期</li>
                   <li>输入验证：输入超出范围时会显示红色提示，点击生成按钮时也会进行验证</li>
                   <li>推荐结果先按成本最低，再按周期最短排序，您可以选择任意方案直接开始模拟</li>
@@ -2830,13 +2830,13 @@ function CloudShopSimulator() {
                                 {recommendInputType === 'budget' ? '首次进货成本' : '投入总成本'}
                               </p>
                               <p className="text-lg font-bold text-gray-800">
-                                {result.stockCost}元
+                                {result.stockCost}¥
                               </p>
                             </div>
                             <div className="bg-white/80 p-3 rounded-xl">
                               <p className="text-xs text-gray-500 mb-1">预期利润</p>
                               <p className={`text-lg font-bold ${isTopRecommendation ? 'text-purple-600' : 'text-green-600'}`}>
-                                {result.estimatedProfit}元
+                                {result.estimatedProfit}¥
                               </p>
                             </div>
                             <div className="bg-white/80 p-3 rounded-xl">
@@ -3005,7 +3005,7 @@ function CloudShopSimulator() {
                 <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-3 sm:p-4 lg:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-green-100">
                   <p className="text-[10px] sm:text-xs lg:text-sm text-green-600 mb-1.5">投入总成本</p>
                   <p className="text-base sm:text-lg lg:text-xl font-bold text-green-600">
-                    {detailsData.stockCost}元
+                    {detailsData.stockCost}¥
                   </p>
                 </div>
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-3 sm:p-4 lg:p-5 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] border border-blue-100">
@@ -3035,7 +3035,7 @@ function CloudShopSimulator() {
                   <div className="flex justify-between items-center">
                     <p className="text-white font-medium text-sm sm:text-base">总利润</p>
                     <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
-                      {detailsData.totalProfit}元
+                      {detailsData.totalProfit}¥
                     </p>
                   </div>
                 </div>
@@ -3104,13 +3104,13 @@ function CloudShopSimulator() {
                       </div>
                       <div className="space-y-1">
                         <p className="text-xs text-gray-500">结算金额</p>
-                        <p className="text-sm font-bold text-gray-800">{sale.settlementAmount.toFixed(2)}元</p>
+                        <p className="text-sm font-bold text-gray-800">{sale.settlementAmount.toFixed(2)}¥</p>
                       </div>
                     </div>
                     <div className="mt-3 pt-3 border-t border-gray-100">
                       <div className="flex justify-between items-center">
                         <p className="text-xs text-gray-500">利润</p>
-                        <p className="text-base font-bold text-green-600">{sale.profit.toFixed(2)}元</p>
+                        <p className="text-base font-bold text-green-600">{sale.profit.toFixed(2)}¥</p>
                       </div>
                     </div>
                   </div>
@@ -3128,13 +3128,13 @@ function CloudShopSimulator() {
                     <div className="flex justify-between items-center">
                       <p className="text-xs text-gray-600">合计结算金额</p>
                       <p className="text-sm font-bold text-blue-700">
-                        {salesData.reduce((sum, s) => sum + s.settlementAmount, 0).toFixed(2)}元
+                        {salesData.reduce((sum, s) => sum + s.settlementAmount, 0).toFixed(2)}¥
                       </p>
                     </div>
                     <div className="flex justify-between items-center pt-2 border-t border-blue-200">
                       <p className="text-xs text-gray-600">合计利润</p>
                       <p className="text-base font-bold text-green-600">
-                        {salesData.reduce((sum, s) => sum + s.profit, 0).toFixed(2)}元
+                        {salesData.reduce((sum, s) => sum + s.profit, 0).toFixed(2)}¥
                       </p>
                     </div>
                   </div>
@@ -3164,10 +3164,10 @@ function CloudShopSimulator() {
                           <TableCell className="text-center font-semibold text-gray-800">{sale.amount}⚡</TableCell>
                           <TableCell className="text-center text-gray-600">{sale.settlementDate}</TableCell>
                           <TableCell className="text-center text-gray-800 font-medium">
-                            {sale.settlementAmount.toFixed(2)}元
+                            {sale.settlementAmount.toFixed(2)}¥
                           </TableCell>
                           <TableCell className="text-center text-green-600 font-semibold">
-                            {sale.profit.toFixed(2)}元
+                            {sale.profit.toFixed(2)}¥
                           </TableCell>
                         </TableRow>
                       ))}
@@ -3180,10 +3180,10 @@ function CloudShopSimulator() {
                         </TableCell>
                         <TableCell className="text-center font-bold text-blue-700">-</TableCell>
                         <TableCell className="text-center font-bold text-blue-700">
-                          {salesData.reduce((sum, s) => sum + s.settlementAmount, 0).toFixed(2)}元
+                          {salesData.reduce((sum, s) => sum + s.settlementAmount, 0).toFixed(2)}¥
                         </TableCell>
                         <TableCell className="text-center font-bold text-blue-700">
-                          {salesData.reduce((sum, s) => sum + s.profit, 0).toFixed(2)}元
+                          {salesData.reduce((sum, s) => sum + s.profit, 0).toFixed(2)}¥
                         </TableCell>
                       </TableRow>
                     </TableFooter>
@@ -3269,12 +3269,12 @@ function CloudShopSimulator() {
                               </div>
                               <div className="bg-gray-50 p-2 rounded-lg">
                                 <p className="text-xs text-gray-500 mb-1">投入成本</p>
-                                <p className="text-sm font-bold text-gray-800">{item.stockCost}元</p>
+                                <p className="text-sm font-bold text-gray-800">{item.stockCost}¥</p>
                               </div>
                               <div className={`p-2 rounded-lg ${isMaxProfit ? 'bg-green-50' : 'bg-gray-50'}`}>
                                 <p className="text-xs text-gray-500 mb-1">总利润</p>
                                 <p className={`text-base font-bold ${isMaxProfit ? 'text-green-600' : 'text-gray-800'}`}>
-                                  {item.totalProfit}元
+                                  {item.totalProfit}¥
                                 </p>
                               </div>
                             </div>
@@ -3300,9 +3300,9 @@ function CloudShopSimulator() {
                         <TableRow>
                           <TableHead className="text-center font-semibold text-gray-700">店铺等级</TableHead>
                           <TableHead className="text-center font-semibold text-gray-700">进货额度⚡</TableHead>
-                          <TableHead className="text-center font-semibold text-gray-700 hidden sm:table-cell">投入总成本(元)</TableHead>
+                          <TableHead className="text-center font-semibold text-gray-700 hidden sm:table-cell">投入总成本(¥)</TableHead>
                           <TableHead className="text-center font-semibold text-gray-700">完成天数</TableHead>
-                          <TableHead className="text-center font-semibold text-gray-700">总利润(元)</TableHead>
+                          <TableHead className="text-center font-semibold text-gray-700">总利润(¥)</TableHead>
                           <TableHead className="text-center font-semibold text-gray-700">操作</TableHead>
                         </TableRow>
                       </TableHeader>
@@ -3353,19 +3353,19 @@ function CloudShopSimulator() {
                         <div className="bg-white p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 border border-gray-100">
                           <p className="text-xs sm:text-sm text-gray-500 mb-2">最低利润</p>
                           <p className="text-xl sm:text-2xl font-bold text-gray-800">
-                            {profitAnalysis.minProfit}元
+                            {profitAnalysis.minProfit}¥
                           </p>
                         </div>
                         <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 border border-green-100">
                           <p className="text-xs sm:text-sm text-green-600 mb-2">最高利润</p>
                           <p className="text-xl sm:text-2xl font-bold text-green-600">
-                            {profitAnalysis.maxProfit}元
+                            {profitAnalysis.maxProfit}¥
                           </p>
                         </div>
                         <div className="bg-white p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 border border-gray-100">
                           <p className="text-xs sm:text-sm text-gray-500 mb-2">利润差额</p>
                           <p className="text-xl sm:text-2xl font-bold text-gray-800">
-                            {profitAnalysis.profitDiff}元
+                            {profitAnalysis.profitDiff}¥
                           </p>
                         </div>
                         <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-4 sm:p-5 rounded-xl shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 border border-blue-100">
@@ -3942,10 +3942,10 @@ function CloudShopSimulator() {
                                 直推 <span className="font-bold text-indigo-600">2个V1</span>
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
-                                <span className="font-bold">600</span>元
+                                <span className="font-bold">600</span>¥
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                每增加<span className="font-bold text-indigo-600">1个V1</span>，工资加<span className="font-bold text-green-600">300</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V1</span>，工资加<span className="font-bold text-green-600">300</span>¥
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3953,10 +3953,10 @@ function CloudShopSimulator() {
                                 直推 <span className="font-bold text-indigo-600">2个V2</span>
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
-                                <span className="font-bold">2000</span>元
+                                <span className="font-bold">2000</span>¥
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                每增加<span className="font-bold text-indigo-600">1个V2</span>，工资加<span className="font-bold text-green-600">1000</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V2</span>，工资加<span className="font-bold text-green-600">1000</span>¥
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3964,10 +3964,10 @@ function CloudShopSimulator() {
                                 直推 <span className="font-bold text-indigo-600">2个V3</span>
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
-                                <span className="font-bold">6000</span>元
+                                <span className="font-bold">6000</span>¥
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                每增加<span className="font-bold text-indigo-600">1个V3</span>，工资加<span className="font-bold text-green-600">3000</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V3</span>，工资加<span className="font-bold text-green-600">3000</span>¥
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3975,10 +3975,10 @@ function CloudShopSimulator() {
                                 直推 <span className="font-bold text-indigo-600">2个V4</span>
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
-                                <span className="font-bold">12000</span>元
+                                <span className="font-bold">12000</span>¥
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                每增加<span className="font-bold text-indigo-600">1个V4</span>，工资加<span className="font-bold text-green-600">6000</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V4</span>，工资加<span className="font-bold text-green-600">6000</span>¥
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3986,10 +3986,10 @@ function CloudShopSimulator() {
                                 直推 <span className="font-bold text-indigo-600">2个V5</span>
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
-                                <span className="font-bold">24000</span>元
+                                <span className="font-bold">24000</span>¥
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                每增加<span className="font-bold text-indigo-600">1个V5</span>，工资加<span className="font-bold text-green-600">12000</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V5</span>，工资加<span className="font-bold text-green-600">12000</span>¥
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -3997,10 +3997,10 @@ function CloudShopSimulator() {
                                 直推 <span className="font-bold text-indigo-600">2个V6</span>
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
-                                <span className="font-bold">48000</span>元
+                                <span className="font-bold">48000</span>¥
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                每增加<span className="font-bold text-indigo-600">1个V6</span>，工资加<span className="font-bold text-green-600">24000</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V6</span>，工资加<span className="font-bold text-green-600">24000</span>¥
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -4008,10 +4008,10 @@ function CloudShopSimulator() {
                                 直推 <span className="font-bold text-indigo-600">2个V7</span>
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
-                                <span className="font-bold">96000</span>元
+                                <span className="font-bold">96000</span>¥
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                每增加<span className="font-bold text-indigo-600">1个V7</span>，工资加<span className="font-bold text-green-600">48000</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V7</span>，工资加<span className="font-bold text-green-600">48000</span>¥
                               </TableCell>
                             </TableRow>
                             <TableRow className="hover:bg-gray-50">
@@ -4019,10 +4019,10 @@ function CloudShopSimulator() {
                                 直推 <span className="font-bold text-indigo-600">2个V8</span>
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base font-bold text-green-600">
-                                <span className="font-bold">192000</span>元
+                                <span className="font-bold">192000</span>¥
                               </TableCell>
                               <TableCell className="px-2 py-3 sm:px-4 text-gray-700 text-center text-sm sm:text-base">
-                                每增加<span className="font-bold text-indigo-600">1个V8</span>，工资加<span className="font-bold text-green-600">96000</span>元
+                                每增加<span className="font-bold text-indigo-600">1个V8</span>，工资加<span className="font-bold text-green-600">96000</span>¥
                               </TableCell>
                             </TableRow>
                           </TableBody>

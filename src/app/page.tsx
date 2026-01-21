@@ -2460,7 +2460,7 @@ function CloudShopSimulator() {
                           百度百科
                         </Button>
                         <p className="text-xs sm:text-sm sm:text-base text-gray-700 leading-relaxed">
-                          　　海南创步科技有限公司，成立于<span className="font-bold text-purple-600">2022年6月9日</span>，位于海南省三沙市，属科技推广和应用服务业。公司聚焦数字生活服务平台研发与运营，核心产品为自主研发的"CJT"一站式数字缴费平台，整合全国水费、电费、燃气费等生活缴费服务，支持银行卡、第三方支付及HTTPS+RSA加密等多重安全防护机制。
+                          　　海南创步科技有限公司，成立于<span className="font-bold text-purple-600">2022年6月9日</span>，位于海南省三沙市，属科技推广和应用服务业。公司聚焦数字生活服务平台研发与运营，核心产品为自主研发的"创缴通"一站式数字缴费平台，整合全国水费、电费、燃气费等生活缴费服务，支持银行卡、第三方支付及HTTPS+RSA加密等多重安全防护机制。
                         </p>
                       </div>
                     </div>

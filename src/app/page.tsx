@@ -144,6 +144,24 @@ function CloudShopSimulator() {
   // 获取当前等级配置
   const levelConfig = currentLevel ? shopLevelsConfig[currentLevel] : null;
 
+  // 微信环境检测：如果检测到微信环境，自动跳转到微信引导页面
+  useEffect(() => {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isWeChat =
+      userAgent.includes('micromessenger') ||
+      userAgent.includes('wechat');
+
+    if (isWeChat && typeof window !== 'undefined') {
+      // 检查是否已经在引导页面，避免循环跳转
+      if (!window.location.pathname.startsWith('/wechat-guide')) {
+        // 延迟跳转，确保页面渲染后再执行
+        setTimeout(() => {
+          window.location.href = '/wechat-guide';
+        }, 100);
+      }
+    }
+  }, []);
+
   // 选择店铺等级
   const handleSelectLevel = (level: ShopLevel) => {
     clearShareParams(); // 清除分享参数，避免影响后续操作

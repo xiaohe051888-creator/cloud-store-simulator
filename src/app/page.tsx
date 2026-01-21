@@ -99,6 +99,52 @@ function CloudShopSimulator() {
     }
   };
 
+  // 下载源代码
+  const handleDownloadSource = async () => {
+    setDownloadingSource(true);
+    setDownloadError('');
+
+    try {
+      const response = await fetch('/api/upload-package', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('上传失败');
+      }
+
+      const data = await response.json();
+
+      if (data.success && data.downloadUrl) {
+        // 使用 fetch + blob 模式下载文件
+        const downloadResponse = await fetch(data.downloadUrl);
+        const blob = await downloadResponse.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = data.fileName || 'cloudshop-simulator-v1.4.6.tar.gz';
+        link.click();
+        window.URL.revokeObjectURL(blobUrl);
+
+        // 显示下载成功提示
+        setShareToast({ show: true, message: '源代码下载成功！' });
+        setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
+      } else {
+        throw new Error(data.error || '获取下载链接失败');
+      }
+    } catch (error) {
+      console.error('下载源代码失败:', error);
+      setDownloadError('下载失败，请稍后重试');
+      setShareToast({ show: true, message: '下载失败，请稍后重试' });
+      setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
+    } finally {
+      setDownloadingSource(false);
+    }
+  };
+
   // 推荐系统输入框引用
   const recommendBudgetRef = useRef<HTMLInputElement>(null);
   const recommendPeriodRef = useRef<HTMLInputElement>(null);
@@ -136,6 +182,12 @@ function CloudShopSimulator() {
   // 分享弹窗状态
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
   const [shareToast, setShareToast] = useState<{ show: boolean; message: string }>({ show: false, message: '' });
+
+  // 源代码下载状态
+  const [downloadingSource, setDownloadingSource] = useState<boolean>(false);
+  const [downloadUrl, setDownloadUrl] = useState<string>('');
+  const [downloadError, setDownloadError] = useState<string>('');
+  const [showDownloadToast, setShowDownloadToast] = useState<boolean>(false);
 
   // 获取分享参数
   const { shareParams, isFromShare, clearShareParams } = useShareParams();
@@ -1381,6 +1433,17 @@ function CloudShopSimulator() {
               className="touch-feedback text-xs sm:text-sm lg:text-base font-bold h-10 sm:h-11 lg:h-12 px-3 sm:px-4 lg:px-5 rounded-xl border-2 border-green-200 bg-gradient-to-r from-green-50 to-emerald-50 text-green-700 hover:border-green-400 hover:shadow-lg hover:shadow-green-500/20 hover:bg-gradient-to-r hover:from-green-100 hover:to-emerald-100 transition-all duration-300"
             >
               进入平台
+            </Button>
+
+            {/* 下载源代码 */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleDownloadSource}
+              disabled={downloadingSource}
+              className="touch-feedback text-xs sm:text-sm lg:text-base font-bold h-10 sm:h-11 lg:h-12 px-3 sm:px-4 lg:px-5 rounded-xl border-2 border-indigo-200 bg-gradient-to-r from-indigo-50 to-blue-50 text-indigo-700 hover:border-indigo-400 hover:shadow-lg hover:shadow-indigo-500/20 hover:bg-gradient-to-r hover:from-indigo-100 hover:to-blue-100 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {downloadingSource ? '处理中...' : '下载源代码'}
             </Button>
 
             {/* 回到首页 */}

@@ -20,6 +20,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import WeChatLinkGuide from '@/components/wechat-link-guide';
 import WeChatShareGuide from '@/components/wechat-share-guide';
+import WeChatOpenGuide from '@/components/wechat-open-guide';
 import ShareModal from '@/components/share-modal';
 import PWAInstallPrompt from '@/components/pwa-install-prompt';
 import PWAUpdatePrompt from '@/components/pwa-update-prompt';
@@ -1344,7 +1345,7 @@ function CloudShopSimulator() {
                 云店模拟器
               </h1>
               <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text">
-                v1.4.6
+                v1.4.7
               </span>
             </div>
           </div>
@@ -4177,6 +4178,9 @@ function CloudShopSimulator() {
         isOpen={showWeChatShareGuide}
         onClose={() => setShowWeChatShareGuide(false)}
       />
+
+      {/* 微信内打开引导 */}
+      <WeChatOpenGuide />
 
       {/* 分享弹窗 */}
       {showShareModal && detailsData && levelConfig && (

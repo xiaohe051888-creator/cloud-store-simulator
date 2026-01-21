@@ -10,17 +10,21 @@ interface WeChatOpenGuideProps {
 
 export default function WeChatOpenGuide({ onClose }: WeChatOpenGuideProps) {
   const [showGuide, setShowGuide] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // 检测是否在微信浏览器中
-    const isWeChat = /micromessenger/i.test(navigator.userAgent);
+    // 确保在客户端挂载后才执行检测
+    setMounted(true);
 
-    // 如果在微信中，显示引导弹窗
+    // 检测是否在微信浏览器中
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isWeChat =
+      userAgent.includes('micromessenger') ||
+      userAgent.includes('wechat');
+
+    // 如果在微信中，立即显示引导弹窗
     if (isWeChat) {
-      // 延迟500ms显示，避免页面加载时立即弹出
-      setTimeout(() => {
-        setShowGuide(true);
-      }, 500);
+      setShowGuide(true);
     }
   }, []);
 
@@ -30,6 +34,8 @@ export default function WeChatOpenGuide({ onClose }: WeChatOpenGuideProps) {
     onClose?.();
   };
 
+  // 如果未挂载，不渲染任何内容
+  if (!mounted) return null;
   if (!showGuide) return null;
 
   return (

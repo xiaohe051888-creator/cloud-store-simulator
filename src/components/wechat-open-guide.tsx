@@ -2,14 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { X, Copy, ExternalLink, CheckCircle } from 'lucide-react';
+import { X, MoreVertical, ExternalLink } from 'lucide-react';
 
 interface WeChatOpenGuideProps {
   onClose?: () => void;
 }
 
 export default function WeChatOpenGuide({ onClose }: WeChatOpenGuideProps) {
-  const [copied, setCopied] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
 
   useEffect(() => {
@@ -25,35 +24,6 @@ export default function WeChatOpenGuide({ onClose }: WeChatOpenGuideProps) {
     }
   }, []);
 
-  // 复制当前链接
-  const handleCopy = async () => {
-    const url = window.location.href;
-
-    try {
-      // 尝试使用现代 Clipboard API
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      // 降级方案：使用传统方法
-      const textarea = document.createElement('textarea');
-      textarea.value = url;
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.select();
-      try {
-        document.execCommand('copy');
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      } catch (err) {
-        console.error('复制失败:', err);
-      } finally {
-        document.body.removeChild(textarea);
-      }
-    }
-  };
-
   // 关闭引导
   const handleClose = () => {
     setShowGuide(false);
@@ -63,10 +33,33 @@ export default function WeChatOpenGuide({ onClose }: WeChatOpenGuideProps) {
   if (!showGuide) return null;
 
   return (
-    <div className="fixed inset-0 z-[400] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden animate-in zoom-in-95 duration-300">
-        {/* 顶部彩色条 */}
-        <div className="h-1.5 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500" />
+    <div className="fixed inset-0 z-[400] bg-black/75 backdrop-blur-sm animate-in fade-in duration-300">
+      {/* 箭头指向右上角 */}
+      <div className="absolute top-6 right-4 sm:right-6 transform transition-all animate-in fade-in slide-in-from-top-2 duration-500">
+        <svg
+          className="w-32 h-20 text-white opacity-90"
+          viewBox="0 0 128 64"
+          fill="none"
+        >
+          {/* 箭头主体 */}
+          <path
+            d="M128 8 Q128 0 120 0 H20 Q12 0 12 8 L12 20 L4 12 Q2 10 2 12 Q2 14 4 16 L12 24 V36 Q2 34 2 36 Q2 38 4 40 L12 48 V56 Q12 64 20 64 H120 Q128 64 128 56"
+            fill="currentColor"
+            stroke="none"
+          />
+          {/* 箭头尖端 */}
+          <path
+            d="M0 24 L12 20 L12 28 Z"
+            fill="currentColor"
+            stroke="none"
+          />
+        </svg>
+      </div>
+
+      {/* 引导内容 */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 sm:p-6 bg-white rounded-t-3xl shadow-2xl animate-in slide-in-from-bottom-4 duration-300 max-w-lg mx-auto">
+        {/* 顶部装饰条 */}
+        <div className="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-6" />
 
         {/* 关闭按钮 */}
         <button
@@ -77,76 +70,64 @@ export default function WeChatOpenGuide({ onClose }: WeChatOpenGuideProps) {
         </button>
 
         {/* 内容区域 */}
-        <div className="p-6 pt-8">
+        <div className="pt-8 pb-4">
           {/* 图标和标题 */}
-          <div className="text-center mb-6">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center shadow-lg">
-              <ExternalLink className="text-white w-8 h-8" />
+          <div className="flex items-start gap-4 mb-6">
+            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg flex-shrink-0">
+              <ExternalLink className="text-white w-7 h-7" />
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              微信内无法直接访问
-            </h3>
-            <p className="text-sm text-gray-600 leading-relaxed">
-              请复制链接后在浏览器中打开，以获得最佳体验
-            </p>
-          </div>
-
-          {/* 当前链接 */}
-          <div className="bg-gray-50 rounded-xl p-4 mb-6 border-2 border-gray-200">
-            <p className="text-xs text-gray-500 mb-2 font-medium">当前链接：</p>
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                value={window.location.href}
-                readOnly
-                className="flex-1 bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none"
-              />
-              <Button
-                size="sm"
-                onClick={handleCopy}
-                className={`flex items-center gap-1.5 px-3 py-2 ${
-                  copied
-                    ? 'bg-green-600 hover:bg-green-700'
-                    : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
-                } text-white text-sm font-semibold transition-all`}
-              >
-                {copied ? (
-                  <>
-                    <CheckCircle size={16} />
-                    已复制
-                  </>
-                ) : (
-                  <>
-                    <Copy size={16} />
-                    复制
-                  </>
-                )}
-              </Button>
+            <div className="flex-1">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+                在浏览器中打开
+              </h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                微信内无法访问，请在浏览器中打开以获得最佳体验
+              </p>
             </div>
           </div>
 
           {/* 操作步骤 */}
-          <div className="bg-green-50 rounded-xl p-4 mb-6 border-2 border-green-200">
-            <h4 className="font-semibold text-green-900 mb-3 flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-green-600 text-white text-xs flex items-center justify-center">
-                3
-              </span>
-              在浏览器中打开
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-5 border-2 border-green-200">
+            <h4 className="font-bold text-green-900 mb-4 text-base sm:text-lg">
+              操作步骤
             </h4>
-            <ol className="text-sm text-green-800 space-y-2 list-decimal list-inside pl-2">
-              <li>点击上方的<span className="font-semibold">"复制"</span>按钮</li>
-              <li>退出微信，打开手机浏览器（如Safari、Chrome等）</li>
-              <li>在地址栏粘贴链接并访问</li>
-            </ol>
+            <div className="space-y-4">
+              {/* 步骤1 */}
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center flex-shrink-0 font-bold">
+                  1
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm sm:text-base text-gray-800 leading-relaxed">
+                    点击右上角的<span className="font-bold text-green-700">三个点</span>
+                    <MoreVertical className="inline-block w-5 h-5 mx-1 text-green-600" />
+                  </p>
+                </div>
+              </div>
+
+              {/* 步骤2 */}
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center flex-shrink-0 font-bold">
+                  2
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm sm:text-base text-gray-800 leading-relaxed">
+                    在菜单中选择<span className="font-bold text-green-700">"在浏览器中打开"</span>
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* 关闭按钮 */}
-          <Button
-            onClick={handleClose}
-            className="w-full bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-semibold py-3"
-          >
-            我知道了
-          </Button>
+          <div className="mt-6">
+            <Button
+              onClick={handleClose}
+              className="w-full bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-semibold py-3 sm:py-3.5"
+            >
+              我知道了
+            </Button>
+          </div>
         </div>
       </div>
     </div>

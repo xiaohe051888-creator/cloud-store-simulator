@@ -5,7 +5,7 @@ import html2canvas from 'html2canvas';
 import { QRCodeSVG } from 'qrcode.react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Download, Share2, MessageCircle, X, Copy } from 'lucide-react';
+import { Download, Share2, X, Copy } from 'lucide-react';
 
 interface ShareData {
   shopLevel: string;
@@ -38,11 +38,6 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     checkMobile();
   }, []);
 
-  // 检测是否在微信中
-  const isWeChat = () => {
-    return /micromessenger/i.test(navigator.userAgent);
-  };
-
   // 生成分享链接
   const generateShareUrl = () => {
     if (!shareData) return '';
@@ -68,33 +63,6 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     } catch (error) {
       console.error('Failed to copy:', error);
     }
-  };
-
-  // 复制微信引导链接
-  const handleCopyWeChatLink = async () => {
-    const wechatUrl = 'https://cloud-store-simulator.pages.dev/wechat-redirect.html';
-    try {
-      await navigator.clipboard.writeText(wechatUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      console.error('Failed to copy:', error);
-    }
-  };
-
-  // 分享到微信（在微信环境中显示引导）
-  const handleShareToWeChat = async () => {
-    const url = generateShareUrl();
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      console.error('Failed to copy:', error);
-    }
-
-    // 显示引导信息
-    alert('链接已复制\n\n1.点击右上角的三个点\n2.选择转发给好友\n3.选择好友并发送');
   };
 
   // 生成分享图片
@@ -338,16 +306,6 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
             </div>
           </div>
 
-          {/* 微信访问提示 */}
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-center">
-            <p className="text-xs text-amber-800 font-medium flex items-center justify-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-              </svg>
-              微信内无法直接访问，请在浏览器中打开
-            </p>
-          </div>
-
           {/* 操作按钮 */}
           <div className="grid grid-cols-2 gap-3">
             {/* 电脑端：下载图片 + 复制链接 */}
@@ -369,36 +327,11 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
                   <Copy className="h-4 w-4" />
                   {copied ? '已复制' : '复制链接'}
                 </Button>
-                {/* 复制微信引导链接 */}
-                <Button
-                  onClick={handleCopyWeChatLink}
-                  variant="outline"
-                  className="flex items-center justify-center gap-2 h-12 col-span-2 bg-green-50 border-green-200 text-green-700 hover:bg-green-100"
-                >
-                  <MessageCircle className="h-4 w-4" />
-                  {copied ? '已复制微信链接' : '复制微信链接'}
-                </Button>
               </>
             )}
 
-            {/* 移动端 + 微信：复制引导链接 */}
-            {isMobile && isWeChat() && (
-              <>
-                <Button
-                  onClick={handleCopyWeChatLink}
-                  className="flex items-center justify-center gap-2 h-12 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 col-span-2"
-                >
-                  <MessageCircle className="h-4 w-4" />
-                  {copied ? '已复制，粘贴到微信分享' : '复制微信链接'}
-                </Button>
-                <p className="text-xs text-gray-500 text-center col-span-2 mt-2">
-                  复制后粘贴到微信发给好友，他们会看到访问引导
-                </p>
-              </>
-            )}
-
-            {/* 移动端 + 浏览器：下载图片 + 复制链接 */}
-            {isMobile && !isWeChat() && (
+            {/* 移动端：下载图片 + 复制链接 */}
+            {isMobile && (
               <>
                 <Button
                   onClick={handleDownloadImage}

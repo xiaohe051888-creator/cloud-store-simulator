@@ -18,9 +18,6 @@ import {
   TableFooter,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import WeChatLinkGuide from '@/components/wechat-link-guide';
-import WeChatShareGuide from '@/components/wechat-share-guide';
-import WeChatOpenGuide from '@/components/wechat-open-guide';
 import ShareModal from '@/components/share-modal';
 import PWAInstallPrompt from '@/components/pwa-install-prompt';
 import PWAUpdatePrompt from '@/components/pwa-update-prompt';
@@ -127,12 +124,6 @@ function CloudShopSimulator() {
   const [isBudgetShaking, setIsBudgetShaking] = useState<boolean>(false);
   const [isPeriodShaking, setIsPeriodShaking] = useState<boolean>(false);
   const [isProfitShaking, setIsProfitShaking] = useState<boolean>(false);
-
-  // 微信链接引导状态
-  const [showWeChatLinkGuide, setShowWeChatLinkGuide] = useState<boolean>(false);
-  const [showWeChatShareGuide, setShowWeChatShareGuide] = useState<boolean>(false);
-  const [targetUrl, setTargetUrl] = useState<string>('');
-  const hasShownWeChatGuide = useRef(false);
 
   // 分享弹窗状态
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
@@ -1267,15 +1258,6 @@ function CloudShopSimulator() {
       // 在浏览器中，直接打开链接
       window.open(url, '_blank');
     }
-  };
-  
-  // 关闭微信链接引导
-  const handleCloseWeChatLinkGuide = () => {
-    setShowWeChatLinkGuide(false);
-    // 清除target参数，避免重复显示
-    const url = new URL(window.location.href);
-    url.searchParams.delete('target');
-    window.history.replaceState({}, '', url.toString());
   };
 
   // 处理分享参数
@@ -4151,22 +4133,6 @@ function CloudShopSimulator() {
         )}
 
       </main>
-
-      {/* 微信链接引导 */}
-      <WeChatLinkGuide
-        isVisible={showWeChatLinkGuide}
-        onClose={handleCloseWeChatLinkGuide}
-        targetUrl={targetUrl}
-      />
-
-      {/* 微信分享引导 */}
-      <WeChatShareGuide
-        isOpen={showWeChatShareGuide}
-        onClose={() => setShowWeChatShareGuide(false)}
-      />
-
-      {/* 微信内打开引导 */}
-      <WeChatOpenGuide />
 
       {/* 分享弹窗 */}
       {showShareModal && detailsData && levelConfig && (

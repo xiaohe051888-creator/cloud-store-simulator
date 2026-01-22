@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import ShareModal from '@/components/share-modal';
+import ShareSuccessModal from '@/components/share-success-modal';
 import PWAInstallPrompt from '@/components/pwa-install-prompt';
 import PWAUpdatePrompt from '@/components/pwa-update-prompt';
 import { useShareParams } from '@/hooks/use-share-params';
@@ -127,7 +128,7 @@ function CloudShopSimulator() {
 
   // 分享弹窗状态
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
-  const [shareToast, setShareToast] = useState<{ show: boolean; message: string }>({ show: false, message: '' });
+  const [showShareSuccessModal, setShowShareSuccessModal] = useState<boolean>(false);
 
   // 获取分享参数
   const { shareParams, isFromShare, clearShareParams } = useShareParams();
@@ -516,11 +517,7 @@ function CloudShopSimulator() {
 
     try {
       await navigator.clipboard.writeText(shareUrl);
-      setShareToast({
-        show: true,
-        message: '复制成功，联系好友粘贴发送，让好友复制链接到浏览器粘贴打开'
-      });
-      setTimeout(() => setShareToast({ show: false, message: '' }), 5000);
+      setShowShareSuccessModal(true);
     } catch (error) {
       console.error('复制失败:', error);
       // 如果复制失败，尝试使用降级方案
@@ -535,19 +532,13 @@ function CloudShopSimulator() {
         const successful = document.execCommand('copy');
         document.body.removeChild(textarea);
         if (successful) {
-          setShareToast({
-            show: true,
-            message: '复制成功，联系好友粘贴发送，让好友复制链接到浏览器粘贴打开'
-          });
-          setTimeout(() => setShareToast({ show: false, message: '' }), 5000);
+          setShowShareSuccessModal(true);
         } else {
-          setShareToast({ show: true, message: '复制失败，请手动复制链接' });
-          setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
+          alert('复制失败，请手动复制链接');
         }
       } catch (e) {
         console.error('降级复制失败:', e);
-        setShareToast({ show: true, message: '复制失败，请手动复制链接' });
-        setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
+        alert('复制失败，请手动复制链接');
       }
     }
   };
@@ -1243,21 +1234,8 @@ function CloudShopSimulator() {
 
   // 打开链接
   const openLink = (url: string) => {
-    // 检测是否在微信中打开
-    const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
-
-    if (isWeChatBrowser) {
-      // 在微信中，设置目标URL并显示引导弹窗
-      setTargetUrl(url);
-      setShowWeChatLinkGuide(true);
-      // 更新URL参数，以便在浏览器打开后能检测到
-      const target = encodeURIComponent(url);
-      const newUrl = `${window.location.origin}/?target=${target}`;
-      window.history.replaceState({}, '', newUrl);
-    } else {
-      // 在浏览器中，直接打开链接
-      window.open(url, '_blank');
-    }
+    // 直接在浏览器中打开链接
+    window.open(url, '_blank');
   };
 
   // 处理分享参数
@@ -4157,17 +4135,11 @@ function CloudShopSimulator() {
       {/* PWA更新提示 */}
       <PWAUpdatePrompt />
 
-      {/* 分享成功提示 */}
-      {shareToast.show && (
-        <div className="fixed bottom-20 sm:bottom-24 left-1/2 transform -translate-x-1/2 z-[300] animate-in slide-in-from-bottom-4 duration-300">
-          <div className="bg-gray-900 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-2">
-            <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            <span className="text-sm font-medium">{shareToast.message}</span>
-          </div>
-        </div>
-      )}
+      {/* 分享成功弹窗 */}
+      <ShareSuccessModal
+        isOpen={showShareSuccessModal}
+        onClose={() => setShowShareSuccessModal(false)}
+      />
     </div>
   );
 }

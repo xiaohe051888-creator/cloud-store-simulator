@@ -520,13 +520,16 @@ function CloudShopSimulator() {
 
   // 处理分享
   const handleShare = async () => {
-    // 使用Cloudflare Pages主域名，避免扣子预览域名在微信中的访问限制
-    const shareUrl = 'https://cloud-store-simulator.pages.dev/';
-    
+    // 使用扣子预览链接进行分享
+    const shareUrl = 'https://cs5mtq7j5q.coze.site/';
+
     try {
       await navigator.clipboard.writeText(shareUrl);
-      setShareToast({ show: true, message: '链接已复制！可以粘贴发送给好友' });
-      setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
+      setShareToast({
+        show: true,
+        message: '复制成功，联系好友粘贴发送，让好友复制链接到浏览器粘贴打开'
+      });
+      setTimeout(() => setShareToast({ show: false, message: '' }), 5000);
     } catch (error) {
       console.error('复制失败:', error);
       // 如果复制失败，尝试使用降级方案
@@ -541,8 +544,11 @@ function CloudShopSimulator() {
         const successful = document.execCommand('copy');
         document.body.removeChild(textarea);
         if (successful) {
-          setShareToast({ show: true, message: '链接已复制！可以粘贴发送给好友' });
-          setTimeout(() => setShareToast({ show: false, message: '' }), 3000);
+          setShareToast({
+            show: true,
+            message: '复制成功，联系好友粘贴发送，让好友复制链接到浏览器粘贴打开'
+          });
+          setTimeout(() => setShareToast({ show: false, message: '' }), 5000);
         } else {
           setShareToast({ show: true, message: '复制失败，请手动复制链接' });
           setTimeout(() => setShareToast({ show: false, message: '' }), 3000);

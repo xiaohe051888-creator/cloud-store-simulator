@@ -20,6 +20,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import ShareModal from '@/components/share-modal';
 import ShareSuccessModal from '@/components/share-success-modal';
+import ExternalLinkGuideModal from '@/components/external-link-guide-modal';
 import PWAInstallPrompt from '@/components/pwa-install-prompt';
 import PWAUpdatePrompt from '@/components/pwa-update-prompt';
 import { useShareParams } from '@/hooks/use-share-params';
@@ -129,6 +130,10 @@ function CloudShopSimulator() {
   // 分享弹窗状态
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
   const [showShareSuccessModal, setShowShareSuccessModal] = useState<boolean>(false);
+
+  // 外部链接引导弹窗状态
+  const [showExternalLinkGuide, setShowExternalLinkGuide] = useState<boolean>(false);
+  const [targetUrl, setTargetUrl] = useState<string>('');
 
   // 获取分享参数
   const { shareParams, isFromShare, clearShareParams } = useShareParams();
@@ -1234,8 +1239,17 @@ function CloudShopSimulator() {
 
   // 打开链接
   const openLink = (url: string) => {
-    // 直接在浏览器中打开链接
-    window.open(url, '_blank');
+    // 检测是否在微信中
+    const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
+
+    if (isWeChatBrowser) {
+      // 在微信中，显示引导弹窗
+      setTargetUrl(url);
+      setShowExternalLinkGuide(true);
+    } else {
+      // 在浏览器中，直接打开链接
+      window.open(url, '_blank');
+    }
   };
 
   // 处理分享参数
@@ -4139,6 +4153,13 @@ function CloudShopSimulator() {
       <ShareSuccessModal
         isOpen={showShareSuccessModal}
         onClose={() => setShowShareSuccessModal(false)}
+      />
+
+      {/* 外部链接引导弹窗 */}
+      <ExternalLinkGuideModal
+        isOpen={showExternalLinkGuide}
+        onClose={() => setShowExternalLinkGuide(false)}
+        targetUrl={targetUrl}
       />
     </div>
   );

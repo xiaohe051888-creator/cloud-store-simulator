@@ -48,8 +48,8 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     params.set('max', String(shareData.maxBalance));
     params.set('profit', String(shareData.totalProfit));
 
-    // 使用 MiniMax 平台域名
-    const baseUrl = 'https://e2igmhe7t40z.space.minimaxi.com';
+    // 使用 GitHub Pages 固定域名
+    const baseUrl = 'https://xiaohe051888-creator.github.io/cloud-store-simulator';
     return `${baseUrl}?${params.toString()}`;
   };
 
@@ -67,8 +67,6 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     }
   };
 
-<<<<<<< Updated upstream
-=======
   // 显示复制成功弹窗
   const showCopySuccessModal = () => {
     const modal = document.createElement('div');
@@ -182,7 +180,7 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
 
   // 复制微信引导链接
   const handleCopyWeChatLink = async () => {
-    const wechatUrl = 'https://e2igmhe7t40z.space.minimaxi.com/wechat-redirect.html';
+    const wechatUrl = 'https://xiaohe051888-creator.github.io/cloud-store-simulator/wechat-redirect.html';
     try {
       await navigator.clipboard.writeText(wechatUrl);
       
@@ -209,7 +207,6 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     alert('链接已复制\n\n1.点击右上角的三个点\n2.选择转发给好友\n3.选择好友并发送');
   };
 
->>>>>>> Stashed changes
   // 生成分享图片
   const handleDownloadImage = async () => {
     if (!shareCardRef.current || !shareData) return;

@@ -48,8 +48,8 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     params.set('max', String(shareData.maxBalance));
     params.set('profit', String(shareData.totalProfit));
 
-    // 使用主域名而不是当前访问的域名，提高微信访问成功率
-    const baseUrl = 'https://cloud-store-simulator.pages.dev';
+    // 使用 MiniMax 平台域名
+    const baseUrl = 'https://e2igmhe7t40z.space.minimaxi.com';
     return `${baseUrl}?${params.toString()}`;
   };
 
@@ -58,13 +58,158 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     const url = generateShareUrl();
     try {
       await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      
+      // 显示居中的弹窗提示
+      showCopySuccessModal();
+      
     } catch (error) {
       console.error('Failed to copy:', error);
     }
   };
 
+<<<<<<< Updated upstream
+=======
+  // 显示复制成功弹窗
+  const showCopySuccessModal = () => {
+    const modal = document.createElement('div');
+    modal.id = 'copy-success-modal';
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeIn 0.3s ease;
+    `;
+    
+    modal.innerHTML = `
+      <div style="
+        background: white;
+        border-radius: 20px;
+        padding: 32px 28px;
+        max-width: 320px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: slideUp 0.3s ease;
+      ">
+        <div style="
+          width: 64px;
+          height: 64px;
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 20px;
+        ">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <h3 style="
+          font-size: 18px;
+          font-weight: 700;
+          color: #1f2937;
+          margin-bottom: 20px;
+        ">链接已复制</h3>
+        <div style="
+          background: #f3f4f6;
+          border-radius: 12px;
+          padding: 16px;
+          text-align: left;
+          margin-bottom: 8px;
+        ">
+          <p style="
+            font-size: 13px;
+            color: #4b5563;
+            margin-bottom: 8px;
+            line-height: 1.6;
+          ">✅ 与好友聊天对话框中粘贴并发送</p>
+          <p style="
+            font-size: 13px;
+            color: #4b5563;
+            margin-bottom: 8px;
+            line-height: 1.6;
+          ">✅ 告知好友要长按链接再点击复制</p>
+          <p style="
+            font-size: 13px;
+            color: #4b5563;
+            line-height: 1.6;
+          ">✅ 复制完成后在浏览器中粘贴打开</p>
+        </div>
+      </div>
+      <style>
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes slideUp {
+          from { transform: translateY(20px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+      </style>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // 点击弹窗外部关闭
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+    
+    // 3秒后自动关闭
+    setTimeout(closeModal, 3000);
+    
+    function closeModal() {
+      modal.style.opacity = '0';
+      modal.style.transition = 'opacity 0.3s ease';
+      setTimeout(() => {
+        if (document.body.contains(modal)) {
+          document.body.removeChild(modal);
+        }
+        setCopied(false);
+      }, 300);
+    }
+  };
+
+  // 复制微信引导链接
+  const handleCopyWeChatLink = async () => {
+    const wechatUrl = 'https://e2igmhe7t40z.space.minimaxi.com/wechat-redirect.html';
+    try {
+      await navigator.clipboard.writeText(wechatUrl);
+      
+      // 显示居中的弹窗提示
+      showCopySuccessModal();
+      
+    } catch (error) {
+      console.error('Failed to copy:', error);
+    }
+  };
+
+  // 分享到微信（在微信环境中显示引导）
+  const handleShareToWeChat = async () => {
+    const url = generateShareUrl();
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error('Failed to copy:', error);
+    }
+
+    // 显示引导信息
+    alert('链接已复制\n\n1.点击右上角的三个点\n2.选择转发给好友\n3.选择好友并发送');
+  };
+
+>>>>>>> Stashed changes
   // 生成分享图片
   const handleDownloadImage = async () => {
     if (!shareCardRef.current || !shareData) return;

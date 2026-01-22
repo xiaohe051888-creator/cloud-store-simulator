@@ -70,6 +70,18 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     }
   };
 
+  // 复制微信引导链接
+  const handleCopyWeChatLink = async () => {
+    const wechatUrl = 'https://cloud-store-simulator.pages.dev/wechat-redirect.html';
+    try {
+      await navigator.clipboard.writeText(wechatUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error('Failed to copy:', error);
+    }
+  };
+
   // 分享到微信（在微信环境中显示引导）
   const handleShareToWeChat = async () => {
     const url = generateShareUrl();
@@ -347,18 +359,32 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
                   <Copy className="h-4 w-4" />
                   {copied ? '已复制' : '复制链接'}
                 </Button>
+                {/* 复制微信引导链接 */}
+                <Button
+                  onClick={handleCopyWeChatLink}
+                  variant="outline"
+                  className="flex items-center justify-center gap-2 h-12 col-span-2 bg-green-50 border-green-200 text-green-700 hover:bg-green-100"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  {copied ? '已复制微信链接' : '复制微信链接'}
+                </Button>
               </>
             )}
 
-            {/* 移动端 + 微信：分享到微信 */}
+            {/* 移动端 + 微信：复制引导链接 */}
             {isMobile && isWeChat() && (
-              <Button
-                onClick={handleShareToWeChat}
-                className="flex items-center justify-center gap-2 h-12 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 col-span-2"
-              >
-                <MessageCircle className="h-4 w-4" />
-                {copied ? '已复制，请在微信中粘贴发送' : '分享到微信'}
-              </Button>
+              <>
+                <Button
+                  onClick={handleCopyWeChatLink}
+                  className="flex items-center justify-center gap-2 h-12 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 col-span-2"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  {copied ? '已复制，粘贴到微信分享' : '复制微信链接'}
+                </Button>
+                <p className="text-xs text-gray-500 text-center col-span-2 mt-2">
+                  复制后粘贴到微信发给好友，他们会看到访问引导
+                </p>
+              </>
             )}
 
             {/* 移动端 + 浏览器：下载图片 + 复制链接 */}

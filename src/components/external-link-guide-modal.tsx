@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { ExternalLink, X } from 'lucide-react';
+import { X, MoreVertical, ExternalLink } from 'lucide-react';
 
 interface ExternalLinkGuideModalProps {
   isOpen: boolean;
@@ -9,7 +9,7 @@ interface ExternalLinkGuideModalProps {
   targetUrl?: string;
 }
 
-export default function ExternalLinkGuideModal({ isOpen, onClose, targetUrl }: ExternalLinkGuideModalProps) {
+export default function ExternalLinkGuideModal({ isOpen, onClose }: ExternalLinkGuideModalProps) {
   if (!isOpen) return null;
 
   return (
@@ -36,38 +36,36 @@ export default function ExternalLinkGuideModal({ isOpen, onClose, targetUrl }: E
           </div>
 
           {/* 标题 */}
-          <h3 className="text-xl sm:text-2xl font-bold text-gray-900 text-center mb-3">
-            需要在浏览器中打开
+          <h3 className="text-xl sm:text-2xl font-bold text-gray-900 text-center mb-4">
+            检测到你在微信环境中
           </h3>
+          <p className="text-base text-gray-600 text-center mb-6">
+            为了体验完整功能请在浏览器中使用
+          </p>
 
           {/* 操作指引 */}
-          <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-4 mb-6 border border-orange-100">
-            <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-              <ExternalLink className="w-4 h-4" />
-              操作指引
-            </h4>
-            <div className="flex items-start gap-3">
-              {/* 右上角三个点示意 */}
-              <div className="flex-shrink-0">
-                <div className="relative w-16 h-16 border-2 border-gray-300 rounded-lg bg-gray-50">
-                  {/* 右上角三个点 */}
-                  <div className="absolute top-1.5 right-1.5 flex flex-col gap-1">
-                    <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
-                    <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
-                    <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
-                  </div>
-                  {/* 箭头指向 */}
-                  <div className="absolute top-4 right-3">
-                    <svg className="w-6 h-6 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
-                    </svg>
-                  </div>
+          <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-5 mb-6 border border-orange-100">
+            <div className="space-y-4">
+              {/* 步骤1 */}
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-7 h-7 rounded-full bg-orange-500 flex items-center justify-center text-white text-sm font-bold">
+                  1
+                </div>
+                <div className="flex-1 flex items-center gap-2">
+                  <MoreVertical className="w-5 h-5 text-orange-600 flex-shrink-0" />
+                  <span className="text-sm text-gray-700">点击右上角的三个点</span>
                 </div>
               </div>
-              {/* 文字说明 */}
-              <div className="flex-1 space-y-1.5 text-sm text-gray-700">
-                <p className="font-medium">点击右上角的三个点</p>
-                <p>选择"在浏览器打开"即可访问</p>
+
+              {/* 步骤2 */}
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-7 h-7 rounded-full bg-orange-500 flex items-center justify-center text-white text-sm font-bold">
+                  2
+                </div>
+                <div className="flex-1 flex items-center gap-2">
+                  <ExternalLink className="w-5 h-5 text-orange-600 flex-shrink-0" />
+                  <span className="text-sm text-gray-700">选择在浏览器中打开</span>
+                </div>
               </div>
             </div>
           </div>

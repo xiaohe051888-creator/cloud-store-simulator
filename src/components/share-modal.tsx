@@ -53,7 +53,8 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     params.set('max', String(shareData.maxBalance));
     params.set('profit', String(shareData.totalProfit));
 
-    const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+    // 使用主域名而不是当前访问的域名，提高微信访问成功率
+    const baseUrl = 'https://cloud-store-simulator.pages.dev';
     return `${baseUrl}?${params.toString()}`;
   };
 

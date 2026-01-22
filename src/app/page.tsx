@@ -21,8 +21,6 @@ import { Badge } from '@/components/ui/badge';
 import ShareModal from '@/components/share-modal';
 import ShareSuccessModal from '@/components/share-success-modal';
 import ExternalLinkGuideModal from '@/components/external-link-guide-modal';
-import PWAInstallPrompt from '@/components/pwa-install-prompt';
-import PWAUpdatePrompt from '@/components/pwa-update-prompt';
 import { useShareParams } from '@/hooks/use-share-params';
 import {
   shopLevelsConfig,
@@ -4125,12 +4123,6 @@ function CloudShopSimulator() {
         />
       )}
 
-      {/* PWA安装提示 */}
-      <PWAInstallPrompt />
-
-      {/* PWA更新提示 */}
-      <PWAUpdatePrompt />
-
       {/* 分享成功弹窗 */}
       <ShareSuccessModal
         isOpen={showShareSuccessModal}
@@ -4141,7 +4133,6 @@ function CloudShopSimulator() {
       <ExternalLinkGuideModal
         isOpen={showExternalLinkGuide}
         onClose={() => setShowExternalLinkGuide(false)}
-        targetUrl={targetUrl}
       />
     </div>
   );

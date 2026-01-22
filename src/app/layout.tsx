@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     default: '云店模拟器',
     template: '%s | 云店模拟器',
   },
-  description: '云店模拟器 - 专业的店铺经营管理模拟工具，支持多种店铺等级，详细计算利润和结算周期。',
+  description: '云店模拟器 v1.6.0 - 专业的店铺经营管理模拟工具，支持多种店铺等级，详细计算利润和结算周期。',
   keywords: [
     '扣子编程',
     'Coze Code',

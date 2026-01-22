@@ -11,7 +11,7 @@ interface ShareSuccessModalProps {
 export default function ShareSuccessModal({ isOpen, onClose }: ShareSuccessModalProps) {
   if (!isOpen) return null;
 
-  const shareUrl = 'https://cs5mtq7j5q.coze.site/';
+  const shareUrl = window.location.origin + window.location.pathname;
 
   const handleCopyAgain = async () => {
     try {

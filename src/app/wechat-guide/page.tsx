@@ -78,7 +78,7 @@ export default function WeChatGuidePage() {
           {/* 复制链接按钮 */}
           <button
             onClick={() => {
-              const url = 'https://cs5mtq7j5q.coze.site/';
+              const url = window.location.origin + window.location.pathname;
               navigator.clipboard.writeText(url).then(() => {
                 alert('链接已复制！');
               }).catch(() => {

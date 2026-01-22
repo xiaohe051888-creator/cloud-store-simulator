@@ -48,8 +48,8 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     params.set('max', String(shareData.maxBalance));
     params.set('profit', String(shareData.totalProfit));
 
-    // 使用 GitHub Pages 固定域名
-    const baseUrl = 'https://xiaohe051888-creator.github.io/cloud-store-simulator';
+    // 使用 MiniMax 平台域名
+    const baseUrl = 'https://mv66yijv0rbs.space.minimaxi.com';
     return `${baseUrl}?${params.toString()}`;
   };
 
@@ -180,7 +180,7 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
 
   // 复制微信引导链接
   const handleCopyWeChatLink = async () => {
-    const wechatUrl = 'https://xiaohe051888-creator.github.io/cloud-store-simulator/wechat-redirect.html';
+    const wechatUrl = 'https://mv66yijv0rbs.space.minimaxi.com/wechat-redirect.html';
     try {
       await navigator.clipboard.writeText(wechatUrl);
       

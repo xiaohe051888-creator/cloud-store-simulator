@@ -497,8 +497,8 @@ function CloudShopSimulator() {
 
   // 处理分享
   const handleShare = async () => {
-    // 使用扣子预览链接进行分享
-    const shareUrl = 'https://cs5mtq7j5q.coze.site/';
+    // 使用当前部署的域名进行分享
+    const shareUrl = window.location.origin + window.location.pathname;
 
     try {
       await navigator.clipboard.writeText(shareUrl);

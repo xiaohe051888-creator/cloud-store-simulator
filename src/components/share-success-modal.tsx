@@ -66,8 +66,8 @@ export default function ShareSuccessModal({ isOpen, onClose }: ShareSuccessModal
             </h4>
             <div className="space-y-2 text-sm text-gray-700">
               <p>1. 粘贴链接发送给好友</p>
-              <p>2. 告知好友在浏览器中打开</p>
-              <p>3. 好友即可正常访问</p>
+              <p>2. 告知好友长按复制链接</p>
+              <p>3. 在浏览器中粘贴打开</p>
             </div>
           </div>
 

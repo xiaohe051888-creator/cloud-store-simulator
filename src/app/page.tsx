@@ -520,8 +520,8 @@ function CloudShopSimulator() {
 
   // 处理分享
   const handleShare = async () => {
-    // 固定复制指定的纯净基础链接，不包含任何查询参数
-    const shareUrl = 'https://cs5mtq7j5q.coze.site/';
+    // 使用Cloudflare Pages主域名，避免扣子预览域名在微信中的访问限制
+    const shareUrl = 'https://cloud-store-simulator.pages.dev/';
     
     try {
       await navigator.clipboard.writeText(shareUrl);

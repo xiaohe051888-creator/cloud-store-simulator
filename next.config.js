@@ -13,6 +13,10 @@ const nextConfig = {
       },
     ],
   },
+  // 配置 Turbopack 根目录
+  turbopack: {
+    root: __dirname,
+  },
 };
 
 module.exports = nextConfig;

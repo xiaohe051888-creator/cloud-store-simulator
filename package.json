@@ -27,7 +27,8 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "recharts": "^3.6.0",
-    "tailwind-merge": "^2.6.0"
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -38,7 +39,6 @@
     "only-allow": "^1.2.2",
     "shadcn": "latest",
     "sharp": "^0.34.5",
-    "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
   },
   "packageManager": "pnpm@9.0.0",

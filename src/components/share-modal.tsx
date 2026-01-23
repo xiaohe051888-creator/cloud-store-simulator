@@ -38,7 +38,23 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     checkMobile();
   }, []);
 
-  // 生成分享链接
+  // 自动复制链接（弹窗打开时）
+  useEffect(() => {
+    if (isOpen && shareData) {
+      const url = generateShareUrl();
+      navigator.clipboard.writeText(url).then(() => {
+        setCopied(true);
+        // 显示复制成功提示
+        showCopySuccessModal();
+        // 2秒后隐藏复制状态
+        setTimeout(() => setCopied(false), 2000);
+      }).catch(err => {
+        console.error('自动复制失败:', err);
+      });
+    }
+  }, [isOpen, shareData]);
+
+  // 生成分享链接 - 使用当前域名
   const generateShareUrl = () => {
     if (!shareData) return '';
     const params = new URLSearchParams();
@@ -48,8 +64,8 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     params.set('max', String(shareData.maxBalance));
     params.set('profit', String(shareData.totalProfit));
 
-    // 使用 MiniMax 平台域名
-    const baseUrl = 'https://mv66yijv0rbs.space.minimaxi.com';
+    // 自动获取当前域名
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
     return `${baseUrl}?${params.toString()}`;
   };
 
@@ -178,9 +194,11 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     }
   };
 
-  // 复制微信引导链接
+  // 复制微信引导链接 - 使用当前域名
   const handleCopyWeChatLink = async () => {
-    const wechatUrl = 'https://mv66yijv0rbs.space.minimaxi.com/wechat-redirect.html';
+    const wechatUrl = typeof window !== 'undefined' 
+      ? `${window.location.origin}/wechat-redirect.html` 
+      : '';
     try {
       await navigator.clipboard.writeText(wechatUrl);
       

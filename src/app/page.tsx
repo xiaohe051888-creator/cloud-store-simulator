@@ -18,7 +18,7 @@ import {
   TableFooter,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import ShareModal from '@/components/share-modal';
+import ShareModal from '@/components/share-modal-enhanced';
 import ShareSuccessModal from '@/components/share-success-modal';
 import ExternalLinkGuideModal from '@/components/external-link-guide-modal';
 import { useShareParams } from '@/hooks/use-share-params';

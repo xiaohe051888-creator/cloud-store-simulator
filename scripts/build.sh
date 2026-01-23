@@ -7,7 +7,7 @@ cd "${COZE_WORKSPACE_PATH}"
 
 echo "Installing dependencies with optimization..."
 # 添加优化参数：--frozen-lockfile, --no-optional
-pnpm install --frozen-lockfile --no-optional --prefer-offline
+pnpm install --frozen-lockfile --prefer-offline
 
 echo "Building for Vercel..."
 # 直接使用 next build，不修改配置文件

@@ -5,7 +5,7 @@ import html2canvas from 'html2canvas';
 import { QRCodeSVG } from 'qrcode.react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Download, Share2, X, Copy, MessageCircle, Share } from 'lucide-react';
+import { Download, Share2, X, Copy } from 'lucide-react';
 
 interface ShareData {
   shopLevel: string;

@@ -18,7 +18,8 @@ import {
   TableFooter,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import ShareModal from '@/components/share-modal-enhanced';
+import ShareModal from '@/components/share-modal';
+import ShareSuccessModal from '@/components/share-success-modal';
 import ExternalLinkGuideModal from '@/components/external-link-guide-modal';
 import { useShareParams } from '@/hooks/use-share-params';
 import {
@@ -126,6 +127,7 @@ function CloudShopSimulator() {
 
   // 分享弹窗状态
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
+  const [showShareSuccessModal, setShowShareSuccessModal] = useState<boolean>(false);
 
   // 外部链接引导弹窗状态
   const [showExternalLinkGuide, setShowExternalLinkGuide] = useState<boolean>(false);
@@ -493,9 +495,37 @@ function CloudShopSimulator() {
     setExpandedBenefit(null); // 重置展开状态
   };
 
-  // 处理分享 - 显示增强分享弹窗
-  const handleShare = () => {
-    setShowShareModal(true);
+  // 处理分享
+  const handleShare = async () => {
+    // 使用当前部署的域名进行分享
+    const shareUrl = window.location.origin + window.location.pathname;
+
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setShowShareSuccessModal(true);
+    } catch (error) {
+      console.error('复制失败:', error);
+      // 如果复制失败，尝试使用降级方案
+      try {
+        const textarea = document.createElement('textarea');
+        textarea.value = shareUrl;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'absolute';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        const successful = document.execCommand('copy');
+        document.body.removeChild(textarea);
+        if (successful) {
+          setShowShareSuccessModal(true);
+        } else {
+          alert('复制失败，请手动复制链接');
+        }
+      } catch (e) {
+        console.error('降级复制失败:', e);
+        alert('复制失败，请手动复制链接');
+      }
+    }
   };
 
   // 删除对比数据
@@ -1274,17 +1304,15 @@ function CloudShopSimulator() {
               </Button>
             )}
 
-            {/* 分享 - 只在有详情数据时显示 */}
-            {detailsData && levelConfig && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleShare}
-                className="touch-feedback text-xs sm:text-sm lg:text-base font-bold h-10 sm:h-11 lg:h-12 px-3 sm:px-4 lg:px-5 rounded-xl border-2 border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 hover:border-purple-400 hover:shadow-lg hover:shadow-purple-500/20 hover:bg-gradient-to-r hover:from-purple-100 hover:to-pink-100 transition-all duration-300"
-              >
-                分享
-              </Button>
-            )}
+            {/* 分享 */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleShare}
+              className="touch-feedback text-xs sm:text-sm lg:text-base font-bold h-10 sm:h-11 lg:h-12 px-3 sm:px-4 lg:px-5 rounded-xl border-2 border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 hover:border-purple-400 hover:shadow-lg hover:shadow-purple-500/20 hover:bg-gradient-to-r hover:from-purple-100 hover:to-pink-100 transition-all duration-300"
+            >
+              分享
+            </Button>
 
             {/* 进入平台 */}
             <Button
@@ -4094,6 +4122,12 @@ function CloudShopSimulator() {
           }}
         />
       )}
+
+      {/* 分享成功弹窗 */}
+      <ShareSuccessModal
+        isOpen={showShareSuccessModal}
+        onClose={() => setShowShareSuccessModal(false)}
+      />
 
       {/* 外部链接引导弹窗 */}
       <ExternalLinkGuideModal

@@ -1274,15 +1274,17 @@ function CloudShopSimulator() {
               </Button>
             )}
 
-            {/* 分享 */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleShare}
-              className="touch-feedback text-xs sm:text-sm lg:text-base font-bold h-10 sm:h-11 lg:h-12 px-3 sm:px-4 lg:px-5 rounded-xl border-2 border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 hover:border-purple-400 hover:shadow-lg hover:shadow-purple-500/20 hover:bg-gradient-to-r hover:from-purple-100 hover:to-pink-100 transition-all duration-300"
-            >
-              分享
-            </Button>
+            {/* 分享 - 只在有详情数据时显示 */}
+            {detailsData && levelConfig && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleShare}
+                className="touch-feedback text-xs sm:text-sm lg:text-base font-bold h-10 sm:h-11 lg:h-12 px-3 sm:px-4 lg:px-5 rounded-xl border-2 border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 hover:border-purple-400 hover:shadow-lg hover:shadow-purple-500/20 hover:bg-gradient-to-r hover:from-purple-100 hover:to-pink-100 transition-all duration-300"
+              >
+                分享
+              </Button>
+            )}
 
             {/* 进入平台 */}
             <Button

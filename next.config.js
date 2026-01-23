@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 静态导出，适用于 Cloudflare Pages
-  output: 'export',
-  // 静态导出时禁用图片优化
+  // 移除静态导出配置，使用标准 SSR 模式
+  // output: 'export',
+  
+  // 图片优化配置
   images: {
-    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -13,6 +13,7 @@ const nextConfig = {
       },
     ],
   },
+  
   // 配置 Turbopack 根目录
   turbopack: {
     root: __dirname,

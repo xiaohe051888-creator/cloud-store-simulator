@@ -19,7 +19,6 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import ShareModal from '@/components/share-modal-enhanced';
-import ShareSuccessModal from '@/components/share-success-modal';
 import ExternalLinkGuideModal from '@/components/external-link-guide-modal';
 import { useShareParams } from '@/hooks/use-share-params';
 import {
@@ -127,7 +126,6 @@ function CloudShopSimulator() {
 
   // 分享弹窗状态
   const [showShareModal, setShowShareModal] = useState<boolean>(false);
-  const [showShareSuccessModal, setShowShareSuccessModal] = useState<boolean>(false);
 
   // 外部链接引导弹窗状态
   const [showExternalLinkGuide, setShowExternalLinkGuide] = useState<boolean>(false);
@@ -495,37 +493,9 @@ function CloudShopSimulator() {
     setExpandedBenefit(null); // 重置展开状态
   };
 
-  // 处理分享
-  const handleShare = async () => {
-    // 使用当前部署的域名进行分享
-    const shareUrl = window.location.origin + window.location.pathname;
-
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      setShowShareSuccessModal(true);
-    } catch (error) {
-      console.error('复制失败:', error);
-      // 如果复制失败，尝试使用降级方案
-      try {
-        const textarea = document.createElement('textarea');
-        textarea.value = shareUrl;
-        textarea.setAttribute('readonly', '');
-        textarea.style.position = 'absolute';
-        textarea.style.left = '-9999px';
-        document.body.appendChild(textarea);
-        textarea.select();
-        const successful = document.execCommand('copy');
-        document.body.removeChild(textarea);
-        if (successful) {
-          setShowShareSuccessModal(true);
-        } else {
-          alert('复制失败，请手动复制链接');
-        }
-      } catch (e) {
-        console.error('降级复制失败:', e);
-        alert('复制失败，请手动复制链接');
-      }
-    }
+  // 处理分享 - 显示增强分享弹窗
+  const handleShare = () => {
+    setShowShareModal(true);
   };
 
   // 删除对比数据
@@ -4122,12 +4092,6 @@ function CloudShopSimulator() {
           }}
         />
       )}
-
-      {/* 分享成功弹窗 */}
-      <ShareSuccessModal
-        isOpen={showShareSuccessModal}
-        onClose={() => setShowShareSuccessModal(false)}
-      />
 
       {/* 外部链接引导弹窗 */}
       <ExternalLinkGuideModal

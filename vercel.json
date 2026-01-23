@@ -1,0 +1,12 @@
+# Vercel 部署配置
+# 这个文件用于 Vercel 部署，不需要修改 next.config.js
+
+[build]
+  command = "pnpm run build"
+  output = ".next"
+
+[devCommand]
+  command = "pnpm run dev"
+
+[install]
+  cache = true

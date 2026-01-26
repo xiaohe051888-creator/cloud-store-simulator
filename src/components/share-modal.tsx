@@ -38,22 +38,6 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     checkMobile();
   }, []);
 
-  // 自动复制链接（弹窗打开时）
-  useEffect(() => {
-    if (isOpen && shareData) {
-      const url = generateShareUrl();
-      navigator.clipboard.writeText(url).then(() => {
-        setCopied(true);
-        // 显示复制成功提示
-        showCopySuccessModal();
-        // 2秒后隐藏复制状态
-        setTimeout(() => setCopied(false), 2000);
-      }).catch(err => {
-        console.error('自动复制失败:', err);
-      });
-    }
-  }, [isOpen, shareData]);
-
   // 生成分享链接 - 使用当前域名
   const generateShareUrl = () => {
     if (!shareData) return '';
@@ -69,22 +53,14 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
     return `${baseUrl}?${params.toString()}`;
   };
 
-  // 复制链接
-  const handleCopyLink = async () => {
-    const url = generateShareUrl();
-    try {
-      await navigator.clipboard.writeText(url);
-      
-      // 显示居中的弹窗提示
-      showCopySuccessModal();
-      
-    } catch (error) {
-      console.error('Failed to copy:', error);
-    }
-  };
-
   // 显示复制成功弹窗
   const showCopySuccessModal = () => {
+    // 移除已存在的弹窗（避免重复）
+    const existingModal = document.getElementById('copy-success-modal');
+    if (existingModal) {
+      existingModal.remove();
+    }
+
     const modal = document.createElement('div');
     modal.id = 'copy-success-modal';
     modal.style.cssText = `
@@ -100,7 +76,7 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
       z-index: 9999;
       animation: fadeIn 0.3s ease;
     `;
-    
+
     modal.innerHTML = `
       <div style="
         background: white;
@@ -169,19 +145,19 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
         }
       </style>
     `;
-    
+
     document.body.appendChild(modal);
-    
+
     // 点击弹窗外部关闭
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         closeModal();
       }
     });
-    
+
     // 3秒后自动关闭
     setTimeout(closeModal, 3000);
-    
+
     function closeModal() {
       modal.style.opacity = '0';
       modal.style.transition = 'opacity 0.3s ease';
@@ -191,6 +167,36 @@ export default function ShareModal({ isOpen, onClose, shareData }: ShareModalPro
         }
         setCopied(false);
       }, 300);
+    }
+  };
+
+  // 自动复制链接（弹窗打开时）
+  useEffect(() => {
+    if (isOpen && shareData) {
+      const url = generateShareUrl();
+      navigator.clipboard.writeText(url).then(() => {
+        setCopied(true);
+        // 显示复制成功提示
+        showCopySuccessModal();
+        // 2秒后隐藏复制状态
+        setTimeout(() => setCopied(false), 2000);
+      }).catch(err => {
+        console.error('自动复制失败:', err);
+      });
+    }
+  }, [isOpen, shareData]);
+
+  // 复制链接
+  const handleCopyLink = async () => {
+    const url = generateShareUrl();
+    try {
+      await navigator.clipboard.writeText(url);
+
+      // 显示居中的弹窗提示
+      showCopySuccessModal();
+
+    } catch (error) {
+      console.error('Failed to copy:', error);
     }
   };
 

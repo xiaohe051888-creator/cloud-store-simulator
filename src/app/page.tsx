@@ -1232,6 +1232,17 @@ function CloudShopSimulator() {
     }
   };
 
+  // 处理浏览器中自动跳转（当用户在微信中点击"在浏览器中打开"时）
+  useEffect(() => {
+    const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
+
+    // 如果有目标链接且当前不在微信浏览器中，自动跳转
+    if (targetUrl && !isWeChatBrowser) {
+      // 使用 window.location.href 跳转（而不是 window.open）
+      window.location.href = targetUrl;
+    }
+  }, [targetUrl]);
+
   // 处理分享参数
   useEffect(() => {
     if (isFromShare && shareParams) {
@@ -4133,6 +4144,7 @@ function CloudShopSimulator() {
       <ExternalLinkGuideModal
         isOpen={showExternalLinkGuide}
         onClose={() => setShowExternalLinkGuide(false)}
+        targetUrl={targetUrl}
       />
     </div>
   );

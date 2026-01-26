@@ -11,7 +11,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { usePWAUpdate } from '@/hooks/use-pwa-update';
 
 // 应用版本号
-const APP_VERSION = '1.9.0';
+const APP_VERSION = '1.10.0';
 import {
   Table,
   TableBody,
@@ -1218,7 +1218,7 @@ function CloudShopSimulator() {
       alert('复制失败，请手动复制');
     }
     
-    // 延迟移除¥素，确保复制完成
+    // 延迟移除元素，确保复制完成
     setTimeout(() => {
       document.body.removeChild(textArea);
     }, 100);
@@ -1230,48 +1230,31 @@ function CloudShopSimulator() {
     const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
 
     if (isWeChatBrowser) {
-      // 在微信中，显示引导弹窗，并将目标 URL 编码到当前页面 URL
+      // 在微信中，显示引导弹窗
       setTargetUrl(url);
-
-      // 更新 URL，添加 redirect 参数
-      const currentUrl = new URL(window.location.href);
-      currentUrl.searchParams.set('redirect', encodeURIComponent(url));
-      window.history.replaceState({}, '', currentUrl.toString());
-
       setShowExternalLinkGuide(true);
     } else {
-      // 在浏览器中，直接打开链接
+      // 在浏览器中，直接在新窗口打开链接
       window.open(url, '_blank');
     }
   };
 
-  // 处理浏览器中自动跳转（当用户在微信中点击"在浏览器中打开"时）
+  // 处理浏览器中自动打开新窗口（当用户在微信中点击"在浏览器中打开"时）
   useEffect(() => {
-    // 检查 URL 中是否有 redirect 参数
-    const currentUrl = new URL(window.location.href);
-    const redirectParam = currentUrl.searchParams.get('redirect');
+    // 检查是否在浏览器环境（非微信）
+    const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
 
-    if (redirectParam) {
-      // 检测是否在微信中
-      const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
-
-      // 如果不在微信中，自动跳转
-      if (!isWeChatBrowser) {
-        try {
-          const targetUrl = decodeURIComponent(redirectParam);
-
-          // 清除 redirect 参数，避免重复跳转
-          currentUrl.searchParams.delete('redirect');
-          window.history.replaceState({}, '', currentUrl.toString());
-
-          // 跳转到目标链接
-          window.location.href = targetUrl;
-        } catch (error) {
-          console.error('自动跳转失败:', error);
-        }
-      }
+    // 如果不在微信中，且有待打开的目标链接
+    if (!isWeChatBrowser && targetUrl) {
+      // 延迟 500ms，确保页面已加载
+      setTimeout(() => {
+        // 在新窗口中打开目标链接
+        window.open(targetUrl, '_blank');
+        // 清除目标链接，避免重复打开
+        setTargetUrl('');
+      }, 500);
     }
-  }, []); // 只在组件挂载时执行一次
+  }, [targetUrl]); // 监听 targetUrl 变化
 
   // 处理分享参数
   useEffect(() => {
@@ -1326,7 +1309,7 @@ function CloudShopSimulator() {
                 云店模拟器
               </h1>
               <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text">
-                v1.9.0
+                v1.10.0
               </span>
             </div>
           </div>

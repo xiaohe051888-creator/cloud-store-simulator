@@ -8,6 +8,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
+import { usePWAUpdate } from '@/hooks/use-pwa-update';
+
+// 应用版本号
+const APP_VERSION = '1.9.0';
 import {
   Table,
   TableBody,
@@ -83,6 +87,9 @@ function CloudShopSimulator() {
   const handleTouchMove = (e: React.TouchEvent) => {
     setTouchEnd(e.targetTouches[0].clientX);
   };
+
+  // PWA 更新检测
+  const { hasUpdate, showUpdatePrompt, handleUpdate, dismissUpdate } = usePWAUpdate(APP_VERSION);
 
   const handleTouchEnd = () => {
     if (salesDetailsScrollRef.current) {
@@ -1223,8 +1230,14 @@ function CloudShopSimulator() {
     const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
 
     if (isWeChatBrowser) {
-      // 在微信中，显示引导弹窗
+      // 在微信中，显示引导弹窗，并将目标 URL 编码到当前页面 URL
       setTargetUrl(url);
+
+      // 更新 URL，添加 redirect 参数
+      const currentUrl = new URL(window.location.href);
+      currentUrl.searchParams.set('redirect', encodeURIComponent(url));
+      window.history.replaceState({}, '', currentUrl.toString());
+
       setShowExternalLinkGuide(true);
     } else {
       // 在浏览器中，直接打开链接
@@ -1234,14 +1247,31 @@ function CloudShopSimulator() {
 
   // 处理浏览器中自动跳转（当用户在微信中点击"在浏览器中打开"时）
   useEffect(() => {
-    const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
+    // 检查 URL 中是否有 redirect 参数
+    const currentUrl = new URL(window.location.href);
+    const redirectParam = currentUrl.searchParams.get('redirect');
 
-    // 如果有目标链接且当前不在微信浏览器中，自动跳转
-    if (targetUrl && !isWeChatBrowser) {
-      // 使用 window.location.href 跳转（而不是 window.open）
-      window.location.href = targetUrl;
+    if (redirectParam) {
+      // 检测是否在微信中
+      const isWeChatBrowser = /micromessenger/i.test(navigator.userAgent);
+
+      // 如果不在微信中，自动跳转
+      if (!isWeChatBrowser) {
+        try {
+          const targetUrl = decodeURIComponent(redirectParam);
+
+          // 清除 redirect 参数，避免重复跳转
+          currentUrl.searchParams.delete('redirect');
+          window.history.replaceState({}, '', currentUrl.toString());
+
+          // 跳转到目标链接
+          window.location.href = targetUrl;
+        } catch (error) {
+          console.error('自动跳转失败:', error);
+        }
+      }
     }
-  }, [targetUrl]);
+  }, []); // 只在组件挂载时执行一次
 
   // 处理分享参数
   useEffect(() => {
@@ -1296,7 +1326,7 @@ function CloudShopSimulator() {
                 云店模拟器
               </h1>
               <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text">
-                v1.8.0
+                v1.9.0
               </span>
             </div>
           </div>
@@ -4146,6 +4176,52 @@ function CloudShopSimulator() {
         onClose={() => setShowExternalLinkGuide(false)}
         targetUrl={targetUrl}
       />
+
+      {/* PWA 更新提示 */}
+      {showUpdatePrompt && (
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-[400] animate-in fade-in-0 slide-in-from-top-4 duration-300">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl shadow-2xl p-4 max-w-sm mx-4">
+            <div className="flex items-start gap-3">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold mb-1">发现新版本</p>
+                <p className="text-sm text-white/90 mb-3">
+                  版本已更新到 {APP_VERSION}，请刷新以使用最新功能
+                </p>
+                <div className="flex gap-2">
+                  <Button
+                    onClick={handleUpdate}
+                    size="sm"
+                    className="bg-white text-blue-600 hover:bg-blue-50 font-semibold"
+                  >
+                    立即更新
+                  </Button>
+                  <Button
+                    onClick={dismissUpdate}
+                    size="sm"
+                    variant="ghost"
+                    className="text-white/90 hover:text-white hover:bg-white/10"
+                  >
+                    稍后
+                  </Button>
+                </div>
+              </div>
+              <button
+                onClick={dismissUpdate}
+                className="flex-shrink-0 w-6 h-6 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

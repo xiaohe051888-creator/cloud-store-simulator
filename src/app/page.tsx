@@ -1296,7 +1296,7 @@ function CloudShopSimulator() {
                 云店模拟器
               </h1>
               <span className="text-[10px] sm:text-xs lg:text-sm text-gray-400 font-medium bg-gradient-to-r from-gray-300 to-gray-400 bg-clip-text">
-                v1.6.0
+                v1.8.0
               </span>
             </div>
           </div>

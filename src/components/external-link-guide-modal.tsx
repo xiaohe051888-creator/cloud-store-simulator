@@ -9,8 +9,16 @@ interface ExternalLinkGuideModalProps {
   targetUrl?: string;
 }
 
-export default function ExternalLinkGuideModal({ isOpen, onClose }: ExternalLinkGuideModalProps) {
+export default function ExternalLinkGuideModal({ isOpen, onClose, targetUrl }: ExternalLinkGuideModalProps) {
   if (!isOpen) return null;
+
+  // 点击"我知道了"后打开链接
+  const handleConfirm = () => {
+    if (targetUrl) {
+      window.open(targetUrl, '_blank');
+    }
+    onClose();
+  };
 
   return (
     <div className="fixed inset-0 z-[300] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-300">
@@ -72,7 +80,7 @@ export default function ExternalLinkGuideModal({ isOpen, onClose }: ExternalLink
 
           {/* 按钮 */}
           <Button
-            onClick={onClose}
+            onClick={handleConfirm}
             className="w-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white font-semibold py-3 sm:py-3.5 text-base"
           >
             我知道了
